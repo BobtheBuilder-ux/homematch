@@ -286,14 +286,14 @@ export class PrismaClient<
   get property(): Prisma.PropertyDelegate<ExtArgs, ClientOptions>;
 
   /**
-   * `prisma.manager`: Exposes CRUD operations for the **Manager** model.
+   * `prisma.landlord`: Exposes CRUD operations for the **landlord** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more Managers
-    * const managers = await prisma.manager.findMany()
+    * // Fetch zero or more landlords
+    * const landlords = await prisma.landlord.findMany()
     * ```
     */
-  get manager(): Prisma.ManagerDelegate<ExtArgs, ClientOptions>;
+  get landlord(): Prisma.landlordDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.tenant`: Exposes CRUD operations for the **Tenant** model.
@@ -806,7 +806,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> = {
     meta: {
-      modelProps: "property" | "manager" | "tenant" | "location" | "application" | "lease" | "payment"
+      modelProps: "property" | "landlord" | "tenant" | "location" | "application" | "lease" | "payment"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -884,77 +884,77 @@ export namespace Prisma {
           }
         }
       }
-      Manager: {
-        payload: Prisma.$ManagerPayload<ExtArgs>
-        fields: Prisma.ManagerFieldRefs
+      landlord: {
+        payload: Prisma.$landlordPayload<ExtArgs>
+        fields: Prisma.landlordFieldRefs
         operations: {
           findUnique: {
-            args: Prisma.ManagerFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ManagerPayload> | null
+            args: Prisma.landlordFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$landlordPayload> | null
           }
           findUniqueOrThrow: {
-            args: Prisma.ManagerFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ManagerPayload>
+            args: Prisma.landlordFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$landlordPayload>
           }
           findFirst: {
-            args: Prisma.ManagerFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ManagerPayload> | null
+            args: Prisma.landlordFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$landlordPayload> | null
           }
           findFirstOrThrow: {
-            args: Prisma.ManagerFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ManagerPayload>
+            args: Prisma.landlordFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$landlordPayload>
           }
           findMany: {
-            args: Prisma.ManagerFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ManagerPayload>[]
+            args: Prisma.landlordFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$landlordPayload>[]
           }
           create: {
-            args: Prisma.ManagerCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ManagerPayload>
+            args: Prisma.landlordCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$landlordPayload>
           }
           createMany: {
-            args: Prisma.ManagerCreateManyArgs<ExtArgs>
+            args: Prisma.landlordCreateManyArgs<ExtArgs>
             result: BatchPayload
           }
           createManyAndReturn: {
-            args: Prisma.ManagerCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ManagerPayload>[]
+            args: Prisma.landlordCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$landlordPayload>[]
           }
           delete: {
-            args: Prisma.ManagerDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ManagerPayload>
+            args: Prisma.landlordDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$landlordPayload>
           }
           update: {
-            args: Prisma.ManagerUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ManagerPayload>
+            args: Prisma.landlordUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$landlordPayload>
           }
           deleteMany: {
-            args: Prisma.ManagerDeleteManyArgs<ExtArgs>
+            args: Prisma.landlordDeleteManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateMany: {
-            args: Prisma.ManagerUpdateManyArgs<ExtArgs>
+            args: Prisma.landlordUpdateManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateManyAndReturn: {
-            args: Prisma.ManagerUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ManagerPayload>[]
+            args: Prisma.landlordUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$landlordPayload>[]
           }
           upsert: {
-            args: Prisma.ManagerUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ManagerPayload>
+            args: Prisma.landlordUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$landlordPayload>
           }
           aggregate: {
-            args: Prisma.ManagerAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateManager>
+            args: Prisma.landlordAggregateArgs<ExtArgs>
+            result: $Utils.Optional<Aggregatelandlord>
           }
           groupBy: {
-            args: Prisma.ManagerGroupByArgs<ExtArgs>
-            result: $Utils.Optional<ManagerGroupByOutputType>[]
+            args: Prisma.landlordGroupByArgs<ExtArgs>
+            result: $Utils.Optional<landlordGroupByOutputType>[]
           }
           count: {
-            args: Prisma.ManagerCountArgs<ExtArgs>
-            result: $Utils.Optional<ManagerCountAggregateOutputType> | number
+            args: Prisma.landlordCountArgs<ExtArgs>
+            result: $Utils.Optional<landlordCountAggregateOutputType> | number
           }
         }
       }
@@ -1397,7 +1397,7 @@ export namespace Prisma {
   }
   export type GlobalOmitConfig = {
     property?: PropertyOmit
-    manager?: ManagerOmit
+    landlord?: landlordOmit
     tenant?: TenantOmit
     location?: LocationOmit
     application?: ApplicationOmit
@@ -1551,32 +1551,32 @@ export namespace Prisma {
 
 
   /**
-   * Count Type ManagerCountOutputType
+   * Count Type landlordCountOutputType
    */
 
-  export type ManagerCountOutputType = {
+  export type landlordCountOutputType = {
     managedProperties: number
   }
 
-  export type ManagerCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    managedProperties?: boolean | ManagerCountOutputTypeCountManagedPropertiesArgs
+  export type landlordCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    managedProperties?: boolean | landlordCountOutputTypeCountManagedPropertiesArgs
   }
 
   // Custom InputTypes
   /**
-   * ManagerCountOutputType without action
+   * landlordCountOutputType without action
    */
-  export type ManagerCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type landlordCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the ManagerCountOutputType
+     * Select specific fields to fetch from the landlordCountOutputType
      */
-    select?: ManagerCountOutputTypeSelect<ExtArgs> | null
+    select?: landlordCountOutputTypeSelect<ExtArgs> | null
   }
 
   /**
-   * ManagerCountOutputType without action
+   * landlordCountOutputType without action
    */
-  export type ManagerCountOutputTypeCountManagedPropertiesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type landlordCountOutputTypeCountManagedPropertiesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: PropertyWhereInput
   }
 
@@ -1760,7 +1760,7 @@ export namespace Prisma {
     averageRating: number | null
     numberOfReviews: number | null
     locationId: number | null
-    managerCognitoId: string | null
+    landlordCognitoId: string | null
   }
 
   export type PropertyMaxAggregateOutputType = {
@@ -1780,7 +1780,7 @@ export namespace Prisma {
     averageRating: number | null
     numberOfReviews: number | null
     locationId: number | null
-    managerCognitoId: string | null
+    landlordCognitoId: string | null
   }
 
   export type PropertyCountAggregateOutputType = {
@@ -1803,7 +1803,7 @@ export namespace Prisma {
     averageRating: number
     numberOfReviews: number
     locationId: number
-    managerCognitoId: number
+    landlordCognitoId: number
     _all: number
   }
 
@@ -1851,7 +1851,7 @@ export namespace Prisma {
     averageRating?: true
     numberOfReviews?: true
     locationId?: true
-    managerCognitoId?: true
+    landlordCognitoId?: true
   }
 
   export type PropertyMaxAggregateInputType = {
@@ -1871,7 +1871,7 @@ export namespace Prisma {
     averageRating?: true
     numberOfReviews?: true
     locationId?: true
-    managerCognitoId?: true
+    landlordCognitoId?: true
   }
 
   export type PropertyCountAggregateInputType = {
@@ -1894,7 +1894,7 @@ export namespace Prisma {
     averageRating?: true
     numberOfReviews?: true
     locationId?: true
-    managerCognitoId?: true
+    landlordCognitoId?: true
     _all?: true
   }
 
@@ -2004,7 +2004,7 @@ export namespace Prisma {
     averageRating: number | null
     numberOfReviews: number | null
     locationId: number
-    managerCognitoId: string
+    landlordCognitoId: string
     _count: PropertyCountAggregateOutputType | null
     _avg: PropertyAvgAggregateOutputType | null
     _sum: PropertySumAggregateOutputType | null
@@ -2046,9 +2046,9 @@ export namespace Prisma {
     averageRating?: boolean
     numberOfReviews?: boolean
     locationId?: boolean
-    managerCognitoId?: boolean
+    landlordCognitoId?: boolean
     location?: boolean | LocationDefaultArgs<ExtArgs>
-    manager?: boolean | ManagerDefaultArgs<ExtArgs>
+    landlord?: boolean | landlordDefaultArgs<ExtArgs>
     leases?: boolean | Property$leasesArgs<ExtArgs>
     applications?: boolean | Property$applicationsArgs<ExtArgs>
     favoritedBy?: boolean | Property$favoritedByArgs<ExtArgs>
@@ -2076,9 +2076,9 @@ export namespace Prisma {
     averageRating?: boolean
     numberOfReviews?: boolean
     locationId?: boolean
-    managerCognitoId?: boolean
+    landlordCognitoId?: boolean
     location?: boolean | LocationDefaultArgs<ExtArgs>
-    manager?: boolean | ManagerDefaultArgs<ExtArgs>
+    landlord?: boolean | landlordDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["property"]>
 
   export type PropertySelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -2101,9 +2101,9 @@ export namespace Prisma {
     averageRating?: boolean
     numberOfReviews?: boolean
     locationId?: boolean
-    managerCognitoId?: boolean
+    landlordCognitoId?: boolean
     location?: boolean | LocationDefaultArgs<ExtArgs>
-    manager?: boolean | ManagerDefaultArgs<ExtArgs>
+    landlord?: boolean | landlordDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["property"]>
 
   export type PropertySelectScalar = {
@@ -2126,13 +2126,13 @@ export namespace Prisma {
     averageRating?: boolean
     numberOfReviews?: boolean
     locationId?: boolean
-    managerCognitoId?: boolean
+    landlordCognitoId?: boolean
   }
 
-  export type PropertyOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "description" | "pricePerMonth" | "securityDeposit" | "applicationFee" | "photoUrls" | "amenities" | "highlights" | "isPetsAllowed" | "isParkingIncluded" | "beds" | "baths" | "squareFeet" | "propertyType" | "postedDate" | "averageRating" | "numberOfReviews" | "locationId" | "managerCognitoId", ExtArgs["result"]["property"]>
+  export type PropertyOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "description" | "pricePerMonth" | "securityDeposit" | "applicationFee" | "photoUrls" | "amenities" | "highlights" | "isPetsAllowed" | "isParkingIncluded" | "beds" | "baths" | "squareFeet" | "propertyType" | "postedDate" | "averageRating" | "numberOfReviews" | "locationId" | "landlordCognitoId", ExtArgs["result"]["property"]>
   export type PropertyInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     location?: boolean | LocationDefaultArgs<ExtArgs>
-    manager?: boolean | ManagerDefaultArgs<ExtArgs>
+    landlord?: boolean | landlordDefaultArgs<ExtArgs>
     leases?: boolean | Property$leasesArgs<ExtArgs>
     applications?: boolean | Property$applicationsArgs<ExtArgs>
     favoritedBy?: boolean | Property$favoritedByArgs<ExtArgs>
@@ -2141,18 +2141,18 @@ export namespace Prisma {
   }
   export type PropertyIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     location?: boolean | LocationDefaultArgs<ExtArgs>
-    manager?: boolean | ManagerDefaultArgs<ExtArgs>
+    landlord?: boolean | landlordDefaultArgs<ExtArgs>
   }
   export type PropertyIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     location?: boolean | LocationDefaultArgs<ExtArgs>
-    manager?: boolean | ManagerDefaultArgs<ExtArgs>
+    landlord?: boolean | landlordDefaultArgs<ExtArgs>
   }
 
   export type $PropertyPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Property"
     objects: {
       location: Prisma.$LocationPayload<ExtArgs>
-      manager: Prisma.$ManagerPayload<ExtArgs>
+      landlord: Prisma.$landlordPayload<ExtArgs>
       leases: Prisma.$LeasePayload<ExtArgs>[]
       applications: Prisma.$ApplicationPayload<ExtArgs>[]
       favoritedBy: Prisma.$TenantPayload<ExtArgs>[]
@@ -2178,7 +2178,7 @@ export namespace Prisma {
       averageRating: number | null
       numberOfReviews: number | null
       locationId: number
-      managerCognitoId: string
+      landlordCognitoId: string
     }, ExtArgs["result"]["property"]>
     composites: {}
   }
@@ -2574,7 +2574,7 @@ export namespace Prisma {
   export interface Prisma__PropertyClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     location<T extends LocationDefaultArgs<ExtArgs> = {}>(args?: Subset<T, LocationDefaultArgs<ExtArgs>>): Prisma__LocationClient<$Result.GetResult<Prisma.$LocationPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | Null, Null, ExtArgs, ClientOptions>
-    manager<T extends ManagerDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ManagerDefaultArgs<ExtArgs>>): Prisma__ManagerClient<$Result.GetResult<Prisma.$ManagerPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | Null, Null, ExtArgs, ClientOptions>
+    landlord<T extends landlordDefaultArgs<ExtArgs> = {}>(args?: Subset<T, landlordDefaultArgs<ExtArgs>>): Prisma__landlordClient<$Result.GetResult<Prisma.$landlordPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | Null, Null, ExtArgs, ClientOptions>
     leases<T extends Property$leasesArgs<ExtArgs> = {}>(args?: Subset<T, Property$leasesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LeasePayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
     applications<T extends Property$applicationsArgs<ExtArgs> = {}>(args?: Subset<T, Property$applicationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ApplicationPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
     favoritedBy<T extends Property$favoritedByArgs<ExtArgs> = {}>(args?: Subset<T, Property$favoritedByArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TenantPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
@@ -2627,7 +2627,7 @@ export namespace Prisma {
     readonly averageRating: FieldRef<"Property", 'Float'>
     readonly numberOfReviews: FieldRef<"Property", 'Int'>
     readonly locationId: FieldRef<"Property", 'Int'>
-    readonly managerCognitoId: FieldRef<"Property", 'String'>
+    readonly landlordCognitoId: FieldRef<"Property", 'String'>
   }
     
 
@@ -3139,34 +3139,26 @@ export namespace Prisma {
 
 
   /**
-   * Model Manager
+   * Model landlord
    */
 
-  export type AggregateManager = {
-    _count: ManagerCountAggregateOutputType | null
-    _avg: ManagerAvgAggregateOutputType | null
-    _sum: ManagerSumAggregateOutputType | null
-    _min: ManagerMinAggregateOutputType | null
-    _max: ManagerMaxAggregateOutputType | null
+  export type Aggregatelandlord = {
+    _count: landlordCountAggregateOutputType | null
+    _avg: landlordAvgAggregateOutputType | null
+    _sum: landlordSumAggregateOutputType | null
+    _min: landlordMinAggregateOutputType | null
+    _max: landlordMaxAggregateOutputType | null
   }
 
-  export type ManagerAvgAggregateOutputType = {
+  export type landlordAvgAggregateOutputType = {
     id: number | null
   }
 
-  export type ManagerSumAggregateOutputType = {
+  export type landlordSumAggregateOutputType = {
     id: number | null
   }
 
-  export type ManagerMinAggregateOutputType = {
-    id: number | null
-    cognitoId: string | null
-    name: string | null
-    email: string | null
-    phoneNumber: string | null
-  }
-
-  export type ManagerMaxAggregateOutputType = {
+  export type landlordMinAggregateOutputType = {
     id: number | null
     cognitoId: string | null
     name: string | null
@@ -3174,7 +3166,15 @@ export namespace Prisma {
     phoneNumber: string | null
   }
 
-  export type ManagerCountAggregateOutputType = {
+  export type landlordMaxAggregateOutputType = {
+    id: number | null
+    cognitoId: string | null
+    name: string | null
+    email: string | null
+    phoneNumber: string | null
+  }
+
+  export type landlordCountAggregateOutputType = {
     id: number
     cognitoId: number
     name: number
@@ -3184,23 +3184,15 @@ export namespace Prisma {
   }
 
 
-  export type ManagerAvgAggregateInputType = {
+  export type landlordAvgAggregateInputType = {
     id?: true
   }
 
-  export type ManagerSumAggregateInputType = {
+  export type landlordSumAggregateInputType = {
     id?: true
   }
 
-  export type ManagerMinAggregateInputType = {
-    id?: true
-    cognitoId?: true
-    name?: true
-    email?: true
-    phoneNumber?: true
-  }
-
-  export type ManagerMaxAggregateInputType = {
+  export type landlordMinAggregateInputType = {
     id?: true
     cognitoId?: true
     name?: true
@@ -3208,7 +3200,15 @@ export namespace Prisma {
     phoneNumber?: true
   }
 
-  export type ManagerCountAggregateInputType = {
+  export type landlordMaxAggregateInputType = {
+    id?: true
+    cognitoId?: true
+    name?: true
+    email?: true
+    phoneNumber?: true
+  }
+
+  export type landlordCountAggregateInputType = {
     id?: true
     cognitoId?: true
     name?: true
@@ -3217,146 +3217,146 @@ export namespace Prisma {
     _all?: true
   }
 
-  export type ManagerAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type landlordAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which Manager to aggregate.
+     * Filter which landlord to aggregate.
      */
-    where?: ManagerWhereInput
+    where?: landlordWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Managers to fetch.
+     * Determine the order of landlords to fetch.
      */
-    orderBy?: ManagerOrderByWithRelationInput | ManagerOrderByWithRelationInput[]
+    orderBy?: landlordOrderByWithRelationInput | landlordOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the start position
      */
-    cursor?: ManagerWhereUniqueInput
+    cursor?: landlordWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Managers from the position of the cursor.
+     * Take `±n` landlords from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Managers.
+     * Skip the first `n` landlords.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Count returned Managers
+     * Count returned landlords
     **/
-    _count?: true | ManagerCountAggregateInputType
+    _count?: true | landlordCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to average
     **/
-    _avg?: ManagerAvgAggregateInputType
+    _avg?: landlordAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to sum
     **/
-    _sum?: ManagerSumAggregateInputType
+    _sum?: landlordSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the minimum value
     **/
-    _min?: ManagerMinAggregateInputType
+    _min?: landlordMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the maximum value
     **/
-    _max?: ManagerMaxAggregateInputType
+    _max?: landlordMaxAggregateInputType
   }
 
-  export type GetManagerAggregateType<T extends ManagerAggregateArgs> = {
-        [P in keyof T & keyof AggregateManager]: P extends '_count' | 'count'
+  export type GetlandlordAggregateType<T extends landlordAggregateArgs> = {
+        [P in keyof T & keyof Aggregatelandlord]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
-        : GetScalarType<T[P], AggregateManager[P]>
-      : GetScalarType<T[P], AggregateManager[P]>
+        : GetScalarType<T[P], Aggregatelandlord[P]>
+      : GetScalarType<T[P], Aggregatelandlord[P]>
   }
 
 
 
 
-  export type ManagerGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: ManagerWhereInput
-    orderBy?: ManagerOrderByWithAggregationInput | ManagerOrderByWithAggregationInput[]
-    by: ManagerScalarFieldEnum[] | ManagerScalarFieldEnum
-    having?: ManagerScalarWhereWithAggregatesInput
+  export type landlordGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: landlordWhereInput
+    orderBy?: landlordOrderByWithAggregationInput | landlordOrderByWithAggregationInput[]
+    by: landlordScalarFieldEnum[] | landlordScalarFieldEnum
+    having?: landlordScalarWhereWithAggregatesInput
     take?: number
     skip?: number
-    _count?: ManagerCountAggregateInputType | true
-    _avg?: ManagerAvgAggregateInputType
-    _sum?: ManagerSumAggregateInputType
-    _min?: ManagerMinAggregateInputType
-    _max?: ManagerMaxAggregateInputType
+    _count?: landlordCountAggregateInputType | true
+    _avg?: landlordAvgAggregateInputType
+    _sum?: landlordSumAggregateInputType
+    _min?: landlordMinAggregateInputType
+    _max?: landlordMaxAggregateInputType
   }
 
-  export type ManagerGroupByOutputType = {
+  export type landlordGroupByOutputType = {
     id: number
     cognitoId: string
     name: string
     email: string
     phoneNumber: string
-    _count: ManagerCountAggregateOutputType | null
-    _avg: ManagerAvgAggregateOutputType | null
-    _sum: ManagerSumAggregateOutputType | null
-    _min: ManagerMinAggregateOutputType | null
-    _max: ManagerMaxAggregateOutputType | null
+    _count: landlordCountAggregateOutputType | null
+    _avg: landlordAvgAggregateOutputType | null
+    _sum: landlordSumAggregateOutputType | null
+    _min: landlordMinAggregateOutputType | null
+    _max: landlordMaxAggregateOutputType | null
   }
 
-  type GetManagerGroupByPayload<T extends ManagerGroupByArgs> = Prisma.PrismaPromise<
+  type GetlandlordGroupByPayload<T extends landlordGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickEnumerable<ManagerGroupByOutputType, T['by']> &
+      PickEnumerable<landlordGroupByOutputType, T['by']> &
         {
-          [P in ((keyof T) & (keyof ManagerGroupByOutputType))]: P extends '_count'
+          [P in ((keyof T) & (keyof landlordGroupByOutputType))]: P extends '_count'
             ? T[P] extends boolean
               ? number
-              : GetScalarType<T[P], ManagerGroupByOutputType[P]>
-            : GetScalarType<T[P], ManagerGroupByOutputType[P]>
+              : GetScalarType<T[P], landlordGroupByOutputType[P]>
+            : GetScalarType<T[P], landlordGroupByOutputType[P]>
         }
       >
     >
 
 
-  export type ManagerSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type landlordSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     cognitoId?: boolean
     name?: boolean
     email?: boolean
     phoneNumber?: boolean
-    managedProperties?: boolean | Manager$managedPropertiesArgs<ExtArgs>
-    _count?: boolean | ManagerCountOutputTypeDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["manager"]>
+    managedProperties?: boolean | landlord$managedPropertiesArgs<ExtArgs>
+    _count?: boolean | landlordCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["landlord"]>
 
-  export type ManagerSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type landlordSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     cognitoId?: boolean
     name?: boolean
     email?: boolean
     phoneNumber?: boolean
-  }, ExtArgs["result"]["manager"]>
+  }, ExtArgs["result"]["landlord"]>
 
-  export type ManagerSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type landlordSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     cognitoId?: boolean
     name?: boolean
     email?: boolean
     phoneNumber?: boolean
-  }, ExtArgs["result"]["manager"]>
+  }, ExtArgs["result"]["landlord"]>
 
-  export type ManagerSelectScalar = {
+  export type landlordSelectScalar = {
     id?: boolean
     cognitoId?: boolean
     name?: boolean
@@ -3364,16 +3364,16 @@ export namespace Prisma {
     phoneNumber?: boolean
   }
 
-  export type ManagerOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "cognitoId" | "name" | "email" | "phoneNumber", ExtArgs["result"]["manager"]>
-  export type ManagerInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    managedProperties?: boolean | Manager$managedPropertiesArgs<ExtArgs>
-    _count?: boolean | ManagerCountOutputTypeDefaultArgs<ExtArgs>
+  export type landlordOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "cognitoId" | "name" | "email" | "phoneNumber", ExtArgs["result"]["landlord"]>
+  export type landlordInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    managedProperties?: boolean | landlord$managedPropertiesArgs<ExtArgs>
+    _count?: boolean | landlordCountOutputTypeDefaultArgs<ExtArgs>
   }
-  export type ManagerIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-  export type ManagerIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type landlordIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type landlordIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
 
-  export type $ManagerPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "Manager"
+  export type $landlordPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "landlord"
     objects: {
       managedProperties: Prisma.$PropertyPayload<ExtArgs>[]
     }
@@ -3383,136 +3383,136 @@ export namespace Prisma {
       name: string
       email: string
       phoneNumber: string
-    }, ExtArgs["result"]["manager"]>
+    }, ExtArgs["result"]["landlord"]>
     composites: {}
   }
 
-  type ManagerGetPayload<S extends boolean | null | undefined | ManagerDefaultArgs> = $Result.GetResult<Prisma.$ManagerPayload, S>
+  type landlordGetPayload<S extends boolean | null | undefined | landlordDefaultArgs> = $Result.GetResult<Prisma.$landlordPayload, S>
 
-  type ManagerCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<ManagerFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: ManagerCountAggregateInputType | true
+  type landlordCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<landlordFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: landlordCountAggregateInputType | true
     }
 
-  export interface ManagerDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Manager'], meta: { name: 'Manager' } }
+  export interface landlordDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['landlord'], meta: { name: 'landlord' } }
     /**
-     * Find zero or one Manager that matches the filter.
-     * @param {ManagerFindUniqueArgs} args - Arguments to find a Manager
+     * Find zero or one landlord that matches the filter.
+     * @param {landlordFindUniqueArgs} args - Arguments to find a landlord
      * @example
-     * // Get one Manager
-     * const manager = await prisma.manager.findUnique({
+     * // Get one landlord
+     * const landlord = await prisma.landlord.findUnique({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUnique<T extends ManagerFindUniqueArgs>(args: SelectSubset<T, ManagerFindUniqueArgs<ExtArgs>>): Prisma__ManagerClient<$Result.GetResult<Prisma.$ManagerPayload<ExtArgs>, T, "findUnique", ClientOptions> | null, null, ExtArgs, ClientOptions>
+    findUnique<T extends landlordFindUniqueArgs>(args: SelectSubset<T, landlordFindUniqueArgs<ExtArgs>>): Prisma__landlordClient<$Result.GetResult<Prisma.$landlordPayload<ExtArgs>, T, "findUnique", ClientOptions> | null, null, ExtArgs, ClientOptions>
 
     /**
-     * Find one Manager that matches the filter or throw an error with `error.code='P2025'`
+     * Find one landlord that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
-     * @param {ManagerFindUniqueOrThrowArgs} args - Arguments to find a Manager
+     * @param {landlordFindUniqueOrThrowArgs} args - Arguments to find a landlord
      * @example
-     * // Get one Manager
-     * const manager = await prisma.manager.findUniqueOrThrow({
+     * // Get one landlord
+     * const landlord = await prisma.landlord.findUniqueOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUniqueOrThrow<T extends ManagerFindUniqueOrThrowArgs>(args: SelectSubset<T, ManagerFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ManagerClient<$Result.GetResult<Prisma.$ManagerPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions>, never, ExtArgs, ClientOptions>
+    findUniqueOrThrow<T extends landlordFindUniqueOrThrowArgs>(args: SelectSubset<T, landlordFindUniqueOrThrowArgs<ExtArgs>>): Prisma__landlordClient<$Result.GetResult<Prisma.$landlordPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions>, never, ExtArgs, ClientOptions>
 
     /**
-     * Find the first Manager that matches the filter.
+     * Find the first landlord that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ManagerFindFirstArgs} args - Arguments to find a Manager
+     * @param {landlordFindFirstArgs} args - Arguments to find a landlord
      * @example
-     * // Get one Manager
-     * const manager = await prisma.manager.findFirst({
+     * // Get one landlord
+     * const landlord = await prisma.landlord.findFirst({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirst<T extends ManagerFindFirstArgs>(args?: SelectSubset<T, ManagerFindFirstArgs<ExtArgs>>): Prisma__ManagerClient<$Result.GetResult<Prisma.$ManagerPayload<ExtArgs>, T, "findFirst", ClientOptions> | null, null, ExtArgs, ClientOptions>
+    findFirst<T extends landlordFindFirstArgs>(args?: SelectSubset<T, landlordFindFirstArgs<ExtArgs>>): Prisma__landlordClient<$Result.GetResult<Prisma.$landlordPayload<ExtArgs>, T, "findFirst", ClientOptions> | null, null, ExtArgs, ClientOptions>
 
     /**
-     * Find the first Manager that matches the filter or
+     * Find the first landlord that matches the filter or
      * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ManagerFindFirstOrThrowArgs} args - Arguments to find a Manager
+     * @param {landlordFindFirstOrThrowArgs} args - Arguments to find a landlord
      * @example
-     * // Get one Manager
-     * const manager = await prisma.manager.findFirstOrThrow({
+     * // Get one landlord
+     * const landlord = await prisma.landlord.findFirstOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirstOrThrow<T extends ManagerFindFirstOrThrowArgs>(args?: SelectSubset<T, ManagerFindFirstOrThrowArgs<ExtArgs>>): Prisma__ManagerClient<$Result.GetResult<Prisma.$ManagerPayload<ExtArgs>, T, "findFirstOrThrow", ClientOptions>, never, ExtArgs, ClientOptions>
+    findFirstOrThrow<T extends landlordFindFirstOrThrowArgs>(args?: SelectSubset<T, landlordFindFirstOrThrowArgs<ExtArgs>>): Prisma__landlordClient<$Result.GetResult<Prisma.$landlordPayload<ExtArgs>, T, "findFirstOrThrow", ClientOptions>, never, ExtArgs, ClientOptions>
 
     /**
-     * Find zero or more Managers that matches the filter.
+     * Find zero or more landlords that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ManagerFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @param {landlordFindManyArgs} args - Arguments to filter and select certain fields only.
      * @example
-     * // Get all Managers
-     * const managers = await prisma.manager.findMany()
+     * // Get all landlords
+     * const landlords = await prisma.landlord.findMany()
      * 
-     * // Get first 10 Managers
-     * const managers = await prisma.manager.findMany({ take: 10 })
+     * // Get first 10 landlords
+     * const landlords = await prisma.landlord.findMany({ take: 10 })
      * 
      * // Only select the `id`
-     * const managerWithIdOnly = await prisma.manager.findMany({ select: { id: true } })
+     * const landlordWithIdOnly = await prisma.landlord.findMany({ select: { id: true } })
      * 
      */
-    findMany<T extends ManagerFindManyArgs>(args?: SelectSubset<T, ManagerFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ManagerPayload<ExtArgs>, T, "findMany", ClientOptions>>
+    findMany<T extends landlordFindManyArgs>(args?: SelectSubset<T, landlordFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$landlordPayload<ExtArgs>, T, "findMany", ClientOptions>>
 
     /**
-     * Create a Manager.
-     * @param {ManagerCreateArgs} args - Arguments to create a Manager.
+     * Create a landlord.
+     * @param {landlordCreateArgs} args - Arguments to create a landlord.
      * @example
-     * // Create one Manager
-     * const Manager = await prisma.manager.create({
+     * // Create one landlord
+     * const landlord = await prisma.landlord.create({
      *   data: {
-     *     // ... data to create a Manager
+     *     // ... data to create a landlord
      *   }
      * })
      * 
      */
-    create<T extends ManagerCreateArgs>(args: SelectSubset<T, ManagerCreateArgs<ExtArgs>>): Prisma__ManagerClient<$Result.GetResult<Prisma.$ManagerPayload<ExtArgs>, T, "create", ClientOptions>, never, ExtArgs, ClientOptions>
+    create<T extends landlordCreateArgs>(args: SelectSubset<T, landlordCreateArgs<ExtArgs>>): Prisma__landlordClient<$Result.GetResult<Prisma.$landlordPayload<ExtArgs>, T, "create", ClientOptions>, never, ExtArgs, ClientOptions>
 
     /**
-     * Create many Managers.
-     * @param {ManagerCreateManyArgs} args - Arguments to create many Managers.
+     * Create many landlords.
+     * @param {landlordCreateManyArgs} args - Arguments to create many landlords.
      * @example
-     * // Create many Managers
-     * const manager = await prisma.manager.createMany({
+     * // Create many landlords
+     * const landlord = await prisma.landlord.createMany({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      *     
      */
-    createMany<T extends ManagerCreateManyArgs>(args?: SelectSubset<T, ManagerCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    createMany<T extends landlordCreateManyArgs>(args?: SelectSubset<T, landlordCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Create many Managers and returns the data saved in the database.
-     * @param {ManagerCreateManyAndReturnArgs} args - Arguments to create many Managers.
+     * Create many landlords and returns the data saved in the database.
+     * @param {landlordCreateManyAndReturnArgs} args - Arguments to create many landlords.
      * @example
-     * // Create many Managers
-     * const manager = await prisma.manager.createManyAndReturn({
+     * // Create many landlords
+     * const landlord = await prisma.landlord.createManyAndReturn({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      * 
-     * // Create many Managers and only return the `id`
-     * const managerWithIdOnly = await prisma.manager.createManyAndReturn({
+     * // Create many landlords and only return the `id`
+     * const landlordWithIdOnly = await prisma.landlord.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -3522,28 +3522,28 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    createManyAndReturn<T extends ManagerCreateManyAndReturnArgs>(args?: SelectSubset<T, ManagerCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ManagerPayload<ExtArgs>, T, "createManyAndReturn", ClientOptions>>
+    createManyAndReturn<T extends landlordCreateManyAndReturnArgs>(args?: SelectSubset<T, landlordCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$landlordPayload<ExtArgs>, T, "createManyAndReturn", ClientOptions>>
 
     /**
-     * Delete a Manager.
-     * @param {ManagerDeleteArgs} args - Arguments to delete one Manager.
+     * Delete a landlord.
+     * @param {landlordDeleteArgs} args - Arguments to delete one landlord.
      * @example
-     * // Delete one Manager
-     * const Manager = await prisma.manager.delete({
+     * // Delete one landlord
+     * const landlord = await prisma.landlord.delete({
      *   where: {
-     *     // ... filter to delete one Manager
+     *     // ... filter to delete one landlord
      *   }
      * })
      * 
      */
-    delete<T extends ManagerDeleteArgs>(args: SelectSubset<T, ManagerDeleteArgs<ExtArgs>>): Prisma__ManagerClient<$Result.GetResult<Prisma.$ManagerPayload<ExtArgs>, T, "delete", ClientOptions>, never, ExtArgs, ClientOptions>
+    delete<T extends landlordDeleteArgs>(args: SelectSubset<T, landlordDeleteArgs<ExtArgs>>): Prisma__landlordClient<$Result.GetResult<Prisma.$landlordPayload<ExtArgs>, T, "delete", ClientOptions>, never, ExtArgs, ClientOptions>
 
     /**
-     * Update one Manager.
-     * @param {ManagerUpdateArgs} args - Arguments to update one Manager.
+     * Update one landlord.
+     * @param {landlordUpdateArgs} args - Arguments to update one landlord.
      * @example
-     * // Update one Manager
-     * const manager = await prisma.manager.update({
+     * // Update one landlord
+     * const landlord = await prisma.landlord.update({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -3553,30 +3553,30 @@ export namespace Prisma {
      * })
      * 
      */
-    update<T extends ManagerUpdateArgs>(args: SelectSubset<T, ManagerUpdateArgs<ExtArgs>>): Prisma__ManagerClient<$Result.GetResult<Prisma.$ManagerPayload<ExtArgs>, T, "update", ClientOptions>, never, ExtArgs, ClientOptions>
+    update<T extends landlordUpdateArgs>(args: SelectSubset<T, landlordUpdateArgs<ExtArgs>>): Prisma__landlordClient<$Result.GetResult<Prisma.$landlordPayload<ExtArgs>, T, "update", ClientOptions>, never, ExtArgs, ClientOptions>
 
     /**
-     * Delete zero or more Managers.
-     * @param {ManagerDeleteManyArgs} args - Arguments to filter Managers to delete.
+     * Delete zero or more landlords.
+     * @param {landlordDeleteManyArgs} args - Arguments to filter landlords to delete.
      * @example
-     * // Delete a few Managers
-     * const { count } = await prisma.manager.deleteMany({
+     * // Delete a few landlords
+     * const { count } = await prisma.landlord.deleteMany({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      * 
      */
-    deleteMany<T extends ManagerDeleteManyArgs>(args?: SelectSubset<T, ManagerDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    deleteMany<T extends landlordDeleteManyArgs>(args?: SelectSubset<T, landlordDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more Managers.
+     * Update zero or more landlords.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ManagerUpdateManyArgs} args - Arguments to update one or more rows.
+     * @param {landlordUpdateManyArgs} args - Arguments to update one or more rows.
      * @example
-     * // Update many Managers
-     * const manager = await prisma.manager.updateMany({
+     * // Update many landlords
+     * const landlord = await prisma.landlord.updateMany({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -3586,14 +3586,14 @@ export namespace Prisma {
      * })
      * 
      */
-    updateMany<T extends ManagerUpdateManyArgs>(args: SelectSubset<T, ManagerUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    updateMany<T extends landlordUpdateManyArgs>(args: SelectSubset<T, landlordUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more Managers and returns the data updated in the database.
-     * @param {ManagerUpdateManyAndReturnArgs} args - Arguments to update many Managers.
+     * Update zero or more landlords and returns the data updated in the database.
+     * @param {landlordUpdateManyAndReturnArgs} args - Arguments to update many landlords.
      * @example
-     * // Update many Managers
-     * const manager = await prisma.manager.updateManyAndReturn({
+     * // Update many landlords
+     * const landlord = await prisma.landlord.updateManyAndReturn({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -3602,8 +3602,8 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Update zero or more Managers and only return the `id`
-     * const managerWithIdOnly = await prisma.manager.updateManyAndReturn({
+     * // Update zero or more landlords and only return the `id`
+     * const landlordWithIdOnly = await prisma.landlord.updateManyAndReturn({
      *   select: { id: true },
      *   where: {
      *     // ... provide filter here
@@ -3616,56 +3616,56 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    updateManyAndReturn<T extends ManagerUpdateManyAndReturnArgs>(args: SelectSubset<T, ManagerUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ManagerPayload<ExtArgs>, T, "updateManyAndReturn", ClientOptions>>
+    updateManyAndReturn<T extends landlordUpdateManyAndReturnArgs>(args: SelectSubset<T, landlordUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$landlordPayload<ExtArgs>, T, "updateManyAndReturn", ClientOptions>>
 
     /**
-     * Create or update one Manager.
-     * @param {ManagerUpsertArgs} args - Arguments to update or create a Manager.
+     * Create or update one landlord.
+     * @param {landlordUpsertArgs} args - Arguments to update or create a landlord.
      * @example
-     * // Update or create a Manager
-     * const manager = await prisma.manager.upsert({
+     * // Update or create a landlord
+     * const landlord = await prisma.landlord.upsert({
      *   create: {
-     *     // ... data to create a Manager
+     *     // ... data to create a landlord
      *   },
      *   update: {
      *     // ... in case it already exists, update
      *   },
      *   where: {
-     *     // ... the filter for the Manager we want to update
+     *     // ... the filter for the landlord we want to update
      *   }
      * })
      */
-    upsert<T extends ManagerUpsertArgs>(args: SelectSubset<T, ManagerUpsertArgs<ExtArgs>>): Prisma__ManagerClient<$Result.GetResult<Prisma.$ManagerPayload<ExtArgs>, T, "upsert", ClientOptions>, never, ExtArgs, ClientOptions>
+    upsert<T extends landlordUpsertArgs>(args: SelectSubset<T, landlordUpsertArgs<ExtArgs>>): Prisma__landlordClient<$Result.GetResult<Prisma.$landlordPayload<ExtArgs>, T, "upsert", ClientOptions>, never, ExtArgs, ClientOptions>
 
 
     /**
-     * Count the number of Managers.
+     * Count the number of landlords.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ManagerCountArgs} args - Arguments to filter Managers to count.
+     * @param {landlordCountArgs} args - Arguments to filter landlords to count.
      * @example
-     * // Count the number of Managers
-     * const count = await prisma.manager.count({
+     * // Count the number of landlords
+     * const count = await prisma.landlord.count({
      *   where: {
-     *     // ... the filter for the Managers we want to count
+     *     // ... the filter for the landlords we want to count
      *   }
      * })
     **/
-    count<T extends ManagerCountArgs>(
-      args?: Subset<T, ManagerCountArgs>,
+    count<T extends landlordCountArgs>(
+      args?: Subset<T, landlordCountArgs>,
     ): Prisma.PrismaPromise<
       T extends $Utils.Record<'select', any>
         ? T['select'] extends true
           ? number
-          : GetScalarType<T['select'], ManagerCountAggregateOutputType>
+          : GetScalarType<T['select'], landlordCountAggregateOutputType>
         : number
     >
 
     /**
-     * Allows you to perform aggregations operations on a Manager.
+     * Allows you to perform aggregations operations on a landlord.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ManagerAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @param {landlordAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
      * @example
      * // Ordered by age ascending
      * // Where email contains prisma.io
@@ -3685,13 +3685,13 @@ export namespace Prisma {
      *   take: 10,
      * })
     **/
-    aggregate<T extends ManagerAggregateArgs>(args: Subset<T, ManagerAggregateArgs>): Prisma.PrismaPromise<GetManagerAggregateType<T>>
+    aggregate<T extends landlordAggregateArgs>(args: Subset<T, landlordAggregateArgs>): Prisma.PrismaPromise<GetlandlordAggregateType<T>>
 
     /**
-     * Group by Manager.
+     * Group by landlord.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ManagerGroupByArgs} args - Group by arguments.
+     * @param {landlordGroupByArgs} args - Group by arguments.
      * @example
      * // Group by city, order by createdAt, get count
      * const result = await prisma.user.groupBy({
@@ -3706,14 +3706,14 @@ export namespace Prisma {
      * 
     **/
     groupBy<
-      T extends ManagerGroupByArgs,
+      T extends landlordGroupByArgs,
       HasSelectOrTake extends Or<
         Extends<'skip', Keys<T>>,
         Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: ManagerGroupByArgs['orderBy'] }
-        : { orderBy?: ManagerGroupByArgs['orderBy'] },
+        ? { orderBy: landlordGroupByArgs['orderBy'] }
+        : { orderBy?: landlordGroupByArgs['orderBy'] },
       OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
       ByFields extends MaybeTupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
@@ -3762,22 +3762,22 @@ export namespace Prisma {
             ? never
             : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
         }[OrderFields]
-    >(args: SubsetIntersection<T, ManagerGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetManagerGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+    >(args: SubsetIntersection<T, landlordGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetlandlordGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
   /**
-   * Fields of the Manager model
+   * Fields of the landlord model
    */
-  readonly fields: ManagerFieldRefs;
+  readonly fields: landlordFieldRefs;
   }
 
   /**
-   * The delegate class that acts as a "Promise-like" for Manager.
+   * The delegate class that acts as a "Promise-like" for landlord.
    * Why is this prefixed with `Prisma__`?
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export interface Prisma__ManagerClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> extends Prisma.PrismaPromise<T> {
+  export interface Prisma__landlordClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    managedProperties<T extends Manager$managedPropertiesArgs<ExtArgs> = {}>(args?: Subset<T, Manager$managedPropertiesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PropertyPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
+    managedProperties<T extends landlord$managedPropertiesArgs<ExtArgs> = {}>(args?: Subset<T, landlord$managedPropertiesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PropertyPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3804,405 +3804,405 @@ export namespace Prisma {
 
 
   /**
-   * Fields of the Manager model
+   * Fields of the landlord model
    */ 
-  interface ManagerFieldRefs {
-    readonly id: FieldRef<"Manager", 'Int'>
-    readonly cognitoId: FieldRef<"Manager", 'String'>
-    readonly name: FieldRef<"Manager", 'String'>
-    readonly email: FieldRef<"Manager", 'String'>
-    readonly phoneNumber: FieldRef<"Manager", 'String'>
+  interface landlordFieldRefs {
+    readonly id: FieldRef<"landlord", 'Int'>
+    readonly cognitoId: FieldRef<"landlord", 'String'>
+    readonly name: FieldRef<"landlord", 'String'>
+    readonly email: FieldRef<"landlord", 'String'>
+    readonly phoneNumber: FieldRef<"landlord", 'String'>
   }
     
 
   // Custom InputTypes
   /**
-   * Manager findUnique
+   * landlord findUnique
    */
-  export type ManagerFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type landlordFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Manager
+     * Select specific fields to fetch from the landlord
      */
-    select?: ManagerSelect<ExtArgs> | null
+    select?: landlordSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Manager
+     * Omit specific fields from the landlord
      */
-    omit?: ManagerOmit<ExtArgs> | null
+    omit?: landlordOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ManagerInclude<ExtArgs> | null
+    include?: landlordInclude<ExtArgs> | null
     /**
-     * Filter, which Manager to fetch.
+     * Filter, which landlord to fetch.
      */
-    where: ManagerWhereUniqueInput
+    where: landlordWhereUniqueInput
   }
 
   /**
-   * Manager findUniqueOrThrow
+   * landlord findUniqueOrThrow
    */
-  export type ManagerFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type landlordFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Manager
+     * Select specific fields to fetch from the landlord
      */
-    select?: ManagerSelect<ExtArgs> | null
+    select?: landlordSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Manager
+     * Omit specific fields from the landlord
      */
-    omit?: ManagerOmit<ExtArgs> | null
+    omit?: landlordOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ManagerInclude<ExtArgs> | null
+    include?: landlordInclude<ExtArgs> | null
     /**
-     * Filter, which Manager to fetch.
+     * Filter, which landlord to fetch.
      */
-    where: ManagerWhereUniqueInput
+    where: landlordWhereUniqueInput
   }
 
   /**
-   * Manager findFirst
+   * landlord findFirst
    */
-  export type ManagerFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type landlordFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Manager
+     * Select specific fields to fetch from the landlord
      */
-    select?: ManagerSelect<ExtArgs> | null
+    select?: landlordSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Manager
+     * Omit specific fields from the landlord
      */
-    omit?: ManagerOmit<ExtArgs> | null
+    omit?: landlordOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ManagerInclude<ExtArgs> | null
+    include?: landlordInclude<ExtArgs> | null
     /**
-     * Filter, which Manager to fetch.
+     * Filter, which landlord to fetch.
      */
-    where?: ManagerWhereInput
+    where?: landlordWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Managers to fetch.
+     * Determine the order of landlords to fetch.
      */
-    orderBy?: ManagerOrderByWithRelationInput | ManagerOrderByWithRelationInput[]
+    orderBy?: landlordOrderByWithRelationInput | landlordOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for Managers.
+     * Sets the position for searching for landlords.
      */
-    cursor?: ManagerWhereUniqueInput
+    cursor?: landlordWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Managers from the position of the cursor.
+     * Take `±n` landlords from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Managers.
+     * Skip the first `n` landlords.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of Managers.
+     * Filter by unique combinations of landlords.
      */
-    distinct?: ManagerScalarFieldEnum | ManagerScalarFieldEnum[]
+    distinct?: landlordScalarFieldEnum | landlordScalarFieldEnum[]
   }
 
   /**
-   * Manager findFirstOrThrow
+   * landlord findFirstOrThrow
    */
-  export type ManagerFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type landlordFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Manager
+     * Select specific fields to fetch from the landlord
      */
-    select?: ManagerSelect<ExtArgs> | null
+    select?: landlordSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Manager
+     * Omit specific fields from the landlord
      */
-    omit?: ManagerOmit<ExtArgs> | null
+    omit?: landlordOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ManagerInclude<ExtArgs> | null
+    include?: landlordInclude<ExtArgs> | null
     /**
-     * Filter, which Manager to fetch.
+     * Filter, which landlord to fetch.
      */
-    where?: ManagerWhereInput
+    where?: landlordWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Managers to fetch.
+     * Determine the order of landlords to fetch.
      */
-    orderBy?: ManagerOrderByWithRelationInput | ManagerOrderByWithRelationInput[]
+    orderBy?: landlordOrderByWithRelationInput | landlordOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for Managers.
+     * Sets the position for searching for landlords.
      */
-    cursor?: ManagerWhereUniqueInput
+    cursor?: landlordWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Managers from the position of the cursor.
+     * Take `±n` landlords from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Managers.
+     * Skip the first `n` landlords.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of Managers.
+     * Filter by unique combinations of landlords.
      */
-    distinct?: ManagerScalarFieldEnum | ManagerScalarFieldEnum[]
+    distinct?: landlordScalarFieldEnum | landlordScalarFieldEnum[]
   }
 
   /**
-   * Manager findMany
+   * landlord findMany
    */
-  export type ManagerFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type landlordFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Manager
+     * Select specific fields to fetch from the landlord
      */
-    select?: ManagerSelect<ExtArgs> | null
+    select?: landlordSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Manager
+     * Omit specific fields from the landlord
      */
-    omit?: ManagerOmit<ExtArgs> | null
+    omit?: landlordOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ManagerInclude<ExtArgs> | null
+    include?: landlordInclude<ExtArgs> | null
     /**
-     * Filter, which Managers to fetch.
+     * Filter, which landlords to fetch.
      */
-    where?: ManagerWhereInput
+    where?: landlordWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Managers to fetch.
+     * Determine the order of landlords to fetch.
      */
-    orderBy?: ManagerOrderByWithRelationInput | ManagerOrderByWithRelationInput[]
+    orderBy?: landlordOrderByWithRelationInput | landlordOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for listing Managers.
+     * Sets the position for listing landlords.
      */
-    cursor?: ManagerWhereUniqueInput
+    cursor?: landlordWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Managers from the position of the cursor.
+     * Take `±n` landlords from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Managers.
+     * Skip the first `n` landlords.
      */
     skip?: number
-    distinct?: ManagerScalarFieldEnum | ManagerScalarFieldEnum[]
+    distinct?: landlordScalarFieldEnum | landlordScalarFieldEnum[]
   }
 
   /**
-   * Manager create
+   * landlord create
    */
-  export type ManagerCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type landlordCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Manager
+     * Select specific fields to fetch from the landlord
      */
-    select?: ManagerSelect<ExtArgs> | null
+    select?: landlordSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Manager
+     * Omit specific fields from the landlord
      */
-    omit?: ManagerOmit<ExtArgs> | null
+    omit?: landlordOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ManagerInclude<ExtArgs> | null
+    include?: landlordInclude<ExtArgs> | null
     /**
-     * The data needed to create a Manager.
+     * The data needed to create a landlord.
      */
-    data: XOR<ManagerCreateInput, ManagerUncheckedCreateInput>
+    data: XOR<landlordCreateInput, landlordUncheckedCreateInput>
   }
 
   /**
-   * Manager createMany
+   * landlord createMany
    */
-  export type ManagerCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type landlordCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to create many Managers.
+     * The data used to create many landlords.
      */
-    data: ManagerCreateManyInput | ManagerCreateManyInput[]
+    data: landlordCreateManyInput | landlordCreateManyInput[]
     skipDuplicates?: boolean
   }
 
   /**
-   * Manager createManyAndReturn
+   * landlord createManyAndReturn
    */
-  export type ManagerCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type landlordCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Manager
+     * Select specific fields to fetch from the landlord
      */
-    select?: ManagerSelectCreateManyAndReturn<ExtArgs> | null
+    select?: landlordSelectCreateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the Manager
+     * Omit specific fields from the landlord
      */
-    omit?: ManagerOmit<ExtArgs> | null
+    omit?: landlordOmit<ExtArgs> | null
     /**
-     * The data used to create many Managers.
+     * The data used to create many landlords.
      */
-    data: ManagerCreateManyInput | ManagerCreateManyInput[]
+    data: landlordCreateManyInput | landlordCreateManyInput[]
     skipDuplicates?: boolean
   }
 
   /**
-   * Manager update
+   * landlord update
    */
-  export type ManagerUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type landlordUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Manager
+     * Select specific fields to fetch from the landlord
      */
-    select?: ManagerSelect<ExtArgs> | null
+    select?: landlordSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Manager
+     * Omit specific fields from the landlord
      */
-    omit?: ManagerOmit<ExtArgs> | null
+    omit?: landlordOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ManagerInclude<ExtArgs> | null
+    include?: landlordInclude<ExtArgs> | null
     /**
-     * The data needed to update a Manager.
+     * The data needed to update a landlord.
      */
-    data: XOR<ManagerUpdateInput, ManagerUncheckedUpdateInput>
+    data: XOR<landlordUpdateInput, landlordUncheckedUpdateInput>
     /**
-     * Choose, which Manager to update.
+     * Choose, which landlord to update.
      */
-    where: ManagerWhereUniqueInput
+    where: landlordWhereUniqueInput
   }
 
   /**
-   * Manager updateMany
+   * landlord updateMany
    */
-  export type ManagerUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type landlordUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to update Managers.
+     * The data used to update landlords.
      */
-    data: XOR<ManagerUpdateManyMutationInput, ManagerUncheckedUpdateManyInput>
+    data: XOR<landlordUpdateManyMutationInput, landlordUncheckedUpdateManyInput>
     /**
-     * Filter which Managers to update
+     * Filter which landlords to update
      */
-    where?: ManagerWhereInput
+    where?: landlordWhereInput
     /**
-     * Limit how many Managers to update.
+     * Limit how many landlords to update.
      */
     limit?: number
   }
 
   /**
-   * Manager updateManyAndReturn
+   * landlord updateManyAndReturn
    */
-  export type ManagerUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type landlordUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Manager
+     * Select specific fields to fetch from the landlord
      */
-    select?: ManagerSelectUpdateManyAndReturn<ExtArgs> | null
+    select?: landlordSelectUpdateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the Manager
+     * Omit specific fields from the landlord
      */
-    omit?: ManagerOmit<ExtArgs> | null
+    omit?: landlordOmit<ExtArgs> | null
     /**
-     * The data used to update Managers.
+     * The data used to update landlords.
      */
-    data: XOR<ManagerUpdateManyMutationInput, ManagerUncheckedUpdateManyInput>
+    data: XOR<landlordUpdateManyMutationInput, landlordUncheckedUpdateManyInput>
     /**
-     * Filter which Managers to update
+     * Filter which landlords to update
      */
-    where?: ManagerWhereInput
+    where?: landlordWhereInput
     /**
-     * Limit how many Managers to update.
+     * Limit how many landlords to update.
      */
     limit?: number
   }
 
   /**
-   * Manager upsert
+   * landlord upsert
    */
-  export type ManagerUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type landlordUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Manager
+     * Select specific fields to fetch from the landlord
      */
-    select?: ManagerSelect<ExtArgs> | null
+    select?: landlordSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Manager
+     * Omit specific fields from the landlord
      */
-    omit?: ManagerOmit<ExtArgs> | null
+    omit?: landlordOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ManagerInclude<ExtArgs> | null
+    include?: landlordInclude<ExtArgs> | null
     /**
-     * The filter to search for the Manager to update in case it exists.
+     * The filter to search for the landlord to update in case it exists.
      */
-    where: ManagerWhereUniqueInput
+    where: landlordWhereUniqueInput
     /**
-     * In case the Manager found by the `where` argument doesn't exist, create a new Manager with this data.
+     * In case the landlord found by the `where` argument doesn't exist, create a new landlord with this data.
      */
-    create: XOR<ManagerCreateInput, ManagerUncheckedCreateInput>
+    create: XOR<landlordCreateInput, landlordUncheckedCreateInput>
     /**
-     * In case the Manager was found with the provided `where` argument, update it with this data.
+     * In case the landlord was found with the provided `where` argument, update it with this data.
      */
-    update: XOR<ManagerUpdateInput, ManagerUncheckedUpdateInput>
+    update: XOR<landlordUpdateInput, landlordUncheckedUpdateInput>
   }
 
   /**
-   * Manager delete
+   * landlord delete
    */
-  export type ManagerDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type landlordDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Manager
+     * Select specific fields to fetch from the landlord
      */
-    select?: ManagerSelect<ExtArgs> | null
+    select?: landlordSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Manager
+     * Omit specific fields from the landlord
      */
-    omit?: ManagerOmit<ExtArgs> | null
+    omit?: landlordOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ManagerInclude<ExtArgs> | null
+    include?: landlordInclude<ExtArgs> | null
     /**
-     * Filter which Manager to delete.
+     * Filter which landlord to delete.
      */
-    where: ManagerWhereUniqueInput
+    where: landlordWhereUniqueInput
   }
 
   /**
-   * Manager deleteMany
+   * landlord deleteMany
    */
-  export type ManagerDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type landlordDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which Managers to delete
+     * Filter which landlords to delete
      */
-    where?: ManagerWhereInput
+    where?: landlordWhereInput
     /**
-     * Limit how many Managers to delete.
+     * Limit how many landlords to delete.
      */
     limit?: number
   }
 
   /**
-   * Manager.managedProperties
+   * landlord.managedProperties
    */
-  export type Manager$managedPropertiesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type landlord$managedPropertiesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the Property
      */
@@ -4224,21 +4224,21 @@ export namespace Prisma {
   }
 
   /**
-   * Manager without action
+   * landlord without action
    */
-  export type ManagerDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type landlordDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Manager
+     * Select specific fields to fetch from the landlord
      */
-    select?: ManagerSelect<ExtArgs> | null
+    select?: landlordSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Manager
+     * Omit specific fields from the landlord
      */
-    omit?: ManagerOmit<ExtArgs> | null
+    omit?: landlordOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ManagerInclude<ExtArgs> | null
+    include?: landlordInclude<ExtArgs> | null
   }
 
 
@@ -9940,13 +9940,13 @@ export namespace Prisma {
     averageRating: 'averageRating',
     numberOfReviews: 'numberOfReviews',
     locationId: 'locationId',
-    managerCognitoId: 'managerCognitoId'
+    landlordCognitoId: 'landlordCognitoId'
   };
 
   export type PropertyScalarFieldEnum = (typeof PropertyScalarFieldEnum)[keyof typeof PropertyScalarFieldEnum]
 
 
-  export const ManagerScalarFieldEnum: {
+  export const landlordScalarFieldEnum: {
     id: 'id',
     cognitoId: 'cognitoId',
     name: 'name',
@@ -9954,7 +9954,7 @@ export namespace Prisma {
     phoneNumber: 'phoneNumber'
   };
 
-  export type ManagerScalarFieldEnum = (typeof ManagerScalarFieldEnum)[keyof typeof ManagerScalarFieldEnum]
+  export type landlordScalarFieldEnum = (typeof landlordScalarFieldEnum)[keyof typeof landlordScalarFieldEnum]
 
 
   export const TenantScalarFieldEnum: {
@@ -10210,9 +10210,9 @@ export namespace Prisma {
     averageRating?: FloatNullableFilter<"Property"> | number | null
     numberOfReviews?: IntNullableFilter<"Property"> | number | null
     locationId?: IntFilter<"Property"> | number
-    managerCognitoId?: StringFilter<"Property"> | string
+    landlordCognitoId?: StringFilter<"Property"> | string
     location?: XOR<LocationScalarRelationFilter, LocationWhereInput>
-    manager?: XOR<ManagerScalarRelationFilter, ManagerWhereInput>
+    landlord?: XOR<landlordScalarRelationFilter, landlordWhereInput>
     leases?: LeaseListRelationFilter
     applications?: ApplicationListRelationFilter
     favoritedBy?: TenantListRelationFilter
@@ -10239,9 +10239,9 @@ export namespace Prisma {
     averageRating?: SortOrderInput | SortOrder
     numberOfReviews?: SortOrderInput | SortOrder
     locationId?: SortOrder
-    managerCognitoId?: SortOrder
+    landlordCognitoId?: SortOrder
     location?: LocationOrderByWithRelationInput
-    manager?: ManagerOrderByWithRelationInput
+    landlord?: landlordOrderByWithRelationInput
     leases?: LeaseOrderByRelationAggregateInput
     applications?: ApplicationOrderByRelationAggregateInput
     favoritedBy?: TenantOrderByRelationAggregateInput
@@ -10271,9 +10271,9 @@ export namespace Prisma {
     averageRating?: FloatNullableFilter<"Property"> | number | null
     numberOfReviews?: IntNullableFilter<"Property"> | number | null
     locationId?: IntFilter<"Property"> | number
-    managerCognitoId?: StringFilter<"Property"> | string
+    landlordCognitoId?: StringFilter<"Property"> | string
     location?: XOR<LocationScalarRelationFilter, LocationWhereInput>
-    manager?: XOR<ManagerScalarRelationFilter, ManagerWhereInput>
+    landlord?: XOR<landlordScalarRelationFilter, landlordWhereInput>
     leases?: LeaseListRelationFilter
     applications?: ApplicationListRelationFilter
     favoritedBy?: TenantListRelationFilter
@@ -10300,7 +10300,7 @@ export namespace Prisma {
     averageRating?: SortOrderInput | SortOrder
     numberOfReviews?: SortOrderInput | SortOrder
     locationId?: SortOrder
-    managerCognitoId?: SortOrder
+    landlordCognitoId?: SortOrder
     _count?: PropertyCountOrderByAggregateInput
     _avg?: PropertyAvgOrderByAggregateInput
     _max?: PropertyMaxOrderByAggregateInput
@@ -10331,22 +10331,22 @@ export namespace Prisma {
     averageRating?: FloatNullableWithAggregatesFilter<"Property"> | number | null
     numberOfReviews?: IntNullableWithAggregatesFilter<"Property"> | number | null
     locationId?: IntWithAggregatesFilter<"Property"> | number
-    managerCognitoId?: StringWithAggregatesFilter<"Property"> | string
+    landlordCognitoId?: StringWithAggregatesFilter<"Property"> | string
   }
 
-  export type ManagerWhereInput = {
-    AND?: ManagerWhereInput | ManagerWhereInput[]
-    OR?: ManagerWhereInput[]
-    NOT?: ManagerWhereInput | ManagerWhereInput[]
-    id?: IntFilter<"Manager"> | number
-    cognitoId?: StringFilter<"Manager"> | string
-    name?: StringFilter<"Manager"> | string
-    email?: StringFilter<"Manager"> | string
-    phoneNumber?: StringFilter<"Manager"> | string
+  export type landlordWhereInput = {
+    AND?: landlordWhereInput | landlordWhereInput[]
+    OR?: landlordWhereInput[]
+    NOT?: landlordWhereInput | landlordWhereInput[]
+    id?: IntFilter<"landlord"> | number
+    cognitoId?: StringFilter<"landlord"> | string
+    name?: StringFilter<"landlord"> | string
+    email?: StringFilter<"landlord"> | string
+    phoneNumber?: StringFilter<"landlord"> | string
     managedProperties?: PropertyListRelationFilter
   }
 
-  export type ManagerOrderByWithRelationInput = {
+  export type landlordOrderByWithRelationInput = {
     id?: SortOrder
     cognitoId?: SortOrder
     name?: SortOrder
@@ -10355,40 +10355,40 @@ export namespace Prisma {
     managedProperties?: PropertyOrderByRelationAggregateInput
   }
 
-  export type ManagerWhereUniqueInput = Prisma.AtLeast<{
+  export type landlordWhereUniqueInput = Prisma.AtLeast<{
     id?: number
     cognitoId?: string
-    AND?: ManagerWhereInput | ManagerWhereInput[]
-    OR?: ManagerWhereInput[]
-    NOT?: ManagerWhereInput | ManagerWhereInput[]
-    name?: StringFilter<"Manager"> | string
-    email?: StringFilter<"Manager"> | string
-    phoneNumber?: StringFilter<"Manager"> | string
+    AND?: landlordWhereInput | landlordWhereInput[]
+    OR?: landlordWhereInput[]
+    NOT?: landlordWhereInput | landlordWhereInput[]
+    name?: StringFilter<"landlord"> | string
+    email?: StringFilter<"landlord"> | string
+    phoneNumber?: StringFilter<"landlord"> | string
     managedProperties?: PropertyListRelationFilter
   }, "id" | "cognitoId">
 
-  export type ManagerOrderByWithAggregationInput = {
+  export type landlordOrderByWithAggregationInput = {
     id?: SortOrder
     cognitoId?: SortOrder
     name?: SortOrder
     email?: SortOrder
     phoneNumber?: SortOrder
-    _count?: ManagerCountOrderByAggregateInput
-    _avg?: ManagerAvgOrderByAggregateInput
-    _max?: ManagerMaxOrderByAggregateInput
-    _min?: ManagerMinOrderByAggregateInput
-    _sum?: ManagerSumOrderByAggregateInput
+    _count?: landlordCountOrderByAggregateInput
+    _avg?: landlordAvgOrderByAggregateInput
+    _max?: landlordMaxOrderByAggregateInput
+    _min?: landlordMinOrderByAggregateInput
+    _sum?: landlordSumOrderByAggregateInput
   }
 
-  export type ManagerScalarWhereWithAggregatesInput = {
-    AND?: ManagerScalarWhereWithAggregatesInput | ManagerScalarWhereWithAggregatesInput[]
-    OR?: ManagerScalarWhereWithAggregatesInput[]
-    NOT?: ManagerScalarWhereWithAggregatesInput | ManagerScalarWhereWithAggregatesInput[]
-    id?: IntWithAggregatesFilter<"Manager"> | number
-    cognitoId?: StringWithAggregatesFilter<"Manager"> | string
-    name?: StringWithAggregatesFilter<"Manager"> | string
-    email?: StringWithAggregatesFilter<"Manager"> | string
-    phoneNumber?: StringWithAggregatesFilter<"Manager"> | string
+  export type landlordScalarWhereWithAggregatesInput = {
+    AND?: landlordScalarWhereWithAggregatesInput | landlordScalarWhereWithAggregatesInput[]
+    OR?: landlordScalarWhereWithAggregatesInput[]
+    NOT?: landlordScalarWhereWithAggregatesInput | landlordScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"landlord"> | number
+    cognitoId?: StringWithAggregatesFilter<"landlord"> | string
+    name?: StringWithAggregatesFilter<"landlord"> | string
+    email?: StringWithAggregatesFilter<"landlord"> | string
+    phoneNumber?: StringWithAggregatesFilter<"landlord"> | string
   }
 
   export type TenantWhereInput = {
@@ -10769,7 +10769,7 @@ export namespace Prisma {
     averageRating?: number | null
     numberOfReviews?: number | null
     location: LocationCreateNestedOneWithoutPropertiesInput
-    manager: ManagerCreateNestedOneWithoutManagedPropertiesInput
+    landlord: landlordCreateNestedOneWithoutManagedPropertiesInput
     leases?: LeaseCreateNestedManyWithoutPropertyInput
     applications?: ApplicationCreateNestedManyWithoutPropertyInput
     favoritedBy?: TenantCreateNestedManyWithoutFavoritesInput
@@ -10796,7 +10796,7 @@ export namespace Prisma {
     averageRating?: number | null
     numberOfReviews?: number | null
     locationId: number
-    managerCognitoId: string
+    landlordCognitoId: string
     leases?: LeaseUncheckedCreateNestedManyWithoutPropertyInput
     applications?: ApplicationUncheckedCreateNestedManyWithoutPropertyInput
     favoritedBy?: TenantUncheckedCreateNestedManyWithoutFavoritesInput
@@ -10822,7 +10822,7 @@ export namespace Prisma {
     averageRating?: NullableFloatFieldUpdateOperationsInput | number | null
     numberOfReviews?: NullableIntFieldUpdateOperationsInput | number | null
     location?: LocationUpdateOneRequiredWithoutPropertiesNestedInput
-    manager?: ManagerUpdateOneRequiredWithoutManagedPropertiesNestedInput
+    landlord?: landlordUpdateOneRequiredWithoutManagedPropertiesNestedInput
     leases?: LeaseUpdateManyWithoutPropertyNestedInput
     applications?: ApplicationUpdateManyWithoutPropertyNestedInput
     favoritedBy?: TenantUpdateManyWithoutFavoritesNestedInput
@@ -10849,7 +10849,7 @@ export namespace Prisma {
     averageRating?: NullableFloatFieldUpdateOperationsInput | number | null
     numberOfReviews?: NullableIntFieldUpdateOperationsInput | number | null
     locationId?: IntFieldUpdateOperationsInput | number
-    managerCognitoId?: StringFieldUpdateOperationsInput | string
+    landlordCognitoId?: StringFieldUpdateOperationsInput | string
     leases?: LeaseUncheckedUpdateManyWithoutPropertyNestedInput
     applications?: ApplicationUncheckedUpdateManyWithoutPropertyNestedInput
     favoritedBy?: TenantUncheckedUpdateManyWithoutFavoritesNestedInput
@@ -10876,7 +10876,7 @@ export namespace Prisma {
     averageRating?: number | null
     numberOfReviews?: number | null
     locationId: number
-    managerCognitoId: string
+    landlordCognitoId: string
   }
 
   export type PropertyUpdateManyMutationInput = {
@@ -10919,44 +10919,44 @@ export namespace Prisma {
     averageRating?: NullableFloatFieldUpdateOperationsInput | number | null
     numberOfReviews?: NullableIntFieldUpdateOperationsInput | number | null
     locationId?: IntFieldUpdateOperationsInput | number
-    managerCognitoId?: StringFieldUpdateOperationsInput | string
+    landlordCognitoId?: StringFieldUpdateOperationsInput | string
   }
 
-  export type ManagerCreateInput = {
+  export type landlordCreateInput = {
     cognitoId: string
     name: string
     email: string
     phoneNumber: string
-    managedProperties?: PropertyCreateNestedManyWithoutManagerInput
+    managedProperties?: PropertyCreateNestedManyWithoutlandlordInput
   }
 
-  export type ManagerUncheckedCreateInput = {
+  export type landlordUncheckedCreateInput = {
     id?: number
     cognitoId: string
     name: string
     email: string
     phoneNumber: string
-    managedProperties?: PropertyUncheckedCreateNestedManyWithoutManagerInput
+    managedProperties?: PropertyUncheckedCreateNestedManyWithoutlandlordInput
   }
 
-  export type ManagerUpdateInput = {
+  export type landlordUpdateInput = {
     cognitoId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     phoneNumber?: StringFieldUpdateOperationsInput | string
-    managedProperties?: PropertyUpdateManyWithoutManagerNestedInput
+    managedProperties?: PropertyUpdateManyWithoutlandlordNestedInput
   }
 
-  export type ManagerUncheckedUpdateInput = {
+  export type landlordUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     cognitoId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     phoneNumber?: StringFieldUpdateOperationsInput | string
-    managedProperties?: PropertyUncheckedUpdateManyWithoutManagerNestedInput
+    managedProperties?: PropertyUncheckedUpdateManyWithoutlandlordNestedInput
   }
 
-  export type ManagerCreateManyInput = {
+  export type landlordCreateManyInput = {
     id?: number
     cognitoId: string
     name: string
@@ -10964,14 +10964,14 @@ export namespace Prisma {
     phoneNumber: string
   }
 
-  export type ManagerUpdateManyMutationInput = {
+  export type landlordUpdateManyMutationInput = {
     cognitoId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     phoneNumber?: StringFieldUpdateOperationsInput | string
   }
 
-  export type ManagerUncheckedUpdateManyInput = {
+  export type landlordUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     cognitoId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
@@ -11419,9 +11419,9 @@ export namespace Prisma {
     isNot?: LocationWhereInput
   }
 
-  export type ManagerScalarRelationFilter = {
-    is?: ManagerWhereInput
-    isNot?: ManagerWhereInput
+  export type landlordScalarRelationFilter = {
+    is?: landlordWhereInput
+    isNot?: landlordWhereInput
   }
 
   export type LeaseListRelationFilter = {
@@ -11479,7 +11479,7 @@ export namespace Prisma {
     averageRating?: SortOrder
     numberOfReviews?: SortOrder
     locationId?: SortOrder
-    managerCognitoId?: SortOrder
+    landlordCognitoId?: SortOrder
   }
 
   export type PropertyAvgOrderByAggregateInput = {
@@ -11512,7 +11512,7 @@ export namespace Prisma {
     averageRating?: SortOrder
     numberOfReviews?: SortOrder
     locationId?: SortOrder
-    managerCognitoId?: SortOrder
+    landlordCognitoId?: SortOrder
   }
 
   export type PropertyMinOrderByAggregateInput = {
@@ -11532,7 +11532,7 @@ export namespace Prisma {
     averageRating?: SortOrder
     numberOfReviews?: SortOrder
     locationId?: SortOrder
-    managerCognitoId?: SortOrder
+    landlordCognitoId?: SortOrder
   }
 
   export type PropertySumOrderByAggregateInput = {
@@ -11672,7 +11672,7 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
-  export type ManagerCountOrderByAggregateInput = {
+  export type landlordCountOrderByAggregateInput = {
     id?: SortOrder
     cognitoId?: SortOrder
     name?: SortOrder
@@ -11680,19 +11680,11 @@ export namespace Prisma {
     phoneNumber?: SortOrder
   }
 
-  export type ManagerAvgOrderByAggregateInput = {
+  export type landlordAvgOrderByAggregateInput = {
     id?: SortOrder
   }
 
-  export type ManagerMaxOrderByAggregateInput = {
-    id?: SortOrder
-    cognitoId?: SortOrder
-    name?: SortOrder
-    email?: SortOrder
-    phoneNumber?: SortOrder
-  }
-
-  export type ManagerMinOrderByAggregateInput = {
+  export type landlordMaxOrderByAggregateInput = {
     id?: SortOrder
     cognitoId?: SortOrder
     name?: SortOrder
@@ -11700,7 +11692,15 @@ export namespace Prisma {
     phoneNumber?: SortOrder
   }
 
-  export type ManagerSumOrderByAggregateInput = {
+  export type landlordMinOrderByAggregateInput = {
+    id?: SortOrder
+    cognitoId?: SortOrder
+    name?: SortOrder
+    email?: SortOrder
+    phoneNumber?: SortOrder
+  }
+
+  export type landlordSumOrderByAggregateInput = {
     id?: SortOrder
   }
 
@@ -12028,10 +12028,10 @@ export namespace Prisma {
     connect?: LocationWhereUniqueInput
   }
 
-  export type ManagerCreateNestedOneWithoutManagedPropertiesInput = {
-    create?: XOR<ManagerCreateWithoutManagedPropertiesInput, ManagerUncheckedCreateWithoutManagedPropertiesInput>
-    connectOrCreate?: ManagerCreateOrConnectWithoutManagedPropertiesInput
-    connect?: ManagerWhereUniqueInput
+  export type landlordCreateNestedOneWithoutManagedPropertiesInput = {
+    create?: XOR<landlordCreateWithoutManagedPropertiesInput, landlordUncheckedCreateWithoutManagedPropertiesInput>
+    connectOrCreate?: landlordCreateOrConnectWithoutManagedPropertiesInput
+    connect?: landlordWhereUniqueInput
   }
 
   export type LeaseCreateNestedManyWithoutPropertyInput = {
@@ -12154,12 +12154,12 @@ export namespace Prisma {
     update?: XOR<XOR<LocationUpdateToOneWithWhereWithoutPropertiesInput, LocationUpdateWithoutPropertiesInput>, LocationUncheckedUpdateWithoutPropertiesInput>
   }
 
-  export type ManagerUpdateOneRequiredWithoutManagedPropertiesNestedInput = {
-    create?: XOR<ManagerCreateWithoutManagedPropertiesInput, ManagerUncheckedCreateWithoutManagedPropertiesInput>
-    connectOrCreate?: ManagerCreateOrConnectWithoutManagedPropertiesInput
-    upsert?: ManagerUpsertWithoutManagedPropertiesInput
-    connect?: ManagerWhereUniqueInput
-    update?: XOR<XOR<ManagerUpdateToOneWithWhereWithoutManagedPropertiesInput, ManagerUpdateWithoutManagedPropertiesInput>, ManagerUncheckedUpdateWithoutManagedPropertiesInput>
+  export type landlordUpdateOneRequiredWithoutManagedPropertiesNestedInput = {
+    create?: XOR<landlordCreateWithoutManagedPropertiesInput, landlordUncheckedCreateWithoutManagedPropertiesInput>
+    connectOrCreate?: landlordCreateOrConnectWithoutManagedPropertiesInput
+    upsert?: landlordUpsertWithoutManagedPropertiesInput
+    connect?: landlordWhereUniqueInput
+    update?: XOR<XOR<landlordUpdateToOneWithWhereWithoutManagedPropertiesInput, landlordUpdateWithoutManagedPropertiesInput>, landlordUncheckedUpdateWithoutManagedPropertiesInput>
   }
 
   export type LeaseUpdateManyWithoutPropertyNestedInput = {
@@ -12270,45 +12270,45 @@ export namespace Prisma {
     deleteMany?: TenantScalarWhereInput | TenantScalarWhereInput[]
   }
 
-  export type PropertyCreateNestedManyWithoutManagerInput = {
-    create?: XOR<PropertyCreateWithoutManagerInput, PropertyUncheckedCreateWithoutManagerInput> | PropertyCreateWithoutManagerInput[] | PropertyUncheckedCreateWithoutManagerInput[]
-    connectOrCreate?: PropertyCreateOrConnectWithoutManagerInput | PropertyCreateOrConnectWithoutManagerInput[]
-    createMany?: PropertyCreateManyManagerInputEnvelope
+  export type PropertyCreateNestedManyWithoutlandlordInput = {
+    create?: XOR<PropertyCreateWithoutlandlordInput, PropertyUncheckedCreateWithoutlandlordInput> | PropertyCreateWithoutlandlordInput[] | PropertyUncheckedCreateWithoutlandlordInput[]
+    connectOrCreate?: PropertyCreateOrConnectWithoutlandlordInput | PropertyCreateOrConnectWithoutlandlordInput[]
+    createMany?: PropertyCreateManylandlordInputEnvelope
     connect?: PropertyWhereUniqueInput | PropertyWhereUniqueInput[]
   }
 
-  export type PropertyUncheckedCreateNestedManyWithoutManagerInput = {
-    create?: XOR<PropertyCreateWithoutManagerInput, PropertyUncheckedCreateWithoutManagerInput> | PropertyCreateWithoutManagerInput[] | PropertyUncheckedCreateWithoutManagerInput[]
-    connectOrCreate?: PropertyCreateOrConnectWithoutManagerInput | PropertyCreateOrConnectWithoutManagerInput[]
-    createMany?: PropertyCreateManyManagerInputEnvelope
+  export type PropertyUncheckedCreateNestedManyWithoutlandlordInput = {
+    create?: XOR<PropertyCreateWithoutlandlordInput, PropertyUncheckedCreateWithoutlandlordInput> | PropertyCreateWithoutlandlordInput[] | PropertyUncheckedCreateWithoutlandlordInput[]
+    connectOrCreate?: PropertyCreateOrConnectWithoutlandlordInput | PropertyCreateOrConnectWithoutlandlordInput[]
+    createMany?: PropertyCreateManylandlordInputEnvelope
     connect?: PropertyWhereUniqueInput | PropertyWhereUniqueInput[]
   }
 
-  export type PropertyUpdateManyWithoutManagerNestedInput = {
-    create?: XOR<PropertyCreateWithoutManagerInput, PropertyUncheckedCreateWithoutManagerInput> | PropertyCreateWithoutManagerInput[] | PropertyUncheckedCreateWithoutManagerInput[]
-    connectOrCreate?: PropertyCreateOrConnectWithoutManagerInput | PropertyCreateOrConnectWithoutManagerInput[]
-    upsert?: PropertyUpsertWithWhereUniqueWithoutManagerInput | PropertyUpsertWithWhereUniqueWithoutManagerInput[]
-    createMany?: PropertyCreateManyManagerInputEnvelope
+  export type PropertyUpdateManyWithoutlandlordNestedInput = {
+    create?: XOR<PropertyCreateWithoutlandlordInput, PropertyUncheckedCreateWithoutlandlordInput> | PropertyCreateWithoutlandlordInput[] | PropertyUncheckedCreateWithoutlandlordInput[]
+    connectOrCreate?: PropertyCreateOrConnectWithoutlandlordInput | PropertyCreateOrConnectWithoutlandlordInput[]
+    upsert?: PropertyUpsertWithWhereUniqueWithoutlandlordInput | PropertyUpsertWithWhereUniqueWithoutlandlordInput[]
+    createMany?: PropertyCreateManylandlordInputEnvelope
     set?: PropertyWhereUniqueInput | PropertyWhereUniqueInput[]
     disconnect?: PropertyWhereUniqueInput | PropertyWhereUniqueInput[]
     delete?: PropertyWhereUniqueInput | PropertyWhereUniqueInput[]
     connect?: PropertyWhereUniqueInput | PropertyWhereUniqueInput[]
-    update?: PropertyUpdateWithWhereUniqueWithoutManagerInput | PropertyUpdateWithWhereUniqueWithoutManagerInput[]
-    updateMany?: PropertyUpdateManyWithWhereWithoutManagerInput | PropertyUpdateManyWithWhereWithoutManagerInput[]
+    update?: PropertyUpdateWithWhereUniqueWithoutlandlordInput | PropertyUpdateWithWhereUniqueWithoutlandlordInput[]
+    updateMany?: PropertyUpdateManyWithWhereWithoutlandlordInput | PropertyUpdateManyWithWhereWithoutlandlordInput[]
     deleteMany?: PropertyScalarWhereInput | PropertyScalarWhereInput[]
   }
 
-  export type PropertyUncheckedUpdateManyWithoutManagerNestedInput = {
-    create?: XOR<PropertyCreateWithoutManagerInput, PropertyUncheckedCreateWithoutManagerInput> | PropertyCreateWithoutManagerInput[] | PropertyUncheckedCreateWithoutManagerInput[]
-    connectOrCreate?: PropertyCreateOrConnectWithoutManagerInput | PropertyCreateOrConnectWithoutManagerInput[]
-    upsert?: PropertyUpsertWithWhereUniqueWithoutManagerInput | PropertyUpsertWithWhereUniqueWithoutManagerInput[]
-    createMany?: PropertyCreateManyManagerInputEnvelope
+  export type PropertyUncheckedUpdateManyWithoutlandlordNestedInput = {
+    create?: XOR<PropertyCreateWithoutlandlordInput, PropertyUncheckedCreateWithoutlandlordInput> | PropertyCreateWithoutlandlordInput[] | PropertyUncheckedCreateWithoutlandlordInput[]
+    connectOrCreate?: PropertyCreateOrConnectWithoutlandlordInput | PropertyCreateOrConnectWithoutlandlordInput[]
+    upsert?: PropertyUpsertWithWhereUniqueWithoutlandlordInput | PropertyUpsertWithWhereUniqueWithoutlandlordInput[]
+    createMany?: PropertyCreateManylandlordInputEnvelope
     set?: PropertyWhereUniqueInput | PropertyWhereUniqueInput[]
     disconnect?: PropertyWhereUniqueInput | PropertyWhereUniqueInput[]
     delete?: PropertyWhereUniqueInput | PropertyWhereUniqueInput[]
     connect?: PropertyWhereUniqueInput | PropertyWhereUniqueInput[]
-    update?: PropertyUpdateWithWhereUniqueWithoutManagerInput | PropertyUpdateWithWhereUniqueWithoutManagerInput[]
-    updateMany?: PropertyUpdateManyWithWhereWithoutManagerInput | PropertyUpdateManyWithWhereWithoutManagerInput[]
+    update?: PropertyUpdateWithWhereUniqueWithoutlandlordInput | PropertyUpdateWithWhereUniqueWithoutlandlordInput[]
+    updateMany?: PropertyUpdateManyWithWhereWithoutlandlordInput | PropertyUpdateManyWithWhereWithoutlandlordInput[]
     deleteMany?: PropertyScalarWhereInput | PropertyScalarWhereInput[]
   }
 
@@ -12931,14 +12931,14 @@ export namespace Prisma {
     _max?: NestedEnumPaymentStatusFilter<$PrismaModel>
   }
 
-  export type ManagerCreateWithoutManagedPropertiesInput = {
+  export type landlordCreateWithoutManagedPropertiesInput = {
     cognitoId: string
     name: string
     email: string
     phoneNumber: string
   }
 
-  export type ManagerUncheckedCreateWithoutManagedPropertiesInput = {
+  export type landlordUncheckedCreateWithoutManagedPropertiesInput = {
     id?: number
     cognitoId: string
     name: string
@@ -12946,9 +12946,9 @@ export namespace Prisma {
     phoneNumber: string
   }
 
-  export type ManagerCreateOrConnectWithoutManagedPropertiesInput = {
-    where: ManagerWhereUniqueInput
-    create: XOR<ManagerCreateWithoutManagedPropertiesInput, ManagerUncheckedCreateWithoutManagedPropertiesInput>
+  export type landlordCreateOrConnectWithoutManagedPropertiesInput = {
+    where: landlordWhereUniqueInput
+    create: XOR<landlordCreateWithoutManagedPropertiesInput, landlordUncheckedCreateWithoutManagedPropertiesInput>
   }
 
   export type LeaseCreateWithoutPropertyInput = {
@@ -13089,25 +13089,25 @@ export namespace Prisma {
     postalCode?: StringFieldUpdateOperationsInput | string
   }
 
-  export type ManagerUpsertWithoutManagedPropertiesInput = {
-    update: XOR<ManagerUpdateWithoutManagedPropertiesInput, ManagerUncheckedUpdateWithoutManagedPropertiesInput>
-    create: XOR<ManagerCreateWithoutManagedPropertiesInput, ManagerUncheckedCreateWithoutManagedPropertiesInput>
-    where?: ManagerWhereInput
+  export type landlordUpsertWithoutManagedPropertiesInput = {
+    update: XOR<landlordUpdateWithoutManagedPropertiesInput, landlordUncheckedUpdateWithoutManagedPropertiesInput>
+    create: XOR<landlordCreateWithoutManagedPropertiesInput, landlordUncheckedCreateWithoutManagedPropertiesInput>
+    where?: landlordWhereInput
   }
 
-  export type ManagerUpdateToOneWithWhereWithoutManagedPropertiesInput = {
-    where?: ManagerWhereInput
-    data: XOR<ManagerUpdateWithoutManagedPropertiesInput, ManagerUncheckedUpdateWithoutManagedPropertiesInput>
+  export type landlordUpdateToOneWithWhereWithoutManagedPropertiesInput = {
+    where?: landlordWhereInput
+    data: XOR<landlordUpdateWithoutManagedPropertiesInput, landlordUncheckedUpdateWithoutManagedPropertiesInput>
   }
 
-  export type ManagerUpdateWithoutManagedPropertiesInput = {
+  export type landlordUpdateWithoutManagedPropertiesInput = {
     cognitoId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     phoneNumber?: StringFieldUpdateOperationsInput | string
   }
 
-  export type ManagerUncheckedUpdateWithoutManagedPropertiesInput = {
+  export type landlordUncheckedUpdateWithoutManagedPropertiesInput = {
     id?: IntFieldUpdateOperationsInput | number
     cognitoId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
@@ -13219,7 +13219,7 @@ export namespace Prisma {
     data: XOR<TenantUpdateManyMutationInput, TenantUncheckedUpdateManyWithoutPropertiesInput>
   }
 
-  export type PropertyCreateWithoutManagerInput = {
+  export type PropertyCreateWithoutlandlordInput = {
     name: string
     description: string
     pricePerMonth: number
@@ -13244,7 +13244,7 @@ export namespace Prisma {
     tenants?: TenantCreateNestedManyWithoutPropertiesInput
   }
 
-  export type PropertyUncheckedCreateWithoutManagerInput = {
+  export type PropertyUncheckedCreateWithoutlandlordInput = {
     id?: number
     name: string
     description: string
@@ -13270,30 +13270,30 @@ export namespace Prisma {
     tenants?: TenantUncheckedCreateNestedManyWithoutPropertiesInput
   }
 
-  export type PropertyCreateOrConnectWithoutManagerInput = {
+  export type PropertyCreateOrConnectWithoutlandlordInput = {
     where: PropertyWhereUniqueInput
-    create: XOR<PropertyCreateWithoutManagerInput, PropertyUncheckedCreateWithoutManagerInput>
+    create: XOR<PropertyCreateWithoutlandlordInput, PropertyUncheckedCreateWithoutlandlordInput>
   }
 
-  export type PropertyCreateManyManagerInputEnvelope = {
-    data: PropertyCreateManyManagerInput | PropertyCreateManyManagerInput[]
+  export type PropertyCreateManylandlordInputEnvelope = {
+    data: PropertyCreateManylandlordInput | PropertyCreateManylandlordInput[]
     skipDuplicates?: boolean
   }
 
-  export type PropertyUpsertWithWhereUniqueWithoutManagerInput = {
+  export type PropertyUpsertWithWhereUniqueWithoutlandlordInput = {
     where: PropertyWhereUniqueInput
-    update: XOR<PropertyUpdateWithoutManagerInput, PropertyUncheckedUpdateWithoutManagerInput>
-    create: XOR<PropertyCreateWithoutManagerInput, PropertyUncheckedCreateWithoutManagerInput>
+    update: XOR<PropertyUpdateWithoutlandlordInput, PropertyUncheckedUpdateWithoutlandlordInput>
+    create: XOR<PropertyCreateWithoutlandlordInput, PropertyUncheckedCreateWithoutlandlordInput>
   }
 
-  export type PropertyUpdateWithWhereUniqueWithoutManagerInput = {
+  export type PropertyUpdateWithWhereUniqueWithoutlandlordInput = {
     where: PropertyWhereUniqueInput
-    data: XOR<PropertyUpdateWithoutManagerInput, PropertyUncheckedUpdateWithoutManagerInput>
+    data: XOR<PropertyUpdateWithoutlandlordInput, PropertyUncheckedUpdateWithoutlandlordInput>
   }
 
-  export type PropertyUpdateManyWithWhereWithoutManagerInput = {
+  export type PropertyUpdateManyWithWhereWithoutlandlordInput = {
     where: PropertyScalarWhereInput
-    data: XOR<PropertyUpdateManyMutationInput, PropertyUncheckedUpdateManyWithoutManagerInput>
+    data: XOR<PropertyUpdateManyMutationInput, PropertyUncheckedUpdateManyWithoutlandlordInput>
   }
 
   export type PropertyScalarWhereInput = {
@@ -13319,7 +13319,7 @@ export namespace Prisma {
     averageRating?: FloatNullableFilter<"Property"> | number | null
     numberOfReviews?: IntNullableFilter<"Property"> | number | null
     locationId?: IntFilter<"Property"> | number
-    managerCognitoId?: StringFilter<"Property"> | string
+    landlordCognitoId?: StringFilter<"Property"> | string
   }
 
   export type PropertyCreateWithoutTenantsInput = {
@@ -13341,7 +13341,7 @@ export namespace Prisma {
     averageRating?: number | null
     numberOfReviews?: number | null
     location: LocationCreateNestedOneWithoutPropertiesInput
-    manager: ManagerCreateNestedOneWithoutManagedPropertiesInput
+    landlord: landlordCreateNestedOneWithoutManagedPropertiesInput
     leases?: LeaseCreateNestedManyWithoutPropertyInput
     applications?: ApplicationCreateNestedManyWithoutPropertyInput
     favoritedBy?: TenantCreateNestedManyWithoutFavoritesInput
@@ -13367,7 +13367,7 @@ export namespace Prisma {
     averageRating?: number | null
     numberOfReviews?: number | null
     locationId: number
-    managerCognitoId: string
+    landlordCognitoId: string
     leases?: LeaseUncheckedCreateNestedManyWithoutPropertyInput
     applications?: ApplicationUncheckedCreateNestedManyWithoutPropertyInput
     favoritedBy?: TenantUncheckedCreateNestedManyWithoutFavoritesInput
@@ -13397,7 +13397,7 @@ export namespace Prisma {
     averageRating?: number | null
     numberOfReviews?: number | null
     location: LocationCreateNestedOneWithoutPropertiesInput
-    manager: ManagerCreateNestedOneWithoutManagedPropertiesInput
+    landlord: landlordCreateNestedOneWithoutManagedPropertiesInput
     leases?: LeaseCreateNestedManyWithoutPropertyInput
     applications?: ApplicationCreateNestedManyWithoutPropertyInput
     tenants?: TenantCreateNestedManyWithoutPropertiesInput
@@ -13423,7 +13423,7 @@ export namespace Prisma {
     averageRating?: number | null
     numberOfReviews?: number | null
     locationId: number
-    managerCognitoId: string
+    landlordCognitoId: string
     leases?: LeaseUncheckedCreateNestedManyWithoutPropertyInput
     applications?: ApplicationUncheckedCreateNestedManyWithoutPropertyInput
     tenants?: TenantUncheckedCreateNestedManyWithoutPropertiesInput
@@ -13580,7 +13580,7 @@ export namespace Prisma {
     postedDate?: Date | string
     averageRating?: number | null
     numberOfReviews?: number | null
-    manager: ManagerCreateNestedOneWithoutManagedPropertiesInput
+    landlord: landlordCreateNestedOneWithoutManagedPropertiesInput
     leases?: LeaseCreateNestedManyWithoutPropertyInput
     applications?: ApplicationCreateNestedManyWithoutPropertyInput
     favoritedBy?: TenantCreateNestedManyWithoutFavoritesInput
@@ -13606,7 +13606,7 @@ export namespace Prisma {
     postedDate?: Date | string
     averageRating?: number | null
     numberOfReviews?: number | null
-    managerCognitoId: string
+    landlordCognitoId: string
     leases?: LeaseUncheckedCreateNestedManyWithoutPropertyInput
     applications?: ApplicationUncheckedCreateNestedManyWithoutPropertyInput
     favoritedBy?: TenantUncheckedCreateNestedManyWithoutFavoritesInput
@@ -13658,7 +13658,7 @@ export namespace Prisma {
     averageRating?: number | null
     numberOfReviews?: number | null
     location: LocationCreateNestedOneWithoutPropertiesInput
-    manager: ManagerCreateNestedOneWithoutManagedPropertiesInput
+    landlord: landlordCreateNestedOneWithoutManagedPropertiesInput
     leases?: LeaseCreateNestedManyWithoutPropertyInput
     favoritedBy?: TenantCreateNestedManyWithoutFavoritesInput
     tenants?: TenantCreateNestedManyWithoutPropertiesInput
@@ -13684,7 +13684,7 @@ export namespace Prisma {
     averageRating?: number | null
     numberOfReviews?: number | null
     locationId: number
-    managerCognitoId: string
+    landlordCognitoId: string
     leases?: LeaseUncheckedCreateNestedManyWithoutPropertyInput
     favoritedBy?: TenantUncheckedCreateNestedManyWithoutFavoritesInput
     tenants?: TenantUncheckedCreateNestedManyWithoutPropertiesInput
@@ -13777,7 +13777,7 @@ export namespace Prisma {
     averageRating?: NullableFloatFieldUpdateOperationsInput | number | null
     numberOfReviews?: NullableIntFieldUpdateOperationsInput | number | null
     location?: LocationUpdateOneRequiredWithoutPropertiesNestedInput
-    manager?: ManagerUpdateOneRequiredWithoutManagedPropertiesNestedInput
+    landlord?: landlordUpdateOneRequiredWithoutManagedPropertiesNestedInput
     leases?: LeaseUpdateManyWithoutPropertyNestedInput
     favoritedBy?: TenantUpdateManyWithoutFavoritesNestedInput
     tenants?: TenantUpdateManyWithoutPropertiesNestedInput
@@ -13803,7 +13803,7 @@ export namespace Prisma {
     averageRating?: NullableFloatFieldUpdateOperationsInput | number | null
     numberOfReviews?: NullableIntFieldUpdateOperationsInput | number | null
     locationId?: IntFieldUpdateOperationsInput | number
-    managerCognitoId?: StringFieldUpdateOperationsInput | string
+    landlordCognitoId?: StringFieldUpdateOperationsInput | string
     leases?: LeaseUncheckedUpdateManyWithoutPropertyNestedInput
     favoritedBy?: TenantUncheckedUpdateManyWithoutFavoritesNestedInput
     tenants?: TenantUncheckedUpdateManyWithoutPropertiesNestedInput
@@ -13892,7 +13892,7 @@ export namespace Prisma {
     averageRating?: number | null
     numberOfReviews?: number | null
     location: LocationCreateNestedOneWithoutPropertiesInput
-    manager: ManagerCreateNestedOneWithoutManagedPropertiesInput
+    landlord: landlordCreateNestedOneWithoutManagedPropertiesInput
     applications?: ApplicationCreateNestedManyWithoutPropertyInput
     favoritedBy?: TenantCreateNestedManyWithoutFavoritesInput
     tenants?: TenantCreateNestedManyWithoutPropertiesInput
@@ -13918,7 +13918,7 @@ export namespace Prisma {
     averageRating?: number | null
     numberOfReviews?: number | null
     locationId: number
-    managerCognitoId: string
+    landlordCognitoId: string
     applications?: ApplicationUncheckedCreateNestedManyWithoutPropertyInput
     favoritedBy?: TenantUncheckedCreateNestedManyWithoutFavoritesInput
     tenants?: TenantUncheckedCreateNestedManyWithoutPropertiesInput
@@ -14040,7 +14040,7 @@ export namespace Prisma {
     averageRating?: NullableFloatFieldUpdateOperationsInput | number | null
     numberOfReviews?: NullableIntFieldUpdateOperationsInput | number | null
     location?: LocationUpdateOneRequiredWithoutPropertiesNestedInput
-    manager?: ManagerUpdateOneRequiredWithoutManagedPropertiesNestedInput
+    landlord?: landlordUpdateOneRequiredWithoutManagedPropertiesNestedInput
     applications?: ApplicationUpdateManyWithoutPropertyNestedInput
     favoritedBy?: TenantUpdateManyWithoutFavoritesNestedInput
     tenants?: TenantUpdateManyWithoutPropertiesNestedInput
@@ -14066,7 +14066,7 @@ export namespace Prisma {
     averageRating?: NullableFloatFieldUpdateOperationsInput | number | null
     numberOfReviews?: NullableIntFieldUpdateOperationsInput | number | null
     locationId?: IntFieldUpdateOperationsInput | number
-    managerCognitoId?: StringFieldUpdateOperationsInput | string
+    landlordCognitoId?: StringFieldUpdateOperationsInput | string
     applications?: ApplicationUncheckedUpdateManyWithoutPropertyNestedInput
     favoritedBy?: TenantUncheckedUpdateManyWithoutFavoritesNestedInput
     tenants?: TenantUncheckedUpdateManyWithoutPropertiesNestedInput
@@ -14369,7 +14369,7 @@ export namespace Prisma {
     phoneNumber?: StringFieldUpdateOperationsInput | string
   }
 
-  export type PropertyCreateManyManagerInput = {
+  export type PropertyCreateManylandlordInput = {
     id?: number
     name: string
     description: string
@@ -14391,7 +14391,7 @@ export namespace Prisma {
     locationId: number
   }
 
-  export type PropertyUpdateWithoutManagerInput = {
+  export type PropertyUpdateWithoutlandlordInput = {
     name?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     pricePerMonth?: FloatFieldUpdateOperationsInput | number
@@ -14416,7 +14416,7 @@ export namespace Prisma {
     tenants?: TenantUpdateManyWithoutPropertiesNestedInput
   }
 
-  export type PropertyUncheckedUpdateWithoutManagerInput = {
+  export type PropertyUncheckedUpdateWithoutlandlordInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
@@ -14442,7 +14442,7 @@ export namespace Prisma {
     tenants?: TenantUncheckedUpdateManyWithoutPropertiesNestedInput
   }
 
-  export type PropertyUncheckedUpdateManyWithoutManagerInput = {
+  export type PropertyUncheckedUpdateManyWithoutlandlordInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
@@ -14504,7 +14504,7 @@ export namespace Prisma {
     averageRating?: NullableFloatFieldUpdateOperationsInput | number | null
     numberOfReviews?: NullableIntFieldUpdateOperationsInput | number | null
     location?: LocationUpdateOneRequiredWithoutPropertiesNestedInput
-    manager?: ManagerUpdateOneRequiredWithoutManagedPropertiesNestedInput
+    landlord?: landlordUpdateOneRequiredWithoutManagedPropertiesNestedInput
     leases?: LeaseUpdateManyWithoutPropertyNestedInput
     applications?: ApplicationUpdateManyWithoutPropertyNestedInput
     favoritedBy?: TenantUpdateManyWithoutFavoritesNestedInput
@@ -14530,7 +14530,7 @@ export namespace Prisma {
     averageRating?: NullableFloatFieldUpdateOperationsInput | number | null
     numberOfReviews?: NullableIntFieldUpdateOperationsInput | number | null
     locationId?: IntFieldUpdateOperationsInput | number
-    managerCognitoId?: StringFieldUpdateOperationsInput | string
+    landlordCognitoId?: StringFieldUpdateOperationsInput | string
     leases?: LeaseUncheckedUpdateManyWithoutPropertyNestedInput
     applications?: ApplicationUncheckedUpdateManyWithoutPropertyNestedInput
     favoritedBy?: TenantUncheckedUpdateManyWithoutFavoritesNestedInput
@@ -14556,7 +14556,7 @@ export namespace Prisma {
     averageRating?: NullableFloatFieldUpdateOperationsInput | number | null
     numberOfReviews?: NullableIntFieldUpdateOperationsInput | number | null
     locationId?: IntFieldUpdateOperationsInput | number
-    managerCognitoId?: StringFieldUpdateOperationsInput | string
+    landlordCognitoId?: StringFieldUpdateOperationsInput | string
   }
 
   export type PropertyUpdateWithoutFavoritedByInput = {
@@ -14578,7 +14578,7 @@ export namespace Prisma {
     averageRating?: NullableFloatFieldUpdateOperationsInput | number | null
     numberOfReviews?: NullableIntFieldUpdateOperationsInput | number | null
     location?: LocationUpdateOneRequiredWithoutPropertiesNestedInput
-    manager?: ManagerUpdateOneRequiredWithoutManagedPropertiesNestedInput
+    landlord?: landlordUpdateOneRequiredWithoutManagedPropertiesNestedInput
     leases?: LeaseUpdateManyWithoutPropertyNestedInput
     applications?: ApplicationUpdateManyWithoutPropertyNestedInput
     tenants?: TenantUpdateManyWithoutPropertiesNestedInput
@@ -14604,7 +14604,7 @@ export namespace Prisma {
     averageRating?: NullableFloatFieldUpdateOperationsInput | number | null
     numberOfReviews?: NullableIntFieldUpdateOperationsInput | number | null
     locationId?: IntFieldUpdateOperationsInput | number
-    managerCognitoId?: StringFieldUpdateOperationsInput | string
+    landlordCognitoId?: StringFieldUpdateOperationsInput | string
     leases?: LeaseUncheckedUpdateManyWithoutPropertyNestedInput
     applications?: ApplicationUncheckedUpdateManyWithoutPropertyNestedInput
     tenants?: TenantUncheckedUpdateManyWithoutPropertiesNestedInput
@@ -14630,7 +14630,7 @@ export namespace Prisma {
     averageRating?: NullableFloatFieldUpdateOperationsInput | number | null
     numberOfReviews?: NullableIntFieldUpdateOperationsInput | number | null
     locationId?: IntFieldUpdateOperationsInput | number
-    managerCognitoId?: StringFieldUpdateOperationsInput | string
+    landlordCognitoId?: StringFieldUpdateOperationsInput | string
   }
 
   export type ApplicationUpdateWithoutTenantInput = {
@@ -14716,7 +14716,7 @@ export namespace Prisma {
     postedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     averageRating?: NullableFloatFieldUpdateOperationsInput | number | null
     numberOfReviews?: NullableIntFieldUpdateOperationsInput | number | null
-    manager?: ManagerUpdateOneRequiredWithoutManagedPropertiesNestedInput
+    landlord?: landlordUpdateOneRequiredWithoutManagedPropertiesNestedInput
     leases?: LeaseUpdateManyWithoutPropertyNestedInput
     applications?: ApplicationUpdateManyWithoutPropertyNestedInput
     favoritedBy?: TenantUpdateManyWithoutFavoritesNestedInput
@@ -14742,7 +14742,7 @@ export namespace Prisma {
     postedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     averageRating?: NullableFloatFieldUpdateOperationsInput | number | null
     numberOfReviews?: NullableIntFieldUpdateOperationsInput | number | null
-    managerCognitoId?: StringFieldUpdateOperationsInput | string
+    landlordCognitoId?: StringFieldUpdateOperationsInput | string
     leases?: LeaseUncheckedUpdateManyWithoutPropertyNestedInput
     applications?: ApplicationUncheckedUpdateManyWithoutPropertyNestedInput
     favoritedBy?: TenantUncheckedUpdateManyWithoutFavoritesNestedInput
@@ -14768,7 +14768,7 @@ export namespace Prisma {
     postedDate?: Date | string
     averageRating?: number | null
     numberOfReviews?: number | null
-    managerCognitoId: string
+    landlordCognitoId: string
   }
 
   export type PropertyUncheckedUpdateManyWithoutLocationInput = {
@@ -14790,7 +14790,7 @@ export namespace Prisma {
     postedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     averageRating?: NullableFloatFieldUpdateOperationsInput | number | null
     numberOfReviews?: NullableIntFieldUpdateOperationsInput | number | null
-    managerCognitoId?: StringFieldUpdateOperationsInput | string
+    landlordCognitoId?: StringFieldUpdateOperationsInput | string
   }
 
   export type PaymentCreateManyLeaseInput = {

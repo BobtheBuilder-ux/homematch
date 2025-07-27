@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { PrismaClient, Prisma } from "@prisma/client"; // Added Prisma import
+import { PrismaClient, Prisma } from "../../node_modules/.prisma/client"; // Added Prisma import
 import { wktToGeoJSON } from "@terraformer/wkt";
 
 const prisma = new PrismaClient();
