@@ -101,7 +101,9 @@ async function main() {
       const model = (prisma as any)[modelNameCamel];
       try {
         for (const item of jsonData) {
-          let data = { ...item };
+          // Remove id field from the data as Prisma will handle ID generation
+          const { id, ...dataWithoutId } = item;
+          let data = { ...dataWithoutId };
           
           // Handle specific model relationships
           if (modelName === "Property") {
@@ -128,14 +130,18 @@ async function main() {
             };
             delete data.propertyId;
             delete data.tenantCognitoId;
+            if (item.leaseId) {
+              data.lease = { connect: { id: item.leaseId } };
+              delete data.leaseId;
+            }
           } else if (modelName === "Payment") {
-            data = {
-              ...data,
-              lease: { connect: { id: item.leaseId } }
-            };
-            delete data.leaseId;
+            if (item.leaseId) {
+              data.lease = { connect: { id: item.leaseId } };
+              delete data.leaseId;
+            }
           }
 
+          console.log(`Creating ${modelName}:`, JSON.stringify(data, null, 2));
           await model.create({ data });
         }
         console.log(`Seeded ${modelName} with data from ${fileName}`);
