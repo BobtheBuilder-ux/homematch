@@ -124,14 +124,33 @@ async function main() {
           // Update existing tenants with property connections
           else if (modelName === "Tenant" && !skipConnections) {
             for (const tenant of jsonData) {
-              if (tenant.properties?.connect || tenant.favorites?.connect) {
-                await prisma.tenant.update({
-                  where: { cognitoId: tenant.cognitoId },
-                  data: {
-                    properties: tenant.properties,
-                    favorites: tenant.favorites,
-                  }
-                });
+              const updateData: any = {};
+              
+              // Only include properties if they exist
+              if (tenant.properties?.connect?.length > 0) {
+                updateData.properties = {
+                  connect: tenant.properties.connect
+                };
+              }
+              
+              // Only include favorites if they exist
+              if (tenant.favorites?.connect?.length > 0) {
+                updateData.favorites = {
+                  connect: tenant.favorites.connect
+                };
+              }
+
+              // Only update if we have properties or favorites to connect
+              if (Object.keys(updateData).length > 0) {
+                try {
+                  console.log(`Updating tenant ${tenant.cognitoId} with:`, JSON.stringify(updateData, null, 2));
+                  await prisma.tenant.update({
+                    where: { cognitoId: tenant.cognitoId },
+                    data: updateData
+                  });
+                } catch (error) {
+                  console.error(`Error updating tenant ${tenant.cognitoId}:`, error);
+                }
               }
             }
             continue; // Skip normal creation since we're just updating
