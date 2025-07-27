@@ -89,7 +89,7 @@ async function main() {
   await deleteAllData(orderedFileNames);
 
   // Now seed in correct order
-  const seedOrder = [
+  const seedOrder: (string | [string, boolean])[] = [
     "location.json",
     "landlord.json",
     ["tenant.json", true], // [filename, skipConnections]
