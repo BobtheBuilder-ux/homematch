@@ -75,21 +75,33 @@ async function deleteAllData(orderedFileNames: string[]) {
 async function main() {
   const dataDirectory = path.join(__dirname, "seedData");
 
+  // Delete all existing data in reverse dependency order
   const orderedFileNames = [
-    "location.json", // No dependencies
-    "landlord.json", // No dependencies
-    "tenant.json", // No dependencies
-    "property.json", // Depends on location and landlord
-    "lease.json", // Depends on property and tenant
-    "application.json", // Depends on property and tenant
-    "payment.json", // Depends on lease
+    "payment.json",
+    "lease.json",
+    "application.json",
+    "property.json",
+    "tenant.json",
+    "landlord.json",
+    "location.json",
   ];
 
-  // Delete all existing data
   await deleteAllData(orderedFileNames);
 
-  // Seed data
-  for (const fileName of orderedFileNames) {
+  // Now seed in correct order
+  const seedOrder = [
+    "location.json",
+    "landlord.json",
+    ["tenant.json", true], // [filename, skipConnections]
+    "property.json",
+    ["tenant.json", false], // Update tenants with connections
+    "lease.json",
+    "application.json",
+    "payment.json",
+  ];
+
+  for (const item of seedOrder) {
+    const [fileName, skipConnections] = Array.isArray(item) ? item : [item, false];
     const filePath = path.join(dataDirectory, fileName);
     const jsonData = JSON.parse(fs.readFileSync(filePath, "utf-8"));
     const modelName = toPascalCase(path.basename(fileName, path.extname(fileName)));
@@ -101,12 +113,31 @@ async function main() {
       const model = (prisma as any)[modelNameCamel];
       try {
         for (const item of jsonData) {
-          // Remove id field from the data as Prisma will handle ID generation
           const { id, ...dataWithoutId } = item;
           let data = { ...dataWithoutId };
           
-          // Handle specific model relationships
-          if (modelName === "Property") {
+          // Skip property connections for initial tenant creation
+          if (modelName === "Tenant" && skipConnections) {
+            delete data.properties;
+            delete data.favorites;
+          } 
+          // Update existing tenants with property connections
+          else if (modelName === "Tenant" && !skipConnections) {
+            for (const tenant of jsonData) {
+              if (tenant.properties?.connect || tenant.favorites?.connect) {
+                await prisma.tenant.update({
+                  where: { cognitoId: tenant.cognitoId },
+                  data: {
+                    properties: tenant.properties,
+                    favorites: tenant.favorites,
+                  }
+                });
+              }
+            }
+            continue; // Skip normal creation since we're just updating
+          }
+          // Handle other model relationships
+          else if (modelName === "Property") {
             data = {
               ...data,
               location: { connect: { id: item.locationId } },
@@ -141,8 +172,20 @@ async function main() {
             }
           }
 
-          console.log(`Creating ${modelName}:`, JSON.stringify(data, null, 2));
-          await model.create({ data });
+          if (!skipConnections) {
+            console.log(`Creating ${modelName}:`, JSON.stringify(data, null, 2));
+            await model.create({ data });
+          } else {
+            // For initial tenant creation without connections
+            const createData = {
+              cognitoId: data.cognitoId,
+              name: data.name,
+              email: data.email,
+              phoneNumber: data.phoneNumber
+            };
+            console.log(`Creating ${modelName} (without connections):`, JSON.stringify(createData, null, 2));
+            await model.create({ data: createData });
+          }
         }
         console.log(`Seeded ${modelName} with data from ${fileName}`);
       } catch (error) {
@@ -150,10 +193,11 @@ async function main() {
       }
     }
 
-    // Reset the sequence after seeding each model
-    await resetSequence(modelName);
-
-    await sleep(1000);
+    if (!Array.isArray(item) || !skipConnections) {
+      // Only reset sequence when we're not in the middle of a two-phase operation
+      await resetSequence(modelNameCamel);
+      await sleep(1000);
+    }
   }
 }
 
