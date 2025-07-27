@@ -18,8 +18,7 @@ function toCamelCase(str: string): string {
 
 async function insertLocationData(locations: any[]) {
   for (const location of locations) {
-    const { id, country, city, state, address, postalCode, coordinates } =
-      location;
+    const { id, country, city, state, address, postalCode, coordinates } = location;
     try {
       await prisma.$executeRaw`
         INSERT INTO "Location" ("id", "country", "city", "state", "address", "postalCode", "coordinates") 
@@ -35,9 +34,7 @@ async function insertLocationData(locations: any[]) {
 async function resetSequence(modelName: string) {
   const quotedModelName = `"${toPascalCase(modelName)}"`;
 
-  const maxIdResult = await (
-    prisma[modelName as keyof PrismaClient] as any
-  ).findMany({
+  const maxIdResult = await (prisma[modelName as keyof PrismaClient] as any).findMany({
     select: { id: true },
     orderBy: { id: "desc" },
     take: 1,
@@ -55,9 +52,9 @@ async function resetSequence(modelName: string) {
 }
 
 async function deleteAllData(orderedFileNames: string[]) {
-  const modelNames = orderedFileNames.map((fileName) => {
-    return toPascalCase(path.basename(fileName, path.extname(fileName)));
-  });
+  const modelNames = orderedFileNames.map((fileName) =>
+    toPascalCase(path.basename(fileName, path.extname(fileName)))
+  );
 
   for (const modelName of modelNames.reverse()) {
     const modelNameCamel = toCamelCase(modelName);
@@ -81,8 +78,8 @@ async function main() {
   const orderedFileNames = [
     "location.json", // No dependencies
     "landlord.json", // No dependencies
-    "property.json", // Depends on location and landlord
     "tenant.json", // No dependencies
+    "property.json", // Depends on location and landlord
     "lease.json", // Depends on property and tenant
     "application.json", // Depends on property and tenant
     "payment.json", // Depends on lease
@@ -95,9 +92,7 @@ async function main() {
   for (const fileName of orderedFileNames) {
     const filePath = path.join(dataDirectory, fileName);
     const jsonData = JSON.parse(fs.readFileSync(filePath, "utf-8"));
-    const modelName = toPascalCase(
-      path.basename(fileName, path.extname(fileName))
-    );
+    const modelName = toPascalCase(path.basename(fileName, path.extname(fileName)));
     const modelNameCamel = toCamelCase(modelName);
 
     if (modelName === "Location") {
@@ -106,9 +101,42 @@ async function main() {
       const model = (prisma as any)[modelNameCamel];
       try {
         for (const item of jsonData) {
-          await model.create({
-            data: item,
-          });
+          let data = { ...item };
+          
+          // Handle specific model relationships
+          if (modelName === "Property") {
+            data = {
+              ...data,
+              location: { connect: { id: item.locationId } },
+              landlord: { connect: { cognitoId: item.managerCognitoId } }
+            };
+            delete data.locationId;
+            delete data.managerCognitoId;
+          } else if (modelName === "Lease") {
+            data = {
+              ...data,
+              property: { connect: { id: item.propertyId } },
+              tenant: { connect: { cognitoId: item.tenantCognitoId } }
+            };
+            delete data.propertyId;
+            delete data.tenantCognitoId;
+          } else if (modelName === "Application") {
+            data = {
+              ...data,
+              property: { connect: { id: item.propertyId } },
+              tenant: { connect: { cognitoId: item.tenantCognitoId } }
+            };
+            delete data.propertyId;
+            delete data.tenantCognitoId;
+          } else if (modelName === "Payment") {
+            data = {
+              ...data,
+              lease: { connect: { id: item.leaseId } }
+            };
+            delete data.leaseId;
+          }
+
+          await model.create({ data });
         }
         console.log(`Seeded ${modelName} with data from ${fileName}`);
       } catch (error) {
