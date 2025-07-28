@@ -122,12 +122,13 @@ declare global {
 
   interface AppSidebarProps {
     userType: "landlord" | "tenant";
+    userType: "landlord" | "tenant" | "admin" | "agent";
   }
 
   interface SettingsFormProps {
     initialData: SettingsFormData;
     onSubmit: (data: SettingsFormData) => Promise<void>;
-    userType: "landlord" | "tenant";
+    userType: "landlord" | "tenant" | "admin" | "agent";
   }
 
   interface User {

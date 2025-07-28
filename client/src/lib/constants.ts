@@ -133,4 +133,22 @@ export const testUsers = {
     },
   },
   landlordRole: "landlord",
+  admin: {
+    username: "Admin User",
+    userId: "us-east-2:admin123-90ab-cdef-1234-567890abcdef",
+    signInDetails: {
+      loginId: "admin@example.com",
+      authFlowType: "USER_SRP_AUTH",
+    },
+  },
+  adminRole: "admin",
+  agent: {
+    username: "Agent Smith",
+    userId: "us-east-2:agent123-90ab-cdef-1234-567890abcdef",
+    signInDetails: {
+      loginId: "agent@example.com",
+      authFlowType: "USER_SRP_AUTH",
+    },
+  },
+  agentRole: "agent",
 };

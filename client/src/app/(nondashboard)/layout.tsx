@@ -16,10 +16,17 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
     if (authUser) {
       const userRole = authUser.userRole?.toLowerCase();
       if (
-        (userRole === "landlord" && pathname.startsWith("/search")) ||
-        (userRole === "landlord" && pathname === "/")
+        (userRole === "landlord" && (pathname.startsWith("/search") || pathname === "/")) ||
+        (userRole === "admin" && pathname === "/") ||
+        (userRole === "agent" && pathname === "/")
       ) {
-        router.push("/landlords/properties", { scroll: false });
+        const redirectPath = ({
+          landlord: "/landlords/properties",
+          admin: "/admin/analytics",
+          agent: "/agent/leads"
+        } as Record<string, string>)[userRole] || "/";
+        
+        router.push(redirectPath, { scroll: false });
       } else {
         setIsLoading(false);
       }

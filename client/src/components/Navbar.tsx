@@ -25,11 +25,34 @@ const Navbar = () => {
   const pathname = usePathname();
 
   const isDashboardPage =
-    pathname.includes("/landlords") || pathname.includes("/tenants");
+    pathname.includes("/landlords") || pathname.includes("/tenants") ||
+    pathname.includes("/admin") || pathname.includes("/agent");
 
+  type UserRole = "landlord" | "tenant" | "admin" | "agent";
+  
   const handleSignOut = async () => {
     await signOut();
     window.location.href = "/";
+  };
+
+  const getActionPath = (role: string | undefined): string => {
+    const paths: Record<UserRole, string> = {
+      landlord: "/landlords/newproperty",
+      tenant: "/search",
+      admin: "/admin/users",
+      agent: "/agent/leads"
+    };
+    return paths[role?.toLowerCase() as UserRole] || "/search";
+  };
+
+  const getDashboardPath = (role: string | undefined): string => {
+    const paths: Record<UserRole, string> = {
+      landlord: "/landlords/properties",
+      tenant: "/tenants/favorites",
+      admin: "/admin/analytics",
+      agent: "/agent/leads"
+    };
+    return paths[role?.toLowerCase() as UserRole] || "/";
   };
 
   return (
@@ -58,9 +81,9 @@ const Navbar = () => {
                 className="w-6 h-6"
               />
               <div className="text-xl font-bold">
-                RENT
+                Home
                 <span className="text-secondary-500 font-light hover:!text-primary-300">
-                  IFUL
+                  Match
                 </span>
               </div>
             </div>
@@ -69,27 +92,41 @@ const Navbar = () => {
             <Button
               variant="secondary"
               className="md:ml-4 bg-primary-50 text-primary-700 hover:bg-secondary-500 hover:text-primary-50"
-              onClick={() =>
-                router.push(
-                  authUser.userRole?.toLowerCase() === "landlord"
-                    ? "/landlords/newproperty"
-                    : "/search"
-                )
-              }
+              onClick={() => router.push(getActionPath(authUser.userRole))}
             >
-              {authUser.userRole?.toLowerCase() === "landlord" ? (
-                <>
-                  <Plus className="h-4 w-4" />
-                  <span className="hidden md:block ml-2">Add New Property</span>
-                </>
-              ) : (
-                <>
-                  <Search className="h-4 w-4" />
-                  <span className="hidden md:block ml-2">
-                    Search Properties
-                  </span>
-                </>
-              )}
+              {(() => {
+                const userRole = authUser.userRole?.toLowerCase();
+                switch (userRole) {
+                  case "landlord":
+                    return (
+                      <>
+                        <Plus className="h-4 w-4" />
+                        <span className="hidden md:block ml-2">Add New Property</span>
+                      </>
+                    );
+                  case "admin":
+                    return (
+                      <>
+                        <Plus className="h-4 w-4" />
+                        <span className="hidden md:block ml-2">Manage Users</span>
+                      </>
+                    );
+                  case "agent":
+                    return (
+                      <>
+                        <Plus className="h-4 w-4" />
+                        <span className="hidden md:block ml-2">View Leads</span>
+                      </>
+                    );
+                  default:
+                    return (
+                      <>
+                        <Search className="h-4 w-4" />
+                        <span className="hidden md:block ml-2">Search Properties</span>
+                      </>
+                    );
+                }
+              })()}
             </Button>
           )}
         </div>
@@ -125,14 +162,7 @@ const Navbar = () => {
                 <DropdownMenuContent className="bg-white text-primary-700">
                   <DropdownMenuItem
                     className="cursor-pointer hover:!bg-primary-700 hover:!text-primary-100 font-bold"
-                    onClick={() =>
-                      router.push(
-                        authUser.userRole?.toLowerCase() === "landlord"
-                          ? "/landlords/properties"
-                          : "/tenants/favorites",
-                        { scroll: false }
-                      )
-                    }
+                    onClick={() => router.push(getDashboardPath(authUser.userRole), { scroll: false })}
                   >
                     Go to Dashboard
                   </DropdownMenuItem>
@@ -140,10 +170,14 @@ const Navbar = () => {
                   <DropdownMenuItem
                     className="cursor-pointer hover:!bg-primary-700 hover:!text-primary-100"
                     onClick={() =>
-                      router.push(
-                        `/${authUser.userRole?.toLowerCase()}s/settings`,
-                        { scroll: false }
-                      )
+                      {
+                        const userRole = authUser.userRole?.toLowerCase();
+                        const settingsPath = userRole === "admin" || userRole === "agent" 
+                          ? `/${userRole}/settings`
+                          : `/${userRole}s/settings`;
+                        
+                        router.push(settingsPath, { scroll: false });
+                      }
                     }
                   >
                     Settings

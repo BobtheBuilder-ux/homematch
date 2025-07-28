@@ -1,22 +1,40 @@
-**/node_modules/
+# Dependencies
+/node_modules
+/.pnp
+.pnp.js
+/client/node_modules
+/server/node_modules
+/server/dist
+/client/dist
+/client/.next
 
-.env
-client/.env.local
-client/.env.development
-client/.env.production
-server/.env
 
-client/.next/
 
+# Testing
+/coverage
+
+# Next.js
+/.next/
+/out/
+
+# Production
+/build
+
+# Misc
 .DS_Store
-Thumbs.db
+*.pem
 
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# IDEs
 .vscode/
-
-client/node_modules/
-server/node_modules/
-server/dist/
-client/.env
-server/.env
-client/.next/
-node_modules

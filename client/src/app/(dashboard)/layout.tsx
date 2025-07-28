@@ -18,15 +18,19 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
     if (authUser) {
       const userRole = authUser.userRole?.toLowerCase();
       if (
-        (userRole === "landlord" && pathname.startsWith("/tenants")) ||
-        (userRole === "tenant" && pathname.startsWith("/landlords"))
+        (userRole === "landlord" && (pathname.startsWith("/tenants") || pathname.startsWith("/admin") || pathname.startsWith("/agent"))) ||
+        (userRole === "tenant" && (pathname.startsWith("/landlords") || pathname.startsWith("/admin") || pathname.startsWith("/agent"))) ||
+        (userRole === "admin" && (pathname.startsWith("/landlords") || pathname.startsWith("/tenants") || pathname.startsWith("/agent"))) ||
+        (userRole === "agent" && (pathname.startsWith("/landlords") || pathname.startsWith("/tenants") || pathname.startsWith("/admin")))
       ) {
-        router.push(
-          userRole === "landlord"
-            ? "/landlords/properties"
-            : "/tenants/favorites",
-          { scroll: false }
-        );
+        const redirectPath = {
+          landlord: "/landlords/properties",
+          tenant: "/tenants/favorites",
+          admin: "/admin/analytics",
+          agent: "/agent/leads"
+        }[userRole] || "/";
+        
+        router.push(redirectPath, { scroll: false });
       } else {
         setIsLoading(false);
       }
