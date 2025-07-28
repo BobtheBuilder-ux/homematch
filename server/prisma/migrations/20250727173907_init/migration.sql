@@ -7,14 +7,14 @@
 
 */
 -- DropForeignKey
-ALTER TABLE "Property" DROP CONSTRAINT "Property_managerCognitoId_fkey";
+ALTER TABLE "Property" DROP CONSTRAINT "Property_landlordCognitoId_fkey";
 
 -- AlterTable
-ALTER TABLE "Property" DROP COLUMN "managerCognitoId",
+ALTER TABLE "Property" DROP COLUMN "landlordCognitoId",
 ADD COLUMN     "landlordCognitoId" TEXT NOT NULL;
 
 -- DropTable
-DROP TABLE "Manager";
+DROP TABLE "Landlord";
 
 -- CreateTable
 CREATE TABLE "Landlord" (

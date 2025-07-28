@@ -37,20 +37,20 @@ CREATE TABLE "Property" (
     "averageRating" DOUBLE PRECISION DEFAULT 0,
     "numberOfReviews" INTEGER DEFAULT 0,
     "locationId" INTEGER NOT NULL,
-    "managerCognitoId" TEXT NOT NULL,
+    "landlordCognitoId" TEXT NOT NULL,
 
     CONSTRAINT "Property_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
-CREATE TABLE "Manager" (
+CREATE TABLE "Landlord" (
     "id" SERIAL NOT NULL,
     "cognitoId" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "phoneNumber" TEXT NOT NULL,
 
-    CONSTRAINT "Manager_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "Landlord_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -136,7 +136,7 @@ CREATE TABLE "_TenantProperties" (
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Manager_cognitoId_key" ON "Manager"("cognitoId");
+CREATE UNIQUE INDEX "Landlord_cognitoId_key" ON "Landlord"("cognitoId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Tenant_cognitoId_key" ON "Tenant"("cognitoId");
@@ -154,7 +154,7 @@ CREATE INDEX "_TenantProperties_B_index" ON "_TenantProperties"("B");
 ALTER TABLE "Property" ADD CONSTRAINT "Property_locationId_fkey" FOREIGN KEY ("locationId") REFERENCES "Location"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Property" ADD CONSTRAINT "Property_managerCognitoId_fkey" FOREIGN KEY ("managerCognitoId") REFERENCES "Manager"("cognitoId") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Property" ADD CONSTRAINT "Property_landlordCognitoId_fkey" FOREIGN KEY ("landlordCognitoId") REFERENCES "Landlord"("cognitoId") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Application" ADD CONSTRAINT "Application_propertyId_fkey" FOREIGN KEY ("propertyId") REFERENCES "Property"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
