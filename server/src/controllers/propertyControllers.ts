@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
-import { PrismaClient, Prisma } from "@prisma/client";
+import { PrismaClient, Prisma } from "../../node_modules/.prisma/client";
 import { wktToGeoJSON } from "@terraformer/wkt";
 import { S3Client } from "@aws-sdk/client-s3";
-import { Location } from "@prisma/client";
+import { Location } from "../../node_modules/.prisma/client";
 import { Upload } from "@aws-sdk/lib-storage";
 import axios from "axios";
 

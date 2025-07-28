@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { PrismaClient, Prisma } from "@prisma/client";
+import { PrismaClient, Prisma } from "../../node_modules/.prisma/client";
 
 const prisma = new PrismaClient();
 
@@ -109,7 +109,7 @@ export const createApplication = async (
       return;
     }
 
-    const newApplication = await prisma.$transaction(async (prisma: PrismaClient) => {
+    const newApplication = await prisma.$transaction(async (prisma: Prisma.TransactionClient) => {
       // Create lease first
       const lease = await prisma.lease.create({
         data: {
