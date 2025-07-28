@@ -39,6 +39,11 @@ export const authMiddleware = (allowedRoles: string[]) => {
         res.status(403).json({ message: "Access Denied" });
         return;
       }
+
+      // Special handling for admin and agent roles
+      if (userRole.toLowerCase() === "admin" || userRole.toLowerCase() === "agent") {
+        // Allow access for admin and agent roles
+      }
     } catch (err) {
       console.error("Failed to decode token:", err);
       res.status(400).json({ message: "Invalid token" });

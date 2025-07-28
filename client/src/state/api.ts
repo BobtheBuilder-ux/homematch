@@ -32,6 +32,13 @@ export const api = createApi({
     "Leases",
     "Payments",
     "Applications",
+    "AdminAnalytics",
+    "AllUsers",
+    "AllProperties",
+    "AdminSettings",
+    "AgentLeads",
+    "AgentClients",
+    "AgentTasks",
   ],
   endpoints: (build) => ({
     getAuthUser: build.query<User, void>({
@@ -348,6 +355,190 @@ export const api = createApi({
         });
       },
     }),
+
+    // Admin endpoints
+    getAdminAnalytics: build.query<any, void>({
+      query: () => "admin/analytics",
+      providesTags: ["AdminAnalytics"],
+      async onQueryStarted(_, { queryFulfilled }) {
+        await withToast(queryFulfilled, {
+          error: "Failed to fetch analytics data.",
+        });
+      },
+    }),
+
+    getAllUsers: build.query<any[], void>({
+      query: () => "admin/users",
+      providesTags: ["AllUsers"],
+      async onQueryStarted(_, { queryFulfilled }) {
+        await withToast(queryFulfilled, {
+          error: "Failed to fetch users.",
+        });
+      },
+    }),
+
+    getAllProperties: build.query<any[], void>({
+      query: () => "admin/properties",
+      providesTags: ["AllProperties"],
+      async onQueryStarted(_, { queryFulfilled }) {
+        await withToast(queryFulfilled, {
+          error: "Failed to fetch properties.",
+        });
+      },
+    }),
+
+    updateUserStatus: build.mutation<any, { userId: string; status: string }>({
+      query: ({ userId, status }) => ({
+        url: `admin/users/${userId}/status`,
+        method: "PUT",
+        body: { status },
+      }),
+      invalidatesTags: ["AllUsers"],
+      async onQueryStarted(_, { queryFulfilled }) {
+        await withToast(queryFulfilled, {
+          success: "User status updated successfully!",
+          error: "Failed to update user status.",
+        });
+      },
+    }),
+
+    deleteUser: build.mutation<any, string>({
+      query: (userId) => ({
+        url: `admin/users/${userId}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["AllUsers"],
+      async onQueryStarted(_, { queryFulfilled }) {
+        await withToast(queryFulfilled, {
+          success: "User deleted successfully!",
+          error: "Failed to delete user.",
+        });
+      },
+    }),
+
+    updatePropertyStatus: build.mutation<any, { propertyId: number; status: string }>({
+      query: ({ propertyId, status }) => ({
+        url: `admin/properties/${propertyId}/status`,
+        method: "PUT",
+        body: { status },
+      }),
+      invalidatesTags: ["AllProperties"],
+      async onQueryStarted(_, { queryFulfilled }) {
+        await withToast(queryFulfilled, {
+          success: "Property status updated successfully!",
+          error: "Failed to update property status.",
+        });
+      },
+    }),
+
+    deleteProperty: build.mutation<any, number>({
+      query: (propertyId) => ({
+        url: `admin/properties/${propertyId}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["AllProperties"],
+      async onQueryStarted(_, { queryFulfilled }) {
+        await withToast(queryFulfilled, {
+          success: "Property deleted successfully!",
+          error: "Failed to delete property.",
+        });
+      },
+    }),
+
+    getAdminSettings: build.query<any, void>({
+      query: () => "admin/settings",
+      providesTags: ["AdminSettings"],
+    }),
+
+    updateAdminSettings: build.mutation<any, any>({
+      query: (settings) => ({
+        url: "admin/settings",
+        method: "PUT",
+        body: settings,
+      }),
+      invalidatesTags: ["AdminSettings"],
+      async onQueryStarted(_, { queryFulfilled }) {
+        await withToast(queryFulfilled, {
+          success: "Settings updated successfully!",
+          error: "Failed to update settings.",
+        });
+      },
+    }),
+
+    // Agent endpoints
+    getAgentLeads: build.query<any[], void>({
+      query: () => "agent/leads",
+      providesTags: ["AgentLeads"],
+      async onQueryStarted(_, { queryFulfilled }) {
+        await withToast(queryFulfilled, {
+          error: "Failed to fetch leads.",
+        });
+      },
+    }),
+
+    getAgentClients: build.query<any[], void>({
+      query: () => "agent/clients",
+      providesTags: ["AgentClients"],
+      async onQueryStarted(_, { queryFulfilled }) {
+        await withToast(queryFulfilled, {
+          error: "Failed to fetch clients.",
+        });
+      },
+    }),
+
+    getAgentTasks: build.query<any[], void>({
+      query: () => "agent/tasks",
+      providesTags: ["AgentTasks"],
+      async onQueryStarted(_, { queryFulfilled }) {
+        await withToast(queryFulfilled, {
+          error: "Failed to fetch tasks.",
+        });
+      },
+    }),
+
+    updateLeadStatus: build.mutation<any, { leadId: number; status: string }>({
+      query: ({ leadId, status }) => ({
+        url: `agent/leads/${leadId}/status`,
+        method: "PUT",
+        body: { status },
+      }),
+      invalidatesTags: ["AgentLeads"],
+      async onQueryStarted(_, { queryFulfilled }) {
+        await withToast(queryFulfilled, {
+          success: "Lead status updated successfully!",
+          error: "Failed to update lead status.",
+        });
+      },
+    }),
+
+    updateTaskStatus: build.mutation<any, { taskId: number; status: string }>({
+      query: ({ taskId, status }) => ({
+        url: `agent/tasks/${taskId}/status`,
+        method: "PUT",
+        body: { status },
+      }),
+      invalidatesTags: ["AgentTasks"],
+      async onQueryStarted(_, { queryFulfilled }) {
+        await withToast(queryFulfilled, {
+          success: "Task status updated successfully!",
+          error: "Failed to update task status.",
+        });
+      },
+    }),
+
+    updateAgentSettings: build.mutation<any, { cognitoId: string } & Partial<any>>({
+      query: ({ cognitoId, ...updatedAgent }) => ({
+        url: `agent/${cognitoId}`,
+        method: "PUT",
+        body: updatedAgent,
+      }),
+      async onQueryStarted(_, { queryFulfilled }) {
+        await withToast(queryFulfilled, {
+          success: "Settings updated successfully!",
+          error: "Failed to update settings.",
+        });
+      },
+    }),
   }),
 });
 
@@ -369,4 +560,21 @@ export const {
   useGetApplicationsQuery,
   useUpdateApplicationStatusMutation,
   useCreateApplicationMutation,
+  // Admin hooks
+  useGetAdminAnalyticsQuery,
+  useGetAllUsersQuery,
+  useGetAllPropertiesQuery,
+  useUpdateUserStatusMutation,
+  useDeleteUserMutation,
+  useUpdatePropertyStatusMutation,
+  useDeletePropertyMutation,
+  useGetAdminSettingsQuery,
+  useUpdateAdminSettingsMutation,
+  // Agent hooks
+  useGetAgentLeadsQuery,
+  useGetAgentClientsQuery,
+  useGetAgentTasksQuery,
+  useUpdateLeadStatusMutation,
+  useUpdateTaskStatusMutation,
+  useUpdateAgentSettingsMutation,
 } = api;
