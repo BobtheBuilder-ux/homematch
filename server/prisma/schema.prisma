@@ -119,6 +119,14 @@ model Tenant {
   leases       Lease[]
 }
 
+model Agent {
+  id          Int    @id @default(autoincrement())
+  cognitoId   String @unique
+  name        String
+  email       String
+  phoneNumber String?
+}
+
 model Location {
   id          Int                                   @id @default(autoincrement())
   address     String

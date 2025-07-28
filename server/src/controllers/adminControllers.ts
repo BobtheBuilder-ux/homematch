@@ -249,3 +249,57 @@ export const updateAdminSettings = async (
     res.status(500).json({ message: `Error updating settings: ${error.message}` });
   }
 };
+
+import { createUserInCognito } from "../utils/cognitoService";
+
+export const createAgent = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const { name, email, phoneNumber, password, invitationCode } = req.body;
+
+    if (invitationCode !== process.env.AGENT_INVITATION_CODE) {
+      res.status(403).json({ message: "Invalid invitation code" });
+      return;
+    }
+
+    if (!email || !password || !name) {
+      res.status(400).json({ message: "Name, email, and password are required" });
+      return;
+    }
+
+    // Create user in Cognito
+    const cognitoUser = await createUserInCognito(email, password);
+
+    if (!cognitoUser) {
+      res.status(500).json({ message: "Failed to create user in Cognito" });
+      return;
+    }
+
+    const agent = await prisma.agent.create({
+      data: {
+        cognitoId: cognitoUser.Username!,
+        name,
+        email,
+        phoneNumber: phoneNumber || null, // Store as null if not provided
+      },
+    });
+
+    res.status(201).json(agent);
+  } catch (error: any) {
+    res.status(500).json({ message: `Error creating agent: ${error.message}` });
+  }
+};
+
+export const getAllAgents = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const agents = await prisma.agent.findMany();
+    res.json(agents);
+  } catch (error: any) {
+    res.status(500).json({ message: `Error fetching agents: ${error.message}` });
+  }
+};

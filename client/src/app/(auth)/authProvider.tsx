@@ -1,12 +1,14 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Amplify } from "aws-amplify";
+import { signUp } from "aws-amplify/auth";
 import {
   Authenticator,
   Heading,
   Radio,
   RadioGroupField,
+  TextField,
   useAuthenticator,
   View,
 } from "@aws-amplify/ui-react";
@@ -61,6 +63,8 @@ const components = {
   SignUp: {
     FormFields() {
       const { validationErrors } = useAuthenticator();
+      const [role, setRole] = useState("tenant");
+      const [invitationCode, setInvitationCode] = useState("");
 
       return (
         <>
@@ -68,13 +72,27 @@ const components = {
           <RadioGroupField
             legend="Role"
             name="custom:role"
+            value={role}
+            onChange={(e) => setRole(e.target.value)}
             errorMessage={validationErrors?.["custom:role"]}
             hasError={!!validationErrors?.["custom:role"]}
             isRequired
           >
             <Radio value="tenant">Tenant</Radio>
-            <Radio value="landlord">LandLord</Radio>
+            <Radio value="landlord">Landlord</Radio>
+            <Radio value="agent">Agent</Radio>
           </RadioGroupField>
+          {role === "agent" && (
+            <TextField
+              placeholder="Enter your invitation code"
+              label="Invitation Code"
+              isRequired
+              value={invitationCode}
+              onChange={(e) => setInvitationCode(e.target.value)}
+              errorMessage={validationErrors?.["custom:invitationCode"]}
+              hasError={!!validationErrors?.["custom:invitationCode"]}
+            />
+          )}
         </>
       );
     },
@@ -160,12 +178,39 @@ const Auth = ({ children }: { children: React.ReactNode }) => {
     return <>{children}</>;
   }
 
+  const handleSignUp = async (formData: any) => {
+    const { "custom:role": role, "custom:invitationCode": invitationCode, ...rest } = formData;
+    if (role === 'agent') {
+      try {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/admin/agents`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ ...formData, invitationCode }),
+        });
+        if (!response.ok) {
+          const error = await response.json();
+          throw new Error(error.message);
+        }
+      } catch (error) {
+        console.error('Failed to create agent:', error);
+        // Handle error display to the user
+        throw error;
+      }
+    }
+    return signUp(formData);
+  };
+
   return (
     <div className="h-full">
       <Authenticator
         initialState={pathname.includes("signup") ? "signUp" : "signIn"}
         components={components}
         formFields={formFields}
+        services={{
+          handleSignUp,
+        }}
       >
         {() => <>{children}</>}
       </Authenticator>
