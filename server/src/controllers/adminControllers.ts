@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { PrismaClient } from "../../node_modules/.prisma/client";
+import { createUserInCognito } from "../utils/cognitoService";
 
 const prisma = new PrismaClient();
 
@@ -250,8 +251,6 @@ export const updateAdminSettings = async (
   }
 };
 
-import { createUserInCognito } from "../utils/cognitoService";
-
 export const createAgent = async (
   req: Request,
   res: Response
@@ -277,16 +276,16 @@ export const createAgent = async (
       return;
     }
 
-    const agent = await prisma.agent.create({
+    const newAgent = await prisma.agent.create({
       data: {
         cognitoId: cognitoUser.Username!,
         name,
         email,
-        phoneNumber: phoneNumber || null, // Store as null if not provided
+        phoneNumber: phoneNumber || null,
       },
     });
 
-    res.status(201).json(agent);
+    res.status(201).json(newAgent);
   } catch (error: any) {
     res.status(500).json({ message: `Error creating agent: ${error.message}` });
   }
