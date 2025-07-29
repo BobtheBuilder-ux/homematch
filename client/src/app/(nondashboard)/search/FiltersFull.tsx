@@ -31,7 +31,8 @@ const FiltersFull = () => {
   const isFiltersFullOpen = useAppSelector(
     (state) => state.global.isFiltersFullOpen
   );
-  const [localFilters, setLocalFilters] = useState<FiltersState>(initialState.filters);
+  const [localFilters, setLocalFilters] = useState<FiltersState & { name?: string }>(initialState.filters);
+  const [nameSearchInput, setNameSearchInput] = useState("");
 
   const updateURL = debounce((newFilters: FiltersState) => {
     const cleanFilters = cleanParams(newFilters);
@@ -97,13 +98,33 @@ const FiltersFull = () => {
   return (
     <div className="bg-white rounded-lg px-4 h-full overflow-auto pb-10">
       <div className="flex flex-col space-y-6">
+        {/* Property Name */}
+        <div>
+          <h4 className="font-bold mb-2">Property Name</h4>
+          <div className="flex items-center">
+            <Input
+              placeholder="Search by property name"
+              value={nameSearchInput}
+              onChange={(e) => {
+                setNameSearchInput(e.target.value);
+                const newValue = e.target.value.trim() ? e.target.value : undefined;
+                setLocalFilters((prev) => ({
+                  ...prev,
+                  name: newValue,
+                }));
+              }}
+              className="w-full rounded-xl border-gray-200"
+            />
+          </div>
+        </div>
+
         {/* Location */}
         <div>
           <h4 className="font-bold mb-2">Location</h4>
           <div className="flex items-center">
             <Input
               placeholder="Enter location"
-              value={filters.location}
+              value={localFilters.location}
               onChange={(e) =>
                 setLocalFilters((prev) => ({
                   ...prev,

@@ -30,6 +30,8 @@ export const getProperties = async (
       availableFrom,
       latitude,
       longitude,
+      name,
+      location,
     } = req.query;
 
     let whereConditions: Prisma.Sql[] = [];
@@ -76,6 +78,25 @@ export const getProperties = async (
     if (propertyType && propertyType !== "any") {
       whereConditions.push(
         Prisma.sql`p."propertyType" = ${propertyType}::"PropertyType"`
+      );
+    }
+    
+    // Search by property name
+    if (name) {
+      whereConditions.push(
+        Prisma.sql`p.name ILIKE ${`%${name}%`}`
+      );
+    }
+    
+    // Search by location text
+    if (location && !latitude && !longitude) {
+      whereConditions.push(
+        Prisma.sql`(
+          l.city ILIKE ${`%${location}%`} OR
+          l.state ILIKE ${`%${location}%`} OR
+          l.country ILIKE ${`%${location}%`} OR
+          l.address ILIKE ${`%${location}%`}
+        )`
       );
     }
 

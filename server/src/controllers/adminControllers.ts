@@ -110,9 +110,20 @@ export const getAllUsers = async (
       },
     });
 
+    const agents = await prisma.agent.findMany({
+      select: {
+        id: true,
+        cognitoId: true,
+        name: true,
+        email: true,
+        phoneNumber: true,
+      },
+    });
+
     const users = [
       ...tenants.map(tenant => ({ ...tenant, role: 'tenant', status: 'active', createdAt: new Date() })),
       ...landlords.map(landlord => ({ ...landlord, role: 'landlord', status: 'active', createdAt: new Date() })),
+      ...agents.map(agent => ({ ...agent, role: 'agent', status: 'active', createdAt: new Date() })),
     ];
 
     res.json(users);

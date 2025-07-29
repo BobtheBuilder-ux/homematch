@@ -84,19 +84,19 @@ const PropertyDetails = ({ propertyId }: PropertyDetailsProps) => {
             <hr />
             <div className="flex justify-between py-2 bg-secondary-50">
               <span className="text-primary-700 font-medium">
-                Application Fee
+                Application Fee (10% of yearly rent)
               </span>
               <span className="text-primary-700">
-                ${property.applicationFee}
+                ${(property.pricePerMonth * 12 * 0.1).toLocaleString()}
               </span>
             </div>
             <hr />
             <div className="flex justify-between py-2 bg-secondary-50">
               <span className="text-primary-700 font-medium">
-                Security Deposit
+                Caution Fee (20% of yearly rent)
               </span>
               <span className="text-primary-700">
-                ${property.securityDeposit}
+                ${(property.pricePerMonth * 12 * 0.2).toLocaleString()}
               </span>
             </div>
             <hr />
