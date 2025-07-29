@@ -25,13 +25,34 @@ const Navbar = () => {
   const pathname = usePathname();
 
   const isDashboardPage =
-    pathname.includes("/landlords") || pathname.includes("/tenants");
-    pathname.includes("/landlords") || pathname.includes("/tenants") || 
+    pathname.includes("/landlords") || pathname.includes("/tenants") ||
     pathname.includes("/admin") || pathname.includes("/agent");
 
+  type UserRole = "landlord" | "tenant" | "admin" | "agent";
+  
   const handleSignOut = async () => {
     await signOut();
     window.location.href = "/";
+  };
+
+  const getActionPath = (role: string | undefined): string => {
+    const paths: Record<UserRole, string> = {
+      landlord: "/landlords/newproperty",
+      tenant: "/search",
+      admin: "/admin/users",
+      agent: "/agent/leads"
+    };
+    return paths[role?.toLowerCase() as UserRole] || "/search";
+  };
+
+  const getDashboardPath = (role: string | undefined): string => {
+    const paths: Record<UserRole, string> = {
+      landlord: "/landlords/properties",
+      tenant: "/tenants/favorites",
+      admin: "/admin/analytics",
+      agent: "/agent/leads"
+    };
+    return paths[role?.toLowerCase() as UserRole] || "/";
   };
 
   return (
@@ -60,9 +81,9 @@ const Navbar = () => {
                 className="w-6 h-6"
               />
               <div className="text-xl font-bold">
-                RENT
+                Home
                 <span className="text-secondary-500 font-light hover:!text-primary-300">
-                  IFUL
+                  Match
                 </span>
               </div>
             </div>
@@ -71,19 +92,7 @@ const Navbar = () => {
             <Button
               variant="secondary"
               className="md:ml-4 bg-primary-50 text-primary-700 hover:bg-secondary-500 hover:text-primary-50"
-              onClick={() =>
-                {
-                  const userRole = authUser.userRole?.toLowerCase();
-                  const actionPath = {
-                    landlord: "/landlords/newproperty",
-                    tenant: "/search",
-                    admin: "/admin/users",
-                    agent: "/agent/leads"
-                  }[userRole] || "/search";
-                  
-                  router.push(actionPath);
-                }
-              }
+              onClick={() => router.push(getActionPath(authUser.userRole))}
             >
               {(() => {
                 const userRole = authUser.userRole?.toLowerCase();
@@ -153,19 +162,7 @@ const Navbar = () => {
                 <DropdownMenuContent className="bg-white text-primary-700">
                   <DropdownMenuItem
                     className="cursor-pointer hover:!bg-primary-700 hover:!text-primary-100 font-bold"
-                    onClick={() =>
-                      {
-                        const userRole = authUser.userRole?.toLowerCase();
-                        const dashboardPath = {
-                          landlord: "/landlords/properties",
-                          tenant: "/tenants/favorites",
-                          admin: "/admin/analytics",
-                          agent: "/agent/leads"
-                        }[userRole] || "/";
-                        
-                        router.push(dashboardPath, { scroll: false });
-                      }
-                    }
+                    onClick={() => router.push(getDashboardPath(authUser.userRole), { scroll: false })}
                   >
                     Go to Dashboard
                   </DropdownMenuItem>

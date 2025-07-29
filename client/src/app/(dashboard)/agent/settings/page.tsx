@@ -20,8 +20,12 @@ const AgentSettings = () => {
   };
 
   const handleSubmit = async (data: typeof initialData) => {
+    if (!authUser?.cognitoInfo?.userId) {
+      console.error("Cognito User ID is undefined. Cannot update agent settings.");
+      return;
+    }
     await updateAgent({
-      cognitoId: authUser?.cognitoInfo?.userId,
+      cognitoId: authUser.cognitoInfo.userId,
       ...data,
     });
   };

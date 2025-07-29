@@ -9,6 +9,10 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "./ui/sidebar";
+
+interface AppSidebarProps {
+  userType: "landlord" | "tenant" | "admin" | "agent";
+}
 import {
   Building,
   FileText,

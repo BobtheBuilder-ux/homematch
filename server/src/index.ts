@@ -33,8 +33,8 @@ app.get("/", (req, res) => {
 app.use("/applications", applicationRoutes);
 app.use("/properties", propertyRoutes);
 app.use("/leases", leaseRoutes);
-app.use("/tenants", authMiddleware(["tenant"]), tenantRoutes);
-app.use("/landlords", authMiddleware(["landlord"]), landlordRoutes);
+app.use("/tenants", authMiddleware(["tenant", "landlord", "agent", "admin"]), tenantRoutes);
+app.use("/landlords", authMiddleware(["landlord", "admin"]), landlordRoutes);
 app.use("/admin", authMiddleware(["admin"]), adminRoutes);
 app.use("/agent", authMiddleware(["agent"]), agentRoutes);
 

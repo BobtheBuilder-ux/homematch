@@ -74,9 +74,12 @@ const FiltersBar = () => {
 
   const handleLocationSearch = async () => {
     try {
+      const trimmedInput = searchInput.trim();
+      if (!trimmedInput) return;
+
       const response = await fetch(
         `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(
-          searchInput
+          trimmedInput
         )}.json?access_token=${
           process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN
         }&fuzzyMatch=true`
@@ -86,13 +89,13 @@ const FiltersBar = () => {
         const [lng, lat] = data.features[0].center;
         dispatch(
           setFilters({
-            location: searchInput,
+            location: trimmedInput,
             coordinates: [lng, lat],
           })
         );
       }
     } catch (err) {
-      console.error("Error search location:", err);
+      console.error("Error searching location:", err);
     }
   };
 

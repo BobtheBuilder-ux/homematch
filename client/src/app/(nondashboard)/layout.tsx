@@ -20,11 +20,11 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         (userRole === "admin" && pathname === "/") ||
         (userRole === "agent" && pathname === "/")
       ) {
-        const redirectPath = {
+        const redirectPath = ({
           landlord: "/landlords/properties",
           admin: "/admin/analytics",
           agent: "/agent/leads"
-        }[userRole] || "/";
+        } as Record<string, string>)[userRole] || "/";
         
         router.push(redirectPath, { scroll: false });
       } else {

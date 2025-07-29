@@ -23,14 +23,14 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
         (userRole === "admin" && (pathname.startsWith("/landlords") || pathname.startsWith("/tenants") || pathname.startsWith("/agent"))) ||
         (userRole === "agent" && (pathname.startsWith("/landlords") || pathname.startsWith("/tenants") || pathname.startsWith("/admin")))
       ) {
-        const redirectPath = {
+        const redirectPath: { [key: string]: string } = {
           landlord: "/landlords/properties",
           tenant: "/tenants/favorites",
           admin: "/admin/analytics",
           agent: "/agent/leads"
-        }[userRole] || "/";
+        };
         
-        router.push(redirectPath, { scroll: false });
+        router.push(redirectPath[userRole as keyof typeof redirectPath] || "/", { scroll: false });
       } else {
         setIsLoading(false);
       }
