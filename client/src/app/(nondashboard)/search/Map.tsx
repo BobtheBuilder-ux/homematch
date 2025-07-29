@@ -5,6 +5,7 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import { useAppSelector } from "@/state/redux";
 import { useGetPropertiesQuery } from "@/state/api";
 import { Property } from "@/types/prismaTypes";
+import Loading from "@/components/Loading";
 
 mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN as string;
 
@@ -22,7 +23,7 @@ const Map = () => {
 
     const map = new mapboxgl.Map({
       container: mapContainerRef.current!,
-      style: "mapbox://styles/majesticglue/cm6u301pq008b01sl7yk1cnvb",
+      style: "mapbox://styles/mapbox/streets-v12",
       center: filters.coordinates || [-74.5, 40],
       zoom: 9,
     });
@@ -42,7 +43,7 @@ const Map = () => {
     return () => map.remove();
   }, [isLoading, isError, properties, filters.coordinates]);
 
-  if (isLoading) return <>Loading...</>;
+  if (isLoading) return <Loading />;
   if (isError || !properties) return <div>Failed to fetch properties</div>;
 
   return (

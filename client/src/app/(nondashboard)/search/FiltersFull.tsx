@@ -1,4 +1,8 @@
-import { FiltersState, initialState, setFilters } from "@/state";
+import {
+  FiltersState,
+  setFilters,
+  initialState,
+} from "@/state";
 import { useAppSelector } from "@/state/redux";
 import { usePathname, useRouter } from "next/navigation";
 import React, { useState } from "react";
@@ -8,7 +12,7 @@ import { cleanParams, cn, formatEnumString } from "@/lib/utils";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Search } from "lucide-react";
-import { AmenityIcons, PropertyTypeIcons } from "@/lib/constants";
+import { AmenityEnum, AmenityIcons, PropertyTypeEnum, PropertyTypeIcons } from "@/lib/constants";
 import { Slider } from "@/components/ui/slider";
 import {
   Select,
@@ -24,10 +28,10 @@ const FiltersFull = () => {
   const router = useRouter();
   const pathname = usePathname();
   const filters = useAppSelector((state) => state.global.filters);
-  const [localFilters, setLocalFilters] = useState(initialState.filters);
   const isFiltersFullOpen = useAppSelector(
     (state) => state.global.isFiltersFullOpen
   );
+  const [localFilters, setLocalFilters] = useState<FiltersState>(initialState.filters);
 
   const updateURL = debounce((newFilters: FiltersState) => {
     const cleanFilters = cleanParams(newFilters);
@@ -65,9 +69,12 @@ const FiltersFull = () => {
 
   const handleLocationSearch = async () => {
     try {
+      const trimmedLocation = localFilters.location?.trim();
+      if (!trimmedLocation) return;
+
       const response = await fetch(
         `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(
-          localFilters.location
+          trimmedLocation
         )}.json?access_token=${
           process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN
         }&fuzzyMatch=true`
@@ -81,7 +88,7 @@ const FiltersFull = () => {
         }));
       }
     } catch (err) {
-      console.error("Error search location:", err);
+      console.error("Error searching location:", err);
     }
   };
 
