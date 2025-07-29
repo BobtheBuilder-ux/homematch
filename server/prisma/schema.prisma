@@ -140,16 +140,45 @@ model Location {
 }
 
 model Application {
-  id              Int               @id @default(autoincrement())
-  applicationDate DateTime
-  status          ApplicationStatus
-  propertyId      Int
-  tenantCognitoId String
-  name            String
-  email           String
-  phoneNumber     String
-  message         String?
-  leaseId         Int?              @unique
+  id                      Int               @id @default(autoincrement())
+  applicationDate         DateTime
+  status                  ApplicationStatus
+  propertyId              Int
+  tenantCognitoId         String
+  name                    String
+  email                   String
+  phoneNumber             String
+  preferredMoveInDate     DateTime?
+  desiredLeaseDuration    String?
+  gender                  String?
+  dateOfBirth             DateTime?
+  nationality             String?
+  maritalStatus           String?
+  idType                  String?
+  idDocumentUrl          String?
+  durationAtCurrentAddress String?
+  employmentStatus        String?
+  occupation              String?
+  employerName            String?
+  workAddress             String?
+  monthlyIncome           Float?
+  durationAtCurrentJob    String?
+  incomeProofUrl          String?
+  previousEmployerName    String?
+  previousJobTitle        String?
+  previousEmploymentDuration String?
+  reasonForLeavingPrevJob String?
+  numberOfOccupants       Int?
+  relationshipToOccupants String?
+  hasPets                 Boolean?
+  isSmoker                Boolean?
+  accessibilityNeeds      String?
+  reasonForLeaving        String?
+  consentToInformation    Boolean?
+  consentToVerification   Boolean?
+  consentToTenancyTerms   Boolean?
+  consentToPrivacyPolicy  Boolean?
+  leaseId                 Int?              @unique
 
   property Property @relation(fields: [propertyId], references: [id])
   tenant   Tenant   @relation(fields: [tenantCognitoId], references: [cognitoId])
