@@ -175,6 +175,9 @@ async function main() {
           } else if (modelName === "Application") {
             data = {
               ...data,
+              applicationDate: new Date(item.applicationDate),
+              preferredMoveInDate: item.preferredMoveInDate ? new Date(item.preferredMoveInDate) : undefined,
+              dateOfBirth: item.dateOfBirth ? new Date(item.dateOfBirth) : undefined,
               property: { connect: { id: item.propertyId } },
               tenant: { connect: { cognitoId: item.tenantCognitoId } }
             };
