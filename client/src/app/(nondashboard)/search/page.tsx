@@ -25,6 +25,15 @@ const SearchPage = () => {
           acc[key] = value.split(",").map((v) => (v === "" ? null : Number(v)));
         } else if (key === "coordinates") {
           acc[key] = value.split(",").map(Number);
+        } else if (key === "lat" || key === "lng") {
+          // Handle lat/lng from landing page search
+          const lat = searchParams.get("lat");
+          const lng = searchParams.get("lng");
+          if (lat && lng) {
+            acc.coordinates = [Number(lng), Number(lat)];
+          }
+        } else if (key === "amenities") {
+          acc[key] = value.split(",");
         } else {
           acc[key] = value === "any" ? null : value;
         }
@@ -34,9 +43,19 @@ const SearchPage = () => {
       {}
     );
 
+    // Ensure location is set from the search params
+    if (searchParams.get("location")) {
+      initialFilters.location = searchParams.get("location");
+    }
+
+    // Ensure name search is set from the search params
+    if (searchParams.get("name")) {
+      initialFilters.name = searchParams.get("name");
+    }
+
     const cleanedFilters = cleanParams(initialFilters);
     dispatch(setFilters(cleanedFilters));
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [searchParams]); // Add searchParams as dependency
 
   return (
     <div

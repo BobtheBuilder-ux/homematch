@@ -47,19 +47,6 @@ const ApplicationModal = ({
       monthlyIncome: undefined,
       durationAtCurrentJob: "",
       incomeProofUrl: undefined,
-      
-      // Previous Employment
-      previousEmployerName: "",
-      previousJobTitle: "",
-      previousEmploymentDuration: "",
-      reasonForLeavingPrevJob: "",
-      
-      // Additional Information
-      numberOfOccupants: undefined,
-      relationshipToOccupants: "",
-      hasPets: false,
-      isSmoker: false,
-      accessibilityNeeds: "",
       reasonForLeaving: "",
       
       // Consent & Declaration
@@ -281,79 +268,9 @@ const ApplicationModal = ({
               </div>
             </div>
             
-            <Separator />
-            
-            {/* Previous Employment */}
-            <div className="space-y-4">
-              <h3 className="text-lg font-semibold">Previous Employment History (Optional)</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <CustomFormField
-                  name="previousEmployerName"
-                  label="Previous Employer Name"
-                  type="text"
-                  placeholder="Enter previous employer name"
-                />
-                <CustomFormField
-                  name="previousJobTitle"
-                  label="Job Title"
-                  type="text"
-                  placeholder="Enter your previous job title"
-                />
-                <CustomFormField
-                  name="previousEmploymentDuration"
-                  label="Duration of Employment"
-                  type="text"
-                  placeholder="Enter duration"
-                />
-                <CustomFormField
-                  name="reasonForLeavingPrevJob"
-                  label="Reason for Leaving"
-                  type="text"
-                  placeholder="Enter reason for leaving"
-                />
-              </div>
-            </div>
-            
-            <Separator />
-            
-            {/* Additional Information */}
             <div className="space-y-4">
               <h3 className="text-lg font-semibold">Additional Information</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <CustomFormField
-                  name="numberOfOccupants"
-                  label="Number of People Moving In"
-                  type="number"
-                  placeholder="Enter number"
-                />
-                <CustomFormField
-                  name="relationshipToOccupants"
-                  label="Relationship to Other Occupants (if any)"
-                  type="text"
-                  placeholder="Enter relationships"
-                />
-                <div className="flex items-center space-x-4">
-                  <CustomFormField
-                    name="hasPets"
-                    label="Will you have any pets?"
-                    type="switch"
-                  />
-                </div>
-                <div className="flex items-center space-x-4">
-                  <CustomFormField
-                    name="isSmoker"
-                    label="Are you a smoker?"
-                    type="switch"
-                  />
-                </div>
-                <div className="md:col-span-2">
-                  <CustomFormField
-                    name="accessibilityNeeds"
-                    label="Do you have any special accessibility or facility needs?"
-                    type="textarea"
-                    placeholder="Describe any special needs"
-                  />
-                </div>
                 <div className="md:col-span-2">
                   <CustomFormField
                     name="reasonForLeaving"

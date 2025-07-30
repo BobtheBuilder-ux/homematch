@@ -51,18 +51,7 @@ export const applicationSchema = z.object({
   durationAtCurrentJob: z.string().optional(),
   incomeProofUrl: z.instanceof(File).optional(),
   
-  // Previous Employment (Optional)
-  previousEmployerName: z.string().optional(),
-  previousJobTitle: z.string().optional(),
-  previousEmploymentDuration: z.string().optional(),
-  reasonForLeavingPrevJob: z.string().optional(),
-  
   // Additional Information
-  numberOfOccupants: z.coerce.number().int().positive().optional(),
-  relationshipToOccupants: z.string().optional(),
-  hasPets: z.boolean().optional(),
-  isSmoker: z.boolean().optional(),
-  accessibilityNeeds: z.string().optional(),
   reasonForLeaving: z.string().optional(),
   
   // Consent & Declaration

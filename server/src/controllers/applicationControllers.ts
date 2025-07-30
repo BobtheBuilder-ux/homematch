@@ -157,42 +157,7 @@ export const createApplication = async (
         },
       });
 
-      // Store additional application data in a structured format in the message field
-      // This is a temporary solution until the database schema is properly migrated
-      const additionalData = {
-        preferredMoveInDate,
-        desiredLeaseDuration,
-        gender,
-        dateOfBirth,
-        nationality,
-        maritalStatus,
-        idType,
-        idDocumentUrl,
-        durationAtCurrentAddress,
-        employmentStatus,
-        occupation,
-        employerName,
-        workAddress,
-        monthlyIncome,
-        durationAtCurrentJob,
-        incomeProofUrl,
-        previousEmployerName,
-        previousJobTitle,
-        previousEmploymentDuration,
-        reasonForLeavingPrevJob,
-        numberOfOccupants,
-        relationshipToOccupants,
-        hasPets,
-        isSmoker,
-        accessibilityNeeds,
-        reasonForLeaving,
-        consentToInformation,
-        consentToVerification,
-        consentToTenancyTerms,
-        consentToPrivacyPolicy,
-      };
-
-      // Then create application with lease connection
+      // Create application with all fields directly
       const application = await prisma.application.create({
         data: {
           applicationDate: new Date(applicationDate),
@@ -200,8 +165,36 @@ export const createApplication = async (
           name,
           email,
           phoneNumber,
-          // Store the additional data as JSON in the message field
-          message: JSON.stringify(additionalData),
+          preferredMoveInDate: preferredMoveInDate ? new Date(preferredMoveInDate) : null,
+          desiredLeaseDuration,
+          gender,
+          dateOfBirth: dateOfBirth ? new Date(dateOfBirth) : null,
+          nationality,
+          maritalStatus,
+          idType,
+          idDocumentUrl,
+          durationAtCurrentAddress,
+          employmentStatus,
+          occupation,
+          employerName,
+          workAddress,
+          monthlyIncome,
+          durationAtCurrentJob,
+          incomeProofUrl,
+          previousEmployerName,
+          previousJobTitle,
+          previousEmploymentDuration,
+          reasonForLeavingPrevJob,
+          numberOfOccupants,
+          relationshipToOccupants,
+          hasPets,
+          isSmoker,
+          accessibilityNeeds,
+          reasonForLeaving,
+          consentToInformation,
+          consentToVerification,
+          consentToTenancyTerms,
+          consentToPrivacyPolicy,
           property: {
             connect: { id: propertyId },
           },
@@ -218,11 +211,6 @@ export const createApplication = async (
           lease: true,
         },
       });
-      
-      // Note: After running this code, you'll need to:
-      // 1. Run prisma generate to update the Prisma client with the new schema
-      // 2. Run prisma migrate dev to create a migration for the schema changes
-      // 3. Update this controller to use the new fields directly instead of the message field
 
       return application;
     });
