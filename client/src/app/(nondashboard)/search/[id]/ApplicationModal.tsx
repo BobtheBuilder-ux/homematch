@@ -1,3 +1,5 @@
+"use client";
+
 import { CustomFormField } from "@/components/FormField";
 import { Button } from "@/components/ui/button";
 import {
@@ -101,8 +103,8 @@ const ApplicationModal = ({
                 <CustomFormField
                   name="preferredMoveInDate"
                   label="Preferred Move-in Date"
-                  type="text"
-                  placeholder="YYYY-MM-DD"
+                  type="date"
+                  placeholder="Select move-in date"
                 />
                 <CustomFormField
                   name="desiredLeaseDuration"
@@ -155,8 +157,8 @@ const ApplicationModal = ({
                 <CustomFormField
                   name="dateOfBirth"
                   label="Date of Birth"
-                  type="text"
-                  placeholder="YYYY-MM-DD"
+                  type="date"
+                  placeholder="Select date of birth"
                 />
                 <CustomFormField
                   name="nationality"
