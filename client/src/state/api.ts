@@ -310,15 +310,14 @@ export const api = createApi({
         if (params.userType) {
           queryParams.append("userType", params.userType);
         }
-
         return `applications?${queryParams.toString()}`;
       },
       providesTags: ["Applications"],
-      async onQueryStarted(_, { queryFulfilled }) {
-        await withToast(queryFulfilled, {
-          error: "Failed to fetch applications.",
-        });
-      },
+    }),
+
+    getApplication: build.query<Application, number>({
+      query: (id) => `applications/${id}`,
+      providesTags: (_, __, id) => [{ type: "Applications", id }],
     }),
 
     updateApplicationStatus: build.mutation<
@@ -556,6 +555,7 @@ export const {
   useGetPropertyLeasesQuery,
   useGetPaymentsQuery,
   useGetApplicationsQuery,
+  useGetApplicationQuery,
   useUpdateApplicationStatusMutation,
   useCreateApplicationMutation,
   // Admin hooks

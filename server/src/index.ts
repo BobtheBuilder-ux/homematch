@@ -23,7 +23,17 @@ app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 app.use(morgan("common"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cors());
+
+// Update CORS configuration
+app.use(
+  cors({
+    origin:
+      process.env.NODE_ENV === "production"
+        ? [process.env.FRONTEND_URL || "https://your-vercel-app.vercel.app"]
+        : true,
+    credentials: true,
+  })
+);
 
 /* ROUTES */
 app.get("/", (req, res) => {
@@ -33,7 +43,11 @@ app.get("/", (req, res) => {
 app.use("/applications", applicationRoutes);
 app.use("/properties", propertyRoutes);
 app.use("/leases", leaseRoutes);
-app.use("/tenants", authMiddleware(["tenant", "landlord", "agent", "admin"]), tenantRoutes);
+app.use(
+  "/tenants",
+  authMiddleware(["tenant", "landlord", "agent", "admin"]),
+  tenantRoutes
+);
 app.use("/landlords", authMiddleware(["landlord", "admin"]), landlordRoutes);
 app.use("/admin", authMiddleware(["admin"]), adminRoutes);
 app.use("/agent", authMiddleware(["agent"]), agentRoutes);
