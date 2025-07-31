@@ -21,7 +21,7 @@ export const getAgentLeads = async (
         property: {
           id: 1,
           name: "Downtown Apartment",
-          pricePerMonth: 1500,
+          pricePerYear: 1500,
         },
       },
       {
@@ -35,7 +35,7 @@ export const getAgentLeads = async (
         property: {
           id: 2,
           name: "Beach House",
-          pricePerMonth: 2000,
+          pricePerYear: 2000,
         },
       },
       {
@@ -49,7 +49,7 @@ export const getAgentLeads = async (
         property: {
           id: 3,
           name: "City Loft",
-          pricePerMonth: 2200,
+          pricePerYear: 2200,
         },
       },
     ];
@@ -87,7 +87,7 @@ export const getAgentClients = async (
         type: "landlord",
         status: "active",
         propertiesCount: landlord.managedProperties.length,
-        totalValue: landlord.managedProperties.reduce((sum, prop) => sum + prop.pricePerMonth, 0),
+        totalValue: landlord.managedProperties.reduce((sum, prop) => sum + prop.pricePerYear, 0),
         lastContact: new Date(),
       })),
       ...tenants.map(tenant => ({
@@ -98,7 +98,7 @@ export const getAgentClients = async (
         type: "tenant",
         status: "active",
         propertiesCount: tenant.properties.length,
-        totalValue: tenant.properties.reduce((sum, prop) => sum + prop.pricePerMonth, 0),
+        totalValue: tenant.properties.reduce((sum, prop) => sum + prop.pricePerYear, 0),
         lastContact: new Date(),
       })),
     ];

@@ -11,6 +11,7 @@ export interface FiltersState {
   squareFeet: [number, number] | [null, null];
   coordinates: [number, number];
   name?: string;
+  favoriteIds?: number[];
 }
 
 interface InitialStateTypes {
