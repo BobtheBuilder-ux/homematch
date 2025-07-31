@@ -29,7 +29,7 @@ app.use(
   cors({
     origin:
       process.env.NODE_ENV === "production"
-        ? [process.env.FRONTEND_URL || "https://your-vercel-app.vercel.app"]
+        ? [process.env.FRONTEND_URL || "https://homematch.com"]
         : true,
     credentials: true,
   })
