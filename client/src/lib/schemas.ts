@@ -28,10 +28,45 @@ export const propertySchema = z.object({
 export type PropertyFormData = z.infer<typeof propertySchema>;
 
 export const applicationSchema = z.object({
+  // Personal Information
   name: z.string().min(1, "Name is required"),
   email: z.string().email("Invalid email address"),
   phoneNumber: z.string().min(10, "Phone number must be at least 10 digits"),
-  message: z.string().optional(),
+  preferredMoveInDate: z.date().optional(),
+  desiredLeaseDuration: z.string().optional(),
+  gender: z.string().optional(),
+  dateOfBirth: z.date().optional(),
+  nationality: z.string().optional(),
+  maritalStatus: z.string().optional(),
+  idType: z.string().optional(),
+  idDocumentUrl: z.instanceof(File).optional(),
+  durationAtCurrentAddress: z.string().optional(),
+  
+  // Employment Details
+  employmentStatus: z.string().optional(),
+  occupation: z.string().optional(),
+  employerName: z.string().optional(),
+  workAddress: z.string().optional(),
+  monthlyIncome: z.coerce.number().positive().optional(),
+  durationAtCurrentJob: z.string().optional(),
+  incomeProofUrl: z.instanceof(File).optional(),
+  
+  // Additional Information
+  reasonForLeaving: z.string().optional(),
+  
+  // Consent & Declaration
+  consentToInformation: z.boolean().refine(val => val === true, {
+    message: "You must confirm that the information provided is true and complete",
+  }),
+  consentToVerification: z.boolean().refine(val => val === true, {
+    message: "You must authorize verification of this information",
+  }),
+  consentToTenancyTerms: z.boolean().refine(val => val === true, {
+    message: "You must understand and agree to the tenancy terms",
+  }),
+  consentToPrivacyPolicy: z.boolean().refine(val => val === true, {
+    message: "You must agree to the privacy policy",
+  }),
 });
 
 export type ApplicationFormData = z.infer<typeof applicationSchema>;

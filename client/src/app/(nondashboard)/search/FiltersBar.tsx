@@ -6,7 +6,7 @@ import {
 } from "@/state";
 import { useAppSelector } from "@/state/redux";
 import { usePathname, useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { debounce } from "lodash";
 import { cleanParams, cn, formatPriceValue } from "@/lib/utils";
@@ -32,6 +32,7 @@ const FiltersBar = () => {
   );
   const viewMode = useAppSelector((state) => state.global.viewMode);
   const [searchInput, setSearchInput] = useState(filters.location);
+  const [nameSearchInput, setNameSearchInput] = useState("");
 
   const updateURL = debounce((newFilters: FiltersState) => {
     const cleanFilters = cleanParams(newFilters);
@@ -131,6 +132,20 @@ const FiltersBar = () => {
           >
             <Search className="w-4 h-4" />
           </Button>
+        </div>
+
+        {/* Search Property Name */}
+        <div className="flex items-center">
+          <Input
+            placeholder="Search by property name"
+            value={nameSearchInput}
+            onChange={(e) => {
+              setNameSearchInput(e.target.value);
+              const newValue = e.target.value.trim() ? e.target.value : undefined;
+              dispatch(setFilters({ name: newValue }));
+            }}
+            className="w-48 rounded-xl border-primary-400"
+          />
         </div>
 
         {/* Price Range */}

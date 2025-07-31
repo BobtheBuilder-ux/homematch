@@ -9,10 +9,6 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "./ui/sidebar";
-
-interface AppSidebarProps {
-  userType: "landlord" | "tenant" | "admin" | "agent";
-}
 import {
   Building,
   FileText,
@@ -25,10 +21,15 @@ import {
   Users,
   UserCheck,
   ClipboardList,
+  File,
 } from "lucide-react";
 import { NAVBAR_HEIGHT } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
+
+interface AppSidebarProps {
+  userType: "landlord" | "tenant" | "admin" | "agent";
+}
 
 const AppSidebar = ({ userType }: AppSidebarProps) => {
   const pathname = usePathname();
@@ -54,6 +55,7 @@ const AppSidebar = ({ userType }: AppSidebarProps) => {
           { icon: BarChart3, label: "Analytics", href: "/admin/analytics" },
           { icon: Users, label: "Users", href: "/admin/users" },
           { icon: Building, label: "Properties", href: "/admin/properties" },
+          { icon: File, label: "Applications", href: "/admin/applications" },
           { icon: Settings, label: "Settings", href: "/admin/settings" },
         ];
       case "agent":

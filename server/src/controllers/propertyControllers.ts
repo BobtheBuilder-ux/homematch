@@ -30,6 +30,8 @@ export const getProperties = async (
       availableFrom,
       latitude,
       longitude,
+      name,
+      location,
     } = req.query;
 
     let whereConditions: Prisma.Sql[] = [];
@@ -43,13 +45,13 @@ export const getProperties = async (
 
     if (priceMin) {
       whereConditions.push(
-        Prisma.sql`p."pricePerMonth" >= ${Number(priceMin)}`
+        Prisma.sql`p."pricePerYear" >= ${Number(priceMin)}`
       );
     }
 
     if (priceMax) {
       whereConditions.push(
-        Prisma.sql`p."pricePerMonth" <= ${Number(priceMax)}`
+        Prisma.sql`p."pricePerYear" <= ${Number(priceMax)}`
       );
     }
 
@@ -76,6 +78,25 @@ export const getProperties = async (
     if (propertyType && propertyType !== "any") {
       whereConditions.push(
         Prisma.sql`p."propertyType" = ${propertyType}::"PropertyType"`
+      );
+    }
+    
+    // Search by property name
+    if (name) {
+      whereConditions.push(
+        Prisma.sql`p.name ILIKE ${`%${name}%`}`
+      );
+    }
+    
+    // Search by location text
+    if (location && !latitude && !longitude) {
+      whereConditions.push(
+        Prisma.sql`(
+          l.city ILIKE ${`%${location}%`} OR
+          l.state ILIKE ${`%${location}%`} OR
+          l.country ILIKE ${`%${location}%`} OR
+          l.address ILIKE ${`%${location}%`}
+        )`
       );
     }
 
@@ -271,7 +292,7 @@ export const createProperty = async (
             : [],
         isPetsAllowed: propertyData.isPetsAllowed === "true",
         isParkingIncluded: propertyData.isParkingIncluded === "true",
-        pricePerMonth: parseFloat(propertyData.pricePerMonth),
+        pricePerYear: parseFloat(propertyData.pricePerYear),
         securityDeposit: parseFloat(propertyData.securityDeposit),
         applicationFee: parseFloat(propertyData.applicationFee),
         beds: parseInt(propertyData.beds),

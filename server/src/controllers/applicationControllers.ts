@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { PrismaClient, Prisma } from "../../node_modules/.prisma/client";
+import { sendEmail } from "../utils/emailService";
 
 const prisma = new PrismaClient();
 
@@ -22,6 +23,7 @@ export const listApplications = async (
           },
         };
       }
+      // Admin can see all applications, so no where clause needed
     }
 
     const applications = await prisma.application.findMany({
@@ -34,6 +36,10 @@ export const listApplications = async (
           },
         },
         tenant: true,
+        lease: true,
+      },
+      orderBy: {
+        applicationDate: 'desc',
       },
     });
 
@@ -46,34 +52,20 @@ export const listApplications = async (
       return nextPaymentDate;
     }
 
-    const formattedApplications = await Promise.all(
-      applications.map(async (app: Prisma.ApplicationGetPayload<{ include: { property: { include: { location: true; landlord: true } }; tenant: true } }>) => {
-        const lease = await prisma.lease.findFirst({
-          where: {
-            tenant: {
-              cognitoId: app.tenantCognitoId,
-            },
-            propertyId: app.propertyId,
-          },
-          orderBy: { startDate: "desc" },
-        });
-
-        return {
-          ...app,
-          property: {
-            ...app.property,
-            address: app.property.location.address,
-          },
-          landlord: app.property.landlord,
-          lease: lease
-            ? {
-                ...lease,
-                nextPaymentDate: calculateNextPaymentDate(lease.startDate),
-              }
-            : null,
-        };
-      })
-    );
+    const formattedApplications = applications.map((app) => ({
+      ...app,
+      property: {
+        ...app.property,
+        address: app.property.location.address,
+      },
+      landlord: app.property.landlord,
+      lease: app.lease
+        ? {
+            ...app.lease,
+            nextPaymentDate: calculateNextPaymentDate(app.lease.startDate),
+          }
+        : null,
+    }));
 
     res.json(formattedApplications);
   } catch (error: any) {
@@ -96,12 +88,44 @@ export const createApplication = async (
       name,
       email,
       phoneNumber,
-      message,
+      preferredMoveInDate,
+      desiredLeaseDuration,
+      gender,
+      dateOfBirth,
+      nationality,
+      maritalStatus,
+      idType,
+      idDocumentUrl,
+      durationAtCurrentAddress,
+      employmentStatus,
+      occupation,
+      employerName,
+      workAddress,
+      monthlyIncome,
+      durationAtCurrentJob,
+      incomeProofUrl,
+      previousEmployerName,
+      previousJobTitle,
+      previousEmploymentDuration,
+      reasonForLeavingPrevJob,
+      numberOfOccupants,
+      relationshipToOccupants,
+      hasPets,
+      isSmoker,
+      accessibilityNeeds,
+      reasonForLeaving,
+      consentToInformation,
+      consentToVerification,
+      consentToTenancyTerms,
+      consentToPrivacyPolicy,
     } = req.body;
 
     const property = await prisma.property.findUnique({
       where: { id: propertyId },
-      select: { pricePerMonth: true, securityDeposit: true },
+      include: {
+        landlord: true,
+        location: true
+      }
     });
 
     if (!property) {
@@ -113,11 +137,9 @@ export const createApplication = async (
       // Create lease first
       const lease = await prisma.lease.create({
         data: {
-          startDate: new Date(), // Today
-          endDate: new Date(
-            new Date().setFullYear(new Date().getFullYear() + 1)
-          ), // 1 year from today
-          rent: property.pricePerMonth,
+          startDate: new Date(),
+          endDate: new Date(new Date().setFullYear(new Date().getFullYear() + 1)),
+          rent: property.pricePerYear,
           deposit: property.securityDeposit,
           property: {
             connect: { id: propertyId },
@@ -128,7 +150,7 @@ export const createApplication = async (
         },
       });
 
-      // Then create application with lease connection
+      // Create application
       const application = await prisma.application.create({
         data: {
           applicationDate: new Date(applicationDate),
@@ -136,7 +158,36 @@ export const createApplication = async (
           name,
           email,
           phoneNumber,
-          message,
+          preferredMoveInDate: preferredMoveInDate ? new Date(preferredMoveInDate) : null,
+          desiredLeaseDuration,
+          gender,
+          dateOfBirth: dateOfBirth ? new Date(dateOfBirth) : null,
+          nationality,
+          maritalStatus,
+          idType,
+          idDocumentUrl,
+          durationAtCurrentAddress,
+          employmentStatus,
+          occupation,
+          employerName,
+          workAddress,
+          monthlyIncome,
+          durationAtCurrentJob,
+          incomeProofUrl,
+          previousEmployerName,
+          previousJobTitle,
+          previousEmploymentDuration,
+          reasonForLeavingPrevJob,
+          numberOfOccupants,
+          relationshipToOccupants,
+          hasPets,
+          isSmoker,
+          accessibilityNeeds,
+          reasonForLeaving,
+          consentToInformation,
+          consentToVerification,
+          consentToTenancyTerms,
+          consentToPrivacyPolicy,
           property: {
             connect: { id: propertyId },
           },
@@ -148,20 +199,62 @@ export const createApplication = async (
           },
         },
         include: {
-          property: true,
+          property: {
+            include: {
+              location: true,
+              landlord: true,
+            },
+          },
           tenant: true,
           lease: true,
         },
       });
+
+      // Send email to tenant
+      await sendEmail({
+        to: email,
+        subject: "Application Received - Property Rental",
+        body: `
+          <h2>Your Application Has Been Received</h2>
+          <p>Dear ${name},</p>
+          <p>Your application for the property at ${property.location.address} has been received and is being processed.</p>
+          <p>Application Details:</p>
+          <ul>
+            <li>Property: ${property.location.address}</li>
+            <li>Annual Rent: $${property.pricePerYear}</li>
+            <li>Security Deposit: $${property.securityDeposit}</li>
+            <li>Application Date: ${new Date(applicationDate).toLocaleDateString()}</li>
+          </ul>
+          <p>We will notify you once the landlord has reviewed your application.</p>
+          <p>Thank you for choosing our platform!</p>
+        `
+      });
+
+      // Send email to landlord
+      if (property.landlord?.email) {
+        await sendEmail({
+          to: property.landlord.email,
+          subject: "New Rental Application Received",
+          body: `
+            <h2>New Application Received</h2>
+            <p>A new application has been submitted for your property at ${property.location.address}.</p>
+            <p>Applicant Details:</p>
+            <ul>
+              <li>Name: ${name}</li>
+              <li>Email: ${email}</li>
+              <li>Application Date: ${new Date(applicationDate).toLocaleDateString()}</li>
+            </ul>
+            <p>Please log in to your dashboard to review the application.</p>
+          `
+        });
+      }
 
       return application;
     });
 
     res.status(201).json(newApplication);
   } catch (error: any) {
-    res
-      .status(500)
-      .json({ message: `Error creating application: ${error.message}` });
+    res.status(500).json({ message: `Error creating application: ${error.message}` });
   }
 };
 
@@ -172,12 +265,15 @@ export const updateApplicationStatus = async (
   try {
     const { id } = req.params;
     const { status } = req.body;
-    console.log("status:", status);
 
     const application = await prisma.application.findUnique({
       where: { id: Number(id) },
       include: {
-        property: true,
+        property: {
+          include: {
+            location: true
+          }
+        },
         tenant: true,
       },
     });
@@ -191,17 +287,14 @@ export const updateApplicationStatus = async (
       const newLease = await prisma.lease.create({
         data: {
           startDate: new Date(),
-          endDate: new Date(
-            new Date().setFullYear(new Date().getFullYear() + 1)
-          ),
-          rent: application.property.pricePerMonth,
+          endDate: new Date(new Date().setFullYear(new Date().getFullYear() + 1)),
+          rent: application.property.pricePerYear,
           deposit: application.property.securityDeposit,
           propertyId: application.propertyId,
           tenantCognitoId: application.tenantCognitoId,
         },
       });
 
-      // Update the property to connect the tenant
       await prisma.property.update({
         where: { id: application.propertyId },
         data: {
@@ -211,25 +304,49 @@ export const updateApplicationStatus = async (
         },
       });
 
-      // Update the application with the new lease ID
       await prisma.application.update({
         where: { id: Number(id) },
         data: { status, leaseId: newLease.id },
-        include: {
-          property: true,
-          tenant: true,
-          lease: true,
-        },
       });
-    } else {
-      // Update the application status (for both "Denied" and other statuses)
+
+      // Send approval email to tenant
+      await sendEmail({
+        to: application.tenant.email,
+        subject: "Your Rental Application Has Been Approved!",
+        body: `
+          <h2>Congratulations! Your Application Has Been Approved</h2>
+          <p>Dear ${application.tenant.name},</p>
+          <p>We're pleased to inform you that your application for ${application.property.location.address} has been approved!</p>
+          <p>Next Steps:</p>
+          <ul>
+            <li>Please log in to your dashboard to review and sign the lease agreement</li>
+            <li>Complete the security deposit payment of $${application.property.securityDeposit}</li>
+            <li>Set up your annual rent payments of $${application.property.pricePerYear}</li>
+          </ul>
+          <p>Your lease will begin on ${new Date().toLocaleDateString()}.</p>
+          <p>If you have any questions, please don't hesitate to contact us.</p>
+        `
+      });
+    } else if (status === "Denied") {
       await prisma.application.update({
         where: { id: Number(id) },
         data: { status },
       });
+
+      // Send denial email to tenant
+      await sendEmail({
+        to: application.tenant.email,
+        subject: "Update on Your Rental Application",
+        body: `
+          <h2>Application Status Update</h2>
+          <p>Dear ${application.tenant.name},</p>
+          <p>We regret to inform you that your application for ${application.property.location.address} has not been approved at this time.</p>
+          <p>You can continue browsing other available properties on our platform that might better suit your needs.</p>
+          <p>Thank you for your interest in our properties.</p>
+        `
+      });
     }
 
-    // Respond with the updated application details
     const updatedApplication = await prisma.application.findUnique({
       where: { id: Number(id) },
       include: {
@@ -241,8 +358,37 @@ export const updateApplicationStatus = async (
 
     res.json(updatedApplication);
   } catch (error: any) {
-    res
-      .status(500)
-      .json({ message: `Error updating application status: ${error.message}` });
+    res.status(500).json({ message: `Error updating application status: ${error.message}` });
+  }
+};
+
+export const getApplication = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const { id } = req.params;
+    const application = await prisma.application.findUnique({
+      where: { id: Number(id) },
+      include: {
+        property: {
+          include: {
+            location: true,
+            landlord: true,
+          },
+        },
+        tenant: true,
+        lease: true,
+      },
+    });
+
+    if (!application) {
+      res.status(404).json({ message: "Application not found" });
+      return;
+    }
+
+    res.json(application);
+  } catch (error: any) {
+    res.status(500).json({ message: `Error retrieving application: ${error.message}` });
   }
 };
