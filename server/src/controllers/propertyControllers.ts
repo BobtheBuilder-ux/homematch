@@ -45,13 +45,13 @@ export const getProperties = async (
 
     if (priceMin) {
       whereConditions.push(
-        Prisma.sql`p."pricePerMonth" >= ${Number(priceMin)}`
+        Prisma.sql`p."pricePerYear" >= ${Number(priceMin)}`
       );
     }
 
     if (priceMax) {
       whereConditions.push(
-        Prisma.sql`p."pricePerMonth" <= ${Number(priceMax)}`
+        Prisma.sql`p."pricePerYear" <= ${Number(priceMax)}`
       );
     }
 
@@ -292,7 +292,7 @@ export const createProperty = async (
             : [],
         isPetsAllowed: propertyData.isPetsAllowed === "true",
         isParkingIncluded: propertyData.isParkingIncluded === "true",
-        pricePerMonth: parseFloat(propertyData.pricePerMonth),
+        pricePerYear: parseFloat(propertyData.pricePerYear),
         securityDeposit: parseFloat(propertyData.securityDeposit),
         applicationFee: parseFloat(propertyData.applicationFee),
         beds: parseInt(propertyData.beds),

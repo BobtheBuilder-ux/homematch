@@ -139,7 +139,7 @@ export const createApplication = async (
         data: {
           startDate: new Date(),
           endDate: new Date(new Date().setFullYear(new Date().getFullYear() + 1)),
-          rent: property.pricePerMonth,
+          rent: property.pricePerYear,
           deposit: property.securityDeposit,
           property: {
             connect: { id: propertyId },
@@ -221,7 +221,7 @@ export const createApplication = async (
           <p>Application Details:</p>
           <ul>
             <li>Property: ${property.location.address}</li>
-            <li>Monthly Rent: $${property.pricePerMonth}</li>
+            <li>Annual Rent: $${property.pricePerYear}</li>
             <li>Security Deposit: $${property.securityDeposit}</li>
             <li>Application Date: ${new Date(applicationDate).toLocaleDateString()}</li>
           </ul>
@@ -288,7 +288,7 @@ export const updateApplicationStatus = async (
         data: {
           startDate: new Date(),
           endDate: new Date(new Date().setFullYear(new Date().getFullYear() + 1)),
-          rent: application.property.pricePerMonth,
+          rent: application.property.pricePerYear,
           deposit: application.property.securityDeposit,
           propertyId: application.propertyId,
           tenantCognitoId: application.tenantCognitoId,
@@ -321,7 +321,7 @@ export const updateApplicationStatus = async (
           <ul>
             <li>Please log in to your dashboard to review and sign the lease agreement</li>
             <li>Complete the security deposit payment of $${application.property.securityDeposit}</li>
-            <li>Set up your monthly rent payments of $${application.property.pricePerMonth}</li>
+            <li>Set up your annual rent payments of $${application.property.pricePerYear}</li>
           </ul>
           <p>Your lease will begin on ${new Date().toLocaleDateString()}.</p>
           <p>If you have any questions, please don't hesitate to contact us.</p>
