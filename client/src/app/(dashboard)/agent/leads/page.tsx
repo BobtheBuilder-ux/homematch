@@ -103,7 +103,7 @@ const Leads = () => {
                   <div>
                     <div className="font-medium">{lead.property?.name}</div>
                     <div className="text-sm text-gray-500">
-                      ${lead.property?.pricePerMonth?.toLocaleString()}/month
+                      ${lead.property?.pricePerYear?.toLocaleString()}/month
                     </div>
                   </div>
                 </TableCell>

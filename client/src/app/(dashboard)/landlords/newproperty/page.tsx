@@ -20,7 +20,7 @@ const NewProperty = () => {
     defaultValues: {
       name: "",
       description: "",
-      pricePerMonth: 1000,
+      pricePerYear: 1000,
       securityDeposit: 500,
       applicationFee: 100,
       isPetsAllowed: true,
@@ -94,7 +94,7 @@ const NewProperty = () => {
             <div className="space-y-6">
               <h2 className="text-lg font-semibold mb-4">Fees</h2>
               <CustomFormField
-                name="pricePerMonth"
+                name="pricePerYear"
                 label="Price per Month"
                 type="number"
               />

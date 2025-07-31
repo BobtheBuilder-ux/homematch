@@ -88,7 +88,7 @@ const Properties = () => {
                 <TableCell>
                   {property.location?.city}, {property.location?.state}
                 </TableCell>
-                <TableCell>${property.pricePerMonth.toLocaleString()}</TableCell>
+                <TableCell>${property.pricePerYear.toLocaleString()}</TableCell>
                 <TableCell>
                   <Badge variant={property.status === "active" ? "default" : "secondary"}>
                     {property.status || "active"}

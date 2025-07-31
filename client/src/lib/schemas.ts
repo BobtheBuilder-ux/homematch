@@ -4,7 +4,7 @@ import { PropertyTypeEnum } from "@/lib/constants";
 export const propertySchema = z.object({
   name: z.string().min(1, "Name is required"),
   description: z.string().min(1, "Description is required"),
-  pricePerMonth: z.coerce.number().positive().min(0).int(),
+  pricePerYear: z.coerce.number().positive().min(0).int(),
   securityDeposit: z.coerce.number().positive().min(0).int(),
   applicationFee: z.coerce.number().positive().min(0).int(),
   isPetsAllowed: z.boolean(),

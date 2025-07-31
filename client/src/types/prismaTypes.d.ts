@@ -1805,7 +1805,7 @@ export namespace Prisma {
 
   export type PropertyAvgAggregateOutputType = {
     id: number | null
-    pricePerMonth: number | null
+    pricePerYear: number | null
     securityDeposit: number | null
     applicationFee: number | null
     beds: number | null
@@ -1818,7 +1818,7 @@ export namespace Prisma {
 
   export type PropertySumAggregateOutputType = {
     id: number | null
-    pricePerMonth: number | null
+    pricePerYear: number | null
     securityDeposit: number | null
     applicationFee: number | null
     beds: number | null
@@ -1833,7 +1833,7 @@ export namespace Prisma {
     id: number | null
     name: string | null
     description: string | null
-    pricePerMonth: number | null
+    pricePerYear: number | null
     securityDeposit: number | null
     applicationFee: number | null
     isPetsAllowed: boolean | null
@@ -1853,7 +1853,7 @@ export namespace Prisma {
     id: number | null
     name: string | null
     description: string | null
-    pricePerMonth: number | null
+    pricePerYear: number | null
     securityDeposit: number | null
     applicationFee: number | null
     isPetsAllowed: boolean | null
@@ -1873,7 +1873,7 @@ export namespace Prisma {
     id: number
     name: number
     description: number
-    pricePerMonth: number
+    pricePerYear: number
     securityDeposit: number
     applicationFee: number
     photoUrls: number
@@ -1896,7 +1896,7 @@ export namespace Prisma {
 
   export type PropertyAvgAggregateInputType = {
     id?: true
-    pricePerMonth?: true
+    pricePerYear?: true
     securityDeposit?: true
     applicationFee?: true
     beds?: true
@@ -1909,7 +1909,7 @@ export namespace Prisma {
 
   export type PropertySumAggregateInputType = {
     id?: true
-    pricePerMonth?: true
+    pricePerYear?: true
     securityDeposit?: true
     applicationFee?: true
     beds?: true
@@ -1924,7 +1924,7 @@ export namespace Prisma {
     id?: true
     name?: true
     description?: true
-    pricePerMonth?: true
+    pricePerYear?: true
     securityDeposit?: true
     applicationFee?: true
     isPetsAllowed?: true
@@ -1944,7 +1944,7 @@ export namespace Prisma {
     id?: true
     name?: true
     description?: true
-    pricePerMonth?: true
+    pricePerYear?: true
     securityDeposit?: true
     applicationFee?: true
     isPetsAllowed?: true
@@ -1964,7 +1964,7 @@ export namespace Prisma {
     id?: true
     name?: true
     description?: true
-    pricePerMonth?: true
+    pricePerYear?: true
     securityDeposit?: true
     applicationFee?: true
     photoUrls?: true
@@ -2074,7 +2074,7 @@ export namespace Prisma {
     id: number
     name: string
     description: string
-    pricePerMonth: number
+    pricePerYear: number
     securityDeposit: number
     applicationFee: number
     photoUrls: string[]
@@ -2116,7 +2116,7 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     description?: boolean
-    pricePerMonth?: boolean
+    pricePerYear?: boolean
     securityDeposit?: boolean
     applicationFee?: boolean
     photoUrls?: boolean
@@ -2146,7 +2146,7 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     description?: boolean
-    pricePerMonth?: boolean
+    pricePerYear?: boolean
     securityDeposit?: boolean
     applicationFee?: boolean
     photoUrls?: boolean
@@ -2171,7 +2171,7 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     description?: boolean
-    pricePerMonth?: boolean
+    pricePerYear?: boolean
     securityDeposit?: boolean
     applicationFee?: boolean
     photoUrls?: boolean
@@ -2196,7 +2196,7 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     description?: boolean
-    pricePerMonth?: boolean
+    pricePerYear?: boolean
     securityDeposit?: boolean
     applicationFee?: boolean
     photoUrls?: boolean
@@ -2215,7 +2215,7 @@ export namespace Prisma {
     landlordCognitoId?: boolean
   }
 
-  export type PropertyOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "description" | "pricePerMonth" | "securityDeposit" | "applicationFee" | "photoUrls" | "amenities" | "highlights" | "isPetsAllowed" | "isParkingIncluded" | "beds" | "baths" | "squareFeet" | "propertyType" | "postedDate" | "averageRating" | "numberOfReviews" | "locationId" | "landlordCognitoId", ExtArgs["result"]["property"]>
+  export type PropertyOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "description" | "pricePerYear" | "securityDeposit" | "applicationFee" | "photoUrls" | "amenities" | "highlights" | "isPetsAllowed" | "isParkingIncluded" | "beds" | "baths" | "squareFeet" | "propertyType" | "postedDate" | "averageRating" | "numberOfReviews" | "locationId" | "landlordCognitoId", ExtArgs["result"]["property"]>
   export type PropertyInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     location?: boolean | LocationDefaultArgs<ExtArgs>
     landlord?: boolean | LandlordDefaultArgs<ExtArgs>
@@ -2248,7 +2248,7 @@ export namespace Prisma {
       id: number
       name: string
       description: string
-      pricePerMonth: number
+      pricePerYear: number
       securityDeposit: number
       applicationFee: number
       photoUrls: string[]
@@ -2697,7 +2697,7 @@ export namespace Prisma {
     readonly id: FieldRef<"Property", 'Int'>
     readonly name: FieldRef<"Property", 'String'>
     readonly description: FieldRef<"Property", 'String'>
-    readonly pricePerMonth: FieldRef<"Property", 'Float'>
+    readonly pricePerYear: FieldRef<"Property", 'Float'>
     readonly securityDeposit: FieldRef<"Property", 'Float'>
     readonly applicationFee: FieldRef<"Property", 'Float'>
     readonly photoUrls: FieldRef<"Property", 'String[]'>
@@ -7515,12 +7515,16 @@ export namespace Prisma {
   export type ApplicationAvgAggregateOutputType = {
     id: number | null
     propertyId: number | null
+    monthlyIncome: number | null
+    numberOfOccupants: number | null
     leaseId: number | null
   }
 
   export type ApplicationSumAggregateOutputType = {
     id: number | null
     propertyId: number | null
+    monthlyIncome: number | null
+    numberOfOccupants: number | null
     leaseId: number | null
   }
 
@@ -7533,7 +7537,36 @@ export namespace Prisma {
     name: string | null
     email: string | null
     phoneNumber: string | null
-    message: string | null
+    preferredMoveInDate: Date | null
+    desiredLeaseDuration: string | null
+    gender: string | null
+    dateOfBirth: Date | null
+    nationality: string | null
+    maritalStatus: string | null
+    idType: string | null
+    idDocumentUrl: string | null
+    durationAtCurrentAddress: string | null
+    employmentStatus: string | null
+    occupation: string | null
+    employerName: string | null
+    workAddress: string | null
+    monthlyIncome: number | null
+    durationAtCurrentJob: string | null
+    incomeProofUrl: string | null
+    previousEmployerName: string | null
+    previousJobTitle: string | null
+    previousEmploymentDuration: string | null
+    reasonForLeavingPrevJob: string | null
+    numberOfOccupants: number | null
+    relationshipToOccupants: string | null
+    hasPets: boolean | null
+    isSmoker: boolean | null
+    accessibilityNeeds: string | null
+    reasonForLeaving: string | null
+    consentToInformation: boolean | null
+    consentToVerification: boolean | null
+    consentToTenancyTerms: boolean | null
+    consentToPrivacyPolicy: boolean | null
     leaseId: number | null
   }
 
@@ -7546,7 +7579,36 @@ export namespace Prisma {
     name: string | null
     email: string | null
     phoneNumber: string | null
-    message: string | null
+    preferredMoveInDate: Date | null
+    desiredLeaseDuration: string | null
+    gender: string | null
+    dateOfBirth: Date | null
+    nationality: string | null
+    maritalStatus: string | null
+    idType: string | null
+    idDocumentUrl: string | null
+    durationAtCurrentAddress: string | null
+    employmentStatus: string | null
+    occupation: string | null
+    employerName: string | null
+    workAddress: string | null
+    monthlyIncome: number | null
+    durationAtCurrentJob: string | null
+    incomeProofUrl: string | null
+    previousEmployerName: string | null
+    previousJobTitle: string | null
+    previousEmploymentDuration: string | null
+    reasonForLeavingPrevJob: string | null
+    numberOfOccupants: number | null
+    relationshipToOccupants: string | null
+    hasPets: boolean | null
+    isSmoker: boolean | null
+    accessibilityNeeds: string | null
+    reasonForLeaving: string | null
+    consentToInformation: boolean | null
+    consentToVerification: boolean | null
+    consentToTenancyTerms: boolean | null
+    consentToPrivacyPolicy: boolean | null
     leaseId: number | null
   }
 
@@ -7559,7 +7621,36 @@ export namespace Prisma {
     name: number
     email: number
     phoneNumber: number
-    message: number
+    preferredMoveInDate: number
+    desiredLeaseDuration: number
+    gender: number
+    dateOfBirth: number
+    nationality: number
+    maritalStatus: number
+    idType: number
+    idDocumentUrl: number
+    durationAtCurrentAddress: number
+    employmentStatus: number
+    occupation: number
+    employerName: number
+    workAddress: number
+    monthlyIncome: number
+    durationAtCurrentJob: number
+    incomeProofUrl: number
+    previousEmployerName: number
+    previousJobTitle: number
+    previousEmploymentDuration: number
+    reasonForLeavingPrevJob: number
+    numberOfOccupants: number
+    relationshipToOccupants: number
+    hasPets: number
+    isSmoker: number
+    accessibilityNeeds: number
+    reasonForLeaving: number
+    consentToInformation: number
+    consentToVerification: number
+    consentToTenancyTerms: number
+    consentToPrivacyPolicy: number
     leaseId: number
     _all: number
   }
@@ -7568,12 +7659,16 @@ export namespace Prisma {
   export type ApplicationAvgAggregateInputType = {
     id?: true
     propertyId?: true
+    monthlyIncome?: true
+    numberOfOccupants?: true
     leaseId?: true
   }
 
   export type ApplicationSumAggregateInputType = {
     id?: true
     propertyId?: true
+    monthlyIncome?: true
+    numberOfOccupants?: true
     leaseId?: true
   }
 
@@ -7586,7 +7681,36 @@ export namespace Prisma {
     name?: true
     email?: true
     phoneNumber?: true
-    message?: true
+    preferredMoveInDate?: true
+    desiredLeaseDuration?: true
+    gender?: true
+    dateOfBirth?: true
+    nationality?: true
+    maritalStatus?: true
+    idType?: true
+    idDocumentUrl?: true
+    durationAtCurrentAddress?: true
+    employmentStatus?: true
+    occupation?: true
+    employerName?: true
+    workAddress?: true
+    monthlyIncome?: true
+    durationAtCurrentJob?: true
+    incomeProofUrl?: true
+    previousEmployerName?: true
+    previousJobTitle?: true
+    previousEmploymentDuration?: true
+    reasonForLeavingPrevJob?: true
+    numberOfOccupants?: true
+    relationshipToOccupants?: true
+    hasPets?: true
+    isSmoker?: true
+    accessibilityNeeds?: true
+    reasonForLeaving?: true
+    consentToInformation?: true
+    consentToVerification?: true
+    consentToTenancyTerms?: true
+    consentToPrivacyPolicy?: true
     leaseId?: true
   }
 
@@ -7599,7 +7723,36 @@ export namespace Prisma {
     name?: true
     email?: true
     phoneNumber?: true
-    message?: true
+    preferredMoveInDate?: true
+    desiredLeaseDuration?: true
+    gender?: true
+    dateOfBirth?: true
+    nationality?: true
+    maritalStatus?: true
+    idType?: true
+    idDocumentUrl?: true
+    durationAtCurrentAddress?: true
+    employmentStatus?: true
+    occupation?: true
+    employerName?: true
+    workAddress?: true
+    monthlyIncome?: true
+    durationAtCurrentJob?: true
+    incomeProofUrl?: true
+    previousEmployerName?: true
+    previousJobTitle?: true
+    previousEmploymentDuration?: true
+    reasonForLeavingPrevJob?: true
+    numberOfOccupants?: true
+    relationshipToOccupants?: true
+    hasPets?: true
+    isSmoker?: true
+    accessibilityNeeds?: true
+    reasonForLeaving?: true
+    consentToInformation?: true
+    consentToVerification?: true
+    consentToTenancyTerms?: true
+    consentToPrivacyPolicy?: true
     leaseId?: true
   }
 
@@ -7612,7 +7765,36 @@ export namespace Prisma {
     name?: true
     email?: true
     phoneNumber?: true
-    message?: true
+    preferredMoveInDate?: true
+    desiredLeaseDuration?: true
+    gender?: true
+    dateOfBirth?: true
+    nationality?: true
+    maritalStatus?: true
+    idType?: true
+    idDocumentUrl?: true
+    durationAtCurrentAddress?: true
+    employmentStatus?: true
+    occupation?: true
+    employerName?: true
+    workAddress?: true
+    monthlyIncome?: true
+    durationAtCurrentJob?: true
+    incomeProofUrl?: true
+    previousEmployerName?: true
+    previousJobTitle?: true
+    previousEmploymentDuration?: true
+    reasonForLeavingPrevJob?: true
+    numberOfOccupants?: true
+    relationshipToOccupants?: true
+    hasPets?: true
+    isSmoker?: true
+    accessibilityNeeds?: true
+    reasonForLeaving?: true
+    consentToInformation?: true
+    consentToVerification?: true
+    consentToTenancyTerms?: true
+    consentToPrivacyPolicy?: true
     leaseId?: true
     _all?: true
   }
@@ -7712,7 +7894,36 @@ export namespace Prisma {
     name: string
     email: string
     phoneNumber: string
-    message: string | null
+    preferredMoveInDate: Date | null
+    desiredLeaseDuration: string | null
+    gender: string | null
+    dateOfBirth: Date | null
+    nationality: string | null
+    maritalStatus: string | null
+    idType: string | null
+    idDocumentUrl: string | null
+    durationAtCurrentAddress: string | null
+    employmentStatus: string | null
+    occupation: string | null
+    employerName: string | null
+    workAddress: string | null
+    monthlyIncome: number | null
+    durationAtCurrentJob: string | null
+    incomeProofUrl: string | null
+    previousEmployerName: string | null
+    previousJobTitle: string | null
+    previousEmploymentDuration: string | null
+    reasonForLeavingPrevJob: string | null
+    numberOfOccupants: number | null
+    relationshipToOccupants: string | null
+    hasPets: boolean | null
+    isSmoker: boolean | null
+    accessibilityNeeds: string | null
+    reasonForLeaving: string | null
+    consentToInformation: boolean | null
+    consentToVerification: boolean | null
+    consentToTenancyTerms: boolean | null
+    consentToPrivacyPolicy: boolean | null
     leaseId: number | null
     _count: ApplicationCountAggregateOutputType | null
     _avg: ApplicationAvgAggregateOutputType | null
@@ -7744,7 +7955,36 @@ export namespace Prisma {
     name?: boolean
     email?: boolean
     phoneNumber?: boolean
-    message?: boolean
+    preferredMoveInDate?: boolean
+    desiredLeaseDuration?: boolean
+    gender?: boolean
+    dateOfBirth?: boolean
+    nationality?: boolean
+    maritalStatus?: boolean
+    idType?: boolean
+    idDocumentUrl?: boolean
+    durationAtCurrentAddress?: boolean
+    employmentStatus?: boolean
+    occupation?: boolean
+    employerName?: boolean
+    workAddress?: boolean
+    monthlyIncome?: boolean
+    durationAtCurrentJob?: boolean
+    incomeProofUrl?: boolean
+    previousEmployerName?: boolean
+    previousJobTitle?: boolean
+    previousEmploymentDuration?: boolean
+    reasonForLeavingPrevJob?: boolean
+    numberOfOccupants?: boolean
+    relationshipToOccupants?: boolean
+    hasPets?: boolean
+    isSmoker?: boolean
+    accessibilityNeeds?: boolean
+    reasonForLeaving?: boolean
+    consentToInformation?: boolean
+    consentToVerification?: boolean
+    consentToTenancyTerms?: boolean
+    consentToPrivacyPolicy?: boolean
     leaseId?: boolean
     property?: boolean | PropertyDefaultArgs<ExtArgs>
     tenant?: boolean | TenantDefaultArgs<ExtArgs>
@@ -7760,7 +8000,36 @@ export namespace Prisma {
     name?: boolean
     email?: boolean
     phoneNumber?: boolean
-    message?: boolean
+    preferredMoveInDate?: boolean
+    desiredLeaseDuration?: boolean
+    gender?: boolean
+    dateOfBirth?: boolean
+    nationality?: boolean
+    maritalStatus?: boolean
+    idType?: boolean
+    idDocumentUrl?: boolean
+    durationAtCurrentAddress?: boolean
+    employmentStatus?: boolean
+    occupation?: boolean
+    employerName?: boolean
+    workAddress?: boolean
+    monthlyIncome?: boolean
+    durationAtCurrentJob?: boolean
+    incomeProofUrl?: boolean
+    previousEmployerName?: boolean
+    previousJobTitle?: boolean
+    previousEmploymentDuration?: boolean
+    reasonForLeavingPrevJob?: boolean
+    numberOfOccupants?: boolean
+    relationshipToOccupants?: boolean
+    hasPets?: boolean
+    isSmoker?: boolean
+    accessibilityNeeds?: boolean
+    reasonForLeaving?: boolean
+    consentToInformation?: boolean
+    consentToVerification?: boolean
+    consentToTenancyTerms?: boolean
+    consentToPrivacyPolicy?: boolean
     leaseId?: boolean
     property?: boolean | PropertyDefaultArgs<ExtArgs>
     tenant?: boolean | TenantDefaultArgs<ExtArgs>
@@ -7776,7 +8045,36 @@ export namespace Prisma {
     name?: boolean
     email?: boolean
     phoneNumber?: boolean
-    message?: boolean
+    preferredMoveInDate?: boolean
+    desiredLeaseDuration?: boolean
+    gender?: boolean
+    dateOfBirth?: boolean
+    nationality?: boolean
+    maritalStatus?: boolean
+    idType?: boolean
+    idDocumentUrl?: boolean
+    durationAtCurrentAddress?: boolean
+    employmentStatus?: boolean
+    occupation?: boolean
+    employerName?: boolean
+    workAddress?: boolean
+    monthlyIncome?: boolean
+    durationAtCurrentJob?: boolean
+    incomeProofUrl?: boolean
+    previousEmployerName?: boolean
+    previousJobTitle?: boolean
+    previousEmploymentDuration?: boolean
+    reasonForLeavingPrevJob?: boolean
+    numberOfOccupants?: boolean
+    relationshipToOccupants?: boolean
+    hasPets?: boolean
+    isSmoker?: boolean
+    accessibilityNeeds?: boolean
+    reasonForLeaving?: boolean
+    consentToInformation?: boolean
+    consentToVerification?: boolean
+    consentToTenancyTerms?: boolean
+    consentToPrivacyPolicy?: boolean
     leaseId?: boolean
     property?: boolean | PropertyDefaultArgs<ExtArgs>
     tenant?: boolean | TenantDefaultArgs<ExtArgs>
@@ -7792,11 +8090,40 @@ export namespace Prisma {
     name?: boolean
     email?: boolean
     phoneNumber?: boolean
-    message?: boolean
+    preferredMoveInDate?: boolean
+    desiredLeaseDuration?: boolean
+    gender?: boolean
+    dateOfBirth?: boolean
+    nationality?: boolean
+    maritalStatus?: boolean
+    idType?: boolean
+    idDocumentUrl?: boolean
+    durationAtCurrentAddress?: boolean
+    employmentStatus?: boolean
+    occupation?: boolean
+    employerName?: boolean
+    workAddress?: boolean
+    monthlyIncome?: boolean
+    durationAtCurrentJob?: boolean
+    incomeProofUrl?: boolean
+    previousEmployerName?: boolean
+    previousJobTitle?: boolean
+    previousEmploymentDuration?: boolean
+    reasonForLeavingPrevJob?: boolean
+    numberOfOccupants?: boolean
+    relationshipToOccupants?: boolean
+    hasPets?: boolean
+    isSmoker?: boolean
+    accessibilityNeeds?: boolean
+    reasonForLeaving?: boolean
+    consentToInformation?: boolean
+    consentToVerification?: boolean
+    consentToTenancyTerms?: boolean
+    consentToPrivacyPolicy?: boolean
     leaseId?: boolean
   }
 
-  export type ApplicationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "applicationDate" | "status" | "propertyId" | "tenantCognitoId" | "name" | "email" | "phoneNumber" | "message" | "leaseId", ExtArgs["result"]["application"]>
+  export type ApplicationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "applicationDate" | "status" | "propertyId" | "tenantCognitoId" | "name" | "email" | "phoneNumber" | "preferredMoveInDate" | "desiredLeaseDuration" | "gender" | "dateOfBirth" | "nationality" | "maritalStatus" | "idType" | "idDocumentUrl" | "durationAtCurrentAddress" | "employmentStatus" | "occupation" | "employerName" | "workAddress" | "monthlyIncome" | "durationAtCurrentJob" | "incomeProofUrl" | "previousEmployerName" | "previousJobTitle" | "previousEmploymentDuration" | "reasonForLeavingPrevJob" | "numberOfOccupants" | "relationshipToOccupants" | "hasPets" | "isSmoker" | "accessibilityNeeds" | "reasonForLeaving" | "consentToInformation" | "consentToVerification" | "consentToTenancyTerms" | "consentToPrivacyPolicy" | "leaseId", ExtArgs["result"]["application"]>
   export type ApplicationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     property?: boolean | PropertyDefaultArgs<ExtArgs>
     tenant?: boolean | TenantDefaultArgs<ExtArgs>
@@ -7829,7 +8156,36 @@ export namespace Prisma {
       name: string
       email: string
       phoneNumber: string
-      message: string | null
+      preferredMoveInDate: Date | null
+      desiredLeaseDuration: string | null
+      gender: string | null
+      dateOfBirth: Date | null
+      nationality: string | null
+      maritalStatus: string | null
+      idType: string | null
+      idDocumentUrl: string | null
+      durationAtCurrentAddress: string | null
+      employmentStatus: string | null
+      occupation: string | null
+      employerName: string | null
+      workAddress: string | null
+      monthlyIncome: number | null
+      durationAtCurrentJob: string | null
+      incomeProofUrl: string | null
+      previousEmployerName: string | null
+      previousJobTitle: string | null
+      previousEmploymentDuration: string | null
+      reasonForLeavingPrevJob: string | null
+      numberOfOccupants: number | null
+      relationshipToOccupants: string | null
+      hasPets: boolean | null
+      isSmoker: boolean | null
+      accessibilityNeeds: string | null
+      reasonForLeaving: string | null
+      consentToInformation: boolean | null
+      consentToVerification: boolean | null
+      consentToTenancyTerms: boolean | null
+      consentToPrivacyPolicy: boolean | null
       leaseId: number | null
     }, ExtArgs["result"]["application"]>
     composites: {}
@@ -8265,7 +8621,36 @@ export namespace Prisma {
     readonly name: FieldRef<"Application", 'String'>
     readonly email: FieldRef<"Application", 'String'>
     readonly phoneNumber: FieldRef<"Application", 'String'>
-    readonly message: FieldRef<"Application", 'String'>
+    readonly preferredMoveInDate: FieldRef<"Application", 'DateTime'>
+    readonly desiredLeaseDuration: FieldRef<"Application", 'String'>
+    readonly gender: FieldRef<"Application", 'String'>
+    readonly dateOfBirth: FieldRef<"Application", 'DateTime'>
+    readonly nationality: FieldRef<"Application", 'String'>
+    readonly maritalStatus: FieldRef<"Application", 'String'>
+    readonly idType: FieldRef<"Application", 'String'>
+    readonly idDocumentUrl: FieldRef<"Application", 'String'>
+    readonly durationAtCurrentAddress: FieldRef<"Application", 'String'>
+    readonly employmentStatus: FieldRef<"Application", 'String'>
+    readonly occupation: FieldRef<"Application", 'String'>
+    readonly employerName: FieldRef<"Application", 'String'>
+    readonly workAddress: FieldRef<"Application", 'String'>
+    readonly monthlyIncome: FieldRef<"Application", 'Float'>
+    readonly durationAtCurrentJob: FieldRef<"Application", 'String'>
+    readonly incomeProofUrl: FieldRef<"Application", 'String'>
+    readonly previousEmployerName: FieldRef<"Application", 'String'>
+    readonly previousJobTitle: FieldRef<"Application", 'String'>
+    readonly previousEmploymentDuration: FieldRef<"Application", 'String'>
+    readonly reasonForLeavingPrevJob: FieldRef<"Application", 'String'>
+    readonly numberOfOccupants: FieldRef<"Application", 'Int'>
+    readonly relationshipToOccupants: FieldRef<"Application", 'String'>
+    readonly hasPets: FieldRef<"Application", 'Boolean'>
+    readonly isSmoker: FieldRef<"Application", 'Boolean'>
+    readonly accessibilityNeeds: FieldRef<"Application", 'String'>
+    readonly reasonForLeaving: FieldRef<"Application", 'String'>
+    readonly consentToInformation: FieldRef<"Application", 'Boolean'>
+    readonly consentToVerification: FieldRef<"Application", 'Boolean'>
+    readonly consentToTenancyTerms: FieldRef<"Application", 'Boolean'>
+    readonly consentToPrivacyPolicy: FieldRef<"Application", 'Boolean'>
     readonly leaseId: FieldRef<"Application", 'Int'>
   }
     
@@ -11039,7 +11424,7 @@ export namespace Prisma {
     id: 'id',
     name: 'name',
     description: 'description',
-    pricePerMonth: 'pricePerMonth',
+    pricePerYear: 'pricePerYear',
     securityDeposit: 'securityDeposit',
     applicationFee: 'applicationFee',
     photoUrls: 'photoUrls',
@@ -11115,7 +11500,36 @@ export namespace Prisma {
     name: 'name',
     email: 'email',
     phoneNumber: 'phoneNumber',
-    message: 'message',
+    preferredMoveInDate: 'preferredMoveInDate',
+    desiredLeaseDuration: 'desiredLeaseDuration',
+    gender: 'gender',
+    dateOfBirth: 'dateOfBirth',
+    nationality: 'nationality',
+    maritalStatus: 'maritalStatus',
+    idType: 'idType',
+    idDocumentUrl: 'idDocumentUrl',
+    durationAtCurrentAddress: 'durationAtCurrentAddress',
+    employmentStatus: 'employmentStatus',
+    occupation: 'occupation',
+    employerName: 'employerName',
+    workAddress: 'workAddress',
+    monthlyIncome: 'monthlyIncome',
+    durationAtCurrentJob: 'durationAtCurrentJob',
+    incomeProofUrl: 'incomeProofUrl',
+    previousEmployerName: 'previousEmployerName',
+    previousJobTitle: 'previousJobTitle',
+    previousEmploymentDuration: 'previousEmploymentDuration',
+    reasonForLeavingPrevJob: 'reasonForLeavingPrevJob',
+    numberOfOccupants: 'numberOfOccupants',
+    relationshipToOccupants: 'relationshipToOccupants',
+    hasPets: 'hasPets',
+    isSmoker: 'isSmoker',
+    accessibilityNeeds: 'accessibilityNeeds',
+    reasonForLeaving: 'reasonForLeaving',
+    consentToInformation: 'consentToInformation',
+    consentToVerification: 'consentToVerification',
+    consentToTenancyTerms: 'consentToTenancyTerms',
+    consentToPrivacyPolicy: 'consentToPrivacyPolicy',
     leaseId: 'leaseId'
   };
 
@@ -11320,7 +11734,7 @@ export namespace Prisma {
     id?: IntFilter<"Property"> | number
     name?: StringFilter<"Property"> | string
     description?: StringFilter<"Property"> | string
-    pricePerMonth?: FloatFilter<"Property"> | number
+    pricePerYear?: FloatFilter<"Property"> | number
     securityDeposit?: FloatFilter<"Property"> | number
     applicationFee?: FloatFilter<"Property"> | number
     photoUrls?: StringNullableListFilter<"Property">
@@ -11349,7 +11763,7 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     description?: SortOrder
-    pricePerMonth?: SortOrder
+    pricePerYear?: SortOrder
     securityDeposit?: SortOrder
     applicationFee?: SortOrder
     photoUrls?: SortOrder
@@ -11381,7 +11795,7 @@ export namespace Prisma {
     NOT?: PropertyWhereInput | PropertyWhereInput[]
     name?: StringFilter<"Property"> | string
     description?: StringFilter<"Property"> | string
-    pricePerMonth?: FloatFilter<"Property"> | number
+    pricePerYear?: FloatFilter<"Property"> | number
     securityDeposit?: FloatFilter<"Property"> | number
     applicationFee?: FloatFilter<"Property"> | number
     photoUrls?: StringNullableListFilter<"Property">
@@ -11410,7 +11824,7 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     description?: SortOrder
-    pricePerMonth?: SortOrder
+    pricePerYear?: SortOrder
     securityDeposit?: SortOrder
     applicationFee?: SortOrder
     photoUrls?: SortOrder
@@ -11441,7 +11855,7 @@ export namespace Prisma {
     id?: IntWithAggregatesFilter<"Property"> | number
     name?: StringWithAggregatesFilter<"Property"> | string
     description?: StringWithAggregatesFilter<"Property"> | string
-    pricePerMonth?: FloatWithAggregatesFilter<"Property"> | number
+    pricePerYear?: FloatWithAggregatesFilter<"Property"> | number
     securityDeposit?: FloatWithAggregatesFilter<"Property"> | number
     applicationFee?: FloatWithAggregatesFilter<"Property"> | number
     photoUrls?: StringNullableListFilter<"Property">
@@ -11711,7 +12125,36 @@ export namespace Prisma {
     name?: StringFilter<"Application"> | string
     email?: StringFilter<"Application"> | string
     phoneNumber?: StringFilter<"Application"> | string
-    message?: StringNullableFilter<"Application"> | string | null
+    preferredMoveInDate?: DateTimeNullableFilter<"Application"> | Date | string | null
+    desiredLeaseDuration?: StringNullableFilter<"Application"> | string | null
+    gender?: StringNullableFilter<"Application"> | string | null
+    dateOfBirth?: DateTimeNullableFilter<"Application"> | Date | string | null
+    nationality?: StringNullableFilter<"Application"> | string | null
+    maritalStatus?: StringNullableFilter<"Application"> | string | null
+    idType?: StringNullableFilter<"Application"> | string | null
+    idDocumentUrl?: StringNullableFilter<"Application"> | string | null
+    durationAtCurrentAddress?: StringNullableFilter<"Application"> | string | null
+    employmentStatus?: StringNullableFilter<"Application"> | string | null
+    occupation?: StringNullableFilter<"Application"> | string | null
+    employerName?: StringNullableFilter<"Application"> | string | null
+    workAddress?: StringNullableFilter<"Application"> | string | null
+    monthlyIncome?: FloatNullableFilter<"Application"> | number | null
+    durationAtCurrentJob?: StringNullableFilter<"Application"> | string | null
+    incomeProofUrl?: StringNullableFilter<"Application"> | string | null
+    previousEmployerName?: StringNullableFilter<"Application"> | string | null
+    previousJobTitle?: StringNullableFilter<"Application"> | string | null
+    previousEmploymentDuration?: StringNullableFilter<"Application"> | string | null
+    reasonForLeavingPrevJob?: StringNullableFilter<"Application"> | string | null
+    numberOfOccupants?: IntNullableFilter<"Application"> | number | null
+    relationshipToOccupants?: StringNullableFilter<"Application"> | string | null
+    hasPets?: BoolNullableFilter<"Application"> | boolean | null
+    isSmoker?: BoolNullableFilter<"Application"> | boolean | null
+    accessibilityNeeds?: StringNullableFilter<"Application"> | string | null
+    reasonForLeaving?: StringNullableFilter<"Application"> | string | null
+    consentToInformation?: BoolNullableFilter<"Application"> | boolean | null
+    consentToVerification?: BoolNullableFilter<"Application"> | boolean | null
+    consentToTenancyTerms?: BoolNullableFilter<"Application"> | boolean | null
+    consentToPrivacyPolicy?: BoolNullableFilter<"Application"> | boolean | null
     leaseId?: IntNullableFilter<"Application"> | number | null
     property?: XOR<PropertyScalarRelationFilter, PropertyWhereInput>
     tenant?: XOR<TenantScalarRelationFilter, TenantWhereInput>
@@ -11727,7 +12170,36 @@ export namespace Prisma {
     name?: SortOrder
     email?: SortOrder
     phoneNumber?: SortOrder
-    message?: SortOrderInput | SortOrder
+    preferredMoveInDate?: SortOrderInput | SortOrder
+    desiredLeaseDuration?: SortOrderInput | SortOrder
+    gender?: SortOrderInput | SortOrder
+    dateOfBirth?: SortOrderInput | SortOrder
+    nationality?: SortOrderInput | SortOrder
+    maritalStatus?: SortOrderInput | SortOrder
+    idType?: SortOrderInput | SortOrder
+    idDocumentUrl?: SortOrderInput | SortOrder
+    durationAtCurrentAddress?: SortOrderInput | SortOrder
+    employmentStatus?: SortOrderInput | SortOrder
+    occupation?: SortOrderInput | SortOrder
+    employerName?: SortOrderInput | SortOrder
+    workAddress?: SortOrderInput | SortOrder
+    monthlyIncome?: SortOrderInput | SortOrder
+    durationAtCurrentJob?: SortOrderInput | SortOrder
+    incomeProofUrl?: SortOrderInput | SortOrder
+    previousEmployerName?: SortOrderInput | SortOrder
+    previousJobTitle?: SortOrderInput | SortOrder
+    previousEmploymentDuration?: SortOrderInput | SortOrder
+    reasonForLeavingPrevJob?: SortOrderInput | SortOrder
+    numberOfOccupants?: SortOrderInput | SortOrder
+    relationshipToOccupants?: SortOrderInput | SortOrder
+    hasPets?: SortOrderInput | SortOrder
+    isSmoker?: SortOrderInput | SortOrder
+    accessibilityNeeds?: SortOrderInput | SortOrder
+    reasonForLeaving?: SortOrderInput | SortOrder
+    consentToInformation?: SortOrderInput | SortOrder
+    consentToVerification?: SortOrderInput | SortOrder
+    consentToTenancyTerms?: SortOrderInput | SortOrder
+    consentToPrivacyPolicy?: SortOrderInput | SortOrder
     leaseId?: SortOrderInput | SortOrder
     property?: PropertyOrderByWithRelationInput
     tenant?: TenantOrderByWithRelationInput
@@ -11747,7 +12219,36 @@ export namespace Prisma {
     name?: StringFilter<"Application"> | string
     email?: StringFilter<"Application"> | string
     phoneNumber?: StringFilter<"Application"> | string
-    message?: StringNullableFilter<"Application"> | string | null
+    preferredMoveInDate?: DateTimeNullableFilter<"Application"> | Date | string | null
+    desiredLeaseDuration?: StringNullableFilter<"Application"> | string | null
+    gender?: StringNullableFilter<"Application"> | string | null
+    dateOfBirth?: DateTimeNullableFilter<"Application"> | Date | string | null
+    nationality?: StringNullableFilter<"Application"> | string | null
+    maritalStatus?: StringNullableFilter<"Application"> | string | null
+    idType?: StringNullableFilter<"Application"> | string | null
+    idDocumentUrl?: StringNullableFilter<"Application"> | string | null
+    durationAtCurrentAddress?: StringNullableFilter<"Application"> | string | null
+    employmentStatus?: StringNullableFilter<"Application"> | string | null
+    occupation?: StringNullableFilter<"Application"> | string | null
+    employerName?: StringNullableFilter<"Application"> | string | null
+    workAddress?: StringNullableFilter<"Application"> | string | null
+    monthlyIncome?: FloatNullableFilter<"Application"> | number | null
+    durationAtCurrentJob?: StringNullableFilter<"Application"> | string | null
+    incomeProofUrl?: StringNullableFilter<"Application"> | string | null
+    previousEmployerName?: StringNullableFilter<"Application"> | string | null
+    previousJobTitle?: StringNullableFilter<"Application"> | string | null
+    previousEmploymentDuration?: StringNullableFilter<"Application"> | string | null
+    reasonForLeavingPrevJob?: StringNullableFilter<"Application"> | string | null
+    numberOfOccupants?: IntNullableFilter<"Application"> | number | null
+    relationshipToOccupants?: StringNullableFilter<"Application"> | string | null
+    hasPets?: BoolNullableFilter<"Application"> | boolean | null
+    isSmoker?: BoolNullableFilter<"Application"> | boolean | null
+    accessibilityNeeds?: StringNullableFilter<"Application"> | string | null
+    reasonForLeaving?: StringNullableFilter<"Application"> | string | null
+    consentToInformation?: BoolNullableFilter<"Application"> | boolean | null
+    consentToVerification?: BoolNullableFilter<"Application"> | boolean | null
+    consentToTenancyTerms?: BoolNullableFilter<"Application"> | boolean | null
+    consentToPrivacyPolicy?: BoolNullableFilter<"Application"> | boolean | null
     property?: XOR<PropertyScalarRelationFilter, PropertyWhereInput>
     tenant?: XOR<TenantScalarRelationFilter, TenantWhereInput>
     lease?: XOR<LeaseNullableScalarRelationFilter, LeaseWhereInput> | null
@@ -11762,7 +12263,36 @@ export namespace Prisma {
     name?: SortOrder
     email?: SortOrder
     phoneNumber?: SortOrder
-    message?: SortOrderInput | SortOrder
+    preferredMoveInDate?: SortOrderInput | SortOrder
+    desiredLeaseDuration?: SortOrderInput | SortOrder
+    gender?: SortOrderInput | SortOrder
+    dateOfBirth?: SortOrderInput | SortOrder
+    nationality?: SortOrderInput | SortOrder
+    maritalStatus?: SortOrderInput | SortOrder
+    idType?: SortOrderInput | SortOrder
+    idDocumentUrl?: SortOrderInput | SortOrder
+    durationAtCurrentAddress?: SortOrderInput | SortOrder
+    employmentStatus?: SortOrderInput | SortOrder
+    occupation?: SortOrderInput | SortOrder
+    employerName?: SortOrderInput | SortOrder
+    workAddress?: SortOrderInput | SortOrder
+    monthlyIncome?: SortOrderInput | SortOrder
+    durationAtCurrentJob?: SortOrderInput | SortOrder
+    incomeProofUrl?: SortOrderInput | SortOrder
+    previousEmployerName?: SortOrderInput | SortOrder
+    previousJobTitle?: SortOrderInput | SortOrder
+    previousEmploymentDuration?: SortOrderInput | SortOrder
+    reasonForLeavingPrevJob?: SortOrderInput | SortOrder
+    numberOfOccupants?: SortOrderInput | SortOrder
+    relationshipToOccupants?: SortOrderInput | SortOrder
+    hasPets?: SortOrderInput | SortOrder
+    isSmoker?: SortOrderInput | SortOrder
+    accessibilityNeeds?: SortOrderInput | SortOrder
+    reasonForLeaving?: SortOrderInput | SortOrder
+    consentToInformation?: SortOrderInput | SortOrder
+    consentToVerification?: SortOrderInput | SortOrder
+    consentToTenancyTerms?: SortOrderInput | SortOrder
+    consentToPrivacyPolicy?: SortOrderInput | SortOrder
     leaseId?: SortOrderInput | SortOrder
     _count?: ApplicationCountOrderByAggregateInput
     _avg?: ApplicationAvgOrderByAggregateInput
@@ -11783,7 +12313,36 @@ export namespace Prisma {
     name?: StringWithAggregatesFilter<"Application"> | string
     email?: StringWithAggregatesFilter<"Application"> | string
     phoneNumber?: StringWithAggregatesFilter<"Application"> | string
-    message?: StringNullableWithAggregatesFilter<"Application"> | string | null
+    preferredMoveInDate?: DateTimeNullableWithAggregatesFilter<"Application"> | Date | string | null
+    desiredLeaseDuration?: StringNullableWithAggregatesFilter<"Application"> | string | null
+    gender?: StringNullableWithAggregatesFilter<"Application"> | string | null
+    dateOfBirth?: DateTimeNullableWithAggregatesFilter<"Application"> | Date | string | null
+    nationality?: StringNullableWithAggregatesFilter<"Application"> | string | null
+    maritalStatus?: StringNullableWithAggregatesFilter<"Application"> | string | null
+    idType?: StringNullableWithAggregatesFilter<"Application"> | string | null
+    idDocumentUrl?: StringNullableWithAggregatesFilter<"Application"> | string | null
+    durationAtCurrentAddress?: StringNullableWithAggregatesFilter<"Application"> | string | null
+    employmentStatus?: StringNullableWithAggregatesFilter<"Application"> | string | null
+    occupation?: StringNullableWithAggregatesFilter<"Application"> | string | null
+    employerName?: StringNullableWithAggregatesFilter<"Application"> | string | null
+    workAddress?: StringNullableWithAggregatesFilter<"Application"> | string | null
+    monthlyIncome?: FloatNullableWithAggregatesFilter<"Application"> | number | null
+    durationAtCurrentJob?: StringNullableWithAggregatesFilter<"Application"> | string | null
+    incomeProofUrl?: StringNullableWithAggregatesFilter<"Application"> | string | null
+    previousEmployerName?: StringNullableWithAggregatesFilter<"Application"> | string | null
+    previousJobTitle?: StringNullableWithAggregatesFilter<"Application"> | string | null
+    previousEmploymentDuration?: StringNullableWithAggregatesFilter<"Application"> | string | null
+    reasonForLeavingPrevJob?: StringNullableWithAggregatesFilter<"Application"> | string | null
+    numberOfOccupants?: IntNullableWithAggregatesFilter<"Application"> | number | null
+    relationshipToOccupants?: StringNullableWithAggregatesFilter<"Application"> | string | null
+    hasPets?: BoolNullableWithAggregatesFilter<"Application"> | boolean | null
+    isSmoker?: BoolNullableWithAggregatesFilter<"Application"> | boolean | null
+    accessibilityNeeds?: StringNullableWithAggregatesFilter<"Application"> | string | null
+    reasonForLeaving?: StringNullableWithAggregatesFilter<"Application"> | string | null
+    consentToInformation?: BoolNullableWithAggregatesFilter<"Application"> | boolean | null
+    consentToVerification?: BoolNullableWithAggregatesFilter<"Application"> | boolean | null
+    consentToTenancyTerms?: BoolNullableWithAggregatesFilter<"Application"> | boolean | null
+    consentToPrivacyPolicy?: BoolNullableWithAggregatesFilter<"Application"> | boolean | null
     leaseId?: IntNullableWithAggregatesFilter<"Application"> | number | null
   }
 
@@ -11933,7 +12492,7 @@ export namespace Prisma {
   export type PropertyCreateInput = {
     name: string
     description: string
-    pricePerMonth: number
+    pricePerYear: number
     securityDeposit: number
     applicationFee: number
     photoUrls?: PropertyCreatephotoUrlsInput | string[]
@@ -11960,7 +12519,7 @@ export namespace Prisma {
     id?: number
     name: string
     description: string
-    pricePerMonth: number
+    pricePerYear: number
     securityDeposit: number
     applicationFee: number
     photoUrls?: PropertyCreatephotoUrlsInput | string[]
@@ -11986,7 +12545,7 @@ export namespace Prisma {
   export type PropertyUpdateInput = {
     name?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
-    pricePerMonth?: FloatFieldUpdateOperationsInput | number
+    pricePerYear?: FloatFieldUpdateOperationsInput | number
     securityDeposit?: FloatFieldUpdateOperationsInput | number
     applicationFee?: FloatFieldUpdateOperationsInput | number
     photoUrls?: PropertyUpdatephotoUrlsInput | string[]
@@ -12013,7 +12572,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
-    pricePerMonth?: FloatFieldUpdateOperationsInput | number
+    pricePerYear?: FloatFieldUpdateOperationsInput | number
     securityDeposit?: FloatFieldUpdateOperationsInput | number
     applicationFee?: FloatFieldUpdateOperationsInput | number
     photoUrls?: PropertyUpdatephotoUrlsInput | string[]
@@ -12040,7 +12599,7 @@ export namespace Prisma {
     id?: number
     name: string
     description: string
-    pricePerMonth: number
+    pricePerYear: number
     securityDeposit: number
     applicationFee: number
     photoUrls?: PropertyCreatephotoUrlsInput | string[]
@@ -12062,7 +12621,7 @@ export namespace Prisma {
   export type PropertyUpdateManyMutationInput = {
     name?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
-    pricePerMonth?: FloatFieldUpdateOperationsInput | number
+    pricePerYear?: FloatFieldUpdateOperationsInput | number
     securityDeposit?: FloatFieldUpdateOperationsInput | number
     applicationFee?: FloatFieldUpdateOperationsInput | number
     photoUrls?: PropertyUpdatephotoUrlsInput | string[]
@@ -12083,7 +12642,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
-    pricePerMonth?: FloatFieldUpdateOperationsInput | number
+    pricePerYear?: FloatFieldUpdateOperationsInput | number
     securityDeposit?: FloatFieldUpdateOperationsInput | number
     applicationFee?: FloatFieldUpdateOperationsInput | number
     photoUrls?: PropertyUpdatephotoUrlsInput | string[]
@@ -12323,7 +12882,36 @@ export namespace Prisma {
     name: string
     email: string
     phoneNumber: string
-    message?: string | null
+    preferredMoveInDate?: Date | string | null
+    desiredLeaseDuration?: string | null
+    gender?: string | null
+    dateOfBirth?: Date | string | null
+    nationality?: string | null
+    maritalStatus?: string | null
+    idType?: string | null
+    idDocumentUrl?: string | null
+    durationAtCurrentAddress?: string | null
+    employmentStatus?: string | null
+    occupation?: string | null
+    employerName?: string | null
+    workAddress?: string | null
+    monthlyIncome?: number | null
+    durationAtCurrentJob?: string | null
+    incomeProofUrl?: string | null
+    previousEmployerName?: string | null
+    previousJobTitle?: string | null
+    previousEmploymentDuration?: string | null
+    reasonForLeavingPrevJob?: string | null
+    numberOfOccupants?: number | null
+    relationshipToOccupants?: string | null
+    hasPets?: boolean | null
+    isSmoker?: boolean | null
+    accessibilityNeeds?: string | null
+    reasonForLeaving?: string | null
+    consentToInformation?: boolean | null
+    consentToVerification?: boolean | null
+    consentToTenancyTerms?: boolean | null
+    consentToPrivacyPolicy?: boolean | null
     property: PropertyCreateNestedOneWithoutApplicationsInput
     tenant: TenantCreateNestedOneWithoutApplicationsInput
     lease?: LeaseCreateNestedOneWithoutApplicationInput
@@ -12338,7 +12926,36 @@ export namespace Prisma {
     name: string
     email: string
     phoneNumber: string
-    message?: string | null
+    preferredMoveInDate?: Date | string | null
+    desiredLeaseDuration?: string | null
+    gender?: string | null
+    dateOfBirth?: Date | string | null
+    nationality?: string | null
+    maritalStatus?: string | null
+    idType?: string | null
+    idDocumentUrl?: string | null
+    durationAtCurrentAddress?: string | null
+    employmentStatus?: string | null
+    occupation?: string | null
+    employerName?: string | null
+    workAddress?: string | null
+    monthlyIncome?: number | null
+    durationAtCurrentJob?: string | null
+    incomeProofUrl?: string | null
+    previousEmployerName?: string | null
+    previousJobTitle?: string | null
+    previousEmploymentDuration?: string | null
+    reasonForLeavingPrevJob?: string | null
+    numberOfOccupants?: number | null
+    relationshipToOccupants?: string | null
+    hasPets?: boolean | null
+    isSmoker?: boolean | null
+    accessibilityNeeds?: string | null
+    reasonForLeaving?: string | null
+    consentToInformation?: boolean | null
+    consentToVerification?: boolean | null
+    consentToTenancyTerms?: boolean | null
+    consentToPrivacyPolicy?: boolean | null
     leaseId?: number | null
   }
 
@@ -12348,7 +12965,36 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     phoneNumber?: StringFieldUpdateOperationsInput | string
-    message?: NullableStringFieldUpdateOperationsInput | string | null
+    preferredMoveInDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    desiredLeaseDuration?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableStringFieldUpdateOperationsInput | string | null
+    dateOfBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    nationality?: NullableStringFieldUpdateOperationsInput | string | null
+    maritalStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    idType?: NullableStringFieldUpdateOperationsInput | string | null
+    idDocumentUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    durationAtCurrentAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    employmentStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    occupation?: NullableStringFieldUpdateOperationsInput | string | null
+    employerName?: NullableStringFieldUpdateOperationsInput | string | null
+    workAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    monthlyIncome?: NullableFloatFieldUpdateOperationsInput | number | null
+    durationAtCurrentJob?: NullableStringFieldUpdateOperationsInput | string | null
+    incomeProofUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    previousEmployerName?: NullableStringFieldUpdateOperationsInput | string | null
+    previousJobTitle?: NullableStringFieldUpdateOperationsInput | string | null
+    previousEmploymentDuration?: NullableStringFieldUpdateOperationsInput | string | null
+    reasonForLeavingPrevJob?: NullableStringFieldUpdateOperationsInput | string | null
+    numberOfOccupants?: NullableIntFieldUpdateOperationsInput | number | null
+    relationshipToOccupants?: NullableStringFieldUpdateOperationsInput | string | null
+    hasPets?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    isSmoker?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    accessibilityNeeds?: NullableStringFieldUpdateOperationsInput | string | null
+    reasonForLeaving?: NullableStringFieldUpdateOperationsInput | string | null
+    consentToInformation?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    consentToVerification?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    consentToTenancyTerms?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    consentToPrivacyPolicy?: NullableBoolFieldUpdateOperationsInput | boolean | null
     property?: PropertyUpdateOneRequiredWithoutApplicationsNestedInput
     tenant?: TenantUpdateOneRequiredWithoutApplicationsNestedInput
     lease?: LeaseUpdateOneWithoutApplicationNestedInput
@@ -12363,7 +13009,36 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     phoneNumber?: StringFieldUpdateOperationsInput | string
-    message?: NullableStringFieldUpdateOperationsInput | string | null
+    preferredMoveInDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    desiredLeaseDuration?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableStringFieldUpdateOperationsInput | string | null
+    dateOfBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    nationality?: NullableStringFieldUpdateOperationsInput | string | null
+    maritalStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    idType?: NullableStringFieldUpdateOperationsInput | string | null
+    idDocumentUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    durationAtCurrentAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    employmentStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    occupation?: NullableStringFieldUpdateOperationsInput | string | null
+    employerName?: NullableStringFieldUpdateOperationsInput | string | null
+    workAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    monthlyIncome?: NullableFloatFieldUpdateOperationsInput | number | null
+    durationAtCurrentJob?: NullableStringFieldUpdateOperationsInput | string | null
+    incomeProofUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    previousEmployerName?: NullableStringFieldUpdateOperationsInput | string | null
+    previousJobTitle?: NullableStringFieldUpdateOperationsInput | string | null
+    previousEmploymentDuration?: NullableStringFieldUpdateOperationsInput | string | null
+    reasonForLeavingPrevJob?: NullableStringFieldUpdateOperationsInput | string | null
+    numberOfOccupants?: NullableIntFieldUpdateOperationsInput | number | null
+    relationshipToOccupants?: NullableStringFieldUpdateOperationsInput | string | null
+    hasPets?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    isSmoker?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    accessibilityNeeds?: NullableStringFieldUpdateOperationsInput | string | null
+    reasonForLeaving?: NullableStringFieldUpdateOperationsInput | string | null
+    consentToInformation?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    consentToVerification?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    consentToTenancyTerms?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    consentToPrivacyPolicy?: NullableBoolFieldUpdateOperationsInput | boolean | null
     leaseId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
@@ -12376,7 +13051,36 @@ export namespace Prisma {
     name: string
     email: string
     phoneNumber: string
-    message?: string | null
+    preferredMoveInDate?: Date | string | null
+    desiredLeaseDuration?: string | null
+    gender?: string | null
+    dateOfBirth?: Date | string | null
+    nationality?: string | null
+    maritalStatus?: string | null
+    idType?: string | null
+    idDocumentUrl?: string | null
+    durationAtCurrentAddress?: string | null
+    employmentStatus?: string | null
+    occupation?: string | null
+    employerName?: string | null
+    workAddress?: string | null
+    monthlyIncome?: number | null
+    durationAtCurrentJob?: string | null
+    incomeProofUrl?: string | null
+    previousEmployerName?: string | null
+    previousJobTitle?: string | null
+    previousEmploymentDuration?: string | null
+    reasonForLeavingPrevJob?: string | null
+    numberOfOccupants?: number | null
+    relationshipToOccupants?: string | null
+    hasPets?: boolean | null
+    isSmoker?: boolean | null
+    accessibilityNeeds?: string | null
+    reasonForLeaving?: string | null
+    consentToInformation?: boolean | null
+    consentToVerification?: boolean | null
+    consentToTenancyTerms?: boolean | null
+    consentToPrivacyPolicy?: boolean | null
     leaseId?: number | null
   }
 
@@ -12386,7 +13090,36 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     phoneNumber?: StringFieldUpdateOperationsInput | string
-    message?: NullableStringFieldUpdateOperationsInput | string | null
+    preferredMoveInDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    desiredLeaseDuration?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableStringFieldUpdateOperationsInput | string | null
+    dateOfBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    nationality?: NullableStringFieldUpdateOperationsInput | string | null
+    maritalStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    idType?: NullableStringFieldUpdateOperationsInput | string | null
+    idDocumentUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    durationAtCurrentAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    employmentStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    occupation?: NullableStringFieldUpdateOperationsInput | string | null
+    employerName?: NullableStringFieldUpdateOperationsInput | string | null
+    workAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    monthlyIncome?: NullableFloatFieldUpdateOperationsInput | number | null
+    durationAtCurrentJob?: NullableStringFieldUpdateOperationsInput | string | null
+    incomeProofUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    previousEmployerName?: NullableStringFieldUpdateOperationsInput | string | null
+    previousJobTitle?: NullableStringFieldUpdateOperationsInput | string | null
+    previousEmploymentDuration?: NullableStringFieldUpdateOperationsInput | string | null
+    reasonForLeavingPrevJob?: NullableStringFieldUpdateOperationsInput | string | null
+    numberOfOccupants?: NullableIntFieldUpdateOperationsInput | number | null
+    relationshipToOccupants?: NullableStringFieldUpdateOperationsInput | string | null
+    hasPets?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    isSmoker?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    accessibilityNeeds?: NullableStringFieldUpdateOperationsInput | string | null
+    reasonForLeaving?: NullableStringFieldUpdateOperationsInput | string | null
+    consentToInformation?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    consentToVerification?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    consentToTenancyTerms?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    consentToPrivacyPolicy?: NullableBoolFieldUpdateOperationsInput | boolean | null
   }
 
   export type ApplicationUncheckedUpdateManyInput = {
@@ -12398,7 +13131,36 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     phoneNumber?: StringFieldUpdateOperationsInput | string
-    message?: NullableStringFieldUpdateOperationsInput | string | null
+    preferredMoveInDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    desiredLeaseDuration?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableStringFieldUpdateOperationsInput | string | null
+    dateOfBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    nationality?: NullableStringFieldUpdateOperationsInput | string | null
+    maritalStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    idType?: NullableStringFieldUpdateOperationsInput | string | null
+    idDocumentUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    durationAtCurrentAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    employmentStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    occupation?: NullableStringFieldUpdateOperationsInput | string | null
+    employerName?: NullableStringFieldUpdateOperationsInput | string | null
+    workAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    monthlyIncome?: NullableFloatFieldUpdateOperationsInput | number | null
+    durationAtCurrentJob?: NullableStringFieldUpdateOperationsInput | string | null
+    incomeProofUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    previousEmployerName?: NullableStringFieldUpdateOperationsInput | string | null
+    previousJobTitle?: NullableStringFieldUpdateOperationsInput | string | null
+    previousEmploymentDuration?: NullableStringFieldUpdateOperationsInput | string | null
+    reasonForLeavingPrevJob?: NullableStringFieldUpdateOperationsInput | string | null
+    numberOfOccupants?: NullableIntFieldUpdateOperationsInput | number | null
+    relationshipToOccupants?: NullableStringFieldUpdateOperationsInput | string | null
+    hasPets?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    isSmoker?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    accessibilityNeeds?: NullableStringFieldUpdateOperationsInput | string | null
+    reasonForLeaving?: NullableStringFieldUpdateOperationsInput | string | null
+    consentToInformation?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    consentToVerification?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    consentToTenancyTerms?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    consentToPrivacyPolicy?: NullableBoolFieldUpdateOperationsInput | boolean | null
     leaseId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
@@ -12696,7 +13458,7 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     description?: SortOrder
-    pricePerMonth?: SortOrder
+    pricePerYear?: SortOrder
     securityDeposit?: SortOrder
     applicationFee?: SortOrder
     photoUrls?: SortOrder
@@ -12717,7 +13479,7 @@ export namespace Prisma {
 
   export type PropertyAvgOrderByAggregateInput = {
     id?: SortOrder
-    pricePerMonth?: SortOrder
+    pricePerYear?: SortOrder
     securityDeposit?: SortOrder
     applicationFee?: SortOrder
     beds?: SortOrder
@@ -12732,7 +13494,7 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     description?: SortOrder
-    pricePerMonth?: SortOrder
+    pricePerYear?: SortOrder
     securityDeposit?: SortOrder
     applicationFee?: SortOrder
     isPetsAllowed?: SortOrder
@@ -12752,7 +13514,7 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     description?: SortOrder
-    pricePerMonth?: SortOrder
+    pricePerYear?: SortOrder
     securityDeposit?: SortOrder
     applicationFee?: SortOrder
     isPetsAllowed?: SortOrder
@@ -12770,7 +13532,7 @@ export namespace Prisma {
 
   export type PropertySumOrderByAggregateInput = {
     id?: SortOrder
-    pricePerMonth?: SortOrder
+    pricePerYear?: SortOrder
     securityDeposit?: SortOrder
     applicationFee?: SortOrder
     beds?: SortOrder
@@ -13076,6 +13838,22 @@ export namespace Prisma {
     not?: NestedEnumApplicationStatusFilter<$PrismaModel> | $Enums.ApplicationStatus
   }
 
+  export type DateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
+  export type BoolNullableFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
+    not?: NestedBoolNullableFilter<$PrismaModel> | boolean | null
+  }
+
   export type PropertyScalarRelationFilter = {
     is?: PropertyWhereInput
     isNot?: PropertyWhereInput
@@ -13100,13 +13878,44 @@ export namespace Prisma {
     name?: SortOrder
     email?: SortOrder
     phoneNumber?: SortOrder
-    message?: SortOrder
+    preferredMoveInDate?: SortOrder
+    desiredLeaseDuration?: SortOrder
+    gender?: SortOrder
+    dateOfBirth?: SortOrder
+    nationality?: SortOrder
+    maritalStatus?: SortOrder
+    idType?: SortOrder
+    idDocumentUrl?: SortOrder
+    durationAtCurrentAddress?: SortOrder
+    employmentStatus?: SortOrder
+    occupation?: SortOrder
+    employerName?: SortOrder
+    workAddress?: SortOrder
+    monthlyIncome?: SortOrder
+    durationAtCurrentJob?: SortOrder
+    incomeProofUrl?: SortOrder
+    previousEmployerName?: SortOrder
+    previousJobTitle?: SortOrder
+    previousEmploymentDuration?: SortOrder
+    reasonForLeavingPrevJob?: SortOrder
+    numberOfOccupants?: SortOrder
+    relationshipToOccupants?: SortOrder
+    hasPets?: SortOrder
+    isSmoker?: SortOrder
+    accessibilityNeeds?: SortOrder
+    reasonForLeaving?: SortOrder
+    consentToInformation?: SortOrder
+    consentToVerification?: SortOrder
+    consentToTenancyTerms?: SortOrder
+    consentToPrivacyPolicy?: SortOrder
     leaseId?: SortOrder
   }
 
   export type ApplicationAvgOrderByAggregateInput = {
     id?: SortOrder
     propertyId?: SortOrder
+    monthlyIncome?: SortOrder
+    numberOfOccupants?: SortOrder
     leaseId?: SortOrder
   }
 
@@ -13119,7 +13928,36 @@ export namespace Prisma {
     name?: SortOrder
     email?: SortOrder
     phoneNumber?: SortOrder
-    message?: SortOrder
+    preferredMoveInDate?: SortOrder
+    desiredLeaseDuration?: SortOrder
+    gender?: SortOrder
+    dateOfBirth?: SortOrder
+    nationality?: SortOrder
+    maritalStatus?: SortOrder
+    idType?: SortOrder
+    idDocumentUrl?: SortOrder
+    durationAtCurrentAddress?: SortOrder
+    employmentStatus?: SortOrder
+    occupation?: SortOrder
+    employerName?: SortOrder
+    workAddress?: SortOrder
+    monthlyIncome?: SortOrder
+    durationAtCurrentJob?: SortOrder
+    incomeProofUrl?: SortOrder
+    previousEmployerName?: SortOrder
+    previousJobTitle?: SortOrder
+    previousEmploymentDuration?: SortOrder
+    reasonForLeavingPrevJob?: SortOrder
+    numberOfOccupants?: SortOrder
+    relationshipToOccupants?: SortOrder
+    hasPets?: SortOrder
+    isSmoker?: SortOrder
+    accessibilityNeeds?: SortOrder
+    reasonForLeaving?: SortOrder
+    consentToInformation?: SortOrder
+    consentToVerification?: SortOrder
+    consentToTenancyTerms?: SortOrder
+    consentToPrivacyPolicy?: SortOrder
     leaseId?: SortOrder
   }
 
@@ -13132,13 +13970,44 @@ export namespace Prisma {
     name?: SortOrder
     email?: SortOrder
     phoneNumber?: SortOrder
-    message?: SortOrder
+    preferredMoveInDate?: SortOrder
+    desiredLeaseDuration?: SortOrder
+    gender?: SortOrder
+    dateOfBirth?: SortOrder
+    nationality?: SortOrder
+    maritalStatus?: SortOrder
+    idType?: SortOrder
+    idDocumentUrl?: SortOrder
+    durationAtCurrentAddress?: SortOrder
+    employmentStatus?: SortOrder
+    occupation?: SortOrder
+    employerName?: SortOrder
+    workAddress?: SortOrder
+    monthlyIncome?: SortOrder
+    durationAtCurrentJob?: SortOrder
+    incomeProofUrl?: SortOrder
+    previousEmployerName?: SortOrder
+    previousJobTitle?: SortOrder
+    previousEmploymentDuration?: SortOrder
+    reasonForLeavingPrevJob?: SortOrder
+    numberOfOccupants?: SortOrder
+    relationshipToOccupants?: SortOrder
+    hasPets?: SortOrder
+    isSmoker?: SortOrder
+    accessibilityNeeds?: SortOrder
+    reasonForLeaving?: SortOrder
+    consentToInformation?: SortOrder
+    consentToVerification?: SortOrder
+    consentToTenancyTerms?: SortOrder
+    consentToPrivacyPolicy?: SortOrder
     leaseId?: SortOrder
   }
 
   export type ApplicationSumOrderByAggregateInput = {
     id?: SortOrder
     propertyId?: SortOrder
+    monthlyIncome?: SortOrder
+    numberOfOccupants?: SortOrder
     leaseId?: SortOrder
   }
 
@@ -13150,6 +14019,28 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumApplicationStatusFilter<$PrismaModel>
     _max?: NestedEnumApplicationStatusFilter<$PrismaModel>
+  }
+
+  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  }
+
+  export type BoolNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
+    not?: NestedBoolNullableWithAggregatesFilter<$PrismaModel> | boolean | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedBoolNullableFilter<$PrismaModel>
+    _max?: NestedBoolNullableFilter<$PrismaModel>
   }
 
   export type ApplicationNullableScalarRelationFilter = {
@@ -13791,6 +14682,14 @@ export namespace Prisma {
     set?: $Enums.ApplicationStatus
   }
 
+  export type NullableDateTimeFieldUpdateOperationsInput = {
+    set?: Date | string | null
+  }
+
+  export type NullableBoolFieldUpdateOperationsInput = {
+    set?: boolean | null
+  }
+
   export type PropertyUpdateOneRequiredWithoutApplicationsNestedInput = {
     create?: XOR<PropertyCreateWithoutApplicationsInput, PropertyUncheckedCreateWithoutApplicationsInput>
     connectOrCreate?: PropertyCreateOrConnectWithoutApplicationsInput
@@ -14169,6 +15068,22 @@ export namespace Prisma {
     not?: NestedEnumApplicationStatusFilter<$PrismaModel> | $Enums.ApplicationStatus
   }
 
+  export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
+  export type NestedBoolNullableFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
+    not?: NestedBoolNullableFilter<$PrismaModel> | boolean | null
+  }
+
   export type NestedEnumApplicationStatusWithAggregatesFilter<$PrismaModel = never> = {
     equals?: $Enums.ApplicationStatus | EnumApplicationStatusFieldRefInput<$PrismaModel>
     in?: $Enums.ApplicationStatus[] | ListEnumApplicationStatusFieldRefInput<$PrismaModel>
@@ -14177,6 +15092,28 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumApplicationStatusFilter<$PrismaModel>
     _max?: NestedEnumApplicationStatusFilter<$PrismaModel>
+  }
+
+  export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  }
+
+  export type NestedBoolNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
+    not?: NestedBoolNullableWithAggregatesFilter<$PrismaModel> | boolean | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedBoolNullableFilter<$PrismaModel>
+    _max?: NestedBoolNullableFilter<$PrismaModel>
   }
 
   export type NestedEnumPaymentStatusFilter<$PrismaModel = never> = {
@@ -14253,7 +15190,36 @@ export namespace Prisma {
     name: string
     email: string
     phoneNumber: string
-    message?: string | null
+    preferredMoveInDate?: Date | string | null
+    desiredLeaseDuration?: string | null
+    gender?: string | null
+    dateOfBirth?: Date | string | null
+    nationality?: string | null
+    maritalStatus?: string | null
+    idType?: string | null
+    idDocumentUrl?: string | null
+    durationAtCurrentAddress?: string | null
+    employmentStatus?: string | null
+    occupation?: string | null
+    employerName?: string | null
+    workAddress?: string | null
+    monthlyIncome?: number | null
+    durationAtCurrentJob?: string | null
+    incomeProofUrl?: string | null
+    previousEmployerName?: string | null
+    previousJobTitle?: string | null
+    previousEmploymentDuration?: string | null
+    reasonForLeavingPrevJob?: string | null
+    numberOfOccupants?: number | null
+    relationshipToOccupants?: string | null
+    hasPets?: boolean | null
+    isSmoker?: boolean | null
+    accessibilityNeeds?: string | null
+    reasonForLeaving?: string | null
+    consentToInformation?: boolean | null
+    consentToVerification?: boolean | null
+    consentToTenancyTerms?: boolean | null
+    consentToPrivacyPolicy?: boolean | null
     tenant: TenantCreateNestedOneWithoutApplicationsInput
     lease?: LeaseCreateNestedOneWithoutApplicationInput
   }
@@ -14266,7 +15232,36 @@ export namespace Prisma {
     name: string
     email: string
     phoneNumber: string
-    message?: string | null
+    preferredMoveInDate?: Date | string | null
+    desiredLeaseDuration?: string | null
+    gender?: string | null
+    dateOfBirth?: Date | string | null
+    nationality?: string | null
+    maritalStatus?: string | null
+    idType?: string | null
+    idDocumentUrl?: string | null
+    durationAtCurrentAddress?: string | null
+    employmentStatus?: string | null
+    occupation?: string | null
+    employerName?: string | null
+    workAddress?: string | null
+    monthlyIncome?: number | null
+    durationAtCurrentJob?: string | null
+    incomeProofUrl?: string | null
+    previousEmployerName?: string | null
+    previousJobTitle?: string | null
+    previousEmploymentDuration?: string | null
+    reasonForLeavingPrevJob?: string | null
+    numberOfOccupants?: number | null
+    relationshipToOccupants?: string | null
+    hasPets?: boolean | null
+    isSmoker?: boolean | null
+    accessibilityNeeds?: string | null
+    reasonForLeaving?: string | null
+    consentToInformation?: boolean | null
+    consentToVerification?: boolean | null
+    consentToTenancyTerms?: boolean | null
+    consentToPrivacyPolicy?: boolean | null
     leaseId?: number | null
   }
 
@@ -14437,7 +15432,36 @@ export namespace Prisma {
     name?: StringFilter<"Application"> | string
     email?: StringFilter<"Application"> | string
     phoneNumber?: StringFilter<"Application"> | string
-    message?: StringNullableFilter<"Application"> | string | null
+    preferredMoveInDate?: DateTimeNullableFilter<"Application"> | Date | string | null
+    desiredLeaseDuration?: StringNullableFilter<"Application"> | string | null
+    gender?: StringNullableFilter<"Application"> | string | null
+    dateOfBirth?: DateTimeNullableFilter<"Application"> | Date | string | null
+    nationality?: StringNullableFilter<"Application"> | string | null
+    maritalStatus?: StringNullableFilter<"Application"> | string | null
+    idType?: StringNullableFilter<"Application"> | string | null
+    idDocumentUrl?: StringNullableFilter<"Application"> | string | null
+    durationAtCurrentAddress?: StringNullableFilter<"Application"> | string | null
+    employmentStatus?: StringNullableFilter<"Application"> | string | null
+    occupation?: StringNullableFilter<"Application"> | string | null
+    employerName?: StringNullableFilter<"Application"> | string | null
+    workAddress?: StringNullableFilter<"Application"> | string | null
+    monthlyIncome?: FloatNullableFilter<"Application"> | number | null
+    durationAtCurrentJob?: StringNullableFilter<"Application"> | string | null
+    incomeProofUrl?: StringNullableFilter<"Application"> | string | null
+    previousEmployerName?: StringNullableFilter<"Application"> | string | null
+    previousJobTitle?: StringNullableFilter<"Application"> | string | null
+    previousEmploymentDuration?: StringNullableFilter<"Application"> | string | null
+    reasonForLeavingPrevJob?: StringNullableFilter<"Application"> | string | null
+    numberOfOccupants?: IntNullableFilter<"Application"> | number | null
+    relationshipToOccupants?: StringNullableFilter<"Application"> | string | null
+    hasPets?: BoolNullableFilter<"Application"> | boolean | null
+    isSmoker?: BoolNullableFilter<"Application"> | boolean | null
+    accessibilityNeeds?: StringNullableFilter<"Application"> | string | null
+    reasonForLeaving?: StringNullableFilter<"Application"> | string | null
+    consentToInformation?: BoolNullableFilter<"Application"> | boolean | null
+    consentToVerification?: BoolNullableFilter<"Application"> | boolean | null
+    consentToTenancyTerms?: BoolNullableFilter<"Application"> | boolean | null
+    consentToPrivacyPolicy?: BoolNullableFilter<"Application"> | boolean | null
     leaseId?: IntNullableFilter<"Application"> | number | null
   }
 
@@ -14487,7 +15511,7 @@ export namespace Prisma {
   export type PropertyCreateWithoutLandlordInput = {
     name: string
     description: string
-    pricePerMonth: number
+    pricePerYear: number
     securityDeposit: number
     applicationFee: number
     photoUrls?: PropertyCreatephotoUrlsInput | string[]
@@ -14513,7 +15537,7 @@ export namespace Prisma {
     id?: number
     name: string
     description: string
-    pricePerMonth: number
+    pricePerYear: number
     securityDeposit: number
     applicationFee: number
     photoUrls?: PropertyCreatephotoUrlsInput | string[]
@@ -14568,7 +15592,7 @@ export namespace Prisma {
     id?: IntFilter<"Property"> | number
     name?: StringFilter<"Property"> | string
     description?: StringFilter<"Property"> | string
-    pricePerMonth?: FloatFilter<"Property"> | number
+    pricePerYear?: FloatFilter<"Property"> | number
     securityDeposit?: FloatFilter<"Property"> | number
     applicationFee?: FloatFilter<"Property"> | number
     photoUrls?: StringNullableListFilter<"Property">
@@ -14590,7 +15614,7 @@ export namespace Prisma {
   export type PropertyCreateWithoutTenantsInput = {
     name: string
     description: string
-    pricePerMonth: number
+    pricePerYear: number
     securityDeposit: number
     applicationFee: number
     photoUrls?: PropertyCreatephotoUrlsInput | string[]
@@ -14616,7 +15640,7 @@ export namespace Prisma {
     id?: number
     name: string
     description: string
-    pricePerMonth: number
+    pricePerYear: number
     securityDeposit: number
     applicationFee: number
     photoUrls?: PropertyCreatephotoUrlsInput | string[]
@@ -14646,7 +15670,7 @@ export namespace Prisma {
   export type PropertyCreateWithoutFavoritedByInput = {
     name: string
     description: string
-    pricePerMonth: number
+    pricePerYear: number
     securityDeposit: number
     applicationFee: number
     photoUrls?: PropertyCreatephotoUrlsInput | string[]
@@ -14672,7 +15696,7 @@ export namespace Prisma {
     id?: number
     name: string
     description: string
-    pricePerMonth: number
+    pricePerYear: number
     securityDeposit: number
     applicationFee: number
     photoUrls?: PropertyCreatephotoUrlsInput | string[]
@@ -14705,7 +15729,36 @@ export namespace Prisma {
     name: string
     email: string
     phoneNumber: string
-    message?: string | null
+    preferredMoveInDate?: Date | string | null
+    desiredLeaseDuration?: string | null
+    gender?: string | null
+    dateOfBirth?: Date | string | null
+    nationality?: string | null
+    maritalStatus?: string | null
+    idType?: string | null
+    idDocumentUrl?: string | null
+    durationAtCurrentAddress?: string | null
+    employmentStatus?: string | null
+    occupation?: string | null
+    employerName?: string | null
+    workAddress?: string | null
+    monthlyIncome?: number | null
+    durationAtCurrentJob?: string | null
+    incomeProofUrl?: string | null
+    previousEmployerName?: string | null
+    previousJobTitle?: string | null
+    previousEmploymentDuration?: string | null
+    reasonForLeavingPrevJob?: string | null
+    numberOfOccupants?: number | null
+    relationshipToOccupants?: string | null
+    hasPets?: boolean | null
+    isSmoker?: boolean | null
+    accessibilityNeeds?: string | null
+    reasonForLeaving?: string | null
+    consentToInformation?: boolean | null
+    consentToVerification?: boolean | null
+    consentToTenancyTerms?: boolean | null
+    consentToPrivacyPolicy?: boolean | null
     property: PropertyCreateNestedOneWithoutApplicationsInput
     lease?: LeaseCreateNestedOneWithoutApplicationInput
   }
@@ -14718,7 +15771,36 @@ export namespace Prisma {
     name: string
     email: string
     phoneNumber: string
-    message?: string | null
+    preferredMoveInDate?: Date | string | null
+    desiredLeaseDuration?: string | null
+    gender?: string | null
+    dateOfBirth?: Date | string | null
+    nationality?: string | null
+    maritalStatus?: string | null
+    idType?: string | null
+    idDocumentUrl?: string | null
+    durationAtCurrentAddress?: string | null
+    employmentStatus?: string | null
+    occupation?: string | null
+    employerName?: string | null
+    workAddress?: string | null
+    monthlyIncome?: number | null
+    durationAtCurrentJob?: string | null
+    incomeProofUrl?: string | null
+    previousEmployerName?: string | null
+    previousJobTitle?: string | null
+    previousEmploymentDuration?: string | null
+    reasonForLeavingPrevJob?: string | null
+    numberOfOccupants?: number | null
+    relationshipToOccupants?: string | null
+    hasPets?: boolean | null
+    isSmoker?: boolean | null
+    accessibilityNeeds?: string | null
+    reasonForLeaving?: string | null
+    consentToInformation?: boolean | null
+    consentToVerification?: boolean | null
+    consentToTenancyTerms?: boolean | null
+    consentToPrivacyPolicy?: boolean | null
     leaseId?: number | null
   }
 
@@ -14830,7 +15912,7 @@ export namespace Prisma {
   export type PropertyCreateWithoutLocationInput = {
     name: string
     description: string
-    pricePerMonth: number
+    pricePerYear: number
     securityDeposit: number
     applicationFee: number
     photoUrls?: PropertyCreatephotoUrlsInput | string[]
@@ -14856,7 +15938,7 @@ export namespace Prisma {
     id?: number
     name: string
     description: string
-    pricePerMonth: number
+    pricePerYear: number
     securityDeposit: number
     applicationFee: number
     photoUrls?: PropertyCreatephotoUrlsInput | string[]
@@ -14907,7 +15989,7 @@ export namespace Prisma {
   export type PropertyCreateWithoutApplicationsInput = {
     name: string
     description: string
-    pricePerMonth: number
+    pricePerYear: number
     securityDeposit: number
     applicationFee: number
     photoUrls?: PropertyCreatephotoUrlsInput | string[]
@@ -14933,7 +16015,7 @@ export namespace Prisma {
     id?: number
     name: string
     description: string
-    pricePerMonth: number
+    pricePerYear: number
     securityDeposit: number
     applicationFee: number
     photoUrls?: PropertyCreatephotoUrlsInput | string[]
@@ -15026,7 +16108,7 @@ export namespace Prisma {
   export type PropertyUpdateWithoutApplicationsInput = {
     name?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
-    pricePerMonth?: FloatFieldUpdateOperationsInput | number
+    pricePerYear?: FloatFieldUpdateOperationsInput | number
     securityDeposit?: FloatFieldUpdateOperationsInput | number
     applicationFee?: FloatFieldUpdateOperationsInput | number
     photoUrls?: PropertyUpdatephotoUrlsInput | string[]
@@ -15052,7 +16134,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
-    pricePerMonth?: FloatFieldUpdateOperationsInput | number
+    pricePerYear?: FloatFieldUpdateOperationsInput | number
     securityDeposit?: FloatFieldUpdateOperationsInput | number
     applicationFee?: FloatFieldUpdateOperationsInput | number
     photoUrls?: PropertyUpdatephotoUrlsInput | string[]
@@ -15141,7 +16223,7 @@ export namespace Prisma {
   export type PropertyCreateWithoutLeasesInput = {
     name: string
     description: string
-    pricePerMonth: number
+    pricePerYear: number
     securityDeposit: number
     applicationFee: number
     photoUrls?: PropertyCreatephotoUrlsInput | string[]
@@ -15167,7 +16249,7 @@ export namespace Prisma {
     id?: number
     name: string
     description: string
-    pricePerMonth: number
+    pricePerYear: number
     securityDeposit: number
     applicationFee: number
     photoUrls?: PropertyCreatephotoUrlsInput | string[]
@@ -15226,7 +16308,36 @@ export namespace Prisma {
     name: string
     email: string
     phoneNumber: string
-    message?: string | null
+    preferredMoveInDate?: Date | string | null
+    desiredLeaseDuration?: string | null
+    gender?: string | null
+    dateOfBirth?: Date | string | null
+    nationality?: string | null
+    maritalStatus?: string | null
+    idType?: string | null
+    idDocumentUrl?: string | null
+    durationAtCurrentAddress?: string | null
+    employmentStatus?: string | null
+    occupation?: string | null
+    employerName?: string | null
+    workAddress?: string | null
+    monthlyIncome?: number | null
+    durationAtCurrentJob?: string | null
+    incomeProofUrl?: string | null
+    previousEmployerName?: string | null
+    previousJobTitle?: string | null
+    previousEmploymentDuration?: string | null
+    reasonForLeavingPrevJob?: string | null
+    numberOfOccupants?: number | null
+    relationshipToOccupants?: string | null
+    hasPets?: boolean | null
+    isSmoker?: boolean | null
+    accessibilityNeeds?: string | null
+    reasonForLeaving?: string | null
+    consentToInformation?: boolean | null
+    consentToVerification?: boolean | null
+    consentToTenancyTerms?: boolean | null
+    consentToPrivacyPolicy?: boolean | null
     property: PropertyCreateNestedOneWithoutApplicationsInput
     tenant: TenantCreateNestedOneWithoutApplicationsInput
   }
@@ -15240,7 +16351,36 @@ export namespace Prisma {
     name: string
     email: string
     phoneNumber: string
-    message?: string | null
+    preferredMoveInDate?: Date | string | null
+    desiredLeaseDuration?: string | null
+    gender?: string | null
+    dateOfBirth?: Date | string | null
+    nationality?: string | null
+    maritalStatus?: string | null
+    idType?: string | null
+    idDocumentUrl?: string | null
+    durationAtCurrentAddress?: string | null
+    employmentStatus?: string | null
+    occupation?: string | null
+    employerName?: string | null
+    workAddress?: string | null
+    monthlyIncome?: number | null
+    durationAtCurrentJob?: string | null
+    incomeProofUrl?: string | null
+    previousEmployerName?: string | null
+    previousJobTitle?: string | null
+    previousEmploymentDuration?: string | null
+    reasonForLeavingPrevJob?: string | null
+    numberOfOccupants?: number | null
+    relationshipToOccupants?: string | null
+    hasPets?: boolean | null
+    isSmoker?: boolean | null
+    accessibilityNeeds?: string | null
+    reasonForLeaving?: string | null
+    consentToInformation?: boolean | null
+    consentToVerification?: boolean | null
+    consentToTenancyTerms?: boolean | null
+    consentToPrivacyPolicy?: boolean | null
   }
 
   export type ApplicationCreateOrConnectWithoutLeaseInput = {
@@ -15289,7 +16429,7 @@ export namespace Prisma {
   export type PropertyUpdateWithoutLeasesInput = {
     name?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
-    pricePerMonth?: FloatFieldUpdateOperationsInput | number
+    pricePerYear?: FloatFieldUpdateOperationsInput | number
     securityDeposit?: FloatFieldUpdateOperationsInput | number
     applicationFee?: FloatFieldUpdateOperationsInput | number
     photoUrls?: PropertyUpdatephotoUrlsInput | string[]
@@ -15315,7 +16455,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
-    pricePerMonth?: FloatFieldUpdateOperationsInput | number
+    pricePerYear?: FloatFieldUpdateOperationsInput | number
     securityDeposit?: FloatFieldUpdateOperationsInput | number
     applicationFee?: FloatFieldUpdateOperationsInput | number
     photoUrls?: PropertyUpdatephotoUrlsInput | string[]
@@ -15386,7 +16526,36 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     phoneNumber?: StringFieldUpdateOperationsInput | string
-    message?: NullableStringFieldUpdateOperationsInput | string | null
+    preferredMoveInDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    desiredLeaseDuration?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableStringFieldUpdateOperationsInput | string | null
+    dateOfBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    nationality?: NullableStringFieldUpdateOperationsInput | string | null
+    maritalStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    idType?: NullableStringFieldUpdateOperationsInput | string | null
+    idDocumentUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    durationAtCurrentAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    employmentStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    occupation?: NullableStringFieldUpdateOperationsInput | string | null
+    employerName?: NullableStringFieldUpdateOperationsInput | string | null
+    workAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    monthlyIncome?: NullableFloatFieldUpdateOperationsInput | number | null
+    durationAtCurrentJob?: NullableStringFieldUpdateOperationsInput | string | null
+    incomeProofUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    previousEmployerName?: NullableStringFieldUpdateOperationsInput | string | null
+    previousJobTitle?: NullableStringFieldUpdateOperationsInput | string | null
+    previousEmploymentDuration?: NullableStringFieldUpdateOperationsInput | string | null
+    reasonForLeavingPrevJob?: NullableStringFieldUpdateOperationsInput | string | null
+    numberOfOccupants?: NullableIntFieldUpdateOperationsInput | number | null
+    relationshipToOccupants?: NullableStringFieldUpdateOperationsInput | string | null
+    hasPets?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    isSmoker?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    accessibilityNeeds?: NullableStringFieldUpdateOperationsInput | string | null
+    reasonForLeaving?: NullableStringFieldUpdateOperationsInput | string | null
+    consentToInformation?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    consentToVerification?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    consentToTenancyTerms?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    consentToPrivacyPolicy?: NullableBoolFieldUpdateOperationsInput | boolean | null
     property?: PropertyUpdateOneRequiredWithoutApplicationsNestedInput
     tenant?: TenantUpdateOneRequiredWithoutApplicationsNestedInput
   }
@@ -15400,7 +16569,36 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     phoneNumber?: StringFieldUpdateOperationsInput | string
-    message?: NullableStringFieldUpdateOperationsInput | string | null
+    preferredMoveInDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    desiredLeaseDuration?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableStringFieldUpdateOperationsInput | string | null
+    dateOfBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    nationality?: NullableStringFieldUpdateOperationsInput | string | null
+    maritalStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    idType?: NullableStringFieldUpdateOperationsInput | string | null
+    idDocumentUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    durationAtCurrentAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    employmentStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    occupation?: NullableStringFieldUpdateOperationsInput | string | null
+    employerName?: NullableStringFieldUpdateOperationsInput | string | null
+    workAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    monthlyIncome?: NullableFloatFieldUpdateOperationsInput | number | null
+    durationAtCurrentJob?: NullableStringFieldUpdateOperationsInput | string | null
+    incomeProofUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    previousEmployerName?: NullableStringFieldUpdateOperationsInput | string | null
+    previousJobTitle?: NullableStringFieldUpdateOperationsInput | string | null
+    previousEmploymentDuration?: NullableStringFieldUpdateOperationsInput | string | null
+    reasonForLeavingPrevJob?: NullableStringFieldUpdateOperationsInput | string | null
+    numberOfOccupants?: NullableIntFieldUpdateOperationsInput | number | null
+    relationshipToOccupants?: NullableStringFieldUpdateOperationsInput | string | null
+    hasPets?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    isSmoker?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    accessibilityNeeds?: NullableStringFieldUpdateOperationsInput | string | null
+    reasonForLeaving?: NullableStringFieldUpdateOperationsInput | string | null
+    consentToInformation?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    consentToVerification?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    consentToTenancyTerms?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    consentToPrivacyPolicy?: NullableBoolFieldUpdateOperationsInput | boolean | null
   }
 
   export type PaymentUpsertWithWhereUniqueWithoutLeaseInput = {
@@ -15507,7 +16705,36 @@ export namespace Prisma {
     name: string
     email: string
     phoneNumber: string
-    message?: string | null
+    preferredMoveInDate?: Date | string | null
+    desiredLeaseDuration?: string | null
+    gender?: string | null
+    dateOfBirth?: Date | string | null
+    nationality?: string | null
+    maritalStatus?: string | null
+    idType?: string | null
+    idDocumentUrl?: string | null
+    durationAtCurrentAddress?: string | null
+    employmentStatus?: string | null
+    occupation?: string | null
+    employerName?: string | null
+    workAddress?: string | null
+    monthlyIncome?: number | null
+    durationAtCurrentJob?: string | null
+    incomeProofUrl?: string | null
+    previousEmployerName?: string | null
+    previousJobTitle?: string | null
+    previousEmploymentDuration?: string | null
+    reasonForLeavingPrevJob?: string | null
+    numberOfOccupants?: number | null
+    relationshipToOccupants?: string | null
+    hasPets?: boolean | null
+    isSmoker?: boolean | null
+    accessibilityNeeds?: string | null
+    reasonForLeaving?: string | null
+    consentToInformation?: boolean | null
+    consentToVerification?: boolean | null
+    consentToTenancyTerms?: boolean | null
+    consentToPrivacyPolicy?: boolean | null
     leaseId?: number | null
   }
 
@@ -15547,7 +16774,36 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     phoneNumber?: StringFieldUpdateOperationsInput | string
-    message?: NullableStringFieldUpdateOperationsInput | string | null
+    preferredMoveInDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    desiredLeaseDuration?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableStringFieldUpdateOperationsInput | string | null
+    dateOfBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    nationality?: NullableStringFieldUpdateOperationsInput | string | null
+    maritalStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    idType?: NullableStringFieldUpdateOperationsInput | string | null
+    idDocumentUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    durationAtCurrentAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    employmentStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    occupation?: NullableStringFieldUpdateOperationsInput | string | null
+    employerName?: NullableStringFieldUpdateOperationsInput | string | null
+    workAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    monthlyIncome?: NullableFloatFieldUpdateOperationsInput | number | null
+    durationAtCurrentJob?: NullableStringFieldUpdateOperationsInput | string | null
+    incomeProofUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    previousEmployerName?: NullableStringFieldUpdateOperationsInput | string | null
+    previousJobTitle?: NullableStringFieldUpdateOperationsInput | string | null
+    previousEmploymentDuration?: NullableStringFieldUpdateOperationsInput | string | null
+    reasonForLeavingPrevJob?: NullableStringFieldUpdateOperationsInput | string | null
+    numberOfOccupants?: NullableIntFieldUpdateOperationsInput | number | null
+    relationshipToOccupants?: NullableStringFieldUpdateOperationsInput | string | null
+    hasPets?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    isSmoker?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    accessibilityNeeds?: NullableStringFieldUpdateOperationsInput | string | null
+    reasonForLeaving?: NullableStringFieldUpdateOperationsInput | string | null
+    consentToInformation?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    consentToVerification?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    consentToTenancyTerms?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    consentToPrivacyPolicy?: NullableBoolFieldUpdateOperationsInput | boolean | null
     tenant?: TenantUpdateOneRequiredWithoutApplicationsNestedInput
     lease?: LeaseUpdateOneWithoutApplicationNestedInput
   }
@@ -15560,7 +16816,36 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     phoneNumber?: StringFieldUpdateOperationsInput | string
-    message?: NullableStringFieldUpdateOperationsInput | string | null
+    preferredMoveInDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    desiredLeaseDuration?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableStringFieldUpdateOperationsInput | string | null
+    dateOfBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    nationality?: NullableStringFieldUpdateOperationsInput | string | null
+    maritalStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    idType?: NullableStringFieldUpdateOperationsInput | string | null
+    idDocumentUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    durationAtCurrentAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    employmentStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    occupation?: NullableStringFieldUpdateOperationsInput | string | null
+    employerName?: NullableStringFieldUpdateOperationsInput | string | null
+    workAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    monthlyIncome?: NullableFloatFieldUpdateOperationsInput | number | null
+    durationAtCurrentJob?: NullableStringFieldUpdateOperationsInput | string | null
+    incomeProofUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    previousEmployerName?: NullableStringFieldUpdateOperationsInput | string | null
+    previousJobTitle?: NullableStringFieldUpdateOperationsInput | string | null
+    previousEmploymentDuration?: NullableStringFieldUpdateOperationsInput | string | null
+    reasonForLeavingPrevJob?: NullableStringFieldUpdateOperationsInput | string | null
+    numberOfOccupants?: NullableIntFieldUpdateOperationsInput | number | null
+    relationshipToOccupants?: NullableStringFieldUpdateOperationsInput | string | null
+    hasPets?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    isSmoker?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    accessibilityNeeds?: NullableStringFieldUpdateOperationsInput | string | null
+    reasonForLeaving?: NullableStringFieldUpdateOperationsInput | string | null
+    consentToInformation?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    consentToVerification?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    consentToTenancyTerms?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    consentToPrivacyPolicy?: NullableBoolFieldUpdateOperationsInput | boolean | null
     leaseId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
@@ -15572,7 +16857,36 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     phoneNumber?: StringFieldUpdateOperationsInput | string
-    message?: NullableStringFieldUpdateOperationsInput | string | null
+    preferredMoveInDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    desiredLeaseDuration?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableStringFieldUpdateOperationsInput | string | null
+    dateOfBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    nationality?: NullableStringFieldUpdateOperationsInput | string | null
+    maritalStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    idType?: NullableStringFieldUpdateOperationsInput | string | null
+    idDocumentUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    durationAtCurrentAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    employmentStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    occupation?: NullableStringFieldUpdateOperationsInput | string | null
+    employerName?: NullableStringFieldUpdateOperationsInput | string | null
+    workAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    monthlyIncome?: NullableFloatFieldUpdateOperationsInput | number | null
+    durationAtCurrentJob?: NullableStringFieldUpdateOperationsInput | string | null
+    incomeProofUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    previousEmployerName?: NullableStringFieldUpdateOperationsInput | string | null
+    previousJobTitle?: NullableStringFieldUpdateOperationsInput | string | null
+    previousEmploymentDuration?: NullableStringFieldUpdateOperationsInput | string | null
+    reasonForLeavingPrevJob?: NullableStringFieldUpdateOperationsInput | string | null
+    numberOfOccupants?: NullableIntFieldUpdateOperationsInput | number | null
+    relationshipToOccupants?: NullableStringFieldUpdateOperationsInput | string | null
+    hasPets?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    isSmoker?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    accessibilityNeeds?: NullableStringFieldUpdateOperationsInput | string | null
+    reasonForLeaving?: NullableStringFieldUpdateOperationsInput | string | null
+    consentToInformation?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    consentToVerification?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    consentToTenancyTerms?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    consentToPrivacyPolicy?: NullableBoolFieldUpdateOperationsInput | boolean | null
     leaseId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
@@ -15638,7 +16952,7 @@ export namespace Prisma {
     id?: number
     name: string
     description: string
-    pricePerMonth: number
+    pricePerYear: number
     securityDeposit: number
     applicationFee: number
     photoUrls?: PropertyCreatephotoUrlsInput | string[]
@@ -15659,7 +16973,7 @@ export namespace Prisma {
   export type PropertyUpdateWithoutLandlordInput = {
     name?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
-    pricePerMonth?: FloatFieldUpdateOperationsInput | number
+    pricePerYear?: FloatFieldUpdateOperationsInput | number
     securityDeposit?: FloatFieldUpdateOperationsInput | number
     applicationFee?: FloatFieldUpdateOperationsInput | number
     photoUrls?: PropertyUpdatephotoUrlsInput | string[]
@@ -15685,7 +16999,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
-    pricePerMonth?: FloatFieldUpdateOperationsInput | number
+    pricePerYear?: FloatFieldUpdateOperationsInput | number
     securityDeposit?: FloatFieldUpdateOperationsInput | number
     applicationFee?: FloatFieldUpdateOperationsInput | number
     photoUrls?: PropertyUpdatephotoUrlsInput | string[]
@@ -15711,7 +17025,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
-    pricePerMonth?: FloatFieldUpdateOperationsInput | number
+    pricePerYear?: FloatFieldUpdateOperationsInput | number
     securityDeposit?: FloatFieldUpdateOperationsInput | number
     applicationFee?: FloatFieldUpdateOperationsInput | number
     photoUrls?: PropertyUpdatephotoUrlsInput | string[]
@@ -15737,7 +17051,36 @@ export namespace Prisma {
     name: string
     email: string
     phoneNumber: string
-    message?: string | null
+    preferredMoveInDate?: Date | string | null
+    desiredLeaseDuration?: string | null
+    gender?: string | null
+    dateOfBirth?: Date | string | null
+    nationality?: string | null
+    maritalStatus?: string | null
+    idType?: string | null
+    idDocumentUrl?: string | null
+    durationAtCurrentAddress?: string | null
+    employmentStatus?: string | null
+    occupation?: string | null
+    employerName?: string | null
+    workAddress?: string | null
+    monthlyIncome?: number | null
+    durationAtCurrentJob?: string | null
+    incomeProofUrl?: string | null
+    previousEmployerName?: string | null
+    previousJobTitle?: string | null
+    previousEmploymentDuration?: string | null
+    reasonForLeavingPrevJob?: string | null
+    numberOfOccupants?: number | null
+    relationshipToOccupants?: string | null
+    hasPets?: boolean | null
+    isSmoker?: boolean | null
+    accessibilityNeeds?: string | null
+    reasonForLeaving?: string | null
+    consentToInformation?: boolean | null
+    consentToVerification?: boolean | null
+    consentToTenancyTerms?: boolean | null
+    consentToPrivacyPolicy?: boolean | null
     leaseId?: number | null
   }
 
@@ -15753,7 +17096,7 @@ export namespace Prisma {
   export type PropertyUpdateWithoutTenantsInput = {
     name?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
-    pricePerMonth?: FloatFieldUpdateOperationsInput | number
+    pricePerYear?: FloatFieldUpdateOperationsInput | number
     securityDeposit?: FloatFieldUpdateOperationsInput | number
     applicationFee?: FloatFieldUpdateOperationsInput | number
     photoUrls?: PropertyUpdatephotoUrlsInput | string[]
@@ -15779,7 +17122,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
-    pricePerMonth?: FloatFieldUpdateOperationsInput | number
+    pricePerYear?: FloatFieldUpdateOperationsInput | number
     securityDeposit?: FloatFieldUpdateOperationsInput | number
     applicationFee?: FloatFieldUpdateOperationsInput | number
     photoUrls?: PropertyUpdatephotoUrlsInput | string[]
@@ -15805,7 +17148,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
-    pricePerMonth?: FloatFieldUpdateOperationsInput | number
+    pricePerYear?: FloatFieldUpdateOperationsInput | number
     securityDeposit?: FloatFieldUpdateOperationsInput | number
     applicationFee?: FloatFieldUpdateOperationsInput | number
     photoUrls?: PropertyUpdatephotoUrlsInput | string[]
@@ -15827,7 +17170,7 @@ export namespace Prisma {
   export type PropertyUpdateWithoutFavoritedByInput = {
     name?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
-    pricePerMonth?: FloatFieldUpdateOperationsInput | number
+    pricePerYear?: FloatFieldUpdateOperationsInput | number
     securityDeposit?: FloatFieldUpdateOperationsInput | number
     applicationFee?: FloatFieldUpdateOperationsInput | number
     photoUrls?: PropertyUpdatephotoUrlsInput | string[]
@@ -15853,7 +17196,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
-    pricePerMonth?: FloatFieldUpdateOperationsInput | number
+    pricePerYear?: FloatFieldUpdateOperationsInput | number
     securityDeposit?: FloatFieldUpdateOperationsInput | number
     applicationFee?: FloatFieldUpdateOperationsInput | number
     photoUrls?: PropertyUpdatephotoUrlsInput | string[]
@@ -15879,7 +17222,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
-    pricePerMonth?: FloatFieldUpdateOperationsInput | number
+    pricePerYear?: FloatFieldUpdateOperationsInput | number
     securityDeposit?: FloatFieldUpdateOperationsInput | number
     applicationFee?: FloatFieldUpdateOperationsInput | number
     photoUrls?: PropertyUpdatephotoUrlsInput | string[]
@@ -15904,7 +17247,36 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     phoneNumber?: StringFieldUpdateOperationsInput | string
-    message?: NullableStringFieldUpdateOperationsInput | string | null
+    preferredMoveInDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    desiredLeaseDuration?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableStringFieldUpdateOperationsInput | string | null
+    dateOfBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    nationality?: NullableStringFieldUpdateOperationsInput | string | null
+    maritalStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    idType?: NullableStringFieldUpdateOperationsInput | string | null
+    idDocumentUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    durationAtCurrentAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    employmentStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    occupation?: NullableStringFieldUpdateOperationsInput | string | null
+    employerName?: NullableStringFieldUpdateOperationsInput | string | null
+    workAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    monthlyIncome?: NullableFloatFieldUpdateOperationsInput | number | null
+    durationAtCurrentJob?: NullableStringFieldUpdateOperationsInput | string | null
+    incomeProofUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    previousEmployerName?: NullableStringFieldUpdateOperationsInput | string | null
+    previousJobTitle?: NullableStringFieldUpdateOperationsInput | string | null
+    previousEmploymentDuration?: NullableStringFieldUpdateOperationsInput | string | null
+    reasonForLeavingPrevJob?: NullableStringFieldUpdateOperationsInput | string | null
+    numberOfOccupants?: NullableIntFieldUpdateOperationsInput | number | null
+    relationshipToOccupants?: NullableStringFieldUpdateOperationsInput | string | null
+    hasPets?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    isSmoker?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    accessibilityNeeds?: NullableStringFieldUpdateOperationsInput | string | null
+    reasonForLeaving?: NullableStringFieldUpdateOperationsInput | string | null
+    consentToInformation?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    consentToVerification?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    consentToTenancyTerms?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    consentToPrivacyPolicy?: NullableBoolFieldUpdateOperationsInput | boolean | null
     property?: PropertyUpdateOneRequiredWithoutApplicationsNestedInput
     lease?: LeaseUpdateOneWithoutApplicationNestedInput
   }
@@ -15917,7 +17289,36 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     phoneNumber?: StringFieldUpdateOperationsInput | string
-    message?: NullableStringFieldUpdateOperationsInput | string | null
+    preferredMoveInDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    desiredLeaseDuration?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableStringFieldUpdateOperationsInput | string | null
+    dateOfBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    nationality?: NullableStringFieldUpdateOperationsInput | string | null
+    maritalStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    idType?: NullableStringFieldUpdateOperationsInput | string | null
+    idDocumentUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    durationAtCurrentAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    employmentStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    occupation?: NullableStringFieldUpdateOperationsInput | string | null
+    employerName?: NullableStringFieldUpdateOperationsInput | string | null
+    workAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    monthlyIncome?: NullableFloatFieldUpdateOperationsInput | number | null
+    durationAtCurrentJob?: NullableStringFieldUpdateOperationsInput | string | null
+    incomeProofUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    previousEmployerName?: NullableStringFieldUpdateOperationsInput | string | null
+    previousJobTitle?: NullableStringFieldUpdateOperationsInput | string | null
+    previousEmploymentDuration?: NullableStringFieldUpdateOperationsInput | string | null
+    reasonForLeavingPrevJob?: NullableStringFieldUpdateOperationsInput | string | null
+    numberOfOccupants?: NullableIntFieldUpdateOperationsInput | number | null
+    relationshipToOccupants?: NullableStringFieldUpdateOperationsInput | string | null
+    hasPets?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    isSmoker?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    accessibilityNeeds?: NullableStringFieldUpdateOperationsInput | string | null
+    reasonForLeaving?: NullableStringFieldUpdateOperationsInput | string | null
+    consentToInformation?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    consentToVerification?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    consentToTenancyTerms?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    consentToPrivacyPolicy?: NullableBoolFieldUpdateOperationsInput | boolean | null
     leaseId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
@@ -15929,7 +17330,36 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     phoneNumber?: StringFieldUpdateOperationsInput | string
-    message?: NullableStringFieldUpdateOperationsInput | string | null
+    preferredMoveInDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    desiredLeaseDuration?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableStringFieldUpdateOperationsInput | string | null
+    dateOfBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    nationality?: NullableStringFieldUpdateOperationsInput | string | null
+    maritalStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    idType?: NullableStringFieldUpdateOperationsInput | string | null
+    idDocumentUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    durationAtCurrentAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    employmentStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    occupation?: NullableStringFieldUpdateOperationsInput | string | null
+    employerName?: NullableStringFieldUpdateOperationsInput | string | null
+    workAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    monthlyIncome?: NullableFloatFieldUpdateOperationsInput | number | null
+    durationAtCurrentJob?: NullableStringFieldUpdateOperationsInput | string | null
+    incomeProofUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    previousEmployerName?: NullableStringFieldUpdateOperationsInput | string | null
+    previousJobTitle?: NullableStringFieldUpdateOperationsInput | string | null
+    previousEmploymentDuration?: NullableStringFieldUpdateOperationsInput | string | null
+    reasonForLeavingPrevJob?: NullableStringFieldUpdateOperationsInput | string | null
+    numberOfOccupants?: NullableIntFieldUpdateOperationsInput | number | null
+    relationshipToOccupants?: NullableStringFieldUpdateOperationsInput | string | null
+    hasPets?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    isSmoker?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    accessibilityNeeds?: NullableStringFieldUpdateOperationsInput | string | null
+    reasonForLeaving?: NullableStringFieldUpdateOperationsInput | string | null
+    consentToInformation?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    consentToVerification?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    consentToTenancyTerms?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    consentToPrivacyPolicy?: NullableBoolFieldUpdateOperationsInput | boolean | null
     leaseId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
@@ -15966,7 +17396,7 @@ export namespace Prisma {
   export type PropertyUpdateWithoutLocationInput = {
     name?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
-    pricePerMonth?: FloatFieldUpdateOperationsInput | number
+    pricePerYear?: FloatFieldUpdateOperationsInput | number
     securityDeposit?: FloatFieldUpdateOperationsInput | number
     applicationFee?: FloatFieldUpdateOperationsInput | number
     photoUrls?: PropertyUpdatephotoUrlsInput | string[]
@@ -15992,7 +17422,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
-    pricePerMonth?: FloatFieldUpdateOperationsInput | number
+    pricePerYear?: FloatFieldUpdateOperationsInput | number
     securityDeposit?: FloatFieldUpdateOperationsInput | number
     applicationFee?: FloatFieldUpdateOperationsInput | number
     photoUrls?: PropertyUpdatephotoUrlsInput | string[]
@@ -16018,7 +17448,7 @@ export namespace Prisma {
     id?: number
     name: string
     description: string
-    pricePerMonth: number
+    pricePerYear: number
     securityDeposit: number
     applicationFee: number
     photoUrls?: PropertyCreatephotoUrlsInput | string[]
@@ -16040,7 +17470,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
-    pricePerMonth?: FloatFieldUpdateOperationsInput | number
+    pricePerYear?: FloatFieldUpdateOperationsInput | number
     securityDeposit?: FloatFieldUpdateOperationsInput | number
     applicationFee?: FloatFieldUpdateOperationsInput | number
     photoUrls?: PropertyUpdatephotoUrlsInput | string[]

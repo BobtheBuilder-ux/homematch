@@ -72,7 +72,7 @@ const ApplicationDetail = () => {
             </div>
             <div>
               <h3 className="font-medium">Monthly Rent</h3>
-              <p>${application.property.pricePerMonth.toLocaleString()}</p>
+              <p>${application.property.pricePerYear.toLocaleString()}</p>
             </div>
             <div>
               <h3 className="font-medium">Security Deposit</h3>
