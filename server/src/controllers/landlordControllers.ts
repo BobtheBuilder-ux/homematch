@@ -55,6 +55,56 @@ export const createLandlord = async (
   }
 };
 
+export const registerLandlordWithCode = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const { cognitoId, name, email, phoneNumber, registrationCode } = req.body;
+
+    // Find and validate the registration code
+    const codeRecord = await prisma.landlordRegistrationCode.findUnique({
+      where: { code: registrationCode },
+    });
+
+    if (!codeRecord) {
+      res.status(400).json({ message: "Invalid registration code" });
+      return;
+    }
+
+    if (codeRecord.isUsed) {
+      res.status(400).json({ message: "Registration code has already been used" });
+      return;
+    }
+
+    // Create the landlord and mark the code as used
+    const landlord = await prisma.landlord.create({
+      data: {
+        cognitoId,
+        name,
+        email,
+        phoneNumber,
+        registrationCodeId: codeRecord.id,
+      },
+    });
+
+    // Mark the code as used
+    await prisma.landlordRegistrationCode.update({
+      where: { id: codeRecord.id },
+      data: {
+        isUsed: true,
+        usedAt: new Date(),
+      },
+    });
+
+    res.status(201).json(landlord);
+  } catch (error: any) {
+    res
+      .status(500)
+      .json({ message: `Error creating landlord: ${error.message}` });
+  }
+};
+
 export const updateLandlord = async (
   req: Request,
   res: Response

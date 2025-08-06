@@ -12,6 +12,7 @@ declare global {
       user?: {
         id: string;
         role: string;
+        skipTenantCreation?: boolean;
       };
     }
   }
@@ -42,7 +43,9 @@ export const authMiddleware = (allowedRoles: string[]) => {
 
       // Special handling for admin and agent roles
       if (userRole.toLowerCase() === "admin" || userRole.toLowerCase() === "agent") {
-        // Allow access for admin and agent roles
+        // Allow access for admin and agent roles without creating tenant records
+        // Skip tenant record creation for these roles
+        req.user.skipTenantCreation = true;
       }
     } catch (err) {
       console.error("Failed to decode token:", err);

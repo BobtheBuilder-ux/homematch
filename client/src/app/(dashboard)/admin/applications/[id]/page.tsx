@@ -27,7 +27,7 @@ const ApplicationDetail = () => {
   if (isError || !application) return <div>Error loading application</div>;
 
   const handleStatusChange = async (status: string) => {
-    await updateApplicationStatus({ id: applicationId, status });
+    await updateApplicationStatus({ id: applicationId, status, userType: 'admin' });
   };
 
   const getStatusColor = (status: string) => {

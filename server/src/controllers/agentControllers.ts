@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { PrismaClient } from "../../node_modules/.prisma/client";
+import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
@@ -8,51 +8,8 @@ export const getAgentLeads = async (
   res: Response
 ): Promise<void> => {
   try {
-    // Mock leads data - in a real app, you'd have a leads table
-    const leads = [
-      {
-        id: 1,
-        name: "John Doe",
-        email: "john.doe@example.com",
-        phoneNumber: "+1 (555) 123-4567",
-        status: "new",
-        source: "Website",
-        createdAt: new Date(),
-        property: {
-          id: 1,
-          name: "Downtown Apartment",
-          pricePerYear: 1500,
-        },
-      },
-      {
-        id: 2,
-        name: "Jane Smith",
-        email: "jane.smith@example.com",
-        phoneNumber: "+1 (555) 987-6543",
-        status: "contacted",
-        source: "Referral",
-        createdAt: new Date(),
-        property: {
-          id: 2,
-          name: "Beach House",
-          pricePerYear: 2000,
-        },
-      },
-      {
-        id: 3,
-        name: "Mike Johnson",
-        email: "mike.johnson@example.com",
-        phoneNumber: "+1 (555) 456-7890",
-        status: "qualified",
-        source: "Social Media",
-        createdAt: new Date(),
-        property: {
-          id: 3,
-          name: "City Loft",
-          pricePerYear: 2200,
-        },
-      },
-    ];
+    // Return empty array - no demo content
+    const leads: any[] = [];
 
     res.json(leads);
   } catch (error: any) {
@@ -114,39 +71,51 @@ export const getAgentTasks = async (
   res: Response
 ): Promise<void> => {
   try {
-    // Mock tasks data - in a real app, you'd have a tasks table
-    const tasks = [
-      {
-        id: 1,
-        title: "Follow up with John Doe",
-        description: "Call John about the downtown apartment viewing",
-        priority: "high",
-        status: "pending",
-        dueDate: new Date(Date.now() + 24 * 60 * 60 * 1000), // Tomorrow
-        client: { name: "John Doe" },
-        notes: "Interested in 2-bedroom apartments",
+    const agentCognitoId = req.user?.id;
+    
+    if (!agentCognitoId) {
+      res.status(401).json({ message: 'Agent authentication required' });
+      return;
+    }
+    
+    // Find the agent by cognitoId
+    const agent = await prisma.agent.findUnique({
+      where: { cognitoId: agentCognitoId }
+    });
+    
+    if (!agent) {
+      res.status(404).json({ message: 'Agent not found' });
+      return;
+    }
+    
+    const { status, priority } = req.query;
+    
+    let whereClause: any = {
+      agentId: agent.id
+    };
+    
+    if (status && typeof status === 'string') {
+      whereClause.status = status;
+    }
+    
+    if (priority && typeof priority === 'string') {
+      whereClause.priority = priority;
+    }
+    
+    const tasks = await prisma.task.findMany({
+      where: whereClause,
+      include: {
+        agent: {
+          select: {
+            name: true,
+            email: true
+          }
+        }
       },
-      {
-        id: 2,
-        title: "Property inspection",
-        description: "Inspect Beach House property for maintenance issues",
-        priority: "medium",
-        status: "pending",
-        dueDate: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000), // Day after tomorrow
-        client: { name: "Jane Smith" },
-        notes: "Check plumbing and electrical systems",
-      },
-      {
-        id: 3,
-        title: "Contract review",
-        description: "Review lease agreement for City Loft",
-        priority: "low",
-        status: "completed",
-        dueDate: new Date(Date.now() - 24 * 60 * 60 * 1000), // Yesterday
-        client: { name: "Mike Johnson" },
-        notes: "All terms agreed upon",
-      },
-    ];
+      orderBy: {
+        createdAt: 'desc'
+      }
+    });
 
     res.json(tasks);
   } catch (error: any) {
@@ -175,10 +144,55 @@ export const updateTaskStatus = async (
 ): Promise<void> => {
   try {
     const { taskId } = req.params;
-    const { status } = req.body;
+    const { status, description } = req.body;
+    const agentCognitoId = req.user?.id;
+    
+    if (!agentCognitoId) {
+      res.status(401).json({ message: 'Agent authentication required' });
+      return;
+    }
+    
+    // Find the agent by cognitoId
+    const agent = await prisma.agent.findUnique({
+      where: { cognitoId: agentCognitoId }
+    });
+    
+    if (!agent) {
+      res.status(404).json({ message: 'Agent not found' });
+      return;
+    }
+    
+    // Check if the task exists and belongs to this agent
+    const existingTask = await prisma.task.findFirst({
+      where: {
+        id: parseInt(taskId),
+        agentId: agent.id
+      }
+    });
+    
+    if (!existingTask) {
+      res.status(404).json({ message: 'Task not found or not assigned to this agent' });
+      return;
+    }
+    
+    // Update the task
+    const updatedTask = await prisma.task.update({
+      where: { id: parseInt(taskId) },
+      data: {
+        ...(status && { status }),
+        ...(description && { description })
+      },
+      include: {
+        agent: {
+          select: {
+            name: true,
+            email: true
+          }
+        }
+      }
+    });
 
-    // In a real implementation, you'd update the task status in the database
-    res.json({ message: "Task status updated successfully", taskId, status });
+    res.json(updatedTask);
   } catch (error: any) {
     res.status(500).json({ message: `Error updating task status: ${error.message}` });
   }

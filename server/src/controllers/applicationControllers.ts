@@ -17,13 +17,14 @@ export const listApplications = async (
       if (userType === "tenant") {
         whereClause = { tenantCognitoId: String(userId) };
       } else if (userType === "landlord") {
+        // Landlords can only view applications, not approve/deny them
         whereClause = {
           property: {
             landlordCognitoId: String(userId),
           },
         };
       }
-      // Admin can see all applications, so no where clause needed
+      // Only admins can approve/deny applications
     }
 
     const applications = await prisma.application.findMany({
@@ -264,7 +265,13 @@ export const updateApplicationStatus = async (
 ): Promise<void> => {
   try {
     const { id } = req.params;
-    const { status } = req.body;
+    const { status, userType } = req.body;
+    
+    // Only admins can update application status
+    if (userType !== 'admin') {
+      res.status(403).json({ message: "Only administrators can approve or deny applications." });
+      return;
+    }
 
     const application = await prisma.application.findUnique({
       where: { id: Number(id) },

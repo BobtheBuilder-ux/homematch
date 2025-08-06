@@ -39,6 +39,10 @@ export const api = createApi({
     "AgentLeads",
     "AgentClients",
     "AgentTasks",
+    "LandlordRegistrations",
+    "AdminTasks",
+    "AdminTaskStats",
+
   ],
   endpoints: (build) => ({
     getAuthUser: build.query<User, void>({
@@ -49,17 +53,31 @@ export const api = createApi({
           const user = await getCurrentUser();
           const userRole = idToken?.payload["custom:role"] as string;
 
-          const endpoint =
-            userRole === "landlord"
-              ? `/landlords/${user.userId}`
-              : `/tenants/${user.userId}`;
+          let endpoint: string;
+          switch (userRole?.toLowerCase()) {
+            case "landlord":
+              endpoint = `/landlords/${user.userId}`;
+              break;
+            case "admin":
+              endpoint = `/admin/admins/${user.userId}`;
+              break;
+            case "agent":
+              endpoint = `/admin/agents/${user.userId}`;
+              break;
+            case "tenant":
+            default:
+              endpoint = `/tenants/${user.userId}`;
+              break;
+          }
 
           let userDetailsResponse = await fetchWithBQ(endpoint);
 
-          // if user doesn't exist, create new user
+          // if user doesn't exist, create new user (but skip for admin and agent roles)
           if (
             userDetailsResponse.error &&
-            userDetailsResponse.error.status === 404
+            userDetailsResponse.error.status === 404 &&
+            userRole?.toLowerCase() !== "admin" &&
+            userRole?.toLowerCase() !== "agent"
           ) {
             userDetailsResponse = await createNewUserInDatabase(
               user,
@@ -322,12 +340,12 @@ export const api = createApi({
 
     updateApplicationStatus: build.mutation<
       Application & { lease?: Lease },
-      { id: number; status: string }
+      { id: number; status: string; userType: string }
     >({
-      query: ({ id, status }) => ({
+      query: ({ id, status, userType }) => ({
         url: `applications/${id}/status`,
         method: "PUT",
-        body: { status },
+        body: { status, userType },
       }),
       invalidatesTags: ["Applications", "Leases"],
       async onQueryStarted(_, { queryFulfilled }) {
@@ -508,17 +526,17 @@ export const api = createApi({
       },
     }),
 
-    updateTaskStatus: build.mutation<any, { taskId: number; status: string }>({
-      query: ({ taskId, status }) => ({
+    updateTaskStatus: build.mutation<any, { taskId: number; status?: string; description?: string }>({
+      query: ({ taskId, status, description }) => ({
         url: `agent/tasks/${taskId}/status`,
         method: "PUT",
-        body: { status },
+        body: { status, description },
       }),
       invalidatesTags: ["AgentTasks"],
       async onQueryStarted(_, { queryFulfilled }) {
         await withToast(queryFulfilled, {
-          success: "Task status updated successfully!",
-          error: "Failed to update task status.",
+          success: "Task updated successfully!",
+          error: "Failed to update task.",
         });
       },
     }),
@@ -536,6 +554,131 @@ export const api = createApi({
         });
       },
     }),
+
+    registerLandlordWithCode: build.mutation<
+      Landlord,
+      { cognitoId: string; name: string; email: string; phoneNumber: string; registrationCode: string }
+    >({
+      query: (body) => ({
+        url: "landlords/register-with-code",
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ["Landlords", "LandlordRegistrations"],
+      async onQueryStarted(_, { queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch (error) {
+          console.error("Error registering landlord with code:", error);
+        }
+      },
+    }),
+
+    getLandlordRegistrations: build.query<
+      any[],
+      { codeFilter?: string; usedFilter?: string }
+    >({
+      query: (params) => {
+        const cleanedParams = cleanParams(params);
+        return {
+          url: "admin/landlord-registrations",
+          params: cleanedParams,
+        };
+      },
+      providesTags: ["LandlordRegistrations"],
+      async onQueryStarted(_, { queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch (error) {
+          console.error("Error fetching landlord registrations:", error);
+        }
+      },
+    }),
+
+    getLandlordRegistrationStats: build.query<any, void>({
+      query: () => "admin/landlord-registration-stats",
+      providesTags: ["LandlordRegistrations"],
+      async onQueryStarted(_, { queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch (error) {
+          console.error("Error fetching landlord registration stats:", error);
+        }
+      },
+    }),
+
+    // Admin Task Management endpoints
+    getAdminTasks: build.query<any[], { status?: string; priority?: string; agentId?: string }>({
+      query: (params) => {
+        const queryParams = new URLSearchParams();
+        if (params.status) queryParams.append("status", params.status);
+        if (params.priority) queryParams.append("priority", params.priority);
+        if (params.agentId) queryParams.append("agentId", params.agentId);
+        return `admin/tasks?${queryParams.toString()}`;
+      },
+      providesTags: ["AdminTasks"],
+      async onQueryStarted(_, { queryFulfilled }) {
+        await withToast(queryFulfilled, {
+          error: "Failed to fetch tasks.",
+        });
+      },
+    }),
+
+    getAdminTaskStats: build.query<any, void>({
+      query: () => "admin/task-stats",
+      providesTags: ["AdminTaskStats"],
+      async onQueryStarted(_, { queryFulfilled }) {
+        await withToast(queryFulfilled, {
+          error: "Failed to fetch task statistics.",
+        });
+      },
+    }),
+
+    createAdminTask: build.mutation<any, { title: string; description: string; agentId: number; priority: string; dueDate?: string }>({
+      query: (taskData) => ({
+        url: "admin/tasks",
+        method: "POST",
+        body: taskData,
+      }),
+      invalidatesTags: ["AdminTasks", "AdminTaskStats"],
+      async onQueryStarted(_, { queryFulfilled }) {
+        await withToast(queryFulfilled, {
+          success: "Task created successfully!",
+          error: "Failed to create task.",
+        });
+      },
+    }),
+
+    updateAdminTask: build.mutation<any, { id: number; title?: string; description?: string; status?: string; priority?: string; dueDate?: string }>({
+      query: ({ id, ...taskData }) => ({
+        url: `admin/tasks/${id}`,
+        method: "PUT",
+        body: taskData,
+      }),
+      invalidatesTags: ["AdminTasks", "AdminTaskStats"],
+      async onQueryStarted(_, { queryFulfilled }) {
+        await withToast(queryFulfilled, {
+          success: "Task updated successfully!",
+          error: "Failed to update task.",
+        });
+      },
+    }),
+
+    deleteAdminTask: build.mutation<any, number>({
+      query: (taskId) => ({
+        url: `admin/tasks/${taskId}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["AdminTasks", "AdminTaskStats"],
+      async onQueryStarted(_, { queryFulfilled }) {
+        await withToast(queryFulfilled, {
+          success: "Task deleted successfully!",
+          error: "Failed to delete task.",
+        });
+      },
+    }),
+
+
   }),
 });
 
@@ -575,4 +718,14 @@ export const {
   useUpdateLeadStatusMutation,
   useUpdateTaskStatusMutation,
   useUpdateAgentSettingsMutation,
+  useRegisterLandlordWithCodeMutation,
+  useGetLandlordRegistrationsQuery,
+  useGetLandlordRegistrationStatsQuery,
+  // Admin Task Management hooks
+  useGetAdminTasksQuery,
+  useGetAdminTaskStatsQuery,
+  useCreateAdminTaskMutation,
+  useUpdateAdminTaskMutation,
+  useDeleteAdminTaskMutation,
+
 } = api;

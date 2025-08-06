@@ -56,6 +56,8 @@ const AppSidebar = ({ userType }: AppSidebarProps) => {
           { icon: Users, label: "Users", href: "/admin/users" },
           { icon: Building, label: "Properties", href: "/admin/properties" },
           { icon: File, label: "Applications", href: "/admin/applications" },
+          { icon: UserCheck, label: "Landlord Registrations", href: "/admin/landlord-registrations" },
+          { icon: ClipboardList, label: "Tasks", href: "/admin/tasks" },
           { icon: Settings, label: "Settings", href: "/admin/settings" },
         ];
       case "agent":

@@ -102,8 +102,10 @@ model Landlord {
   name        String
   email       String
   phoneNumber String
+  registrationCodeId Int?
 
   managedProperties Property[]
+  registrationCode  LandlordRegistrationCode? @relation(fields: [registrationCodeId], references: [id])
 }
 
 model Tenant {
@@ -125,6 +127,68 @@ model Agent {
   name        String
   email       String
   phoneNumber String?
+  registrationCodeId Int?
+
+  registrationCode  AgentRegistrationCode? @relation(fields: [registrationCodeId], references: [id])
+  assignedTasks     Task[] @relation("AgentTasks")
+}
+
+model Admin {
+  id          Int    @id @default(autoincrement())
+  cognitoId   String @unique
+  name        String
+  email       String
+  phoneNumber String?
+}
+
+model LandlordRegistrationCode {
+  id        Int      @id @default(autoincrement())
+  code      String   @unique
+  isUsed    Boolean  @default(false)
+  createdAt DateTime @default(now())
+  usedAt    DateTime?
+  
+  landlords Landlord[]
+}
+
+model AgentRegistrationCode {
+  id        Int      @id @default(autoincrement())
+  code      String   @unique
+  isUsed    Boolean  @default(false)
+  createdAt DateTime @default(now())
+  usedAt    DateTime?
+  assignedBy String? // Admin who assigned this code
+  
+  agents Agent[]
+}
+
+enum TaskStatus {
+  Pending
+  InProgress
+  Completed
+  Cancelled
+}
+
+enum TaskPriority {
+  Low
+  Medium
+  High
+  Urgent
+}
+
+model Task {
+  id          Int          @id @default(autoincrement())
+  title       String
+  description String?
+  status      TaskStatus   @default(Pending)
+  priority    TaskPriority @default(Medium)
+  dueDate     DateTime?
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  assignedBy  String       // Admin who assigned the task
+  agentId     Int
+  
+  agent Agent @relation("AgentTasks", fields: [agentId], references: [id])
 }
 
 model Location {
@@ -210,4 +274,18 @@ model Payment {
   leaseId       Int
 
   lease Lease @relation(fields: [leaseId], references: [id])
+}
+
+model AdminSettings {
+  id                        Int     @id @default(autoincrement())
+  siteName                  String  @default("Rentiful")
+  siteDescription           String  @default("Find your perfect rental property")
+  maintenanceMode           Boolean @default(false)
+  allowRegistration         Boolean @default(true)
+  maxPropertiesPerLandlord  Int     @default(50)
+  commissionRate            Float   @default(5.0)
+  emailNotifications        Boolean @default(true)
+  smsNotifications          Boolean @default(false)
+  createdAt                 DateTime @default(now())
+  updatedAt                 DateTime @updatedAt
 }

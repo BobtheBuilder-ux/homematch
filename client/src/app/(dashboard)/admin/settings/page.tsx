@@ -7,8 +7,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
+import { AlertTriangle, CheckCircle } from "lucide-react";
 import { useGetAdminSettingsQuery, useUpdateAdminSettingsMutation } from "@/state/api";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const AdminSettings = () => {
   const { data: settings, isLoading } = useGetAdminSettingsQuery();
@@ -23,6 +24,22 @@ const AdminSettings = () => {
     emailNotifications: true,
     smsNotifications: false,
   });
+
+  // Update form data when settings are loaded
+  useEffect(() => {
+    if (settings) {
+      setFormData({
+        siteName: settings.siteName || "",
+        siteDescription: settings.siteDescription || "",
+        maintenanceMode: settings.maintenanceMode || false,
+        allowRegistration: settings.allowRegistration ?? true,
+        maxPropertiesPerLandlord: settings.maxPropertiesPerLandlord || 50,
+        commissionRate: settings.commissionRate || 5,
+        emailNotifications: settings.emailNotifications ?? true,
+        smsNotifications: settings.smsNotifications || false,
+      });
+    }
+  }, [settings]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -62,13 +79,27 @@ const AdminSettings = () => {
                 placeholder="Enter site description"
               />
             </div>
-            <div className="flex items-center space-x-2">
-              <Switch
-                id="maintenanceMode"
-                checked={formData.maintenanceMode}
-                onCheckedChange={(checked) => setFormData({ ...formData, maintenanceMode: checked })}
-              />
-              <Label htmlFor="maintenanceMode">Maintenance Mode</Label>
+            <div className="space-y-2">
+              <div className="flex items-center space-x-2">
+                <Switch
+                  id="maintenanceMode"
+                  checked={formData.maintenanceMode}
+                  onCheckedChange={(checked) => setFormData({ ...formData, maintenanceMode: checked })}
+                />
+                <Label htmlFor="maintenanceMode">Maintenance Mode</Label>
+              </div>
+              {formData.maintenanceMode && (
+                <div className="flex items-center space-x-2 text-sm text-orange-600 bg-orange-50 p-2 rounded-md">
+                  <AlertTriangle className="h-4 w-4" />
+                  <span>Site is currently in maintenance mode. Only admins can access the dashboard.</span>
+                </div>
+              )}
+              {!formData.maintenanceMode && (
+                <div className="flex items-center space-x-2 text-sm text-green-600 bg-green-50 p-2 rounded-md">
+                  <CheckCircle className="h-4 w-4" />
+                  <span>Site is operational and accessible to all users.</span>
+                </div>
+              )}
             </div>
             <div className="flex items-center space-x-2">
               <Switch

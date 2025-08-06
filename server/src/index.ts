@@ -12,6 +12,8 @@ import propertyRoutes from "./routes/propertyRoutes";
 import leaseRoutes from "./routes/leaseRoutes";
 import applicationRoutes from "./routes/applicationRoutes";
 import adminRoutes from "./routes/adminRoutes";
+import publicAdminRoutes from "./routes/publicAdminRoutes";
+import publicAgentRoutes from "./routes/publicAgentRoutes";
 import agentRoutes from "./routes/agentRoutes";
 
 /* CONFIGURATIONS */
@@ -49,6 +51,11 @@ app.use(
   tenantRoutes
 );
 app.use("/landlords", authMiddleware(["landlord", "admin"]), landlordRoutes);
+// Admin routes with exception for admin creation
+// Public admin routes (no authentication required)
+app.use("/admin", publicAdminRoutes);
+app.use("/agent", publicAgentRoutes);
+// Protected admin routes (authentication required)
 app.use("/admin", authMiddleware(["admin"]), adminRoutes);
 app.use("/agent", authMiddleware(["agent"]), agentRoutes);
 

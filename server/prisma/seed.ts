@@ -51,6 +51,31 @@ async function resetSequence(modelName: string) {
   console.log(`Reset sequence for ${modelName} to ${nextId}`);
 }
 
+async function generateLandlordRegistrationCodes() {
+  console.log('Generating landlord registration codes...');
+  
+  // Delete existing codes
+  await prisma.landlordRegistrationCode.deleteMany({});
+  
+  // Generate 20 unique codes
+  const codes = [];
+  for (let i = 1; i <= 20; i++) {
+    codes.push({
+      code: `homematch-landlord/${i}`,
+      isUsed: false
+    });
+  }
+  
+  // Insert codes into database
+  for (const codeData of codes) {
+    await prisma.landlordRegistrationCode.create({
+      data: codeData
+    });
+  }
+  
+  console.log('Generated 20 landlord registration codes');
+}
+
 async function deleteAllData(orderedFileNames: string[]) {
   const modelNames = orderedFileNames.map((fileName) =>
     toPascalCase(path.basename(fileName, path.extname(fileName)))
@@ -87,6 +112,9 @@ async function main() {
   ];
 
   await deleteAllData(orderedFileNames);
+  
+  // Generate landlord registration codes
+  await generateLandlordRegistrationCodes();
 
   // Now seed in correct order
   const seedOrder: (string | [string, boolean])[] = [

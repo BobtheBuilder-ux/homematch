@@ -31,8 +31,27 @@ export const createTenant = async (
   res: Response
 ): Promise<void> => {
   try {
+    console.log("Creating tenant with request body:", req.body);
+    console.log("User object in createTenant:", req.user);
+
     const { cognitoId, name, email, phoneNumber } = req.body;
 
+    // Skip tenant creation for admin and agent roles
+    if (req.user?.skipTenantCreation) {
+      console.log("Skipping tenant creation due to skipTenantCreation flag");
+      res.status(200).json({ message: "Tenant creation skipped for admin/agent role" });
+      return;
+    }
+
+    // Additional check: Skip tenant creation if the user's role is admin or agent
+    // This is a fallback in case skipTenantCreation flag is not set
+    if (req.user?.role && (req.user.role.toLowerCase() === 'admin' || req.user.role.toLowerCase() === 'agent')) {
+      console.log("Skipping tenant creation due to user role:", req.user.role);
+      res.status(200).json({ message: "Tenant creation skipped for admin/agent role" });
+      return;
+    }
+
+    console.log("Creating tenant in database with cognitoId:", cognitoId);
     const tenant = await prisma.tenant.create({
       data: {
         cognitoId,
@@ -41,9 +60,11 @@ export const createTenant = async (
         phoneNumber,
       },
     });
+    console.log("Tenant created in database:", tenant);
 
     res.status(201).json(tenant);
   } catch (error: any) {
+    console.error("Error creating tenant:", error);
     res
       .status(500)
       .json({ message: `Error creating tenant: ${error.message}` });

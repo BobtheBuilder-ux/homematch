@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { PrismaClient } from "../../node_modules/.prisma/client";
+import { PrismaClient } from "@prisma/client";
 import { createUserInCognito } from "../utils/cognitoService";
 
 const prisma = new PrismaClient();
@@ -13,7 +13,7 @@ export const getAnalytics = async (
     const totalProperties = await prisma.property.count();
     const totalUsers = await prisma.tenant.count() + await prisma.landlord.count();
     const totalApplications = await prisma.application.count();
-    
+
     // Calculate revenue from payments
     const payments = await prisma.payment.findMany({
       where: { paymentStatus: "Paid" },
@@ -23,7 +23,7 @@ export const getAnalytics = async (
     // Get monthly revenue data (last 6 months)
     const sixMonthsAgo = new Date();
     sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6);
-    
+
     const monthlyPayments = await prisma.payment.findMany({
       where: {
         paymentDate: { gte: sixMonthsAgo },
@@ -230,17 +230,15 @@ export const getAdminSettings = async (
   res: Response
 ): Promise<void> => {
   try {
-    // Mock settings data - in a real app, you'd store this in the database
-    const settings = {
-      siteName: "Rentiful",
-      siteDescription: "Find your perfect rental property",
-      maintenanceMode: false,
-      allowRegistration: true,
-      maxPropertiesPerLandlord: 50,
-      commissionRate: 5,
-      emailNotifications: true,
-      smsNotifications: false,
-    };
+    // Get or create admin settings
+    let settings = await prisma.adminSettings.findFirst();
+    
+    if (!settings) {
+      // Create default settings if none exist
+      settings = await prisma.adminSettings.create({
+        data: {}
+      });
+    }
 
     res.json(settings);
   } catch (error: any) {
@@ -253,9 +251,24 @@ export const updateAdminSettings = async (
   res: Response
 ): Promise<void> => {
   try {
-    const settings = req.body;
+    const settingsData = req.body;
+
+    // Get or create admin settings
+    let settings = await prisma.adminSettings.findFirst();
     
-    // In a real implementation, you'd save these settings to the database
+    if (!settings) {
+      // Create new settings if none exist
+      settings = await prisma.adminSettings.create({
+        data: settingsData
+      });
+    } else {
+      // Update existing settings
+      settings = await prisma.adminSettings.update({
+        where: { id: settings.id },
+        data: settingsData
+      });
+    }
+
     res.json({ message: "Settings updated successfully", settings });
   } catch (error: any) {
     res.status(500).json({ message: `Error updating settings: ${error.message}` });
@@ -267,38 +280,177 @@ export const createAgent = async (
   res: Response
 ): Promise<void> => {
   try {
-    const { name, email, phoneNumber, password, invitationCode } = req.body;
+    console.log("Creating agent with request body:", req.body);
+    const { name, email, phoneNumber, invitationCode } = req.body;
 
+    // Validate invitation code
     if (invitationCode !== process.env.AGENT_INVITATION_CODE) {
-      res.status(403).json({ message: "Invalid invitation code" });
-      return;
-    }
-
-    if (!email || !password || !name) {
-      res.status(400).json({ message: "Name, email, and password are required" });
+      res.status(400).json({ message: "Invalid invitation code" });
       return;
     }
 
     // Create user in Cognito
-    const cognitoUser = await createUserInCognito(email, password);
+    const temporaryPassword = Math.random().toString(36).slice(-8) + "Aa1!";
+    console.log("Creating agent in Cognito with email:", email);
+    const cognitoUser = await createUserInCognito(email, temporaryPassword, 'agent');
+    console.log("Cognito user created:", cognitoUser);
 
-    if (!cognitoUser) {
-      res.status(500).json({ message: "Failed to create user in Cognito" });
+    if (!cognitoUser || !cognitoUser.Username) {
+      throw new Error("Failed to create user in Cognito");
+    }
+
+    // Set skipTenantCreation flag for agent users
+    if (!req.user) {
+      req.user = {
+        id: cognitoUser.Username,
+        role: 'agent',
+        skipTenantCreation: true
+      };
+    } else {
+      req.user.skipTenantCreation = true;
+    }
+    console.log("User object with skipTenantCreation flag:", req.user);
+
+    // Create agent in database
+    console.log("Creating agent in database with cognitoId:", cognitoUser.Username);
+    const agent = await prisma.agent.create({
+      data: {
+        cognitoId: cognitoUser.Username,
+        name,
+        email,
+        phoneNumber: phoneNumber || '',
+      },
+    });
+    console.log("Agent created in database:", agent);
+
+    res.status(201).json({
+      message: "Agent created successfully",
+      agent: {
+        id: agent.id,
+        name: agent.name,
+        email: agent.email,
+        phoneNumber: agent.phoneNumber,
+      },
+    });
+  } catch (error: any) {
+    console.error("Error creating agent:", error);
+    res.status(500).json({ message: `Error creating agent: ${error.message}` });
+  }
+};
+
+export const createAdmin = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    console.log("Creating admin with request body:", req.body);
+    const { name, email, phoneNumber, superadminCode } = req.body;
+
+    // Validate superadmin code
+    if (superadminCode !== process.env.SUPERADMIN_CODE) {
+      res.status(400).json({ message: "Invalid superadmin code" });
       return;
     }
 
-    const newAgent = await prisma.agent.create({
+    // Check if admin with this email already exists
+    const existingAdmin = await prisma.admin.findFirst({
+      where: { email }
+    });
+
+    if (existingAdmin) {
+      res.status(400).json({ message: "Admin with this email already exists" });
+      return;
+    }
+
+    // Create user in Cognito
+    const temporaryPassword = Math.random().toString(36).slice(-8) + "Aa1!";
+    console.log("Creating admin in Cognito with email:", email);
+    const cognitoUser = await createUserInCognito(email, temporaryPassword, 'admin');
+    console.log("Cognito user created:", cognitoUser);
+
+    if (!cognitoUser || !cognitoUser.Username) {
+      throw new Error("Failed to create user in Cognito");
+    }
+    
+    // Create admin in database
+    console.log("Creating admin in database with cognitoId:", cognitoUser.Username);
+    const admin = await prisma.admin.create({
       data: {
-        cognitoId: cognitoUser.Username!,
+        cognitoId: cognitoUser.Username,
         name,
         email,
-        phoneNumber: phoneNumber || null,
+        phoneNumber: phoneNumber || '',
+      },
+    });
+    console.log("Admin created in database:", admin);
+
+    res.status(201).json({
+      message: "Admin created successfully",
+      admin: {
+        id: admin.id,
+        name: admin.name,
+        email: admin.email,
+        phoneNumber: admin.phoneNumber,
+      },
+    });
+  } catch (error: any) {
+    console.error("Error creating admin:", error);
+    res.status(500).json({ message: `Error creating admin: ${error.message}` });
+  }
+};
+
+export const getAdmin = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const { cognitoId } = req.params;
+    const admin = await prisma.admin.findUnique({
+      where: { cognitoId },
+      select: {
+        cognitoId: true,
+        name: true,
+        email: true,
+        phoneNumber: true,
       },
     });
 
-    res.status(201).json(newAgent);
+    if (!admin) {
+      res.status(404).json({ message: "Admin not found" });
+      return;
+    }
+
+    res.json(admin);
   } catch (error: any) {
-    res.status(500).json({ message: `Error creating agent: ${error.message}` });
+    res.status(500).json({ message: `Error retrieving admin: ${error.message}` });
+  }
+};
+
+export const getAgent = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const { cognitoId } = req.params;
+    const agent = await prisma.agent.findUnique({
+      where: { cognitoId },
+      select: {
+        id: true,
+        cognitoId: true,
+        name: true,
+        email: true,
+        phoneNumber: true,
+      },
+    });
+
+    if (!agent) {
+      res.status(404).json({ message: "Agent not found" });
+      return;
+    }
+
+    res.json(agent);
+  } catch (error: any) {
+    res.status(500).json({ message: `Error retrieving agent: ${error.message}` });
   }
 };
 
@@ -310,6 +462,408 @@ export const getAllAgents = async (
     const agents = await prisma.agent.findMany();
     res.json(agents);
   } catch (error: any) {
-    res.status(500).json({ message: `Error fetching agents: ${error.message}` });
+    res.status(500).json({ message: `Error retrieving agents: ${error.message}` });
+  }
+};
+
+export const getLandlordRegistrations = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const { codeFilter, usedFilter } = req.query;
+    
+    let whereClause: any = {};
+    
+    // Filter by specific code if provided
+    if (codeFilter && typeof codeFilter === 'string') {
+      whereClause.code = {
+        contains: codeFilter,
+        mode: 'insensitive'
+      };
+    }
+    
+    // Filter by used status if provided
+    if (usedFilter !== undefined) {
+      whereClause.isUsed = usedFilter === 'true';
+    }
+    
+    const registrationCodes = await prisma.landlordRegistrationCode.findMany({
+      where: whereClause,
+      include: {
+        landlords: {
+          select: {
+            cognitoId: true,
+            name: true,
+            email: true,
+            phoneNumber: true
+          }
+        }
+      },
+      orderBy: {
+        createdAt: 'desc'
+      }
+    });
+    
+    res.json(registrationCodes);
+  } catch (error: any) {
+    res.status(500).json({ message: `Error retrieving landlord registrations: ${error.message}` });
+  }
+};
+
+export const getLandlordRegistrationStats = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const totalCodes = await prisma.landlordRegistrationCode.count();
+    const usedCodes = await prisma.landlordRegistrationCode.count({
+      where: { isUsed: true }
+    });
+    const availableCodes = totalCodes - usedCodes;
+    
+    const recentRegistrations = await prisma.landlordRegistrationCode.findMany({
+      where: { isUsed: true },
+      include: {
+        landlords: {
+          select: {
+            name: true,
+            email: true
+          }
+        }
+      },
+      orderBy: {
+        usedAt: 'desc'
+      },
+      take: 5
+    });
+    
+    res.json({
+       totalCodes,
+       usedCodes,
+       availableCodes,
+       recentRegistrations
+     });
+   } catch (error: any) {
+    res.status(500).json({ message: `Error retrieving landlord registration stats: ${error.message}` });
+  }
+};
+
+// Agent Registration Code Management
+export const getAgentRegistrations = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const { codeFilter, usedFilter } = req.query;
+    
+    let whereClause: any = {};
+    
+    // Filter by specific code if provided
+    if (codeFilter && typeof codeFilter === 'string') {
+      whereClause.code = {
+        contains: codeFilter,
+        mode: 'insensitive'
+      };
+    }
+    
+    // Filter by used status if provided
+    if (usedFilter !== undefined) {
+      whereClause.isUsed = usedFilter === 'true';
+    }
+    
+    const registrationCodes = await prisma.agentRegistrationCode.findMany({
+      where: whereClause,
+      include: {
+        agents: {
+          select: {
+            cognitoId: true,
+            name: true,
+            email: true,
+            phoneNumber: true
+          }
+        }
+      },
+      orderBy: {
+        createdAt: 'desc'
+      }
+    });
+    
+    res.json(registrationCodes);
+  } catch (error: any) {
+    res.status(500).json({ message: `Error retrieving agent registrations: ${error.message}` });
+  }
+};
+
+export const getAgentRegistrationStats = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const totalCodes = await prisma.agentRegistrationCode.count();
+    const usedCodes = await prisma.agentRegistrationCode.count({
+      where: { isUsed: true }
+    });
+    const availableCodes = totalCodes - usedCodes;
+    
+    const recentRegistrations = await prisma.agentRegistrationCode.findMany({
+      where: { isUsed: true },
+      include: {
+        agents: {
+          select: {
+            name: true,
+            email: true
+          }
+        }
+      },
+      orderBy: {
+        usedAt: 'desc'
+      },
+      take: 5
+    });
+    
+    res.json({
+       totalCodes,
+       usedCodes,
+       availableCodes,
+       recentRegistrations
+     });
+  } catch (error: any) {
+    res.status(500).json({ message: `Error retrieving agent registration stats: ${error.message}` });
+  }
+};
+
+export const assignCodeToAgent = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const { codeId, agentId } = req.body;
+    const adminCognitoId = req.user?.id;
+    
+    if (!adminCognitoId) {
+      res.status(401).json({ message: 'Admin authentication required' });
+      return;
+    }
+    
+    // Check if code exists and is available
+    const code = await prisma.agentRegistrationCode.findUnique({
+      where: { id: codeId }
+    });
+    
+    if (!code) {
+      res.status(404).json({ message: 'Registration code not found' });
+      return;
+    }
+    
+    if (code.isUsed) {
+      res.status(400).json({ message: 'Registration code is already used' });
+      return;
+    }
+    
+    // Check if agent exists
+    const agent = await prisma.agent.findUnique({
+      where: { id: agentId }
+    });
+    
+    if (!agent) {
+      res.status(404).json({ message: 'Agent not found' });
+      return;
+    }
+    
+    // Update the code to mark it as assigned
+    await prisma.agentRegistrationCode.update({
+      where: { id: codeId },
+      data: {
+        assignedBy: adminCognitoId,
+        usedAt: new Date(),
+        isUsed: true
+      }
+    });
+    
+    // Update the agent with the registration code
+    await prisma.agent.update({
+      where: { id: agentId },
+      data: {
+        registrationCodeId: codeId
+      }
+    });
+    
+    res.json({ message: 'Code successfully assigned to agent' });
+  } catch (error: any) {
+    res.status(500).json({ message: `Error assigning code to agent: ${error.message}` });
+  }
+};
+
+// Task Management
+export const createTask = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const { title, description, priority, dueDate, agentId } = req.body;
+    const adminCognitoId = req.user?.id;
+    
+    if (!adminCognitoId) {
+      res.status(401).json({ message: 'Admin authentication required' });
+      return;
+    }
+    
+    // Check if agent exists
+    const agent = await prisma.agent.findUnique({
+      where: { id: agentId }
+    });
+    
+    if (!agent) {
+      res.status(404).json({ message: 'Agent not found' });
+      return;
+    }
+    
+    const task = await prisma.task.create({
+      data: {
+        title,
+        description,
+        priority: priority || 'Medium',
+        dueDate: dueDate ? new Date(dueDate) : null,
+        assignedBy: adminCognitoId,
+        agentId
+      },
+      include: {
+        agent: {
+          select: {
+            name: true,
+            email: true
+          }
+        }
+      }
+    });
+    
+    res.status(201).json(task);
+  } catch (error: any) {
+    res.status(500).json({ message: `Error creating task: ${error.message}` });
+  }
+};
+
+export const getTasks = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const { status, priority, agentId } = req.query;
+    
+    let whereClause: any = {};
+    
+    if (status && typeof status === 'string') {
+      whereClause.status = status;
+    }
+    
+    if (priority && typeof priority === 'string') {
+      whereClause.priority = priority;
+    }
+    
+    if (agentId && typeof agentId === 'string') {
+      whereClause.agentId = parseInt(agentId);
+    }
+    
+    const tasks = await prisma.task.findMany({
+      where: whereClause,
+      include: {
+        agent: {
+          select: {
+            name: true,
+            email: true
+          }
+        }
+      },
+      orderBy: {
+        createdAt: 'desc'
+      }
+    });
+    
+    res.json(tasks);
+  } catch (error: any) {
+    res.status(500).json({ message: `Error retrieving tasks: ${error.message}` });
+  }
+};
+
+export const updateTask = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const { id } = req.params;
+    const { title, description, status, priority, dueDate } = req.body;
+    
+    const task = await prisma.task.update({
+      where: { id: parseInt(id) },
+      data: {
+        ...(title && { title }),
+        ...(description && { description }),
+        ...(status && { status }),
+        ...(priority && { priority }),
+        ...(dueDate && { dueDate: new Date(dueDate) })
+      },
+      include: {
+        agent: {
+          select: {
+            name: true,
+            email: true
+          }
+        }
+      }
+    });
+    
+    res.json(task);
+  } catch (error: any) {
+    res.status(500).json({ message: `Error updating task: ${error.message}` });
+  }
+};
+
+export const deleteTask = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const { id } = req.params;
+    
+    await prisma.task.delete({
+      where: { id: parseInt(id) }
+    });
+    
+    res.json({ message: 'Task deleted successfully' });
+  } catch (error: any) {
+    res.status(500).json({ message: `Error deleting task: ${error.message}` });
+  }
+};
+
+export const getTaskStats = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const totalTasks = await prisma.task.count();
+    const pendingTasks = await prisma.task.count({ where: { status: 'Pending' } });
+    const inProgressTasks = await prisma.task.count({ where: { status: 'InProgress' } });
+    const completedTasks = await prisma.task.count({ where: { status: 'Completed' } });
+    const overdueTasks = await prisma.task.count({
+      where: {
+        dueDate: {
+          lt: new Date()
+        },
+        status: {
+          not: 'Completed'
+        }
+      }
+    });
+    
+    res.json({
+      totalTasks,
+      pendingTasks,
+      inProgressTasks,
+      completedTasks,
+      overdueTasks
+    });
+  } catch (error: any) {
+    res.status(500).json({ message: `Error retrieving task stats: ${error.message}` });
   }
 };

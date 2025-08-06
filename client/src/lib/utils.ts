@@ -62,8 +62,23 @@ export const createNewUserInDatabase = async (
   userRole: string,
   fetchWithBQ: any
 ) => {
-  const createEndpoint =
-    userRole?.toLowerCase() === "landlord" ? "/landlords" : "/tenants";
+  let createEndpoint: string;
+  
+  switch (userRole?.toLowerCase()) {
+    case "landlord":
+      createEndpoint = "/landlords";
+      break;
+    case "admin":
+      createEndpoint = "/admin/admins";
+      break;
+    case "agent":
+      createEndpoint = "/agent/agents";
+      break;
+    case "tenant":
+    default:
+      createEndpoint = "/tenants";
+      break;
+  }
 
   const createUserResponse = await fetchWithBQ({
     url: createEndpoint,
