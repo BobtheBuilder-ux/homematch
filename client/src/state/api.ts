@@ -315,6 +315,60 @@ export const api = createApi({
       },
     }),
 
+    initializePayment: build.mutation<
+      { authorization_url: string; access_code: string; reference: string },
+      { leaseId: number; amount: number; email: string; paymentType: string }
+    >({
+      query: (paymentData) => ({
+        url: "payments/initialize",
+        method: "POST",
+        body: paymentData,
+      }),
+      invalidatesTags: ["Payments"],
+      async onQueryStarted(_, { queryFulfilled }) {
+        await withToast(queryFulfilled, {
+          success: "Payment initialized successfully",
+          error: "Failed to initialize payment",
+        });
+      },
+    }),
+
+    verifyPayment: build.query<
+      { status: string; data: any },
+      string
+    >({
+      query: (reference) => `payments/verify/${reference}`,
+      providesTags: ["Payments"],
+    }),
+
+    getPaymentHistory: build.query<Payment[], number>({
+      query: (leaseId) => `payments/history/${leaseId}`,
+      providesTags: ["Payments"],
+      async onQueryStarted(_, { queryFulfilled }) {
+        await withToast(queryFulfilled, {
+          error: "Failed to fetch payment history",
+        });
+      },
+    }),
+
+    createPayment: build.mutation<
+      Payment,
+      { leaseId: number; amount: number; paymentType: string; reference?: string }
+    >({
+      query: (paymentData) => ({
+        url: "payments/create",
+        method: "POST",
+        body: paymentData,
+      }),
+      invalidatesTags: ["Payments"],
+      async onQueryStarted(_, { queryFulfilled }) {
+        await withToast(queryFulfilled, {
+          success: "Payment recorded successfully",
+          error: "Failed to record payment",
+        });
+      },
+    }),
+
     // application related endpoints
     getApplications: build.query<
       Application[],
@@ -697,6 +751,10 @@ export const {
   useGetLeasesQuery,
   useGetPropertyLeasesQuery,
   useGetPaymentsQuery,
+  useInitializePaymentMutation,
+  useVerifyPaymentQuery,
+  useGetPaymentHistoryQuery,
+  useCreatePaymentMutation,
   useGetApplicationsQuery,
   useGetApplicationQuery,
   useUpdateApplicationStatusMutation,

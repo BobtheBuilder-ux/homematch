@@ -1,0 +1,133 @@
+HOMEMATCH RESIDENTIAL LEASE AGREEMENT
+(Homematch as Landlord's Representative)
+
+THIS LEASE AGREEMENT is made this {{agreement_day}} day of {{agreement_month}}, {{agreement_year}}
+
+BETWEEN
+
+HOMEMATCH LIMITED (acting as the authorized property manager/representative of the property owner)
+RC No: {{rc_number}}
+Registered Address: {{homematch_address}}
+Phone: {{homematch_phone}} Email: {{homematch_email}}
+
+(Hereinafter referred to as "Homematch" or "Landlord's Representative")
+
+AND
+
+Tenant Name: {{tenant_name}}
+Address: {{tenant_address}}
+Phone: {{tenant_phone}} Email: {{tenant_email}}
+
+(Individually referred to as "Party" and collectively as "Parties")
+
+1. PROPERTY
+Homematch, acting on behalf of the property owner, hereby leases to the Tenant the residential property located at:
+
+Property Address: {{property_address}}
+Description: {{property_description}}
+
+(Including all fixtures, fittings, and any furniture provided as part of the tenancy.)
+
+2. TERM
+The tenancy shall commence on the {{start_day}} day of {{start_month}}, {{start_year}} and continue for a fixed term of 1 year, ending on the {{end_day}} day of {{end_month}}, {{end_year}}, unless terminated earlier in accordance with this Agreement.
+
+Renewal may be requested at least 30 days before expiry and is subject to approval by Homematch and the property owner.
+
+3. RENT
+Annual rent is ₦{{annual_rent}}, payable in full in advance before the start date of the tenancy.
+
+Payment shall be made directly to Homematch's designated account on behalf of the landlord.
+
+Late payment beyond the agreed start date or renewal date attracts a penalty of ₦{{late_fee}} per day/week.
+
+4. SECURITY DEPOSIT
+Tenant shall pay a refundable security deposit of ₦{{security_deposit}} before moving in.
+
+Homematch will hold the deposit in trust for the property owner.
+
+It will be refunded within 30 days after the Tenant vacates, subject to deductions for unpaid rent, utility arrears, or damages beyond normal wear and tear.
+
+5. USE OF PROPERTY
+The property shall be used solely for private residential purposes by the Tenant and their immediate household.
+
+The Tenant shall not sublet, assign, or transfer this Agreement without Homematch's written consent.
+
+Commercial use is prohibited unless otherwise agreed.
+
+6. UTILITIES & CHARGES
+The Tenant shall be responsible for all utility bills (water, electricity, waste disposal, internet, etc.), unless otherwise stated:
+{{utilities_notes}}
+
+Homematch will ensure that all utility connections are functional at the start of the tenancy.
+
+7. MAINTENANCE & REPAIRS
+Tenant's Responsibilities:
+
+Keep the property clean and habitable.
+
+Promptly report any damages or faults to Homematch.
+
+Not make alterations without prior written consent.
+
+Homematch's Responsibilities:
+
+Coordinate repairs and maintenance on behalf of the landlord.
+
+Maintain structural integrity and essential services of the property.
+
+8. INSPECTIONS
+Homematch may conduct inspections with at least 24 hours' notice to the Tenant.
+
+In emergencies, Homematch may enter the property without notice.
+
+9. DAMAGES
+Tenant is responsible for any damages caused by negligence, misuse, or intentional acts.
+
+Normal wear and tear is excluded.
+
+10. TERMINATION
+This Lease may be terminated:
+
+By mutual written agreement.
+
+By Homematch if the Tenant fails to pay rent in full before the tenancy start date or renewal date.
+
+By either party giving 30 days' notice after the fixed term ends.
+
+Upon termination, the Tenant must:
+
+Vacate and return all keys/access devices to the address or person that will be communicated.
+
+Remove all belongings.
+
+Leave the property in good condition.
+
+11. DEFAULT
+Failure to comply with this Agreement constitutes a breach.
+
+Homematch may initiate eviction proceedings and legal recovery of outstanding rent or damages on behalf of the landlord.
+
+12. GOVERNING LAW
+This Agreement is governed by the laws of the Federal Republic of Nigeria and applicable state tenancy laws.
+
+13. DISPUTE RESOLUTION
+Disputes will first be addressed through negotiation.
+
+If unresolved, the matter will be referred to arbitration/mediation in accordance with the Arbitration and Conciliation Act, Cap A18, Laws of the Federation of Nigeria 2004.
+
+14. SPECIAL TERMS & CONDITIONS
+{{special_conditions}}
+
+15. HOMEMATCH REPRESENTATION CLAUSE
+This Lease Agreement has been prepared and facilitated by Homematch Limited in its capacity as the official property manager and representative of the landlord. All rent payments, deposits, and tenancy communications shall be directed to Homematch, which will manage the tenancy and act in the best interest of both the landlord and the tenant.
+
+SIGNED on the date first above written:
+
+For Homematch Limited (as Landlord's Representative):
+Name & Signature: {{homematch_representative_name}}
+Position: {{homematch_representative_position}}
+Date: {{agreement_date}}
+
+Tenant:
+Name & Signature: {{tenant_name}}
+Date: {{agreement_date}}

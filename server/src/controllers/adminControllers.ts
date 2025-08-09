@@ -289,20 +289,24 @@ export const createAgent = async (
       return;
     }
 
-    // Create user in Cognito
-    const temporaryPassword = Math.random().toString(36).slice(-8) + "Aa1!";
-    console.log("Creating agent in Cognito with email:", email);
-    const cognitoUser = await createUserInCognito(email, temporaryPassword, 'agent');
-    console.log("Cognito user created:", cognitoUser);
+    // Check if agent with this email already exists
+    const existingAgent = await prisma.agent.findFirst({
+      where: { email },
+    });
 
-    if (!cognitoUser || !cognitoUser.Username) {
-      throw new Error("Failed to create user in Cognito");
+    if (existingAgent) {
+      res.status(400).json({ message: "Agent with this email already exists" });
+      return;
     }
+
+    // Generate a temporary cognitoId (will be replaced when Cognito is integrated)
+    const temporaryCognitoId = `temp-${Date.now()}-${Math.random().toString(36).substring(2, 15)}`;
+    console.log("Using temporary cognitoId:", temporaryCognitoId);
 
     // Set skipTenantCreation flag for agent users
     if (!req.user) {
       req.user = {
-        id: cognitoUser.Username,
+        id: temporaryCognitoId,
         role: 'agent',
         skipTenantCreation: true
       };
@@ -311,11 +315,11 @@ export const createAgent = async (
     }
     console.log("User object with skipTenantCreation flag:", req.user);
 
-    // Create agent in database
-    console.log("Creating agent in database with cognitoId:", cognitoUser.Username);
+    // Create agent in database only
+    console.log("Creating agent in database with temporary cognitoId:", temporaryCognitoId);
     const agent = await prisma.agent.create({
       data: {
-        cognitoId: cognitoUser.Username,
+        cognitoId: temporaryCognitoId,
         name,
         email,
         phoneNumber: phoneNumber || '',

@@ -1,0 +1,322 @@
+/* Custom Survey Styles */
+.survey-container {
+  font-family: inherit;
+}
+
+/* Override SurveyJS default styles to match the app theme */
+.sv-root-modern {
+  --sjs-corner-radius: 8px;
+  --sjs-base-unit: 8px;
+  --sjs-primary-backcolor: #3b82f6;
+  --sjs-primary-forecolor: #ffffff;
+  --sjs-general-backcolor-dim: #f8fafc;
+  --sjs-secondary-backcolor: #e2e8f0;
+  --sjs-shadow-small: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  --sjs-shadow-medium: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --sjs-font-family: inherit;
+}
+
+/* Progress bar styling */
+.sv-progress {
+  background-color: #e5e7eb;
+  border-radius: 9999px;
+  height: 8px;
+}
+
+.sv-progress__bar {
+  background: linear-gradient(90deg, #3b82f6 0%, #1d4ed8 100%);
+  border-radius: 9999px;
+  transition: width 0.3s ease;
+}
+
+/* Button styling */
+.sv-btn {
+  border-radius: 8px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.sv-btn--navigation {
+  padding: 12px 24px;
+  font-size: 14px;
+}
+
+.sv-btn--navigation.sv-btn--next {
+  background: #3b82f6;
+  color: white;
+}
+
+.sv-btn--navigation.sv-btn--next:hover {
+  background: #2563eb;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.sv-btn--navigation.sv-btn--prev {
+  background: #6b7280;
+  color: white;
+}
+
+.sv-btn--navigation.sv-btn--prev:hover {
+  background: #4b5563;
+}
+
+.sv-btn--navigation.sv-btn--complete {
+  background: #10b981;
+  color: white;
+}
+
+.sv-btn--navigation.sv-btn--complete:hover {
+  background: #059669;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+/* Question styling */
+.sv-question {
+  margin-bottom: 2rem;
+}
+
+.sv-question__title {
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 0.75rem;
+  font-size: 16px;
+}
+
+.sv-question__description {
+  color: #6b7280;
+  font-size: 14px;
+  margin-bottom: 1rem;
+}
+
+/* Input styling */
+.sv-text {
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-size: 14px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  width: 100%;
+}
+
+.sv-text:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* Dropdown styling */
+.sv-dropdown {
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-size: 14px;
+  background: white;
+  cursor: pointer;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.sv-dropdown:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* Radio button styling */
+.sv-selectbase__item {
+  margin-bottom: 0.75rem;
+}
+
+.sv-radio {
+  margin-right: 0.75rem;
+}
+
+.sv-selectbase__label {
+  font-size: 14px;
+  color: #374151;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+/* Checkbox styling */
+.sv-checkbox {
+  margin-right: 0.75rem;
+}
+
+/* Rating styling */
+.sv-rating {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.sv-rating__item {
+  width: 40px;
+  height: 40px;
+  border: 2px solid #d1d5db;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: 600;
+  color: #6b7280;
+}
+
+.sv-rating__item:hover {
+  border-color: #3b82f6;
+  background: #eff6ff;
+}
+
+.sv-rating__item--selected {
+  background: #3b82f6;
+  border-color: #3b82f6;
+  color: white;
+}
+
+/* Textarea styling */
+.sv-comment {
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-size: 14px;
+  font-family: inherit;
+  resize: vertical;
+  min-height: 100px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.sv-comment:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* Boolean (Yes/No) styling */
+.sv-boolean {
+  display: flex;
+  gap: 1rem;
+}
+
+.sv-boolean__switch {
+  background: #e5e7eb;
+  border-radius: 9999px;
+  width: 48px;
+  height: 24px;
+  position: relative;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.sv-boolean__switch--checked {
+  background: #3b82f6;
+}
+
+.sv-boolean__slider {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 20px;
+  height: 20px;
+  background: white;
+  border-radius: 50%;
+  transition: transform 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.sv-boolean__switch--checked .sv-boolean__slider {
+  transform: translateX(24px);
+}
+
+/* Page navigation */
+.sv-page {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Error styling */
+.sv-question--error .sv-text,
+.sv-question--error .sv-dropdown,
+.sv-question--error .sv-comment {
+  border-color: #ef4444;
+}
+
+.sv-question__erros {
+  color: #ef4444;
+  font-size: 12px;
+  margin-top: 0.5rem;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .sv-question__title {
+    font-size: 14px;
+  }
+  
+  .sv-btn--navigation {
+    padding: 10px 20px;
+    font-size: 13px;
+  }
+  
+  .sv-rating__item {
+    width: 35px;
+    height: 35px;
+    font-size: 12px;
+  }
+}
+
+/* Custom slider styling for price range */
+.sv-slider {
+  margin: 2rem 0;
+}
+
+.sv-slider .noUi-connect {
+  background: linear-gradient(90deg, #3b82f6 0%, #1d4ed8 100%);
+}
+
+.sv-slider .noUi-handle {
+  background: #3b82f6;
+  border: 2px solid white;
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+}
+
+.sv-slider .noUi-handle:hover {
+  transform: scale(1.1);
+}
+
+/* Completion page styling */
+.sv-completedpage {
+  text-align: center;
+  padding: 3rem 2rem;
+  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+  border-radius: 12px;
+  margin: 2rem 0;
+}
+
+.sv-completedpage h3 {
+  color: #10b981;
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.sv-completedpage p {
+  color: #6b7280;
+  font-size: 16px;
+  line-height: 1.6;
+}

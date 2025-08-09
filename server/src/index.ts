@@ -15,6 +15,8 @@ import adminRoutes from "./routes/adminRoutes";
 import publicAdminRoutes from "./routes/publicAdminRoutes";
 import publicAgentRoutes from "./routes/publicAgentRoutes";
 import agentRoutes from "./routes/agentRoutes";
+import surveyRoutes from "./routes/surveyRoutes";
+import paymentRoutes from "./routes/paymentRoutes";
 
 /* CONFIGURATIONS */
 dotenv.config();
@@ -31,7 +33,7 @@ app.use(
   cors({
     origin:
       process.env.NODE_ENV === "production"
-        ? [process.env.FRONTEND_URL || "https://homematch.com"]
+        ? [process.env.FRONTEND_URL || "https://homematch.ng"]
         : true,
     credentials: true,
   })
@@ -45,6 +47,7 @@ app.get("/", (req, res) => {
 app.use("/applications", applicationRoutes);
 app.use("/properties", propertyRoutes);
 app.use("/leases", leaseRoutes);
+app.use("/payments", paymentRoutes);
 app.use(
   "/tenants",
   authMiddleware(["tenant", "landlord", "agent", "admin"]),
@@ -55,6 +58,7 @@ app.use("/landlords", authMiddleware(["landlord", "admin"]), landlordRoutes);
 // Public admin routes (no authentication required)
 app.use("/admin", publicAdminRoutes);
 app.use("/agent", publicAgentRoutes);
+app.use("/surveys", surveyRoutes);
 // Protected admin routes (authentication required)
 app.use("/admin", authMiddleware(["admin"]), adminRoutes);
 app.use("/agent", authMiddleware(["agent"]), agentRoutes);

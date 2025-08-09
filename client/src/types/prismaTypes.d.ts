@@ -34,10 +34,25 @@ export type Tenant = $Result.DefaultSelection<Prisma.$TenantPayload>
  */
 export type Agent = $Result.DefaultSelection<Prisma.$AgentPayload>
 /**
- * Model LandlordRegistrationToken
+ * Model Admin
  * 
  */
-export type LandlordRegistrationToken = $Result.DefaultSelection<Prisma.$LandlordRegistrationTokenPayload>
+export type Admin = $Result.DefaultSelection<Prisma.$AdminPayload>
+/**
+ * Model LandlordRegistrationCode
+ * 
+ */
+export type LandlordRegistrationCode = $Result.DefaultSelection<Prisma.$LandlordRegistrationCodePayload>
+/**
+ * Model AgentRegistrationCode
+ * 
+ */
+export type AgentRegistrationCode = $Result.DefaultSelection<Prisma.$AgentRegistrationCodePayload>
+/**
+ * Model Task
+ * 
+ */
+export type Task = $Result.DefaultSelection<Prisma.$TaskPayload>
 /**
  * Model Location
  * 
@@ -58,6 +73,21 @@ export type Lease = $Result.DefaultSelection<Prisma.$LeasePayload>
  * 
  */
 export type Payment = $Result.DefaultSelection<Prisma.$PaymentPayload>
+/**
+ * Model AdminSettings
+ * 
+ */
+export type AdminSettings = $Result.DefaultSelection<Prisma.$AdminSettingsPayload>
+/**
+ * Model TenantSurvey
+ * 
+ */
+export type TenantSurvey = $Result.DefaultSelection<Prisma.$TenantSurveyPayload>
+/**
+ * Model LandlordSurvey
+ * 
+ */
+export type LandlordSurvey = $Result.DefaultSelection<Prisma.$LandlordSurveyPayload>
 
 /**
  * Enums
@@ -133,6 +163,26 @@ export const PaymentStatus: {
 
 export type PaymentStatus = (typeof PaymentStatus)[keyof typeof PaymentStatus]
 
+
+export const TaskStatus: {
+  Pending: 'Pending',
+  InProgress: 'InProgress',
+  Completed: 'Completed',
+  Cancelled: 'Cancelled'
+};
+
+export type TaskStatus = (typeof TaskStatus)[keyof typeof TaskStatus]
+
+
+export const TaskPriority: {
+  Low: 'Low',
+  Medium: 'Medium',
+  High: 'High',
+  Urgent: 'Urgent'
+};
+
+export type TaskPriority = (typeof TaskPriority)[keyof typeof TaskPriority]
+
 }
 
 export type Highlight = $Enums.Highlight
@@ -154,6 +204,14 @@ export const ApplicationStatus: typeof $Enums.ApplicationStatus
 export type PaymentStatus = $Enums.PaymentStatus
 
 export const PaymentStatus: typeof $Enums.PaymentStatus
+
+export type TaskStatus = $Enums.TaskStatus
+
+export const TaskStatus: typeof $Enums.TaskStatus
+
+export type TaskPriority = $Enums.TaskPriority
+
+export const TaskPriority: typeof $Enums.TaskPriority
 
 /**
  * ##  Prisma Client ʲˢ
@@ -321,14 +379,44 @@ export class PrismaClient<
   get agent(): Prisma.AgentDelegate<ExtArgs, ClientOptions>;
 
   /**
-   * `prisma.landlordRegistrationToken`: Exposes CRUD operations for the **LandlordRegistrationToken** model.
+   * `prisma.admin`: Exposes CRUD operations for the **Admin** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more LandlordRegistrationTokens
-    * const landlordRegistrationTokens = await prisma.landlordRegistrationToken.findMany()
+    * // Fetch zero or more Admins
+    * const admins = await prisma.admin.findMany()
     * ```
     */
-  get landlordRegistrationToken(): Prisma.LandlordRegistrationTokenDelegate<ExtArgs, ClientOptions>;
+  get admin(): Prisma.AdminDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.landlordRegistrationCode`: Exposes CRUD operations for the **LandlordRegistrationCode** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more LandlordRegistrationCodes
+    * const landlordRegistrationCodes = await prisma.landlordRegistrationCode.findMany()
+    * ```
+    */
+  get landlordRegistrationCode(): Prisma.LandlordRegistrationCodeDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.agentRegistrationCode`: Exposes CRUD operations for the **AgentRegistrationCode** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more AgentRegistrationCodes
+    * const agentRegistrationCodes = await prisma.agentRegistrationCode.findMany()
+    * ```
+    */
+  get agentRegistrationCode(): Prisma.AgentRegistrationCodeDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.task`: Exposes CRUD operations for the **Task** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Tasks
+    * const tasks = await prisma.task.findMany()
+    * ```
+    */
+  get task(): Prisma.TaskDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.location`: Exposes CRUD operations for the **Location** model.
@@ -369,6 +457,36 @@ export class PrismaClient<
     * ```
     */
   get payment(): Prisma.PaymentDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.adminSettings`: Exposes CRUD operations for the **AdminSettings** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more AdminSettings
+    * const adminSettings = await prisma.adminSettings.findMany()
+    * ```
+    */
+  get adminSettings(): Prisma.AdminSettingsDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.tenantSurvey`: Exposes CRUD operations for the **TenantSurvey** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more TenantSurveys
+    * const tenantSurveys = await prisma.tenantSurvey.findMany()
+    * ```
+    */
+  get tenantSurvey(): Prisma.TenantSurveyDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.landlordSurvey`: Exposes CRUD operations for the **LandlordSurvey** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more LandlordSurveys
+    * const landlordSurveys = await prisma.landlordSurvey.findMany()
+    * ```
+    */
+  get landlordSurvey(): Prisma.LandlordSurveyDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -813,11 +931,17 @@ export namespace Prisma {
     Landlord: 'Landlord',
     Tenant: 'Tenant',
     Agent: 'Agent',
-    LandlordRegistrationToken: 'LandlordRegistrationToken',
+    Admin: 'Admin',
+    LandlordRegistrationCode: 'LandlordRegistrationCode',
+    AgentRegistrationCode: 'AgentRegistrationCode',
+    Task: 'Task',
     Location: 'Location',
     Application: 'Application',
     Lease: 'Lease',
-    Payment: 'Payment'
+    Payment: 'Payment',
+    AdminSettings: 'AdminSettings',
+    TenantSurvey: 'TenantSurvey',
+    LandlordSurvey: 'LandlordSurvey'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -833,7 +957,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> = {
     meta: {
-      modelProps: "property" | "landlord" | "tenant" | "agent" | "landlordRegistrationToken" | "location" | "application" | "lease" | "payment"
+      modelProps: "property" | "landlord" | "tenant" | "agent" | "admin" | "landlordRegistrationCode" | "agentRegistrationCode" | "task" | "location" | "application" | "lease" | "payment" | "adminSettings" | "tenantSurvey" | "landlordSurvey"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1133,77 +1257,299 @@ export namespace Prisma {
           }
         }
       }
-      LandlordRegistrationToken: {
-        payload: Prisma.$LandlordRegistrationTokenPayload<ExtArgs>
-        fields: Prisma.LandlordRegistrationTokenFieldRefs
+      Admin: {
+        payload: Prisma.$AdminPayload<ExtArgs>
+        fields: Prisma.AdminFieldRefs
         operations: {
           findUnique: {
-            args: Prisma.LandlordRegistrationTokenFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$LandlordRegistrationTokenPayload> | null
+            args: Prisma.AdminFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AdminPayload> | null
           }
           findUniqueOrThrow: {
-            args: Prisma.LandlordRegistrationTokenFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$LandlordRegistrationTokenPayload>
+            args: Prisma.AdminFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AdminPayload>
           }
           findFirst: {
-            args: Prisma.LandlordRegistrationTokenFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$LandlordRegistrationTokenPayload> | null
+            args: Prisma.AdminFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AdminPayload> | null
           }
           findFirstOrThrow: {
-            args: Prisma.LandlordRegistrationTokenFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$LandlordRegistrationTokenPayload>
+            args: Prisma.AdminFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AdminPayload>
           }
           findMany: {
-            args: Prisma.LandlordRegistrationTokenFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$LandlordRegistrationTokenPayload>[]
+            args: Prisma.AdminFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AdminPayload>[]
           }
           create: {
-            args: Prisma.LandlordRegistrationTokenCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$LandlordRegistrationTokenPayload>
+            args: Prisma.AdminCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AdminPayload>
           }
           createMany: {
-            args: Prisma.LandlordRegistrationTokenCreateManyArgs<ExtArgs>
+            args: Prisma.AdminCreateManyArgs<ExtArgs>
             result: BatchPayload
           }
           createManyAndReturn: {
-            args: Prisma.LandlordRegistrationTokenCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$LandlordRegistrationTokenPayload>[]
+            args: Prisma.AdminCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AdminPayload>[]
           }
           delete: {
-            args: Prisma.LandlordRegistrationTokenDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$LandlordRegistrationTokenPayload>
+            args: Prisma.AdminDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AdminPayload>
           }
           update: {
-            args: Prisma.LandlordRegistrationTokenUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$LandlordRegistrationTokenPayload>
+            args: Prisma.AdminUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AdminPayload>
           }
           deleteMany: {
-            args: Prisma.LandlordRegistrationTokenDeleteManyArgs<ExtArgs>
+            args: Prisma.AdminDeleteManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateMany: {
-            args: Prisma.LandlordRegistrationTokenUpdateManyArgs<ExtArgs>
+            args: Prisma.AdminUpdateManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateManyAndReturn: {
-            args: Prisma.LandlordRegistrationTokenUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$LandlordRegistrationTokenPayload>[]
+            args: Prisma.AdminUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AdminPayload>[]
           }
           upsert: {
-            args: Prisma.LandlordRegistrationTokenUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$LandlordRegistrationTokenPayload>
+            args: Prisma.AdminUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AdminPayload>
           }
           aggregate: {
-            args: Prisma.LandlordRegistrationTokenAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateLandlordRegistrationToken>
+            args: Prisma.AdminAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateAdmin>
           }
           groupBy: {
-            args: Prisma.LandlordRegistrationTokenGroupByArgs<ExtArgs>
-            result: $Utils.Optional<LandlordRegistrationTokenGroupByOutputType>[]
+            args: Prisma.AdminGroupByArgs<ExtArgs>
+            result: $Utils.Optional<AdminGroupByOutputType>[]
           }
           count: {
-            args: Prisma.LandlordRegistrationTokenCountArgs<ExtArgs>
-            result: $Utils.Optional<LandlordRegistrationTokenCountAggregateOutputType> | number
+            args: Prisma.AdminCountArgs<ExtArgs>
+            result: $Utils.Optional<AdminCountAggregateOutputType> | number
+          }
+        }
+      }
+      LandlordRegistrationCode: {
+        payload: Prisma.$LandlordRegistrationCodePayload<ExtArgs>
+        fields: Prisma.LandlordRegistrationCodeFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.LandlordRegistrationCodeFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LandlordRegistrationCodePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.LandlordRegistrationCodeFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LandlordRegistrationCodePayload>
+          }
+          findFirst: {
+            args: Prisma.LandlordRegistrationCodeFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LandlordRegistrationCodePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.LandlordRegistrationCodeFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LandlordRegistrationCodePayload>
+          }
+          findMany: {
+            args: Prisma.LandlordRegistrationCodeFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LandlordRegistrationCodePayload>[]
+          }
+          create: {
+            args: Prisma.LandlordRegistrationCodeCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LandlordRegistrationCodePayload>
+          }
+          createMany: {
+            args: Prisma.LandlordRegistrationCodeCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.LandlordRegistrationCodeCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LandlordRegistrationCodePayload>[]
+          }
+          delete: {
+            args: Prisma.LandlordRegistrationCodeDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LandlordRegistrationCodePayload>
+          }
+          update: {
+            args: Prisma.LandlordRegistrationCodeUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LandlordRegistrationCodePayload>
+          }
+          deleteMany: {
+            args: Prisma.LandlordRegistrationCodeDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.LandlordRegistrationCodeUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.LandlordRegistrationCodeUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LandlordRegistrationCodePayload>[]
+          }
+          upsert: {
+            args: Prisma.LandlordRegistrationCodeUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LandlordRegistrationCodePayload>
+          }
+          aggregate: {
+            args: Prisma.LandlordRegistrationCodeAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateLandlordRegistrationCode>
+          }
+          groupBy: {
+            args: Prisma.LandlordRegistrationCodeGroupByArgs<ExtArgs>
+            result: $Utils.Optional<LandlordRegistrationCodeGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.LandlordRegistrationCodeCountArgs<ExtArgs>
+            result: $Utils.Optional<LandlordRegistrationCodeCountAggregateOutputType> | number
+          }
+        }
+      }
+      AgentRegistrationCode: {
+        payload: Prisma.$AgentRegistrationCodePayload<ExtArgs>
+        fields: Prisma.AgentRegistrationCodeFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.AgentRegistrationCodeFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AgentRegistrationCodePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.AgentRegistrationCodeFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AgentRegistrationCodePayload>
+          }
+          findFirst: {
+            args: Prisma.AgentRegistrationCodeFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AgentRegistrationCodePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.AgentRegistrationCodeFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AgentRegistrationCodePayload>
+          }
+          findMany: {
+            args: Prisma.AgentRegistrationCodeFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AgentRegistrationCodePayload>[]
+          }
+          create: {
+            args: Prisma.AgentRegistrationCodeCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AgentRegistrationCodePayload>
+          }
+          createMany: {
+            args: Prisma.AgentRegistrationCodeCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.AgentRegistrationCodeCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AgentRegistrationCodePayload>[]
+          }
+          delete: {
+            args: Prisma.AgentRegistrationCodeDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AgentRegistrationCodePayload>
+          }
+          update: {
+            args: Prisma.AgentRegistrationCodeUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AgentRegistrationCodePayload>
+          }
+          deleteMany: {
+            args: Prisma.AgentRegistrationCodeDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.AgentRegistrationCodeUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.AgentRegistrationCodeUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AgentRegistrationCodePayload>[]
+          }
+          upsert: {
+            args: Prisma.AgentRegistrationCodeUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AgentRegistrationCodePayload>
+          }
+          aggregate: {
+            args: Prisma.AgentRegistrationCodeAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateAgentRegistrationCode>
+          }
+          groupBy: {
+            args: Prisma.AgentRegistrationCodeGroupByArgs<ExtArgs>
+            result: $Utils.Optional<AgentRegistrationCodeGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.AgentRegistrationCodeCountArgs<ExtArgs>
+            result: $Utils.Optional<AgentRegistrationCodeCountAggregateOutputType> | number
+          }
+        }
+      }
+      Task: {
+        payload: Prisma.$TaskPayload<ExtArgs>
+        fields: Prisma.TaskFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.TaskFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TaskPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.TaskFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TaskPayload>
+          }
+          findFirst: {
+            args: Prisma.TaskFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TaskPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.TaskFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TaskPayload>
+          }
+          findMany: {
+            args: Prisma.TaskFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TaskPayload>[]
+          }
+          create: {
+            args: Prisma.TaskCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TaskPayload>
+          }
+          createMany: {
+            args: Prisma.TaskCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.TaskCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TaskPayload>[]
+          }
+          delete: {
+            args: Prisma.TaskDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TaskPayload>
+          }
+          update: {
+            args: Prisma.TaskUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TaskPayload>
+          }
+          deleteMany: {
+            args: Prisma.TaskDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.TaskUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.TaskUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TaskPayload>[]
+          }
+          upsert: {
+            args: Prisma.TaskUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TaskPayload>
+          }
+          aggregate: {
+            args: Prisma.TaskAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateTask>
+          }
+          groupBy: {
+            args: Prisma.TaskGroupByArgs<ExtArgs>
+            result: $Utils.Optional<TaskGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.TaskCountArgs<ExtArgs>
+            result: $Utils.Optional<TaskCountAggregateOutputType> | number
           }
         }
       }
@@ -1487,6 +1833,228 @@ export namespace Prisma {
           }
         }
       }
+      AdminSettings: {
+        payload: Prisma.$AdminSettingsPayload<ExtArgs>
+        fields: Prisma.AdminSettingsFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.AdminSettingsFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AdminSettingsPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.AdminSettingsFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AdminSettingsPayload>
+          }
+          findFirst: {
+            args: Prisma.AdminSettingsFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AdminSettingsPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.AdminSettingsFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AdminSettingsPayload>
+          }
+          findMany: {
+            args: Prisma.AdminSettingsFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AdminSettingsPayload>[]
+          }
+          create: {
+            args: Prisma.AdminSettingsCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AdminSettingsPayload>
+          }
+          createMany: {
+            args: Prisma.AdminSettingsCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.AdminSettingsCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AdminSettingsPayload>[]
+          }
+          delete: {
+            args: Prisma.AdminSettingsDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AdminSettingsPayload>
+          }
+          update: {
+            args: Prisma.AdminSettingsUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AdminSettingsPayload>
+          }
+          deleteMany: {
+            args: Prisma.AdminSettingsDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.AdminSettingsUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.AdminSettingsUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AdminSettingsPayload>[]
+          }
+          upsert: {
+            args: Prisma.AdminSettingsUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AdminSettingsPayload>
+          }
+          aggregate: {
+            args: Prisma.AdminSettingsAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateAdminSettings>
+          }
+          groupBy: {
+            args: Prisma.AdminSettingsGroupByArgs<ExtArgs>
+            result: $Utils.Optional<AdminSettingsGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.AdminSettingsCountArgs<ExtArgs>
+            result: $Utils.Optional<AdminSettingsCountAggregateOutputType> | number
+          }
+        }
+      }
+      TenantSurvey: {
+        payload: Prisma.$TenantSurveyPayload<ExtArgs>
+        fields: Prisma.TenantSurveyFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.TenantSurveyFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TenantSurveyPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.TenantSurveyFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TenantSurveyPayload>
+          }
+          findFirst: {
+            args: Prisma.TenantSurveyFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TenantSurveyPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.TenantSurveyFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TenantSurveyPayload>
+          }
+          findMany: {
+            args: Prisma.TenantSurveyFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TenantSurveyPayload>[]
+          }
+          create: {
+            args: Prisma.TenantSurveyCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TenantSurveyPayload>
+          }
+          createMany: {
+            args: Prisma.TenantSurveyCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.TenantSurveyCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TenantSurveyPayload>[]
+          }
+          delete: {
+            args: Prisma.TenantSurveyDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TenantSurveyPayload>
+          }
+          update: {
+            args: Prisma.TenantSurveyUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TenantSurveyPayload>
+          }
+          deleteMany: {
+            args: Prisma.TenantSurveyDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.TenantSurveyUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.TenantSurveyUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TenantSurveyPayload>[]
+          }
+          upsert: {
+            args: Prisma.TenantSurveyUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TenantSurveyPayload>
+          }
+          aggregate: {
+            args: Prisma.TenantSurveyAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateTenantSurvey>
+          }
+          groupBy: {
+            args: Prisma.TenantSurveyGroupByArgs<ExtArgs>
+            result: $Utils.Optional<TenantSurveyGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.TenantSurveyCountArgs<ExtArgs>
+            result: $Utils.Optional<TenantSurveyCountAggregateOutputType> | number
+          }
+        }
+      }
+      LandlordSurvey: {
+        payload: Prisma.$LandlordSurveyPayload<ExtArgs>
+        fields: Prisma.LandlordSurveyFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.LandlordSurveyFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LandlordSurveyPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.LandlordSurveyFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LandlordSurveyPayload>
+          }
+          findFirst: {
+            args: Prisma.LandlordSurveyFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LandlordSurveyPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.LandlordSurveyFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LandlordSurveyPayload>
+          }
+          findMany: {
+            args: Prisma.LandlordSurveyFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LandlordSurveyPayload>[]
+          }
+          create: {
+            args: Prisma.LandlordSurveyCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LandlordSurveyPayload>
+          }
+          createMany: {
+            args: Prisma.LandlordSurveyCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.LandlordSurveyCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LandlordSurveyPayload>[]
+          }
+          delete: {
+            args: Prisma.LandlordSurveyDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LandlordSurveyPayload>
+          }
+          update: {
+            args: Prisma.LandlordSurveyUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LandlordSurveyPayload>
+          }
+          deleteMany: {
+            args: Prisma.LandlordSurveyDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.LandlordSurveyUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.LandlordSurveyUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LandlordSurveyPayload>[]
+          }
+          upsert: {
+            args: Prisma.LandlordSurveyUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LandlordSurveyPayload>
+          }
+          aggregate: {
+            args: Prisma.LandlordSurveyAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateLandlordSurvey>
+          }
+          groupBy: {
+            args: Prisma.LandlordSurveyGroupByArgs<ExtArgs>
+            result: $Utils.Optional<LandlordSurveyGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.LandlordSurveyCountArgs<ExtArgs>
+            result: $Utils.Optional<LandlordSurveyCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1575,11 +2143,17 @@ export namespace Prisma {
     landlord?: LandlordOmit
     tenant?: TenantOmit
     agent?: AgentOmit
-    landlordRegistrationToken?: LandlordRegistrationTokenOmit
+    admin?: AdminOmit
+    landlordRegistrationCode?: LandlordRegistrationCodeOmit
+    agentRegistrationCode?: AgentRegistrationCodeOmit
+    task?: TaskOmit
     location?: LocationOmit
     application?: ApplicationOmit
     lease?: LeaseOmit
     payment?: PaymentOmit
+    adminSettings?: AdminSettingsOmit
+    tenantSurvey?: TenantSurveyOmit
+    landlordSurvey?: LandlordSurveyOmit
   }
 
   /* Types for Logging */
@@ -1821,11 +2395,11 @@ export namespace Prisma {
    */
 
   export type AgentCountOutputType = {
-    registrationTokens: number
+    assignedTasks: number
   }
 
   export type AgentCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    registrationTokens?: boolean | AgentCountOutputTypeCountRegistrationTokensArgs
+    assignedTasks?: boolean | AgentCountOutputTypeCountAssignedTasksArgs
   }
 
   // Custom InputTypes
@@ -1842,8 +2416,70 @@ export namespace Prisma {
   /**
    * AgentCountOutputType without action
    */
-  export type AgentCountOutputTypeCountRegistrationTokensArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: LandlordRegistrationTokenWhereInput
+  export type AgentCountOutputTypeCountAssignedTasksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TaskWhereInput
+  }
+
+
+  /**
+   * Count Type LandlordRegistrationCodeCountOutputType
+   */
+
+  export type LandlordRegistrationCodeCountOutputType = {
+    landlords: number
+  }
+
+  export type LandlordRegistrationCodeCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    landlords?: boolean | LandlordRegistrationCodeCountOutputTypeCountLandlordsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * LandlordRegistrationCodeCountOutputType without action
+   */
+  export type LandlordRegistrationCodeCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LandlordRegistrationCodeCountOutputType
+     */
+    select?: LandlordRegistrationCodeCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * LandlordRegistrationCodeCountOutputType without action
+   */
+  export type LandlordRegistrationCodeCountOutputTypeCountLandlordsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: LandlordWhereInput
+  }
+
+
+  /**
+   * Count Type AgentRegistrationCodeCountOutputType
+   */
+
+  export type AgentRegistrationCodeCountOutputType = {
+    agents: number
+  }
+
+  export type AgentRegistrationCodeCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    agents?: boolean | AgentRegistrationCodeCountOutputTypeCountAgentsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * AgentRegistrationCodeCountOutputType without action
+   */
+  export type AgentRegistrationCodeCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AgentRegistrationCodeCountOutputType
+     */
+    select?: AgentRegistrationCodeCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * AgentRegistrationCodeCountOutputType without action
+   */
+  export type AgentRegistrationCodeCountOutputTypeCountAgentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AgentWhereInput
   }
 
 
@@ -3360,10 +3996,12 @@ export namespace Prisma {
 
   export type LandlordAvgAggregateOutputType = {
     id: number | null
+    registrationCodeId: number | null
   }
 
   export type LandlordSumAggregateOutputType = {
     id: number | null
+    registrationCodeId: number | null
   }
 
   export type LandlordMinAggregateOutputType = {
@@ -3372,6 +4010,7 @@ export namespace Prisma {
     name: string | null
     email: string | null
     phoneNumber: string | null
+    registrationCodeId: number | null
   }
 
   export type LandlordMaxAggregateOutputType = {
@@ -3380,6 +4019,7 @@ export namespace Prisma {
     name: string | null
     email: string | null
     phoneNumber: string | null
+    registrationCodeId: number | null
   }
 
   export type LandlordCountAggregateOutputType = {
@@ -3388,16 +4028,19 @@ export namespace Prisma {
     name: number
     email: number
     phoneNumber: number
+    registrationCodeId: number
     _all: number
   }
 
 
   export type LandlordAvgAggregateInputType = {
     id?: true
+    registrationCodeId?: true
   }
 
   export type LandlordSumAggregateInputType = {
     id?: true
+    registrationCodeId?: true
   }
 
   export type LandlordMinAggregateInputType = {
@@ -3406,6 +4049,7 @@ export namespace Prisma {
     name?: true
     email?: true
     phoneNumber?: true
+    registrationCodeId?: true
   }
 
   export type LandlordMaxAggregateInputType = {
@@ -3414,6 +4058,7 @@ export namespace Prisma {
     name?: true
     email?: true
     phoneNumber?: true
+    registrationCodeId?: true
   }
 
   export type LandlordCountAggregateInputType = {
@@ -3422,6 +4067,7 @@ export namespace Prisma {
     name?: true
     email?: true
     phoneNumber?: true
+    registrationCodeId?: true
     _all?: true
   }
 
@@ -3517,6 +4163,7 @@ export namespace Prisma {
     name: string
     email: string
     phoneNumber: string
+    registrationCodeId: number | null
     _count: LandlordCountAggregateOutputType | null
     _avg: LandlordAvgAggregateOutputType | null
     _sum: LandlordSumAggregateOutputType | null
@@ -3544,8 +4191,9 @@ export namespace Prisma {
     name?: boolean
     email?: boolean
     phoneNumber?: boolean
+    registrationCodeId?: boolean
     managedProperties?: boolean | Landlord$managedPropertiesArgs<ExtArgs>
-    registrationToken?: boolean | Landlord$registrationTokenArgs<ExtArgs>
+    registrationCode?: boolean | Landlord$registrationCodeArgs<ExtArgs>
     _count?: boolean | LandlordCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["landlord"]>
 
@@ -3555,6 +4203,8 @@ export namespace Prisma {
     name?: boolean
     email?: boolean
     phoneNumber?: boolean
+    registrationCodeId?: boolean
+    registrationCode?: boolean | Landlord$registrationCodeArgs<ExtArgs>
   }, ExtArgs["result"]["landlord"]>
 
   export type LandlordSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -3563,6 +4213,8 @@ export namespace Prisma {
     name?: boolean
     email?: boolean
     phoneNumber?: boolean
+    registrationCodeId?: boolean
+    registrationCode?: boolean | Landlord$registrationCodeArgs<ExtArgs>
   }, ExtArgs["result"]["landlord"]>
 
   export type LandlordSelectScalar = {
@@ -3571,22 +4223,27 @@ export namespace Prisma {
     name?: boolean
     email?: boolean
     phoneNumber?: boolean
+    registrationCodeId?: boolean
   }
 
-  export type LandlordOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "cognitoId" | "name" | "email" | "phoneNumber", ExtArgs["result"]["landlord"]>
+  export type LandlordOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "cognitoId" | "name" | "email" | "phoneNumber" | "registrationCodeId", ExtArgs["result"]["landlord"]>
   export type LandlordInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     managedProperties?: boolean | Landlord$managedPropertiesArgs<ExtArgs>
-    registrationToken?: boolean | Landlord$registrationTokenArgs<ExtArgs>
+    registrationCode?: boolean | Landlord$registrationCodeArgs<ExtArgs>
     _count?: boolean | LandlordCountOutputTypeDefaultArgs<ExtArgs>
   }
-  export type LandlordIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-  export type LandlordIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type LandlordIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    registrationCode?: boolean | Landlord$registrationCodeArgs<ExtArgs>
+  }
+  export type LandlordIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    registrationCode?: boolean | Landlord$registrationCodeArgs<ExtArgs>
+  }
 
   export type $LandlordPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Landlord"
     objects: {
       managedProperties: Prisma.$PropertyPayload<ExtArgs>[]
-      registrationToken: Prisma.$LandlordRegistrationTokenPayload<ExtArgs> | null
+      registrationCode: Prisma.$LandlordRegistrationCodePayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -3594,6 +4251,7 @@ export namespace Prisma {
       name: string
       email: string
       phoneNumber: string
+      registrationCodeId: number | null
     }, ExtArgs["result"]["landlord"]>
     composites: {}
   }
@@ -3989,7 +4647,7 @@ export namespace Prisma {
   export interface Prisma__LandlordClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     managedProperties<T extends Landlord$managedPropertiesArgs<ExtArgs> = {}>(args?: Subset<T, Landlord$managedPropertiesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PropertyPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
-    registrationToken<T extends Landlord$registrationTokenArgs<ExtArgs> = {}>(args?: Subset<T, Landlord$registrationTokenArgs<ExtArgs>>): Prisma__LandlordRegistrationTokenClient<$Result.GetResult<Prisma.$LandlordRegistrationTokenPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | null, null, ExtArgs, ClientOptions>
+    registrationCode<T extends Landlord$registrationCodeArgs<ExtArgs> = {}>(args?: Subset<T, Landlord$registrationCodeArgs<ExtArgs>>): Prisma__LandlordRegistrationCodeClient<$Result.GetResult<Prisma.$LandlordRegistrationCodePayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | null, null, ExtArgs, ClientOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -4024,6 +4682,7 @@ export namespace Prisma {
     readonly name: FieldRef<"Landlord", 'String'>
     readonly email: FieldRef<"Landlord", 'String'>
     readonly phoneNumber: FieldRef<"Landlord", 'String'>
+    readonly registrationCodeId: FieldRef<"Landlord", 'Int'>
   }
     
 
@@ -4273,6 +4932,10 @@ export namespace Prisma {
      */
     data: LandlordCreateManyInput | LandlordCreateManyInput[]
     skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LandlordIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -4343,6 +5006,10 @@ export namespace Prisma {
      * Limit how many Landlords to update.
      */
     limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LandlordIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -4436,22 +5103,22 @@ export namespace Prisma {
   }
 
   /**
-   * Landlord.registrationToken
+   * Landlord.registrationCode
    */
-  export type Landlord$registrationTokenArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Landlord$registrationCodeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the LandlordRegistrationToken
+     * Select specific fields to fetch from the LandlordRegistrationCode
      */
-    select?: LandlordRegistrationTokenSelect<ExtArgs> | null
+    select?: LandlordRegistrationCodeSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the LandlordRegistrationToken
+     * Omit specific fields from the LandlordRegistrationCode
      */
-    omit?: LandlordRegistrationTokenOmit<ExtArgs> | null
+    omit?: LandlordRegistrationCodeOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: LandlordRegistrationTokenInclude<ExtArgs> | null
-    where?: LandlordRegistrationTokenWhereInput
+    include?: LandlordRegistrationCodeInclude<ExtArgs> | null
+    where?: LandlordRegistrationCodeWhereInput
   }
 
   /**
@@ -5675,10 +6342,12 @@ export namespace Prisma {
 
   export type AgentAvgAggregateOutputType = {
     id: number | null
+    registrationCodeId: number | null
   }
 
   export type AgentSumAggregateOutputType = {
     id: number | null
+    registrationCodeId: number | null
   }
 
   export type AgentMinAggregateOutputType = {
@@ -5687,6 +6356,7 @@ export namespace Prisma {
     name: string | null
     email: string | null
     phoneNumber: string | null
+    registrationCodeId: number | null
   }
 
   export type AgentMaxAggregateOutputType = {
@@ -5695,6 +6365,7 @@ export namespace Prisma {
     name: string | null
     email: string | null
     phoneNumber: string | null
+    registrationCodeId: number | null
   }
 
   export type AgentCountAggregateOutputType = {
@@ -5703,16 +6374,19 @@ export namespace Prisma {
     name: number
     email: number
     phoneNumber: number
+    registrationCodeId: number
     _all: number
   }
 
 
   export type AgentAvgAggregateInputType = {
     id?: true
+    registrationCodeId?: true
   }
 
   export type AgentSumAggregateInputType = {
     id?: true
+    registrationCodeId?: true
   }
 
   export type AgentMinAggregateInputType = {
@@ -5721,6 +6395,7 @@ export namespace Prisma {
     name?: true
     email?: true
     phoneNumber?: true
+    registrationCodeId?: true
   }
 
   export type AgentMaxAggregateInputType = {
@@ -5729,6 +6404,7 @@ export namespace Prisma {
     name?: true
     email?: true
     phoneNumber?: true
+    registrationCodeId?: true
   }
 
   export type AgentCountAggregateInputType = {
@@ -5737,6 +6413,7 @@ export namespace Prisma {
     name?: true
     email?: true
     phoneNumber?: true
+    registrationCodeId?: true
     _all?: true
   }
 
@@ -5832,6 +6509,7 @@ export namespace Prisma {
     name: string
     email: string
     phoneNumber: string | null
+    registrationCodeId: number | null
     _count: AgentCountAggregateOutputType | null
     _avg: AgentAvgAggregateOutputType | null
     _sum: AgentSumAggregateOutputType | null
@@ -5859,7 +6537,9 @@ export namespace Prisma {
     name?: boolean
     email?: boolean
     phoneNumber?: boolean
-    registrationTokens?: boolean | Agent$registrationTokensArgs<ExtArgs>
+    registrationCodeId?: boolean
+    registrationCode?: boolean | Agent$registrationCodeArgs<ExtArgs>
+    assignedTasks?: boolean | Agent$assignedTasksArgs<ExtArgs>
     _count?: boolean | AgentCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["agent"]>
 
@@ -5869,6 +6549,8 @@ export namespace Prisma {
     name?: boolean
     email?: boolean
     phoneNumber?: boolean
+    registrationCodeId?: boolean
+    registrationCode?: boolean | Agent$registrationCodeArgs<ExtArgs>
   }, ExtArgs["result"]["agent"]>
 
   export type AgentSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -5877,6 +6559,8 @@ export namespace Prisma {
     name?: boolean
     email?: boolean
     phoneNumber?: boolean
+    registrationCodeId?: boolean
+    registrationCode?: boolean | Agent$registrationCodeArgs<ExtArgs>
   }, ExtArgs["result"]["agent"]>
 
   export type AgentSelectScalar = {
@@ -5885,20 +6569,27 @@ export namespace Prisma {
     name?: boolean
     email?: boolean
     phoneNumber?: boolean
+    registrationCodeId?: boolean
   }
 
-  export type AgentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "cognitoId" | "name" | "email" | "phoneNumber", ExtArgs["result"]["agent"]>
+  export type AgentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "cognitoId" | "name" | "email" | "phoneNumber" | "registrationCodeId", ExtArgs["result"]["agent"]>
   export type AgentInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    registrationTokens?: boolean | Agent$registrationTokensArgs<ExtArgs>
+    registrationCode?: boolean | Agent$registrationCodeArgs<ExtArgs>
+    assignedTasks?: boolean | Agent$assignedTasksArgs<ExtArgs>
     _count?: boolean | AgentCountOutputTypeDefaultArgs<ExtArgs>
   }
-  export type AgentIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-  export type AgentIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type AgentIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    registrationCode?: boolean | Agent$registrationCodeArgs<ExtArgs>
+  }
+  export type AgentIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    registrationCode?: boolean | Agent$registrationCodeArgs<ExtArgs>
+  }
 
   export type $AgentPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Agent"
     objects: {
-      registrationTokens: Prisma.$LandlordRegistrationTokenPayload<ExtArgs>[]
+      registrationCode: Prisma.$AgentRegistrationCodePayload<ExtArgs> | null
+      assignedTasks: Prisma.$TaskPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -5906,6 +6597,7 @@ export namespace Prisma {
       name: string
       email: string
       phoneNumber: string | null
+      registrationCodeId: number | null
     }, ExtArgs["result"]["agent"]>
     composites: {}
   }
@@ -6300,7 +6992,8 @@ export namespace Prisma {
    */
   export interface Prisma__AgentClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    registrationTokens<T extends Agent$registrationTokensArgs<ExtArgs> = {}>(args?: Subset<T, Agent$registrationTokensArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LandlordRegistrationTokenPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
+    registrationCode<T extends Agent$registrationCodeArgs<ExtArgs> = {}>(args?: Subset<T, Agent$registrationCodeArgs<ExtArgs>>): Prisma__AgentRegistrationCodeClient<$Result.GetResult<Prisma.$AgentRegistrationCodePayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | null, null, ExtArgs, ClientOptions>
+    assignedTasks<T extends Agent$assignedTasksArgs<ExtArgs> = {}>(args?: Subset<T, Agent$assignedTasksArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -6335,6 +7028,7 @@ export namespace Prisma {
     readonly name: FieldRef<"Agent", 'String'>
     readonly email: FieldRef<"Agent", 'String'>
     readonly phoneNumber: FieldRef<"Agent", 'String'>
+    readonly registrationCodeId: FieldRef<"Agent", 'Int'>
   }
     
 
@@ -6584,6 +7278,10 @@ export namespace Prisma {
      */
     data: AgentCreateManyInput | AgentCreateManyInput[]
     skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AgentIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -6654,6 +7352,10 @@ export namespace Prisma {
      * Limit how many Agents to update.
      */
     limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AgentIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -6723,27 +7425,46 @@ export namespace Prisma {
   }
 
   /**
-   * Agent.registrationTokens
+   * Agent.registrationCode
    */
-  export type Agent$registrationTokensArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Agent$registrationCodeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the LandlordRegistrationToken
+     * Select specific fields to fetch from the AgentRegistrationCode
      */
-    select?: LandlordRegistrationTokenSelect<ExtArgs> | null
+    select?: AgentRegistrationCodeSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the LandlordRegistrationToken
+     * Omit specific fields from the AgentRegistrationCode
      */
-    omit?: LandlordRegistrationTokenOmit<ExtArgs> | null
+    omit?: AgentRegistrationCodeOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: LandlordRegistrationTokenInclude<ExtArgs> | null
-    where?: LandlordRegistrationTokenWhereInput
-    orderBy?: LandlordRegistrationTokenOrderByWithRelationInput | LandlordRegistrationTokenOrderByWithRelationInput[]
-    cursor?: LandlordRegistrationTokenWhereUniqueInput
+    include?: AgentRegistrationCodeInclude<ExtArgs> | null
+    where?: AgentRegistrationCodeWhereInput
+  }
+
+  /**
+   * Agent.assignedTasks
+   */
+  export type Agent$assignedTasksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Task
+     */
+    select?: TaskSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Task
+     */
+    omit?: TaskOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TaskInclude<ExtArgs> | null
+    where?: TaskWhereInput
+    orderBy?: TaskOrderByWithRelationInput | TaskOrderByWithRelationInput[]
+    cursor?: TaskWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: LandlordRegistrationTokenScalarFieldEnum | LandlordRegistrationTokenScalarFieldEnum[]
+    distinct?: TaskScalarFieldEnum | TaskScalarFieldEnum[]
   }
 
   /**
@@ -6766,431 +7487,370 @@ export namespace Prisma {
 
 
   /**
-   * Model LandlordRegistrationToken
+   * Model Admin
    */
 
-  export type AggregateLandlordRegistrationToken = {
-    _count: LandlordRegistrationTokenCountAggregateOutputType | null
-    _avg: LandlordRegistrationTokenAvgAggregateOutputType | null
-    _sum: LandlordRegistrationTokenSumAggregateOutputType | null
-    _min: LandlordRegistrationTokenMinAggregateOutputType | null
-    _max: LandlordRegistrationTokenMaxAggregateOutputType | null
+  export type AggregateAdmin = {
+    _count: AdminCountAggregateOutputType | null
+    _avg: AdminAvgAggregateOutputType | null
+    _sum: AdminSumAggregateOutputType | null
+    _min: AdminMinAggregateOutputType | null
+    _max: AdminMaxAggregateOutputType | null
   }
 
-  export type LandlordRegistrationTokenAvgAggregateOutputType = {
-    agentId: number | null
-    landlordId: number | null
+  export type AdminAvgAggregateOutputType = {
+    id: number | null
   }
 
-  export type LandlordRegistrationTokenSumAggregateOutputType = {
-    agentId: number | null
-    landlordId: number | null
+  export type AdminSumAggregateOutputType = {
+    id: number | null
   }
 
-  export type LandlordRegistrationTokenMinAggregateOutputType = {
-    id: string | null
-    token: string | null
-    agentId: number | null
-    isUsed: boolean | null
-    expiresAt: Date | null
-    createdAt: Date | null
-    usedAt: Date | null
-    landlordId: number | null
+  export type AdminMinAggregateOutputType = {
+    id: number | null
+    cognitoId: string | null
+    name: string | null
+    email: string | null
+    phoneNumber: string | null
   }
 
-  export type LandlordRegistrationTokenMaxAggregateOutputType = {
-    id: string | null
-    token: string | null
-    agentId: number | null
-    isUsed: boolean | null
-    expiresAt: Date | null
-    createdAt: Date | null
-    usedAt: Date | null
-    landlordId: number | null
+  export type AdminMaxAggregateOutputType = {
+    id: number | null
+    cognitoId: string | null
+    name: string | null
+    email: string | null
+    phoneNumber: string | null
   }
 
-  export type LandlordRegistrationTokenCountAggregateOutputType = {
+  export type AdminCountAggregateOutputType = {
     id: number
-    token: number
-    agentId: number
-    isUsed: number
-    expiresAt: number
-    createdAt: number
-    usedAt: number
-    landlordId: number
+    cognitoId: number
+    name: number
+    email: number
+    phoneNumber: number
     _all: number
   }
 
 
-  export type LandlordRegistrationTokenAvgAggregateInputType = {
-    agentId?: true
-    landlordId?: true
-  }
-
-  export type LandlordRegistrationTokenSumAggregateInputType = {
-    agentId?: true
-    landlordId?: true
-  }
-
-  export type LandlordRegistrationTokenMinAggregateInputType = {
+  export type AdminAvgAggregateInputType = {
     id?: true
-    token?: true
-    agentId?: true
-    isUsed?: true
-    expiresAt?: true
-    createdAt?: true
-    usedAt?: true
-    landlordId?: true
   }
 
-  export type LandlordRegistrationTokenMaxAggregateInputType = {
+  export type AdminSumAggregateInputType = {
     id?: true
-    token?: true
-    agentId?: true
-    isUsed?: true
-    expiresAt?: true
-    createdAt?: true
-    usedAt?: true
-    landlordId?: true
   }
 
-  export type LandlordRegistrationTokenCountAggregateInputType = {
+  export type AdminMinAggregateInputType = {
     id?: true
-    token?: true
-    agentId?: true
-    isUsed?: true
-    expiresAt?: true
-    createdAt?: true
-    usedAt?: true
-    landlordId?: true
+    cognitoId?: true
+    name?: true
+    email?: true
+    phoneNumber?: true
+  }
+
+  export type AdminMaxAggregateInputType = {
+    id?: true
+    cognitoId?: true
+    name?: true
+    email?: true
+    phoneNumber?: true
+  }
+
+  export type AdminCountAggregateInputType = {
+    id?: true
+    cognitoId?: true
+    name?: true
+    email?: true
+    phoneNumber?: true
     _all?: true
   }
 
-  export type LandlordRegistrationTokenAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AdminAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which LandlordRegistrationToken to aggregate.
+     * Filter which Admin to aggregate.
      */
-    where?: LandlordRegistrationTokenWhereInput
+    where?: AdminWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of LandlordRegistrationTokens to fetch.
+     * Determine the order of Admins to fetch.
      */
-    orderBy?: LandlordRegistrationTokenOrderByWithRelationInput | LandlordRegistrationTokenOrderByWithRelationInput[]
+    orderBy?: AdminOrderByWithRelationInput | AdminOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the start position
      */
-    cursor?: LandlordRegistrationTokenWhereUniqueInput
+    cursor?: AdminWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` LandlordRegistrationTokens from the position of the cursor.
+     * Take `±n` Admins from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` LandlordRegistrationTokens.
+     * Skip the first `n` Admins.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Count returned LandlordRegistrationTokens
+     * Count returned Admins
     **/
-    _count?: true | LandlordRegistrationTokenCountAggregateInputType
+    _count?: true | AdminCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to average
     **/
-    _avg?: LandlordRegistrationTokenAvgAggregateInputType
+    _avg?: AdminAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to sum
     **/
-    _sum?: LandlordRegistrationTokenSumAggregateInputType
+    _sum?: AdminSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the minimum value
     **/
-    _min?: LandlordRegistrationTokenMinAggregateInputType
+    _min?: AdminMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the maximum value
     **/
-    _max?: LandlordRegistrationTokenMaxAggregateInputType
+    _max?: AdminMaxAggregateInputType
   }
 
-  export type GetLandlordRegistrationTokenAggregateType<T extends LandlordRegistrationTokenAggregateArgs> = {
-        [P in keyof T & keyof AggregateLandlordRegistrationToken]: P extends '_count' | 'count'
+  export type GetAdminAggregateType<T extends AdminAggregateArgs> = {
+        [P in keyof T & keyof AggregateAdmin]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
-        : GetScalarType<T[P], AggregateLandlordRegistrationToken[P]>
-      : GetScalarType<T[P], AggregateLandlordRegistrationToken[P]>
+        : GetScalarType<T[P], AggregateAdmin[P]>
+      : GetScalarType<T[P], AggregateAdmin[P]>
   }
 
 
 
 
-  export type LandlordRegistrationTokenGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: LandlordRegistrationTokenWhereInput
-    orderBy?: LandlordRegistrationTokenOrderByWithAggregationInput | LandlordRegistrationTokenOrderByWithAggregationInput[]
-    by: LandlordRegistrationTokenScalarFieldEnum[] | LandlordRegistrationTokenScalarFieldEnum
-    having?: LandlordRegistrationTokenScalarWhereWithAggregatesInput
+  export type AdminGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AdminWhereInput
+    orderBy?: AdminOrderByWithAggregationInput | AdminOrderByWithAggregationInput[]
+    by: AdminScalarFieldEnum[] | AdminScalarFieldEnum
+    having?: AdminScalarWhereWithAggregatesInput
     take?: number
     skip?: number
-    _count?: LandlordRegistrationTokenCountAggregateInputType | true
-    _avg?: LandlordRegistrationTokenAvgAggregateInputType
-    _sum?: LandlordRegistrationTokenSumAggregateInputType
-    _min?: LandlordRegistrationTokenMinAggregateInputType
-    _max?: LandlordRegistrationTokenMaxAggregateInputType
+    _count?: AdminCountAggregateInputType | true
+    _avg?: AdminAvgAggregateInputType
+    _sum?: AdminSumAggregateInputType
+    _min?: AdminMinAggregateInputType
+    _max?: AdminMaxAggregateInputType
   }
 
-  export type LandlordRegistrationTokenGroupByOutputType = {
-    id: string
-    token: string
-    agentId: number
-    isUsed: boolean
-    expiresAt: Date
-    createdAt: Date
-    usedAt: Date | null
-    landlordId: number | null
-    _count: LandlordRegistrationTokenCountAggregateOutputType | null
-    _avg: LandlordRegistrationTokenAvgAggregateOutputType | null
-    _sum: LandlordRegistrationTokenSumAggregateOutputType | null
-    _min: LandlordRegistrationTokenMinAggregateOutputType | null
-    _max: LandlordRegistrationTokenMaxAggregateOutputType | null
+  export type AdminGroupByOutputType = {
+    id: number
+    cognitoId: string
+    name: string
+    email: string
+    phoneNumber: string | null
+    _count: AdminCountAggregateOutputType | null
+    _avg: AdminAvgAggregateOutputType | null
+    _sum: AdminSumAggregateOutputType | null
+    _min: AdminMinAggregateOutputType | null
+    _max: AdminMaxAggregateOutputType | null
   }
 
-  type GetLandlordRegistrationTokenGroupByPayload<T extends LandlordRegistrationTokenGroupByArgs> = Prisma.PrismaPromise<
+  type GetAdminGroupByPayload<T extends AdminGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickEnumerable<LandlordRegistrationTokenGroupByOutputType, T['by']> &
+      PickEnumerable<AdminGroupByOutputType, T['by']> &
         {
-          [P in ((keyof T) & (keyof LandlordRegistrationTokenGroupByOutputType))]: P extends '_count'
+          [P in ((keyof T) & (keyof AdminGroupByOutputType))]: P extends '_count'
             ? T[P] extends boolean
               ? number
-              : GetScalarType<T[P], LandlordRegistrationTokenGroupByOutputType[P]>
-            : GetScalarType<T[P], LandlordRegistrationTokenGroupByOutputType[P]>
+              : GetScalarType<T[P], AdminGroupByOutputType[P]>
+            : GetScalarType<T[P], AdminGroupByOutputType[P]>
         }
       >
     >
 
 
-  export type LandlordRegistrationTokenSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type AdminSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    token?: boolean
-    agentId?: boolean
-    isUsed?: boolean
-    expiresAt?: boolean
-    createdAt?: boolean
-    usedAt?: boolean
-    landlordId?: boolean
-    agent?: boolean | AgentDefaultArgs<ExtArgs>
-    landlord?: boolean | LandlordRegistrationToken$landlordArgs<ExtArgs>
-  }, ExtArgs["result"]["landlordRegistrationToken"]>
+    cognitoId?: boolean
+    name?: boolean
+    email?: boolean
+    phoneNumber?: boolean
+  }, ExtArgs["result"]["admin"]>
 
-  export type LandlordRegistrationTokenSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type AdminSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    token?: boolean
-    agentId?: boolean
-    isUsed?: boolean
-    expiresAt?: boolean
-    createdAt?: boolean
-    usedAt?: boolean
-    landlordId?: boolean
-    agent?: boolean | AgentDefaultArgs<ExtArgs>
-    landlord?: boolean | LandlordRegistrationToken$landlordArgs<ExtArgs>
-  }, ExtArgs["result"]["landlordRegistrationToken"]>
+    cognitoId?: boolean
+    name?: boolean
+    email?: boolean
+    phoneNumber?: boolean
+  }, ExtArgs["result"]["admin"]>
 
-  export type LandlordRegistrationTokenSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type AdminSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    token?: boolean
-    agentId?: boolean
-    isUsed?: boolean
-    expiresAt?: boolean
-    createdAt?: boolean
-    usedAt?: boolean
-    landlordId?: boolean
-    agent?: boolean | AgentDefaultArgs<ExtArgs>
-    landlord?: boolean | LandlordRegistrationToken$landlordArgs<ExtArgs>
-  }, ExtArgs["result"]["landlordRegistrationToken"]>
+    cognitoId?: boolean
+    name?: boolean
+    email?: boolean
+    phoneNumber?: boolean
+  }, ExtArgs["result"]["admin"]>
 
-  export type LandlordRegistrationTokenSelectScalar = {
+  export type AdminSelectScalar = {
     id?: boolean
-    token?: boolean
-    agentId?: boolean
-    isUsed?: boolean
-    expiresAt?: boolean
-    createdAt?: boolean
-    usedAt?: boolean
-    landlordId?: boolean
+    cognitoId?: boolean
+    name?: boolean
+    email?: boolean
+    phoneNumber?: boolean
   }
 
-  export type LandlordRegistrationTokenOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "token" | "agentId" | "isUsed" | "expiresAt" | "createdAt" | "usedAt" | "landlordId", ExtArgs["result"]["landlordRegistrationToken"]>
-  export type LandlordRegistrationTokenInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    agent?: boolean | AgentDefaultArgs<ExtArgs>
-    landlord?: boolean | LandlordRegistrationToken$landlordArgs<ExtArgs>
-  }
-  export type LandlordRegistrationTokenIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    agent?: boolean | AgentDefaultArgs<ExtArgs>
-    landlord?: boolean | LandlordRegistrationToken$landlordArgs<ExtArgs>
-  }
-  export type LandlordRegistrationTokenIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    agent?: boolean | AgentDefaultArgs<ExtArgs>
-    landlord?: boolean | LandlordRegistrationToken$landlordArgs<ExtArgs>
-  }
+  export type AdminOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "cognitoId" | "name" | "email" | "phoneNumber", ExtArgs["result"]["admin"]>
 
-  export type $LandlordRegistrationTokenPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "LandlordRegistrationToken"
-    objects: {
-      agent: Prisma.$AgentPayload<ExtArgs>
-      landlord: Prisma.$LandlordPayload<ExtArgs> | null
-    }
+  export type $AdminPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Admin"
+    objects: {}
     scalars: $Extensions.GetPayloadResult<{
-      id: string
-      token: string
-      agentId: number
-      isUsed: boolean
-      expiresAt: Date
-      createdAt: Date
-      usedAt: Date | null
-      landlordId: number | null
-    }, ExtArgs["result"]["landlordRegistrationToken"]>
+      id: number
+      cognitoId: string
+      name: string
+      email: string
+      phoneNumber: string | null
+    }, ExtArgs["result"]["admin"]>
     composites: {}
   }
 
-  type LandlordRegistrationTokenGetPayload<S extends boolean | null | undefined | LandlordRegistrationTokenDefaultArgs> = $Result.GetResult<Prisma.$LandlordRegistrationTokenPayload, S>
+  type AdminGetPayload<S extends boolean | null | undefined | AdminDefaultArgs> = $Result.GetResult<Prisma.$AdminPayload, S>
 
-  type LandlordRegistrationTokenCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<LandlordRegistrationTokenFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: LandlordRegistrationTokenCountAggregateInputType | true
+  type AdminCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<AdminFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: AdminCountAggregateInputType | true
     }
 
-  export interface LandlordRegistrationTokenDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['LandlordRegistrationToken'], meta: { name: 'LandlordRegistrationToken' } }
+  export interface AdminDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Admin'], meta: { name: 'Admin' } }
     /**
-     * Find zero or one LandlordRegistrationToken that matches the filter.
-     * @param {LandlordRegistrationTokenFindUniqueArgs} args - Arguments to find a LandlordRegistrationToken
+     * Find zero or one Admin that matches the filter.
+     * @param {AdminFindUniqueArgs} args - Arguments to find a Admin
      * @example
-     * // Get one LandlordRegistrationToken
-     * const landlordRegistrationToken = await prisma.landlordRegistrationToken.findUnique({
+     * // Get one Admin
+     * const admin = await prisma.admin.findUnique({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUnique<T extends LandlordRegistrationTokenFindUniqueArgs>(args: SelectSubset<T, LandlordRegistrationTokenFindUniqueArgs<ExtArgs>>): Prisma__LandlordRegistrationTokenClient<$Result.GetResult<Prisma.$LandlordRegistrationTokenPayload<ExtArgs>, T, "findUnique", ClientOptions> | null, null, ExtArgs, ClientOptions>
+    findUnique<T extends AdminFindUniqueArgs>(args: SelectSubset<T, AdminFindUniqueArgs<ExtArgs>>): Prisma__AdminClient<$Result.GetResult<Prisma.$AdminPayload<ExtArgs>, T, "findUnique", ClientOptions> | null, null, ExtArgs, ClientOptions>
 
     /**
-     * Find one LandlordRegistrationToken that matches the filter or throw an error with `error.code='P2025'`
+     * Find one Admin that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
-     * @param {LandlordRegistrationTokenFindUniqueOrThrowArgs} args - Arguments to find a LandlordRegistrationToken
+     * @param {AdminFindUniqueOrThrowArgs} args - Arguments to find a Admin
      * @example
-     * // Get one LandlordRegistrationToken
-     * const landlordRegistrationToken = await prisma.landlordRegistrationToken.findUniqueOrThrow({
+     * // Get one Admin
+     * const admin = await prisma.admin.findUniqueOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUniqueOrThrow<T extends LandlordRegistrationTokenFindUniqueOrThrowArgs>(args: SelectSubset<T, LandlordRegistrationTokenFindUniqueOrThrowArgs<ExtArgs>>): Prisma__LandlordRegistrationTokenClient<$Result.GetResult<Prisma.$LandlordRegistrationTokenPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions>, never, ExtArgs, ClientOptions>
+    findUniqueOrThrow<T extends AdminFindUniqueOrThrowArgs>(args: SelectSubset<T, AdminFindUniqueOrThrowArgs<ExtArgs>>): Prisma__AdminClient<$Result.GetResult<Prisma.$AdminPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions>, never, ExtArgs, ClientOptions>
 
     /**
-     * Find the first LandlordRegistrationToken that matches the filter.
+     * Find the first Admin that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {LandlordRegistrationTokenFindFirstArgs} args - Arguments to find a LandlordRegistrationToken
+     * @param {AdminFindFirstArgs} args - Arguments to find a Admin
      * @example
-     * // Get one LandlordRegistrationToken
-     * const landlordRegistrationToken = await prisma.landlordRegistrationToken.findFirst({
+     * // Get one Admin
+     * const admin = await prisma.admin.findFirst({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirst<T extends LandlordRegistrationTokenFindFirstArgs>(args?: SelectSubset<T, LandlordRegistrationTokenFindFirstArgs<ExtArgs>>): Prisma__LandlordRegistrationTokenClient<$Result.GetResult<Prisma.$LandlordRegistrationTokenPayload<ExtArgs>, T, "findFirst", ClientOptions> | null, null, ExtArgs, ClientOptions>
+    findFirst<T extends AdminFindFirstArgs>(args?: SelectSubset<T, AdminFindFirstArgs<ExtArgs>>): Prisma__AdminClient<$Result.GetResult<Prisma.$AdminPayload<ExtArgs>, T, "findFirst", ClientOptions> | null, null, ExtArgs, ClientOptions>
 
     /**
-     * Find the first LandlordRegistrationToken that matches the filter or
+     * Find the first Admin that matches the filter or
      * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {LandlordRegistrationTokenFindFirstOrThrowArgs} args - Arguments to find a LandlordRegistrationToken
+     * @param {AdminFindFirstOrThrowArgs} args - Arguments to find a Admin
      * @example
-     * // Get one LandlordRegistrationToken
-     * const landlordRegistrationToken = await prisma.landlordRegistrationToken.findFirstOrThrow({
+     * // Get one Admin
+     * const admin = await prisma.admin.findFirstOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirstOrThrow<T extends LandlordRegistrationTokenFindFirstOrThrowArgs>(args?: SelectSubset<T, LandlordRegistrationTokenFindFirstOrThrowArgs<ExtArgs>>): Prisma__LandlordRegistrationTokenClient<$Result.GetResult<Prisma.$LandlordRegistrationTokenPayload<ExtArgs>, T, "findFirstOrThrow", ClientOptions>, never, ExtArgs, ClientOptions>
+    findFirstOrThrow<T extends AdminFindFirstOrThrowArgs>(args?: SelectSubset<T, AdminFindFirstOrThrowArgs<ExtArgs>>): Prisma__AdminClient<$Result.GetResult<Prisma.$AdminPayload<ExtArgs>, T, "findFirstOrThrow", ClientOptions>, never, ExtArgs, ClientOptions>
 
     /**
-     * Find zero or more LandlordRegistrationTokens that matches the filter.
+     * Find zero or more Admins that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {LandlordRegistrationTokenFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @param {AdminFindManyArgs} args - Arguments to filter and select certain fields only.
      * @example
-     * // Get all LandlordRegistrationTokens
-     * const landlordRegistrationTokens = await prisma.landlordRegistrationToken.findMany()
+     * // Get all Admins
+     * const admins = await prisma.admin.findMany()
      * 
-     * // Get first 10 LandlordRegistrationTokens
-     * const landlordRegistrationTokens = await prisma.landlordRegistrationToken.findMany({ take: 10 })
+     * // Get first 10 Admins
+     * const admins = await prisma.admin.findMany({ take: 10 })
      * 
      * // Only select the `id`
-     * const landlordRegistrationTokenWithIdOnly = await prisma.landlordRegistrationToken.findMany({ select: { id: true } })
+     * const adminWithIdOnly = await prisma.admin.findMany({ select: { id: true } })
      * 
      */
-    findMany<T extends LandlordRegistrationTokenFindManyArgs>(args?: SelectSubset<T, LandlordRegistrationTokenFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LandlordRegistrationTokenPayload<ExtArgs>, T, "findMany", ClientOptions>>
+    findMany<T extends AdminFindManyArgs>(args?: SelectSubset<T, AdminFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AdminPayload<ExtArgs>, T, "findMany", ClientOptions>>
 
     /**
-     * Create a LandlordRegistrationToken.
-     * @param {LandlordRegistrationTokenCreateArgs} args - Arguments to create a LandlordRegistrationToken.
+     * Create a Admin.
+     * @param {AdminCreateArgs} args - Arguments to create a Admin.
      * @example
-     * // Create one LandlordRegistrationToken
-     * const LandlordRegistrationToken = await prisma.landlordRegistrationToken.create({
+     * // Create one Admin
+     * const Admin = await prisma.admin.create({
      *   data: {
-     *     // ... data to create a LandlordRegistrationToken
+     *     // ... data to create a Admin
      *   }
      * })
      * 
      */
-    create<T extends LandlordRegistrationTokenCreateArgs>(args: SelectSubset<T, LandlordRegistrationTokenCreateArgs<ExtArgs>>): Prisma__LandlordRegistrationTokenClient<$Result.GetResult<Prisma.$LandlordRegistrationTokenPayload<ExtArgs>, T, "create", ClientOptions>, never, ExtArgs, ClientOptions>
+    create<T extends AdminCreateArgs>(args: SelectSubset<T, AdminCreateArgs<ExtArgs>>): Prisma__AdminClient<$Result.GetResult<Prisma.$AdminPayload<ExtArgs>, T, "create", ClientOptions>, never, ExtArgs, ClientOptions>
 
     /**
-     * Create many LandlordRegistrationTokens.
-     * @param {LandlordRegistrationTokenCreateManyArgs} args - Arguments to create many LandlordRegistrationTokens.
+     * Create many Admins.
+     * @param {AdminCreateManyArgs} args - Arguments to create many Admins.
      * @example
-     * // Create many LandlordRegistrationTokens
-     * const landlordRegistrationToken = await prisma.landlordRegistrationToken.createMany({
+     * // Create many Admins
+     * const admin = await prisma.admin.createMany({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      *     
      */
-    createMany<T extends LandlordRegistrationTokenCreateManyArgs>(args?: SelectSubset<T, LandlordRegistrationTokenCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    createMany<T extends AdminCreateManyArgs>(args?: SelectSubset<T, AdminCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Create many LandlordRegistrationTokens and returns the data saved in the database.
-     * @param {LandlordRegistrationTokenCreateManyAndReturnArgs} args - Arguments to create many LandlordRegistrationTokens.
+     * Create many Admins and returns the data saved in the database.
+     * @param {AdminCreateManyAndReturnArgs} args - Arguments to create many Admins.
      * @example
-     * // Create many LandlordRegistrationTokens
-     * const landlordRegistrationToken = await prisma.landlordRegistrationToken.createManyAndReturn({
+     * // Create many Admins
+     * const admin = await prisma.admin.createManyAndReturn({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      * 
-     * // Create many LandlordRegistrationTokens and only return the `id`
-     * const landlordRegistrationTokenWithIdOnly = await prisma.landlordRegistrationToken.createManyAndReturn({
+     * // Create many Admins and only return the `id`
+     * const adminWithIdOnly = await prisma.admin.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -7200,28 +7860,28 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    createManyAndReturn<T extends LandlordRegistrationTokenCreateManyAndReturnArgs>(args?: SelectSubset<T, LandlordRegistrationTokenCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LandlordRegistrationTokenPayload<ExtArgs>, T, "createManyAndReturn", ClientOptions>>
+    createManyAndReturn<T extends AdminCreateManyAndReturnArgs>(args?: SelectSubset<T, AdminCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AdminPayload<ExtArgs>, T, "createManyAndReturn", ClientOptions>>
 
     /**
-     * Delete a LandlordRegistrationToken.
-     * @param {LandlordRegistrationTokenDeleteArgs} args - Arguments to delete one LandlordRegistrationToken.
+     * Delete a Admin.
+     * @param {AdminDeleteArgs} args - Arguments to delete one Admin.
      * @example
-     * // Delete one LandlordRegistrationToken
-     * const LandlordRegistrationToken = await prisma.landlordRegistrationToken.delete({
+     * // Delete one Admin
+     * const Admin = await prisma.admin.delete({
      *   where: {
-     *     // ... filter to delete one LandlordRegistrationToken
+     *     // ... filter to delete one Admin
      *   }
      * })
      * 
      */
-    delete<T extends LandlordRegistrationTokenDeleteArgs>(args: SelectSubset<T, LandlordRegistrationTokenDeleteArgs<ExtArgs>>): Prisma__LandlordRegistrationTokenClient<$Result.GetResult<Prisma.$LandlordRegistrationTokenPayload<ExtArgs>, T, "delete", ClientOptions>, never, ExtArgs, ClientOptions>
+    delete<T extends AdminDeleteArgs>(args: SelectSubset<T, AdminDeleteArgs<ExtArgs>>): Prisma__AdminClient<$Result.GetResult<Prisma.$AdminPayload<ExtArgs>, T, "delete", ClientOptions>, never, ExtArgs, ClientOptions>
 
     /**
-     * Update one LandlordRegistrationToken.
-     * @param {LandlordRegistrationTokenUpdateArgs} args - Arguments to update one LandlordRegistrationToken.
+     * Update one Admin.
+     * @param {AdminUpdateArgs} args - Arguments to update one Admin.
      * @example
-     * // Update one LandlordRegistrationToken
-     * const landlordRegistrationToken = await prisma.landlordRegistrationToken.update({
+     * // Update one Admin
+     * const admin = await prisma.admin.update({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -7231,30 +7891,30 @@ export namespace Prisma {
      * })
      * 
      */
-    update<T extends LandlordRegistrationTokenUpdateArgs>(args: SelectSubset<T, LandlordRegistrationTokenUpdateArgs<ExtArgs>>): Prisma__LandlordRegistrationTokenClient<$Result.GetResult<Prisma.$LandlordRegistrationTokenPayload<ExtArgs>, T, "update", ClientOptions>, never, ExtArgs, ClientOptions>
+    update<T extends AdminUpdateArgs>(args: SelectSubset<T, AdminUpdateArgs<ExtArgs>>): Prisma__AdminClient<$Result.GetResult<Prisma.$AdminPayload<ExtArgs>, T, "update", ClientOptions>, never, ExtArgs, ClientOptions>
 
     /**
-     * Delete zero or more LandlordRegistrationTokens.
-     * @param {LandlordRegistrationTokenDeleteManyArgs} args - Arguments to filter LandlordRegistrationTokens to delete.
+     * Delete zero or more Admins.
+     * @param {AdminDeleteManyArgs} args - Arguments to filter Admins to delete.
      * @example
-     * // Delete a few LandlordRegistrationTokens
-     * const { count } = await prisma.landlordRegistrationToken.deleteMany({
+     * // Delete a few Admins
+     * const { count } = await prisma.admin.deleteMany({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      * 
      */
-    deleteMany<T extends LandlordRegistrationTokenDeleteManyArgs>(args?: SelectSubset<T, LandlordRegistrationTokenDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    deleteMany<T extends AdminDeleteManyArgs>(args?: SelectSubset<T, AdminDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more LandlordRegistrationTokens.
+     * Update zero or more Admins.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {LandlordRegistrationTokenUpdateManyArgs} args - Arguments to update one or more rows.
+     * @param {AdminUpdateManyArgs} args - Arguments to update one or more rows.
      * @example
-     * // Update many LandlordRegistrationTokens
-     * const landlordRegistrationToken = await prisma.landlordRegistrationToken.updateMany({
+     * // Update many Admins
+     * const admin = await prisma.admin.updateMany({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -7264,14 +7924,14 @@ export namespace Prisma {
      * })
      * 
      */
-    updateMany<T extends LandlordRegistrationTokenUpdateManyArgs>(args: SelectSubset<T, LandlordRegistrationTokenUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    updateMany<T extends AdminUpdateManyArgs>(args: SelectSubset<T, AdminUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more LandlordRegistrationTokens and returns the data updated in the database.
-     * @param {LandlordRegistrationTokenUpdateManyAndReturnArgs} args - Arguments to update many LandlordRegistrationTokens.
+     * Update zero or more Admins and returns the data updated in the database.
+     * @param {AdminUpdateManyAndReturnArgs} args - Arguments to update many Admins.
      * @example
-     * // Update many LandlordRegistrationTokens
-     * const landlordRegistrationToken = await prisma.landlordRegistrationToken.updateManyAndReturn({
+     * // Update many Admins
+     * const admin = await prisma.admin.updateManyAndReturn({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -7280,8 +7940,8 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Update zero or more LandlordRegistrationTokens and only return the `id`
-     * const landlordRegistrationTokenWithIdOnly = await prisma.landlordRegistrationToken.updateManyAndReturn({
+     * // Update zero or more Admins and only return the `id`
+     * const adminWithIdOnly = await prisma.admin.updateManyAndReturn({
      *   select: { id: true },
      *   where: {
      *     // ... provide filter here
@@ -7294,56 +7954,56 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    updateManyAndReturn<T extends LandlordRegistrationTokenUpdateManyAndReturnArgs>(args: SelectSubset<T, LandlordRegistrationTokenUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LandlordRegistrationTokenPayload<ExtArgs>, T, "updateManyAndReturn", ClientOptions>>
+    updateManyAndReturn<T extends AdminUpdateManyAndReturnArgs>(args: SelectSubset<T, AdminUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AdminPayload<ExtArgs>, T, "updateManyAndReturn", ClientOptions>>
 
     /**
-     * Create or update one LandlordRegistrationToken.
-     * @param {LandlordRegistrationTokenUpsertArgs} args - Arguments to update or create a LandlordRegistrationToken.
+     * Create or update one Admin.
+     * @param {AdminUpsertArgs} args - Arguments to update or create a Admin.
      * @example
-     * // Update or create a LandlordRegistrationToken
-     * const landlordRegistrationToken = await prisma.landlordRegistrationToken.upsert({
+     * // Update or create a Admin
+     * const admin = await prisma.admin.upsert({
      *   create: {
-     *     // ... data to create a LandlordRegistrationToken
+     *     // ... data to create a Admin
      *   },
      *   update: {
      *     // ... in case it already exists, update
      *   },
      *   where: {
-     *     // ... the filter for the LandlordRegistrationToken we want to update
+     *     // ... the filter for the Admin we want to update
      *   }
      * })
      */
-    upsert<T extends LandlordRegistrationTokenUpsertArgs>(args: SelectSubset<T, LandlordRegistrationTokenUpsertArgs<ExtArgs>>): Prisma__LandlordRegistrationTokenClient<$Result.GetResult<Prisma.$LandlordRegistrationTokenPayload<ExtArgs>, T, "upsert", ClientOptions>, never, ExtArgs, ClientOptions>
+    upsert<T extends AdminUpsertArgs>(args: SelectSubset<T, AdminUpsertArgs<ExtArgs>>): Prisma__AdminClient<$Result.GetResult<Prisma.$AdminPayload<ExtArgs>, T, "upsert", ClientOptions>, never, ExtArgs, ClientOptions>
 
 
     /**
-     * Count the number of LandlordRegistrationTokens.
+     * Count the number of Admins.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {LandlordRegistrationTokenCountArgs} args - Arguments to filter LandlordRegistrationTokens to count.
+     * @param {AdminCountArgs} args - Arguments to filter Admins to count.
      * @example
-     * // Count the number of LandlordRegistrationTokens
-     * const count = await prisma.landlordRegistrationToken.count({
+     * // Count the number of Admins
+     * const count = await prisma.admin.count({
      *   where: {
-     *     // ... the filter for the LandlordRegistrationTokens we want to count
+     *     // ... the filter for the Admins we want to count
      *   }
      * })
     **/
-    count<T extends LandlordRegistrationTokenCountArgs>(
-      args?: Subset<T, LandlordRegistrationTokenCountArgs>,
+    count<T extends AdminCountArgs>(
+      args?: Subset<T, AdminCountArgs>,
     ): Prisma.PrismaPromise<
       T extends $Utils.Record<'select', any>
         ? T['select'] extends true
           ? number
-          : GetScalarType<T['select'], LandlordRegistrationTokenCountAggregateOutputType>
+          : GetScalarType<T['select'], AdminCountAggregateOutputType>
         : number
     >
 
     /**
-     * Allows you to perform aggregations operations on a LandlordRegistrationToken.
+     * Allows you to perform aggregations operations on a Admin.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {LandlordRegistrationTokenAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @param {AdminAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
      * @example
      * // Ordered by age ascending
      * // Where email contains prisma.io
@@ -7363,13 +8023,13 @@ export namespace Prisma {
      *   take: 10,
      * })
     **/
-    aggregate<T extends LandlordRegistrationTokenAggregateArgs>(args: Subset<T, LandlordRegistrationTokenAggregateArgs>): Prisma.PrismaPromise<GetLandlordRegistrationTokenAggregateType<T>>
+    aggregate<T extends AdminAggregateArgs>(args: Subset<T, AdminAggregateArgs>): Prisma.PrismaPromise<GetAdminAggregateType<T>>
 
     /**
-     * Group by LandlordRegistrationToken.
+     * Group by Admin.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {LandlordRegistrationTokenGroupByArgs} args - Group by arguments.
+     * @param {AdminGroupByArgs} args - Group by arguments.
      * @example
      * // Group by city, order by createdAt, get count
      * const result = await prisma.user.groupBy({
@@ -7384,14 +8044,14 @@ export namespace Prisma {
      * 
     **/
     groupBy<
-      T extends LandlordRegistrationTokenGroupByArgs,
+      T extends AdminGroupByArgs,
       HasSelectOrTake extends Or<
         Extends<'skip', Keys<T>>,
         Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: LandlordRegistrationTokenGroupByArgs['orderBy'] }
-        : { orderBy?: LandlordRegistrationTokenGroupByArgs['orderBy'] },
+        ? { orderBy: AdminGroupByArgs['orderBy'] }
+        : { orderBy?: AdminGroupByArgs['orderBy'] },
       OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
       ByFields extends MaybeTupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
@@ -7440,23 +8100,21 @@ export namespace Prisma {
             ? never
             : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
         }[OrderFields]
-    >(args: SubsetIntersection<T, LandlordRegistrationTokenGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetLandlordRegistrationTokenGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+    >(args: SubsetIntersection<T, AdminGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAdminGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
   /**
-   * Fields of the LandlordRegistrationToken model
+   * Fields of the Admin model
    */
-  readonly fields: LandlordRegistrationTokenFieldRefs;
+  readonly fields: AdminFieldRefs;
   }
 
   /**
-   * The delegate class that acts as a "Promise-like" for LandlordRegistrationToken.
+   * The delegate class that acts as a "Promise-like" for Admin.
    * Why is this prefixed with `Prisma__`?
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export interface Prisma__LandlordRegistrationTokenClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> extends Prisma.PrismaPromise<T> {
+  export interface Prisma__AdminClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    agent<T extends AgentDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AgentDefaultArgs<ExtArgs>>): Prisma__AgentClient<$Result.GetResult<Prisma.$AgentPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | Null, Null, ExtArgs, ClientOptions>
-    landlord<T extends LandlordRegistrationToken$landlordArgs<ExtArgs> = {}>(args?: Subset<T, LandlordRegistrationToken$landlordArgs<ExtArgs>>): Prisma__LandlordClient<$Result.GetResult<Prisma.$LandlordPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | null, null, ExtArgs, ClientOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -7483,416 +8141,1445 @@ export namespace Prisma {
 
 
   /**
-   * Fields of the LandlordRegistrationToken model
+   * Fields of the Admin model
    */ 
-  interface LandlordRegistrationTokenFieldRefs {
-    readonly id: FieldRef<"LandlordRegistrationToken", 'String'>
-    readonly token: FieldRef<"LandlordRegistrationToken", 'String'>
-    readonly agentId: FieldRef<"LandlordRegistrationToken", 'Int'>
-    readonly isUsed: FieldRef<"LandlordRegistrationToken", 'Boolean'>
-    readonly expiresAt: FieldRef<"LandlordRegistrationToken", 'DateTime'>
-    readonly createdAt: FieldRef<"LandlordRegistrationToken", 'DateTime'>
-    readonly usedAt: FieldRef<"LandlordRegistrationToken", 'DateTime'>
-    readonly landlordId: FieldRef<"LandlordRegistrationToken", 'Int'>
+  interface AdminFieldRefs {
+    readonly id: FieldRef<"Admin", 'Int'>
+    readonly cognitoId: FieldRef<"Admin", 'String'>
+    readonly name: FieldRef<"Admin", 'String'>
+    readonly email: FieldRef<"Admin", 'String'>
+    readonly phoneNumber: FieldRef<"Admin", 'String'>
   }
     
 
   // Custom InputTypes
   /**
-   * LandlordRegistrationToken findUnique
+   * Admin findUnique
    */
-  export type LandlordRegistrationTokenFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AdminFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the LandlordRegistrationToken
+     * Select specific fields to fetch from the Admin
      */
-    select?: LandlordRegistrationTokenSelect<ExtArgs> | null
+    select?: AdminSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the LandlordRegistrationToken
+     * Omit specific fields from the Admin
      */
-    omit?: LandlordRegistrationTokenOmit<ExtArgs> | null
+    omit?: AdminOmit<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well
+     * Filter, which Admin to fetch.
      */
-    include?: LandlordRegistrationTokenInclude<ExtArgs> | null
-    /**
-     * Filter, which LandlordRegistrationToken to fetch.
-     */
-    where: LandlordRegistrationTokenWhereUniqueInput
+    where: AdminWhereUniqueInput
   }
 
   /**
-   * LandlordRegistrationToken findUniqueOrThrow
+   * Admin findUniqueOrThrow
    */
-  export type LandlordRegistrationTokenFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AdminFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the LandlordRegistrationToken
+     * Select specific fields to fetch from the Admin
      */
-    select?: LandlordRegistrationTokenSelect<ExtArgs> | null
+    select?: AdminSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the LandlordRegistrationToken
+     * Omit specific fields from the Admin
      */
-    omit?: LandlordRegistrationTokenOmit<ExtArgs> | null
+    omit?: AdminOmit<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well
+     * Filter, which Admin to fetch.
      */
-    include?: LandlordRegistrationTokenInclude<ExtArgs> | null
-    /**
-     * Filter, which LandlordRegistrationToken to fetch.
-     */
-    where: LandlordRegistrationTokenWhereUniqueInput
+    where: AdminWhereUniqueInput
   }
 
   /**
-   * LandlordRegistrationToken findFirst
+   * Admin findFirst
    */
-  export type LandlordRegistrationTokenFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AdminFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the LandlordRegistrationToken
+     * Select specific fields to fetch from the Admin
      */
-    select?: LandlordRegistrationTokenSelect<ExtArgs> | null
+    select?: AdminSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the LandlordRegistrationToken
+     * Omit specific fields from the Admin
      */
-    omit?: LandlordRegistrationTokenOmit<ExtArgs> | null
+    omit?: AdminOmit<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well
+     * Filter, which Admin to fetch.
      */
-    include?: LandlordRegistrationTokenInclude<ExtArgs> | null
-    /**
-     * Filter, which LandlordRegistrationToken to fetch.
-     */
-    where?: LandlordRegistrationTokenWhereInput
+    where?: AdminWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of LandlordRegistrationTokens to fetch.
+     * Determine the order of Admins to fetch.
      */
-    orderBy?: LandlordRegistrationTokenOrderByWithRelationInput | LandlordRegistrationTokenOrderByWithRelationInput[]
+    orderBy?: AdminOrderByWithRelationInput | AdminOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for LandlordRegistrationTokens.
+     * Sets the position for searching for Admins.
      */
-    cursor?: LandlordRegistrationTokenWhereUniqueInput
+    cursor?: AdminWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` LandlordRegistrationTokens from the position of the cursor.
+     * Take `±n` Admins from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` LandlordRegistrationTokens.
+     * Skip the first `n` Admins.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of LandlordRegistrationTokens.
+     * Filter by unique combinations of Admins.
      */
-    distinct?: LandlordRegistrationTokenScalarFieldEnum | LandlordRegistrationTokenScalarFieldEnum[]
+    distinct?: AdminScalarFieldEnum | AdminScalarFieldEnum[]
   }
 
   /**
-   * LandlordRegistrationToken findFirstOrThrow
+   * Admin findFirstOrThrow
    */
-  export type LandlordRegistrationTokenFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AdminFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the LandlordRegistrationToken
+     * Select specific fields to fetch from the Admin
      */
-    select?: LandlordRegistrationTokenSelect<ExtArgs> | null
+    select?: AdminSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the LandlordRegistrationToken
+     * Omit specific fields from the Admin
      */
-    omit?: LandlordRegistrationTokenOmit<ExtArgs> | null
+    omit?: AdminOmit<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well
+     * Filter, which Admin to fetch.
      */
-    include?: LandlordRegistrationTokenInclude<ExtArgs> | null
-    /**
-     * Filter, which LandlordRegistrationToken to fetch.
-     */
-    where?: LandlordRegistrationTokenWhereInput
+    where?: AdminWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of LandlordRegistrationTokens to fetch.
+     * Determine the order of Admins to fetch.
      */
-    orderBy?: LandlordRegistrationTokenOrderByWithRelationInput | LandlordRegistrationTokenOrderByWithRelationInput[]
+    orderBy?: AdminOrderByWithRelationInput | AdminOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for LandlordRegistrationTokens.
+     * Sets the position for searching for Admins.
      */
-    cursor?: LandlordRegistrationTokenWhereUniqueInput
+    cursor?: AdminWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` LandlordRegistrationTokens from the position of the cursor.
+     * Take `±n` Admins from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` LandlordRegistrationTokens.
+     * Skip the first `n` Admins.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of LandlordRegistrationTokens.
+     * Filter by unique combinations of Admins.
      */
-    distinct?: LandlordRegistrationTokenScalarFieldEnum | LandlordRegistrationTokenScalarFieldEnum[]
+    distinct?: AdminScalarFieldEnum | AdminScalarFieldEnum[]
   }
 
   /**
-   * LandlordRegistrationToken findMany
+   * Admin findMany
    */
-  export type LandlordRegistrationTokenFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AdminFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the LandlordRegistrationToken
+     * Select specific fields to fetch from the Admin
      */
-    select?: LandlordRegistrationTokenSelect<ExtArgs> | null
+    select?: AdminSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the LandlordRegistrationToken
+     * Omit specific fields from the Admin
      */
-    omit?: LandlordRegistrationTokenOmit<ExtArgs> | null
+    omit?: AdminOmit<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well
+     * Filter, which Admins to fetch.
      */
-    include?: LandlordRegistrationTokenInclude<ExtArgs> | null
-    /**
-     * Filter, which LandlordRegistrationTokens to fetch.
-     */
-    where?: LandlordRegistrationTokenWhereInput
+    where?: AdminWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of LandlordRegistrationTokens to fetch.
+     * Determine the order of Admins to fetch.
      */
-    orderBy?: LandlordRegistrationTokenOrderByWithRelationInput | LandlordRegistrationTokenOrderByWithRelationInput[]
+    orderBy?: AdminOrderByWithRelationInput | AdminOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for listing LandlordRegistrationTokens.
+     * Sets the position for listing Admins.
      */
-    cursor?: LandlordRegistrationTokenWhereUniqueInput
+    cursor?: AdminWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` LandlordRegistrationTokens from the position of the cursor.
+     * Take `±n` Admins from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` LandlordRegistrationTokens.
+     * Skip the first `n` Admins.
      */
     skip?: number
-    distinct?: LandlordRegistrationTokenScalarFieldEnum | LandlordRegistrationTokenScalarFieldEnum[]
+    distinct?: AdminScalarFieldEnum | AdminScalarFieldEnum[]
   }
 
   /**
-   * LandlordRegistrationToken create
+   * Admin create
    */
-  export type LandlordRegistrationTokenCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AdminCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the LandlordRegistrationToken
+     * Select specific fields to fetch from the Admin
      */
-    select?: LandlordRegistrationTokenSelect<ExtArgs> | null
+    select?: AdminSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the LandlordRegistrationToken
+     * Omit specific fields from the Admin
      */
-    omit?: LandlordRegistrationTokenOmit<ExtArgs> | null
+    omit?: AdminOmit<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well
+     * The data needed to create a Admin.
      */
-    include?: LandlordRegistrationTokenInclude<ExtArgs> | null
-    /**
-     * The data needed to create a LandlordRegistrationToken.
-     */
-    data: XOR<LandlordRegistrationTokenCreateInput, LandlordRegistrationTokenUncheckedCreateInput>
+    data: XOR<AdminCreateInput, AdminUncheckedCreateInput>
   }
 
   /**
-   * LandlordRegistrationToken createMany
+   * Admin createMany
    */
-  export type LandlordRegistrationTokenCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AdminCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to create many LandlordRegistrationTokens.
+     * The data used to create many Admins.
      */
-    data: LandlordRegistrationTokenCreateManyInput | LandlordRegistrationTokenCreateManyInput[]
+    data: AdminCreateManyInput | AdminCreateManyInput[]
     skipDuplicates?: boolean
   }
 
   /**
-   * LandlordRegistrationToken createManyAndReturn
+   * Admin createManyAndReturn
    */
-  export type LandlordRegistrationTokenCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AdminCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the LandlordRegistrationToken
+     * Select specific fields to fetch from the Admin
      */
-    select?: LandlordRegistrationTokenSelectCreateManyAndReturn<ExtArgs> | null
+    select?: AdminSelectCreateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the LandlordRegistrationToken
+     * Omit specific fields from the Admin
      */
-    omit?: LandlordRegistrationTokenOmit<ExtArgs> | null
+    omit?: AdminOmit<ExtArgs> | null
     /**
-     * The data used to create many LandlordRegistrationTokens.
+     * The data used to create many Admins.
      */
-    data: LandlordRegistrationTokenCreateManyInput | LandlordRegistrationTokenCreateManyInput[]
+    data: AdminCreateManyInput | AdminCreateManyInput[]
     skipDuplicates?: boolean
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: LandlordRegistrationTokenIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
-   * LandlordRegistrationToken update
+   * Admin update
    */
-  export type LandlordRegistrationTokenUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AdminUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the LandlordRegistrationToken
+     * Select specific fields to fetch from the Admin
      */
-    select?: LandlordRegistrationTokenSelect<ExtArgs> | null
+    select?: AdminSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the LandlordRegistrationToken
+     * Omit specific fields from the Admin
      */
-    omit?: LandlordRegistrationTokenOmit<ExtArgs> | null
+    omit?: AdminOmit<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well
+     * The data needed to update a Admin.
      */
-    include?: LandlordRegistrationTokenInclude<ExtArgs> | null
+    data: XOR<AdminUpdateInput, AdminUncheckedUpdateInput>
     /**
-     * The data needed to update a LandlordRegistrationToken.
+     * Choose, which Admin to update.
      */
-    data: XOR<LandlordRegistrationTokenUpdateInput, LandlordRegistrationTokenUncheckedUpdateInput>
-    /**
-     * Choose, which LandlordRegistrationToken to update.
-     */
-    where: LandlordRegistrationTokenWhereUniqueInput
+    where: AdminWhereUniqueInput
   }
 
   /**
-   * LandlordRegistrationToken updateMany
+   * Admin updateMany
    */
-  export type LandlordRegistrationTokenUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AdminUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to update LandlordRegistrationTokens.
+     * The data used to update Admins.
      */
-    data: XOR<LandlordRegistrationTokenUpdateManyMutationInput, LandlordRegistrationTokenUncheckedUpdateManyInput>
+    data: XOR<AdminUpdateManyMutationInput, AdminUncheckedUpdateManyInput>
     /**
-     * Filter which LandlordRegistrationTokens to update
+     * Filter which Admins to update
      */
-    where?: LandlordRegistrationTokenWhereInput
+    where?: AdminWhereInput
     /**
-     * Limit how many LandlordRegistrationTokens to update.
+     * Limit how many Admins to update.
      */
     limit?: number
   }
 
   /**
-   * LandlordRegistrationToken updateManyAndReturn
+   * Admin updateManyAndReturn
    */
-  export type LandlordRegistrationTokenUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AdminUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the LandlordRegistrationToken
+     * Select specific fields to fetch from the Admin
      */
-    select?: LandlordRegistrationTokenSelectUpdateManyAndReturn<ExtArgs> | null
+    select?: AdminSelectUpdateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the LandlordRegistrationToken
+     * Omit specific fields from the Admin
      */
-    omit?: LandlordRegistrationTokenOmit<ExtArgs> | null
+    omit?: AdminOmit<ExtArgs> | null
     /**
-     * The data used to update LandlordRegistrationTokens.
+     * The data used to update Admins.
      */
-    data: XOR<LandlordRegistrationTokenUpdateManyMutationInput, LandlordRegistrationTokenUncheckedUpdateManyInput>
+    data: XOR<AdminUpdateManyMutationInput, AdminUncheckedUpdateManyInput>
     /**
-     * Filter which LandlordRegistrationTokens to update
+     * Filter which Admins to update
      */
-    where?: LandlordRegistrationTokenWhereInput
+    where?: AdminWhereInput
     /**
-     * Limit how many LandlordRegistrationTokens to update.
-     */
-    limit?: number
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: LandlordRegistrationTokenIncludeUpdateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * LandlordRegistrationToken upsert
-   */
-  export type LandlordRegistrationTokenUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the LandlordRegistrationToken
-     */
-    select?: LandlordRegistrationTokenSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the LandlordRegistrationToken
-     */
-    omit?: LandlordRegistrationTokenOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: LandlordRegistrationTokenInclude<ExtArgs> | null
-    /**
-     * The filter to search for the LandlordRegistrationToken to update in case it exists.
-     */
-    where: LandlordRegistrationTokenWhereUniqueInput
-    /**
-     * In case the LandlordRegistrationToken found by the `where` argument doesn't exist, create a new LandlordRegistrationToken with this data.
-     */
-    create: XOR<LandlordRegistrationTokenCreateInput, LandlordRegistrationTokenUncheckedCreateInput>
-    /**
-     * In case the LandlordRegistrationToken was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<LandlordRegistrationTokenUpdateInput, LandlordRegistrationTokenUncheckedUpdateInput>
-  }
-
-  /**
-   * LandlordRegistrationToken delete
-   */
-  export type LandlordRegistrationTokenDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the LandlordRegistrationToken
-     */
-    select?: LandlordRegistrationTokenSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the LandlordRegistrationToken
-     */
-    omit?: LandlordRegistrationTokenOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: LandlordRegistrationTokenInclude<ExtArgs> | null
-    /**
-     * Filter which LandlordRegistrationToken to delete.
-     */
-    where: LandlordRegistrationTokenWhereUniqueInput
-  }
-
-  /**
-   * LandlordRegistrationToken deleteMany
-   */
-  export type LandlordRegistrationTokenDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which LandlordRegistrationTokens to delete
-     */
-    where?: LandlordRegistrationTokenWhereInput
-    /**
-     * Limit how many LandlordRegistrationTokens to delete.
+     * Limit how many Admins to update.
      */
     limit?: number
   }
 
   /**
-   * LandlordRegistrationToken.landlord
+   * Admin upsert
    */
-  export type LandlordRegistrationToken$landlordArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AdminUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Admin
+     */
+    select?: AdminSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Admin
+     */
+    omit?: AdminOmit<ExtArgs> | null
+    /**
+     * The filter to search for the Admin to update in case it exists.
+     */
+    where: AdminWhereUniqueInput
+    /**
+     * In case the Admin found by the `where` argument doesn't exist, create a new Admin with this data.
+     */
+    create: XOR<AdminCreateInput, AdminUncheckedCreateInput>
+    /**
+     * In case the Admin was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<AdminUpdateInput, AdminUncheckedUpdateInput>
+  }
+
+  /**
+   * Admin delete
+   */
+  export type AdminDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Admin
+     */
+    select?: AdminSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Admin
+     */
+    omit?: AdminOmit<ExtArgs> | null
+    /**
+     * Filter which Admin to delete.
+     */
+    where: AdminWhereUniqueInput
+  }
+
+  /**
+   * Admin deleteMany
+   */
+  export type AdminDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Admins to delete
+     */
+    where?: AdminWhereInput
+    /**
+     * Limit how many Admins to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Admin without action
+   */
+  export type AdminDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Admin
+     */
+    select?: AdminSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Admin
+     */
+    omit?: AdminOmit<ExtArgs> | null
+  }
+
+
+  /**
+   * Model LandlordRegistrationCode
+   */
+
+  export type AggregateLandlordRegistrationCode = {
+    _count: LandlordRegistrationCodeCountAggregateOutputType | null
+    _avg: LandlordRegistrationCodeAvgAggregateOutputType | null
+    _sum: LandlordRegistrationCodeSumAggregateOutputType | null
+    _min: LandlordRegistrationCodeMinAggregateOutputType | null
+    _max: LandlordRegistrationCodeMaxAggregateOutputType | null
+  }
+
+  export type LandlordRegistrationCodeAvgAggregateOutputType = {
+    id: number | null
+  }
+
+  export type LandlordRegistrationCodeSumAggregateOutputType = {
+    id: number | null
+  }
+
+  export type LandlordRegistrationCodeMinAggregateOutputType = {
+    id: number | null
+    code: string | null
+    isUsed: boolean | null
+    createdAt: Date | null
+    usedAt: Date | null
+  }
+
+  export type LandlordRegistrationCodeMaxAggregateOutputType = {
+    id: number | null
+    code: string | null
+    isUsed: boolean | null
+    createdAt: Date | null
+    usedAt: Date | null
+  }
+
+  export type LandlordRegistrationCodeCountAggregateOutputType = {
+    id: number
+    code: number
+    isUsed: number
+    createdAt: number
+    usedAt: number
+    _all: number
+  }
+
+
+  export type LandlordRegistrationCodeAvgAggregateInputType = {
+    id?: true
+  }
+
+  export type LandlordRegistrationCodeSumAggregateInputType = {
+    id?: true
+  }
+
+  export type LandlordRegistrationCodeMinAggregateInputType = {
+    id?: true
+    code?: true
+    isUsed?: true
+    createdAt?: true
+    usedAt?: true
+  }
+
+  export type LandlordRegistrationCodeMaxAggregateInputType = {
+    id?: true
+    code?: true
+    isUsed?: true
+    createdAt?: true
+    usedAt?: true
+  }
+
+  export type LandlordRegistrationCodeCountAggregateInputType = {
+    id?: true
+    code?: true
+    isUsed?: true
+    createdAt?: true
+    usedAt?: true
+    _all?: true
+  }
+
+  export type LandlordRegistrationCodeAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which LandlordRegistrationCode to aggregate.
+     */
+    where?: LandlordRegistrationCodeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LandlordRegistrationCodes to fetch.
+     */
+    orderBy?: LandlordRegistrationCodeOrderByWithRelationInput | LandlordRegistrationCodeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: LandlordRegistrationCodeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LandlordRegistrationCodes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LandlordRegistrationCodes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned LandlordRegistrationCodes
+    **/
+    _count?: true | LandlordRegistrationCodeCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: LandlordRegistrationCodeAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: LandlordRegistrationCodeSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: LandlordRegistrationCodeMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: LandlordRegistrationCodeMaxAggregateInputType
+  }
+
+  export type GetLandlordRegistrationCodeAggregateType<T extends LandlordRegistrationCodeAggregateArgs> = {
+        [P in keyof T & keyof AggregateLandlordRegistrationCode]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateLandlordRegistrationCode[P]>
+      : GetScalarType<T[P], AggregateLandlordRegistrationCode[P]>
+  }
+
+
+
+
+  export type LandlordRegistrationCodeGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: LandlordRegistrationCodeWhereInput
+    orderBy?: LandlordRegistrationCodeOrderByWithAggregationInput | LandlordRegistrationCodeOrderByWithAggregationInput[]
+    by: LandlordRegistrationCodeScalarFieldEnum[] | LandlordRegistrationCodeScalarFieldEnum
+    having?: LandlordRegistrationCodeScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: LandlordRegistrationCodeCountAggregateInputType | true
+    _avg?: LandlordRegistrationCodeAvgAggregateInputType
+    _sum?: LandlordRegistrationCodeSumAggregateInputType
+    _min?: LandlordRegistrationCodeMinAggregateInputType
+    _max?: LandlordRegistrationCodeMaxAggregateInputType
+  }
+
+  export type LandlordRegistrationCodeGroupByOutputType = {
+    id: number
+    code: string
+    isUsed: boolean
+    createdAt: Date
+    usedAt: Date | null
+    _count: LandlordRegistrationCodeCountAggregateOutputType | null
+    _avg: LandlordRegistrationCodeAvgAggregateOutputType | null
+    _sum: LandlordRegistrationCodeSumAggregateOutputType | null
+    _min: LandlordRegistrationCodeMinAggregateOutputType | null
+    _max: LandlordRegistrationCodeMaxAggregateOutputType | null
+  }
+
+  type GetLandlordRegistrationCodeGroupByPayload<T extends LandlordRegistrationCodeGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<LandlordRegistrationCodeGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof LandlordRegistrationCodeGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], LandlordRegistrationCodeGroupByOutputType[P]>
+            : GetScalarType<T[P], LandlordRegistrationCodeGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type LandlordRegistrationCodeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    code?: boolean
+    isUsed?: boolean
+    createdAt?: boolean
+    usedAt?: boolean
+    landlords?: boolean | LandlordRegistrationCode$landlordsArgs<ExtArgs>
+    _count?: boolean | LandlordRegistrationCodeCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["landlordRegistrationCode"]>
+
+  export type LandlordRegistrationCodeSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    code?: boolean
+    isUsed?: boolean
+    createdAt?: boolean
+    usedAt?: boolean
+  }, ExtArgs["result"]["landlordRegistrationCode"]>
+
+  export type LandlordRegistrationCodeSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    code?: boolean
+    isUsed?: boolean
+    createdAt?: boolean
+    usedAt?: boolean
+  }, ExtArgs["result"]["landlordRegistrationCode"]>
+
+  export type LandlordRegistrationCodeSelectScalar = {
+    id?: boolean
+    code?: boolean
+    isUsed?: boolean
+    createdAt?: boolean
+    usedAt?: boolean
+  }
+
+  export type LandlordRegistrationCodeOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "code" | "isUsed" | "createdAt" | "usedAt", ExtArgs["result"]["landlordRegistrationCode"]>
+  export type LandlordRegistrationCodeInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    landlords?: boolean | LandlordRegistrationCode$landlordsArgs<ExtArgs>
+    _count?: boolean | LandlordRegistrationCodeCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type LandlordRegistrationCodeIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type LandlordRegistrationCodeIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $LandlordRegistrationCodePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "LandlordRegistrationCode"
+    objects: {
+      landlords: Prisma.$LandlordPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      code: string
+      isUsed: boolean
+      createdAt: Date
+      usedAt: Date | null
+    }, ExtArgs["result"]["landlordRegistrationCode"]>
+    composites: {}
+  }
+
+  type LandlordRegistrationCodeGetPayload<S extends boolean | null | undefined | LandlordRegistrationCodeDefaultArgs> = $Result.GetResult<Prisma.$LandlordRegistrationCodePayload, S>
+
+  type LandlordRegistrationCodeCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<LandlordRegistrationCodeFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: LandlordRegistrationCodeCountAggregateInputType | true
+    }
+
+  export interface LandlordRegistrationCodeDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['LandlordRegistrationCode'], meta: { name: 'LandlordRegistrationCode' } }
+    /**
+     * Find zero or one LandlordRegistrationCode that matches the filter.
+     * @param {LandlordRegistrationCodeFindUniqueArgs} args - Arguments to find a LandlordRegistrationCode
+     * @example
+     * // Get one LandlordRegistrationCode
+     * const landlordRegistrationCode = await prisma.landlordRegistrationCode.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends LandlordRegistrationCodeFindUniqueArgs>(args: SelectSubset<T, LandlordRegistrationCodeFindUniqueArgs<ExtArgs>>): Prisma__LandlordRegistrationCodeClient<$Result.GetResult<Prisma.$LandlordRegistrationCodePayload<ExtArgs>, T, "findUnique", ClientOptions> | null, null, ExtArgs, ClientOptions>
+
+    /**
+     * Find one LandlordRegistrationCode that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {LandlordRegistrationCodeFindUniqueOrThrowArgs} args - Arguments to find a LandlordRegistrationCode
+     * @example
+     * // Get one LandlordRegistrationCode
+     * const landlordRegistrationCode = await prisma.landlordRegistrationCode.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends LandlordRegistrationCodeFindUniqueOrThrowArgs>(args: SelectSubset<T, LandlordRegistrationCodeFindUniqueOrThrowArgs<ExtArgs>>): Prisma__LandlordRegistrationCodeClient<$Result.GetResult<Prisma.$LandlordRegistrationCodePayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Find the first LandlordRegistrationCode that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LandlordRegistrationCodeFindFirstArgs} args - Arguments to find a LandlordRegistrationCode
+     * @example
+     * // Get one LandlordRegistrationCode
+     * const landlordRegistrationCode = await prisma.landlordRegistrationCode.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends LandlordRegistrationCodeFindFirstArgs>(args?: SelectSubset<T, LandlordRegistrationCodeFindFirstArgs<ExtArgs>>): Prisma__LandlordRegistrationCodeClient<$Result.GetResult<Prisma.$LandlordRegistrationCodePayload<ExtArgs>, T, "findFirst", ClientOptions> | null, null, ExtArgs, ClientOptions>
+
+    /**
+     * Find the first LandlordRegistrationCode that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LandlordRegistrationCodeFindFirstOrThrowArgs} args - Arguments to find a LandlordRegistrationCode
+     * @example
+     * // Get one LandlordRegistrationCode
+     * const landlordRegistrationCode = await prisma.landlordRegistrationCode.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends LandlordRegistrationCodeFindFirstOrThrowArgs>(args?: SelectSubset<T, LandlordRegistrationCodeFindFirstOrThrowArgs<ExtArgs>>): Prisma__LandlordRegistrationCodeClient<$Result.GetResult<Prisma.$LandlordRegistrationCodePayload<ExtArgs>, T, "findFirstOrThrow", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Find zero or more LandlordRegistrationCodes that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LandlordRegistrationCodeFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all LandlordRegistrationCodes
+     * const landlordRegistrationCodes = await prisma.landlordRegistrationCode.findMany()
+     * 
+     * // Get first 10 LandlordRegistrationCodes
+     * const landlordRegistrationCodes = await prisma.landlordRegistrationCode.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const landlordRegistrationCodeWithIdOnly = await prisma.landlordRegistrationCode.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends LandlordRegistrationCodeFindManyArgs>(args?: SelectSubset<T, LandlordRegistrationCodeFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LandlordRegistrationCodePayload<ExtArgs>, T, "findMany", ClientOptions>>
+
+    /**
+     * Create a LandlordRegistrationCode.
+     * @param {LandlordRegistrationCodeCreateArgs} args - Arguments to create a LandlordRegistrationCode.
+     * @example
+     * // Create one LandlordRegistrationCode
+     * const LandlordRegistrationCode = await prisma.landlordRegistrationCode.create({
+     *   data: {
+     *     // ... data to create a LandlordRegistrationCode
+     *   }
+     * })
+     * 
+     */
+    create<T extends LandlordRegistrationCodeCreateArgs>(args: SelectSubset<T, LandlordRegistrationCodeCreateArgs<ExtArgs>>): Prisma__LandlordRegistrationCodeClient<$Result.GetResult<Prisma.$LandlordRegistrationCodePayload<ExtArgs>, T, "create", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Create many LandlordRegistrationCodes.
+     * @param {LandlordRegistrationCodeCreateManyArgs} args - Arguments to create many LandlordRegistrationCodes.
+     * @example
+     * // Create many LandlordRegistrationCodes
+     * const landlordRegistrationCode = await prisma.landlordRegistrationCode.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends LandlordRegistrationCodeCreateManyArgs>(args?: SelectSubset<T, LandlordRegistrationCodeCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many LandlordRegistrationCodes and returns the data saved in the database.
+     * @param {LandlordRegistrationCodeCreateManyAndReturnArgs} args - Arguments to create many LandlordRegistrationCodes.
+     * @example
+     * // Create many LandlordRegistrationCodes
+     * const landlordRegistrationCode = await prisma.landlordRegistrationCode.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many LandlordRegistrationCodes and only return the `id`
+     * const landlordRegistrationCodeWithIdOnly = await prisma.landlordRegistrationCode.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends LandlordRegistrationCodeCreateManyAndReturnArgs>(args?: SelectSubset<T, LandlordRegistrationCodeCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LandlordRegistrationCodePayload<ExtArgs>, T, "createManyAndReturn", ClientOptions>>
+
+    /**
+     * Delete a LandlordRegistrationCode.
+     * @param {LandlordRegistrationCodeDeleteArgs} args - Arguments to delete one LandlordRegistrationCode.
+     * @example
+     * // Delete one LandlordRegistrationCode
+     * const LandlordRegistrationCode = await prisma.landlordRegistrationCode.delete({
+     *   where: {
+     *     // ... filter to delete one LandlordRegistrationCode
+     *   }
+     * })
+     * 
+     */
+    delete<T extends LandlordRegistrationCodeDeleteArgs>(args: SelectSubset<T, LandlordRegistrationCodeDeleteArgs<ExtArgs>>): Prisma__LandlordRegistrationCodeClient<$Result.GetResult<Prisma.$LandlordRegistrationCodePayload<ExtArgs>, T, "delete", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Update one LandlordRegistrationCode.
+     * @param {LandlordRegistrationCodeUpdateArgs} args - Arguments to update one LandlordRegistrationCode.
+     * @example
+     * // Update one LandlordRegistrationCode
+     * const landlordRegistrationCode = await prisma.landlordRegistrationCode.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends LandlordRegistrationCodeUpdateArgs>(args: SelectSubset<T, LandlordRegistrationCodeUpdateArgs<ExtArgs>>): Prisma__LandlordRegistrationCodeClient<$Result.GetResult<Prisma.$LandlordRegistrationCodePayload<ExtArgs>, T, "update", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Delete zero or more LandlordRegistrationCodes.
+     * @param {LandlordRegistrationCodeDeleteManyArgs} args - Arguments to filter LandlordRegistrationCodes to delete.
+     * @example
+     * // Delete a few LandlordRegistrationCodes
+     * const { count } = await prisma.landlordRegistrationCode.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends LandlordRegistrationCodeDeleteManyArgs>(args?: SelectSubset<T, LandlordRegistrationCodeDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more LandlordRegistrationCodes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LandlordRegistrationCodeUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many LandlordRegistrationCodes
+     * const landlordRegistrationCode = await prisma.landlordRegistrationCode.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends LandlordRegistrationCodeUpdateManyArgs>(args: SelectSubset<T, LandlordRegistrationCodeUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more LandlordRegistrationCodes and returns the data updated in the database.
+     * @param {LandlordRegistrationCodeUpdateManyAndReturnArgs} args - Arguments to update many LandlordRegistrationCodes.
+     * @example
+     * // Update many LandlordRegistrationCodes
+     * const landlordRegistrationCode = await prisma.landlordRegistrationCode.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more LandlordRegistrationCodes and only return the `id`
+     * const landlordRegistrationCodeWithIdOnly = await prisma.landlordRegistrationCode.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends LandlordRegistrationCodeUpdateManyAndReturnArgs>(args: SelectSubset<T, LandlordRegistrationCodeUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LandlordRegistrationCodePayload<ExtArgs>, T, "updateManyAndReturn", ClientOptions>>
+
+    /**
+     * Create or update one LandlordRegistrationCode.
+     * @param {LandlordRegistrationCodeUpsertArgs} args - Arguments to update or create a LandlordRegistrationCode.
+     * @example
+     * // Update or create a LandlordRegistrationCode
+     * const landlordRegistrationCode = await prisma.landlordRegistrationCode.upsert({
+     *   create: {
+     *     // ... data to create a LandlordRegistrationCode
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the LandlordRegistrationCode we want to update
+     *   }
+     * })
+     */
+    upsert<T extends LandlordRegistrationCodeUpsertArgs>(args: SelectSubset<T, LandlordRegistrationCodeUpsertArgs<ExtArgs>>): Prisma__LandlordRegistrationCodeClient<$Result.GetResult<Prisma.$LandlordRegistrationCodePayload<ExtArgs>, T, "upsert", ClientOptions>, never, ExtArgs, ClientOptions>
+
+
+    /**
+     * Count the number of LandlordRegistrationCodes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LandlordRegistrationCodeCountArgs} args - Arguments to filter LandlordRegistrationCodes to count.
+     * @example
+     * // Count the number of LandlordRegistrationCodes
+     * const count = await prisma.landlordRegistrationCode.count({
+     *   where: {
+     *     // ... the filter for the LandlordRegistrationCodes we want to count
+     *   }
+     * })
+    **/
+    count<T extends LandlordRegistrationCodeCountArgs>(
+      args?: Subset<T, LandlordRegistrationCodeCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], LandlordRegistrationCodeCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a LandlordRegistrationCode.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LandlordRegistrationCodeAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends LandlordRegistrationCodeAggregateArgs>(args: Subset<T, LandlordRegistrationCodeAggregateArgs>): Prisma.PrismaPromise<GetLandlordRegistrationCodeAggregateType<T>>
+
+    /**
+     * Group by LandlordRegistrationCode.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LandlordRegistrationCodeGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends LandlordRegistrationCodeGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: LandlordRegistrationCodeGroupByArgs['orderBy'] }
+        : { orderBy?: LandlordRegistrationCodeGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, LandlordRegistrationCodeGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetLandlordRegistrationCodeGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the LandlordRegistrationCode model
+   */
+  readonly fields: LandlordRegistrationCodeFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for LandlordRegistrationCode.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__LandlordRegistrationCodeClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    landlords<T extends LandlordRegistrationCode$landlordsArgs<ExtArgs> = {}>(args?: Subset<T, LandlordRegistrationCode$landlordsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LandlordPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the LandlordRegistrationCode model
+   */ 
+  interface LandlordRegistrationCodeFieldRefs {
+    readonly id: FieldRef<"LandlordRegistrationCode", 'Int'>
+    readonly code: FieldRef<"LandlordRegistrationCode", 'String'>
+    readonly isUsed: FieldRef<"LandlordRegistrationCode", 'Boolean'>
+    readonly createdAt: FieldRef<"LandlordRegistrationCode", 'DateTime'>
+    readonly usedAt: FieldRef<"LandlordRegistrationCode", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * LandlordRegistrationCode findUnique
+   */
+  export type LandlordRegistrationCodeFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LandlordRegistrationCode
+     */
+    select?: LandlordRegistrationCodeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LandlordRegistrationCode
+     */
+    omit?: LandlordRegistrationCodeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LandlordRegistrationCodeInclude<ExtArgs> | null
+    /**
+     * Filter, which LandlordRegistrationCode to fetch.
+     */
+    where: LandlordRegistrationCodeWhereUniqueInput
+  }
+
+  /**
+   * LandlordRegistrationCode findUniqueOrThrow
+   */
+  export type LandlordRegistrationCodeFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LandlordRegistrationCode
+     */
+    select?: LandlordRegistrationCodeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LandlordRegistrationCode
+     */
+    omit?: LandlordRegistrationCodeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LandlordRegistrationCodeInclude<ExtArgs> | null
+    /**
+     * Filter, which LandlordRegistrationCode to fetch.
+     */
+    where: LandlordRegistrationCodeWhereUniqueInput
+  }
+
+  /**
+   * LandlordRegistrationCode findFirst
+   */
+  export type LandlordRegistrationCodeFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LandlordRegistrationCode
+     */
+    select?: LandlordRegistrationCodeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LandlordRegistrationCode
+     */
+    omit?: LandlordRegistrationCodeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LandlordRegistrationCodeInclude<ExtArgs> | null
+    /**
+     * Filter, which LandlordRegistrationCode to fetch.
+     */
+    where?: LandlordRegistrationCodeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LandlordRegistrationCodes to fetch.
+     */
+    orderBy?: LandlordRegistrationCodeOrderByWithRelationInput | LandlordRegistrationCodeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for LandlordRegistrationCodes.
+     */
+    cursor?: LandlordRegistrationCodeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LandlordRegistrationCodes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LandlordRegistrationCodes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of LandlordRegistrationCodes.
+     */
+    distinct?: LandlordRegistrationCodeScalarFieldEnum | LandlordRegistrationCodeScalarFieldEnum[]
+  }
+
+  /**
+   * LandlordRegistrationCode findFirstOrThrow
+   */
+  export type LandlordRegistrationCodeFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LandlordRegistrationCode
+     */
+    select?: LandlordRegistrationCodeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LandlordRegistrationCode
+     */
+    omit?: LandlordRegistrationCodeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LandlordRegistrationCodeInclude<ExtArgs> | null
+    /**
+     * Filter, which LandlordRegistrationCode to fetch.
+     */
+    where?: LandlordRegistrationCodeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LandlordRegistrationCodes to fetch.
+     */
+    orderBy?: LandlordRegistrationCodeOrderByWithRelationInput | LandlordRegistrationCodeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for LandlordRegistrationCodes.
+     */
+    cursor?: LandlordRegistrationCodeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LandlordRegistrationCodes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LandlordRegistrationCodes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of LandlordRegistrationCodes.
+     */
+    distinct?: LandlordRegistrationCodeScalarFieldEnum | LandlordRegistrationCodeScalarFieldEnum[]
+  }
+
+  /**
+   * LandlordRegistrationCode findMany
+   */
+  export type LandlordRegistrationCodeFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LandlordRegistrationCode
+     */
+    select?: LandlordRegistrationCodeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LandlordRegistrationCode
+     */
+    omit?: LandlordRegistrationCodeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LandlordRegistrationCodeInclude<ExtArgs> | null
+    /**
+     * Filter, which LandlordRegistrationCodes to fetch.
+     */
+    where?: LandlordRegistrationCodeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LandlordRegistrationCodes to fetch.
+     */
+    orderBy?: LandlordRegistrationCodeOrderByWithRelationInput | LandlordRegistrationCodeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing LandlordRegistrationCodes.
+     */
+    cursor?: LandlordRegistrationCodeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LandlordRegistrationCodes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LandlordRegistrationCodes.
+     */
+    skip?: number
+    distinct?: LandlordRegistrationCodeScalarFieldEnum | LandlordRegistrationCodeScalarFieldEnum[]
+  }
+
+  /**
+   * LandlordRegistrationCode create
+   */
+  export type LandlordRegistrationCodeCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LandlordRegistrationCode
+     */
+    select?: LandlordRegistrationCodeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LandlordRegistrationCode
+     */
+    omit?: LandlordRegistrationCodeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LandlordRegistrationCodeInclude<ExtArgs> | null
+    /**
+     * The data needed to create a LandlordRegistrationCode.
+     */
+    data: XOR<LandlordRegistrationCodeCreateInput, LandlordRegistrationCodeUncheckedCreateInput>
+  }
+
+  /**
+   * LandlordRegistrationCode createMany
+   */
+  export type LandlordRegistrationCodeCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many LandlordRegistrationCodes.
+     */
+    data: LandlordRegistrationCodeCreateManyInput | LandlordRegistrationCodeCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * LandlordRegistrationCode createManyAndReturn
+   */
+  export type LandlordRegistrationCodeCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LandlordRegistrationCode
+     */
+    select?: LandlordRegistrationCodeSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the LandlordRegistrationCode
+     */
+    omit?: LandlordRegistrationCodeOmit<ExtArgs> | null
+    /**
+     * The data used to create many LandlordRegistrationCodes.
+     */
+    data: LandlordRegistrationCodeCreateManyInput | LandlordRegistrationCodeCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * LandlordRegistrationCode update
+   */
+  export type LandlordRegistrationCodeUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LandlordRegistrationCode
+     */
+    select?: LandlordRegistrationCodeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LandlordRegistrationCode
+     */
+    omit?: LandlordRegistrationCodeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LandlordRegistrationCodeInclude<ExtArgs> | null
+    /**
+     * The data needed to update a LandlordRegistrationCode.
+     */
+    data: XOR<LandlordRegistrationCodeUpdateInput, LandlordRegistrationCodeUncheckedUpdateInput>
+    /**
+     * Choose, which LandlordRegistrationCode to update.
+     */
+    where: LandlordRegistrationCodeWhereUniqueInput
+  }
+
+  /**
+   * LandlordRegistrationCode updateMany
+   */
+  export type LandlordRegistrationCodeUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update LandlordRegistrationCodes.
+     */
+    data: XOR<LandlordRegistrationCodeUpdateManyMutationInput, LandlordRegistrationCodeUncheckedUpdateManyInput>
+    /**
+     * Filter which LandlordRegistrationCodes to update
+     */
+    where?: LandlordRegistrationCodeWhereInput
+    /**
+     * Limit how many LandlordRegistrationCodes to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * LandlordRegistrationCode updateManyAndReturn
+   */
+  export type LandlordRegistrationCodeUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LandlordRegistrationCode
+     */
+    select?: LandlordRegistrationCodeSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the LandlordRegistrationCode
+     */
+    omit?: LandlordRegistrationCodeOmit<ExtArgs> | null
+    /**
+     * The data used to update LandlordRegistrationCodes.
+     */
+    data: XOR<LandlordRegistrationCodeUpdateManyMutationInput, LandlordRegistrationCodeUncheckedUpdateManyInput>
+    /**
+     * Filter which LandlordRegistrationCodes to update
+     */
+    where?: LandlordRegistrationCodeWhereInput
+    /**
+     * Limit how many LandlordRegistrationCodes to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * LandlordRegistrationCode upsert
+   */
+  export type LandlordRegistrationCodeUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LandlordRegistrationCode
+     */
+    select?: LandlordRegistrationCodeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LandlordRegistrationCode
+     */
+    omit?: LandlordRegistrationCodeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LandlordRegistrationCodeInclude<ExtArgs> | null
+    /**
+     * The filter to search for the LandlordRegistrationCode to update in case it exists.
+     */
+    where: LandlordRegistrationCodeWhereUniqueInput
+    /**
+     * In case the LandlordRegistrationCode found by the `where` argument doesn't exist, create a new LandlordRegistrationCode with this data.
+     */
+    create: XOR<LandlordRegistrationCodeCreateInput, LandlordRegistrationCodeUncheckedCreateInput>
+    /**
+     * In case the LandlordRegistrationCode was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<LandlordRegistrationCodeUpdateInput, LandlordRegistrationCodeUncheckedUpdateInput>
+  }
+
+  /**
+   * LandlordRegistrationCode delete
+   */
+  export type LandlordRegistrationCodeDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LandlordRegistrationCode
+     */
+    select?: LandlordRegistrationCodeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LandlordRegistrationCode
+     */
+    omit?: LandlordRegistrationCodeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LandlordRegistrationCodeInclude<ExtArgs> | null
+    /**
+     * Filter which LandlordRegistrationCode to delete.
+     */
+    where: LandlordRegistrationCodeWhereUniqueInput
+  }
+
+  /**
+   * LandlordRegistrationCode deleteMany
+   */
+  export type LandlordRegistrationCodeDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which LandlordRegistrationCodes to delete
+     */
+    where?: LandlordRegistrationCodeWhereInput
+    /**
+     * Limit how many LandlordRegistrationCodes to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * LandlordRegistrationCode.landlords
+   */
+  export type LandlordRegistrationCode$landlordsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the Landlord
      */
@@ -7906,24 +9593,2307 @@ export namespace Prisma {
      */
     include?: LandlordInclude<ExtArgs> | null
     where?: LandlordWhereInput
+    orderBy?: LandlordOrderByWithRelationInput | LandlordOrderByWithRelationInput[]
+    cursor?: LandlordWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: LandlordScalarFieldEnum | LandlordScalarFieldEnum[]
   }
 
   /**
-   * LandlordRegistrationToken without action
+   * LandlordRegistrationCode without action
    */
-  export type LandlordRegistrationTokenDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type LandlordRegistrationCodeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the LandlordRegistrationToken
+     * Select specific fields to fetch from the LandlordRegistrationCode
      */
-    select?: LandlordRegistrationTokenSelect<ExtArgs> | null
+    select?: LandlordRegistrationCodeSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the LandlordRegistrationToken
+     * Omit specific fields from the LandlordRegistrationCode
      */
-    omit?: LandlordRegistrationTokenOmit<ExtArgs> | null
+    omit?: LandlordRegistrationCodeOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: LandlordRegistrationTokenInclude<ExtArgs> | null
+    include?: LandlordRegistrationCodeInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model AgentRegistrationCode
+   */
+
+  export type AggregateAgentRegistrationCode = {
+    _count: AgentRegistrationCodeCountAggregateOutputType | null
+    _avg: AgentRegistrationCodeAvgAggregateOutputType | null
+    _sum: AgentRegistrationCodeSumAggregateOutputType | null
+    _min: AgentRegistrationCodeMinAggregateOutputType | null
+    _max: AgentRegistrationCodeMaxAggregateOutputType | null
+  }
+
+  export type AgentRegistrationCodeAvgAggregateOutputType = {
+    id: number | null
+  }
+
+  export type AgentRegistrationCodeSumAggregateOutputType = {
+    id: number | null
+  }
+
+  export type AgentRegistrationCodeMinAggregateOutputType = {
+    id: number | null
+    code: string | null
+    isUsed: boolean | null
+    createdAt: Date | null
+    usedAt: Date | null
+    assignedBy: string | null
+  }
+
+  export type AgentRegistrationCodeMaxAggregateOutputType = {
+    id: number | null
+    code: string | null
+    isUsed: boolean | null
+    createdAt: Date | null
+    usedAt: Date | null
+    assignedBy: string | null
+  }
+
+  export type AgentRegistrationCodeCountAggregateOutputType = {
+    id: number
+    code: number
+    isUsed: number
+    createdAt: number
+    usedAt: number
+    assignedBy: number
+    _all: number
+  }
+
+
+  export type AgentRegistrationCodeAvgAggregateInputType = {
+    id?: true
+  }
+
+  export type AgentRegistrationCodeSumAggregateInputType = {
+    id?: true
+  }
+
+  export type AgentRegistrationCodeMinAggregateInputType = {
+    id?: true
+    code?: true
+    isUsed?: true
+    createdAt?: true
+    usedAt?: true
+    assignedBy?: true
+  }
+
+  export type AgentRegistrationCodeMaxAggregateInputType = {
+    id?: true
+    code?: true
+    isUsed?: true
+    createdAt?: true
+    usedAt?: true
+    assignedBy?: true
+  }
+
+  export type AgentRegistrationCodeCountAggregateInputType = {
+    id?: true
+    code?: true
+    isUsed?: true
+    createdAt?: true
+    usedAt?: true
+    assignedBy?: true
+    _all?: true
+  }
+
+  export type AgentRegistrationCodeAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AgentRegistrationCode to aggregate.
+     */
+    where?: AgentRegistrationCodeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AgentRegistrationCodes to fetch.
+     */
+    orderBy?: AgentRegistrationCodeOrderByWithRelationInput | AgentRegistrationCodeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: AgentRegistrationCodeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AgentRegistrationCodes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AgentRegistrationCodes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned AgentRegistrationCodes
+    **/
+    _count?: true | AgentRegistrationCodeCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: AgentRegistrationCodeAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: AgentRegistrationCodeSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: AgentRegistrationCodeMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: AgentRegistrationCodeMaxAggregateInputType
+  }
+
+  export type GetAgentRegistrationCodeAggregateType<T extends AgentRegistrationCodeAggregateArgs> = {
+        [P in keyof T & keyof AggregateAgentRegistrationCode]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateAgentRegistrationCode[P]>
+      : GetScalarType<T[P], AggregateAgentRegistrationCode[P]>
+  }
+
+
+
+
+  export type AgentRegistrationCodeGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AgentRegistrationCodeWhereInput
+    orderBy?: AgentRegistrationCodeOrderByWithAggregationInput | AgentRegistrationCodeOrderByWithAggregationInput[]
+    by: AgentRegistrationCodeScalarFieldEnum[] | AgentRegistrationCodeScalarFieldEnum
+    having?: AgentRegistrationCodeScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: AgentRegistrationCodeCountAggregateInputType | true
+    _avg?: AgentRegistrationCodeAvgAggregateInputType
+    _sum?: AgentRegistrationCodeSumAggregateInputType
+    _min?: AgentRegistrationCodeMinAggregateInputType
+    _max?: AgentRegistrationCodeMaxAggregateInputType
+  }
+
+  export type AgentRegistrationCodeGroupByOutputType = {
+    id: number
+    code: string
+    isUsed: boolean
+    createdAt: Date
+    usedAt: Date | null
+    assignedBy: string | null
+    _count: AgentRegistrationCodeCountAggregateOutputType | null
+    _avg: AgentRegistrationCodeAvgAggregateOutputType | null
+    _sum: AgentRegistrationCodeSumAggregateOutputType | null
+    _min: AgentRegistrationCodeMinAggregateOutputType | null
+    _max: AgentRegistrationCodeMaxAggregateOutputType | null
+  }
+
+  type GetAgentRegistrationCodeGroupByPayload<T extends AgentRegistrationCodeGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<AgentRegistrationCodeGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof AgentRegistrationCodeGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], AgentRegistrationCodeGroupByOutputType[P]>
+            : GetScalarType<T[P], AgentRegistrationCodeGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type AgentRegistrationCodeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    code?: boolean
+    isUsed?: boolean
+    createdAt?: boolean
+    usedAt?: boolean
+    assignedBy?: boolean
+    agents?: boolean | AgentRegistrationCode$agentsArgs<ExtArgs>
+    _count?: boolean | AgentRegistrationCodeCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["agentRegistrationCode"]>
+
+  export type AgentRegistrationCodeSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    code?: boolean
+    isUsed?: boolean
+    createdAt?: boolean
+    usedAt?: boolean
+    assignedBy?: boolean
+  }, ExtArgs["result"]["agentRegistrationCode"]>
+
+  export type AgentRegistrationCodeSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    code?: boolean
+    isUsed?: boolean
+    createdAt?: boolean
+    usedAt?: boolean
+    assignedBy?: boolean
+  }, ExtArgs["result"]["agentRegistrationCode"]>
+
+  export type AgentRegistrationCodeSelectScalar = {
+    id?: boolean
+    code?: boolean
+    isUsed?: boolean
+    createdAt?: boolean
+    usedAt?: boolean
+    assignedBy?: boolean
+  }
+
+  export type AgentRegistrationCodeOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "code" | "isUsed" | "createdAt" | "usedAt" | "assignedBy", ExtArgs["result"]["agentRegistrationCode"]>
+  export type AgentRegistrationCodeInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    agents?: boolean | AgentRegistrationCode$agentsArgs<ExtArgs>
+    _count?: boolean | AgentRegistrationCodeCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type AgentRegistrationCodeIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type AgentRegistrationCodeIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $AgentRegistrationCodePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "AgentRegistrationCode"
+    objects: {
+      agents: Prisma.$AgentPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      code: string
+      isUsed: boolean
+      createdAt: Date
+      usedAt: Date | null
+      assignedBy: string | null
+    }, ExtArgs["result"]["agentRegistrationCode"]>
+    composites: {}
+  }
+
+  type AgentRegistrationCodeGetPayload<S extends boolean | null | undefined | AgentRegistrationCodeDefaultArgs> = $Result.GetResult<Prisma.$AgentRegistrationCodePayload, S>
+
+  type AgentRegistrationCodeCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<AgentRegistrationCodeFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: AgentRegistrationCodeCountAggregateInputType | true
+    }
+
+  export interface AgentRegistrationCodeDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['AgentRegistrationCode'], meta: { name: 'AgentRegistrationCode' } }
+    /**
+     * Find zero or one AgentRegistrationCode that matches the filter.
+     * @param {AgentRegistrationCodeFindUniqueArgs} args - Arguments to find a AgentRegistrationCode
+     * @example
+     * // Get one AgentRegistrationCode
+     * const agentRegistrationCode = await prisma.agentRegistrationCode.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends AgentRegistrationCodeFindUniqueArgs>(args: SelectSubset<T, AgentRegistrationCodeFindUniqueArgs<ExtArgs>>): Prisma__AgentRegistrationCodeClient<$Result.GetResult<Prisma.$AgentRegistrationCodePayload<ExtArgs>, T, "findUnique", ClientOptions> | null, null, ExtArgs, ClientOptions>
+
+    /**
+     * Find one AgentRegistrationCode that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {AgentRegistrationCodeFindUniqueOrThrowArgs} args - Arguments to find a AgentRegistrationCode
+     * @example
+     * // Get one AgentRegistrationCode
+     * const agentRegistrationCode = await prisma.agentRegistrationCode.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends AgentRegistrationCodeFindUniqueOrThrowArgs>(args: SelectSubset<T, AgentRegistrationCodeFindUniqueOrThrowArgs<ExtArgs>>): Prisma__AgentRegistrationCodeClient<$Result.GetResult<Prisma.$AgentRegistrationCodePayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Find the first AgentRegistrationCode that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AgentRegistrationCodeFindFirstArgs} args - Arguments to find a AgentRegistrationCode
+     * @example
+     * // Get one AgentRegistrationCode
+     * const agentRegistrationCode = await prisma.agentRegistrationCode.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends AgentRegistrationCodeFindFirstArgs>(args?: SelectSubset<T, AgentRegistrationCodeFindFirstArgs<ExtArgs>>): Prisma__AgentRegistrationCodeClient<$Result.GetResult<Prisma.$AgentRegistrationCodePayload<ExtArgs>, T, "findFirst", ClientOptions> | null, null, ExtArgs, ClientOptions>
+
+    /**
+     * Find the first AgentRegistrationCode that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AgentRegistrationCodeFindFirstOrThrowArgs} args - Arguments to find a AgentRegistrationCode
+     * @example
+     * // Get one AgentRegistrationCode
+     * const agentRegistrationCode = await prisma.agentRegistrationCode.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends AgentRegistrationCodeFindFirstOrThrowArgs>(args?: SelectSubset<T, AgentRegistrationCodeFindFirstOrThrowArgs<ExtArgs>>): Prisma__AgentRegistrationCodeClient<$Result.GetResult<Prisma.$AgentRegistrationCodePayload<ExtArgs>, T, "findFirstOrThrow", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Find zero or more AgentRegistrationCodes that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AgentRegistrationCodeFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all AgentRegistrationCodes
+     * const agentRegistrationCodes = await prisma.agentRegistrationCode.findMany()
+     * 
+     * // Get first 10 AgentRegistrationCodes
+     * const agentRegistrationCodes = await prisma.agentRegistrationCode.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const agentRegistrationCodeWithIdOnly = await prisma.agentRegistrationCode.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends AgentRegistrationCodeFindManyArgs>(args?: SelectSubset<T, AgentRegistrationCodeFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AgentRegistrationCodePayload<ExtArgs>, T, "findMany", ClientOptions>>
+
+    /**
+     * Create a AgentRegistrationCode.
+     * @param {AgentRegistrationCodeCreateArgs} args - Arguments to create a AgentRegistrationCode.
+     * @example
+     * // Create one AgentRegistrationCode
+     * const AgentRegistrationCode = await prisma.agentRegistrationCode.create({
+     *   data: {
+     *     // ... data to create a AgentRegistrationCode
+     *   }
+     * })
+     * 
+     */
+    create<T extends AgentRegistrationCodeCreateArgs>(args: SelectSubset<T, AgentRegistrationCodeCreateArgs<ExtArgs>>): Prisma__AgentRegistrationCodeClient<$Result.GetResult<Prisma.$AgentRegistrationCodePayload<ExtArgs>, T, "create", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Create many AgentRegistrationCodes.
+     * @param {AgentRegistrationCodeCreateManyArgs} args - Arguments to create many AgentRegistrationCodes.
+     * @example
+     * // Create many AgentRegistrationCodes
+     * const agentRegistrationCode = await prisma.agentRegistrationCode.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends AgentRegistrationCodeCreateManyArgs>(args?: SelectSubset<T, AgentRegistrationCodeCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many AgentRegistrationCodes and returns the data saved in the database.
+     * @param {AgentRegistrationCodeCreateManyAndReturnArgs} args - Arguments to create many AgentRegistrationCodes.
+     * @example
+     * // Create many AgentRegistrationCodes
+     * const agentRegistrationCode = await prisma.agentRegistrationCode.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many AgentRegistrationCodes and only return the `id`
+     * const agentRegistrationCodeWithIdOnly = await prisma.agentRegistrationCode.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends AgentRegistrationCodeCreateManyAndReturnArgs>(args?: SelectSubset<T, AgentRegistrationCodeCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AgentRegistrationCodePayload<ExtArgs>, T, "createManyAndReturn", ClientOptions>>
+
+    /**
+     * Delete a AgentRegistrationCode.
+     * @param {AgentRegistrationCodeDeleteArgs} args - Arguments to delete one AgentRegistrationCode.
+     * @example
+     * // Delete one AgentRegistrationCode
+     * const AgentRegistrationCode = await prisma.agentRegistrationCode.delete({
+     *   where: {
+     *     // ... filter to delete one AgentRegistrationCode
+     *   }
+     * })
+     * 
+     */
+    delete<T extends AgentRegistrationCodeDeleteArgs>(args: SelectSubset<T, AgentRegistrationCodeDeleteArgs<ExtArgs>>): Prisma__AgentRegistrationCodeClient<$Result.GetResult<Prisma.$AgentRegistrationCodePayload<ExtArgs>, T, "delete", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Update one AgentRegistrationCode.
+     * @param {AgentRegistrationCodeUpdateArgs} args - Arguments to update one AgentRegistrationCode.
+     * @example
+     * // Update one AgentRegistrationCode
+     * const agentRegistrationCode = await prisma.agentRegistrationCode.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends AgentRegistrationCodeUpdateArgs>(args: SelectSubset<T, AgentRegistrationCodeUpdateArgs<ExtArgs>>): Prisma__AgentRegistrationCodeClient<$Result.GetResult<Prisma.$AgentRegistrationCodePayload<ExtArgs>, T, "update", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Delete zero or more AgentRegistrationCodes.
+     * @param {AgentRegistrationCodeDeleteManyArgs} args - Arguments to filter AgentRegistrationCodes to delete.
+     * @example
+     * // Delete a few AgentRegistrationCodes
+     * const { count } = await prisma.agentRegistrationCode.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends AgentRegistrationCodeDeleteManyArgs>(args?: SelectSubset<T, AgentRegistrationCodeDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AgentRegistrationCodes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AgentRegistrationCodeUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many AgentRegistrationCodes
+     * const agentRegistrationCode = await prisma.agentRegistrationCode.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends AgentRegistrationCodeUpdateManyArgs>(args: SelectSubset<T, AgentRegistrationCodeUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AgentRegistrationCodes and returns the data updated in the database.
+     * @param {AgentRegistrationCodeUpdateManyAndReturnArgs} args - Arguments to update many AgentRegistrationCodes.
+     * @example
+     * // Update many AgentRegistrationCodes
+     * const agentRegistrationCode = await prisma.agentRegistrationCode.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more AgentRegistrationCodes and only return the `id`
+     * const agentRegistrationCodeWithIdOnly = await prisma.agentRegistrationCode.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends AgentRegistrationCodeUpdateManyAndReturnArgs>(args: SelectSubset<T, AgentRegistrationCodeUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AgentRegistrationCodePayload<ExtArgs>, T, "updateManyAndReturn", ClientOptions>>
+
+    /**
+     * Create or update one AgentRegistrationCode.
+     * @param {AgentRegistrationCodeUpsertArgs} args - Arguments to update or create a AgentRegistrationCode.
+     * @example
+     * // Update or create a AgentRegistrationCode
+     * const agentRegistrationCode = await prisma.agentRegistrationCode.upsert({
+     *   create: {
+     *     // ... data to create a AgentRegistrationCode
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the AgentRegistrationCode we want to update
+     *   }
+     * })
+     */
+    upsert<T extends AgentRegistrationCodeUpsertArgs>(args: SelectSubset<T, AgentRegistrationCodeUpsertArgs<ExtArgs>>): Prisma__AgentRegistrationCodeClient<$Result.GetResult<Prisma.$AgentRegistrationCodePayload<ExtArgs>, T, "upsert", ClientOptions>, never, ExtArgs, ClientOptions>
+
+
+    /**
+     * Count the number of AgentRegistrationCodes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AgentRegistrationCodeCountArgs} args - Arguments to filter AgentRegistrationCodes to count.
+     * @example
+     * // Count the number of AgentRegistrationCodes
+     * const count = await prisma.agentRegistrationCode.count({
+     *   where: {
+     *     // ... the filter for the AgentRegistrationCodes we want to count
+     *   }
+     * })
+    **/
+    count<T extends AgentRegistrationCodeCountArgs>(
+      args?: Subset<T, AgentRegistrationCodeCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], AgentRegistrationCodeCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a AgentRegistrationCode.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AgentRegistrationCodeAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends AgentRegistrationCodeAggregateArgs>(args: Subset<T, AgentRegistrationCodeAggregateArgs>): Prisma.PrismaPromise<GetAgentRegistrationCodeAggregateType<T>>
+
+    /**
+     * Group by AgentRegistrationCode.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AgentRegistrationCodeGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends AgentRegistrationCodeGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: AgentRegistrationCodeGroupByArgs['orderBy'] }
+        : { orderBy?: AgentRegistrationCodeGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, AgentRegistrationCodeGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAgentRegistrationCodeGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the AgentRegistrationCode model
+   */
+  readonly fields: AgentRegistrationCodeFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for AgentRegistrationCode.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__AgentRegistrationCodeClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    agents<T extends AgentRegistrationCode$agentsArgs<ExtArgs> = {}>(args?: Subset<T, AgentRegistrationCode$agentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AgentPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the AgentRegistrationCode model
+   */ 
+  interface AgentRegistrationCodeFieldRefs {
+    readonly id: FieldRef<"AgentRegistrationCode", 'Int'>
+    readonly code: FieldRef<"AgentRegistrationCode", 'String'>
+    readonly isUsed: FieldRef<"AgentRegistrationCode", 'Boolean'>
+    readonly createdAt: FieldRef<"AgentRegistrationCode", 'DateTime'>
+    readonly usedAt: FieldRef<"AgentRegistrationCode", 'DateTime'>
+    readonly assignedBy: FieldRef<"AgentRegistrationCode", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * AgentRegistrationCode findUnique
+   */
+  export type AgentRegistrationCodeFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AgentRegistrationCode
+     */
+    select?: AgentRegistrationCodeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AgentRegistrationCode
+     */
+    omit?: AgentRegistrationCodeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AgentRegistrationCodeInclude<ExtArgs> | null
+    /**
+     * Filter, which AgentRegistrationCode to fetch.
+     */
+    where: AgentRegistrationCodeWhereUniqueInput
+  }
+
+  /**
+   * AgentRegistrationCode findUniqueOrThrow
+   */
+  export type AgentRegistrationCodeFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AgentRegistrationCode
+     */
+    select?: AgentRegistrationCodeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AgentRegistrationCode
+     */
+    omit?: AgentRegistrationCodeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AgentRegistrationCodeInclude<ExtArgs> | null
+    /**
+     * Filter, which AgentRegistrationCode to fetch.
+     */
+    where: AgentRegistrationCodeWhereUniqueInput
+  }
+
+  /**
+   * AgentRegistrationCode findFirst
+   */
+  export type AgentRegistrationCodeFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AgentRegistrationCode
+     */
+    select?: AgentRegistrationCodeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AgentRegistrationCode
+     */
+    omit?: AgentRegistrationCodeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AgentRegistrationCodeInclude<ExtArgs> | null
+    /**
+     * Filter, which AgentRegistrationCode to fetch.
+     */
+    where?: AgentRegistrationCodeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AgentRegistrationCodes to fetch.
+     */
+    orderBy?: AgentRegistrationCodeOrderByWithRelationInput | AgentRegistrationCodeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AgentRegistrationCodes.
+     */
+    cursor?: AgentRegistrationCodeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AgentRegistrationCodes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AgentRegistrationCodes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AgentRegistrationCodes.
+     */
+    distinct?: AgentRegistrationCodeScalarFieldEnum | AgentRegistrationCodeScalarFieldEnum[]
+  }
+
+  /**
+   * AgentRegistrationCode findFirstOrThrow
+   */
+  export type AgentRegistrationCodeFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AgentRegistrationCode
+     */
+    select?: AgentRegistrationCodeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AgentRegistrationCode
+     */
+    omit?: AgentRegistrationCodeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AgentRegistrationCodeInclude<ExtArgs> | null
+    /**
+     * Filter, which AgentRegistrationCode to fetch.
+     */
+    where?: AgentRegistrationCodeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AgentRegistrationCodes to fetch.
+     */
+    orderBy?: AgentRegistrationCodeOrderByWithRelationInput | AgentRegistrationCodeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AgentRegistrationCodes.
+     */
+    cursor?: AgentRegistrationCodeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AgentRegistrationCodes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AgentRegistrationCodes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AgentRegistrationCodes.
+     */
+    distinct?: AgentRegistrationCodeScalarFieldEnum | AgentRegistrationCodeScalarFieldEnum[]
+  }
+
+  /**
+   * AgentRegistrationCode findMany
+   */
+  export type AgentRegistrationCodeFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AgentRegistrationCode
+     */
+    select?: AgentRegistrationCodeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AgentRegistrationCode
+     */
+    omit?: AgentRegistrationCodeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AgentRegistrationCodeInclude<ExtArgs> | null
+    /**
+     * Filter, which AgentRegistrationCodes to fetch.
+     */
+    where?: AgentRegistrationCodeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AgentRegistrationCodes to fetch.
+     */
+    orderBy?: AgentRegistrationCodeOrderByWithRelationInput | AgentRegistrationCodeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing AgentRegistrationCodes.
+     */
+    cursor?: AgentRegistrationCodeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AgentRegistrationCodes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AgentRegistrationCodes.
+     */
+    skip?: number
+    distinct?: AgentRegistrationCodeScalarFieldEnum | AgentRegistrationCodeScalarFieldEnum[]
+  }
+
+  /**
+   * AgentRegistrationCode create
+   */
+  export type AgentRegistrationCodeCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AgentRegistrationCode
+     */
+    select?: AgentRegistrationCodeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AgentRegistrationCode
+     */
+    omit?: AgentRegistrationCodeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AgentRegistrationCodeInclude<ExtArgs> | null
+    /**
+     * The data needed to create a AgentRegistrationCode.
+     */
+    data: XOR<AgentRegistrationCodeCreateInput, AgentRegistrationCodeUncheckedCreateInput>
+  }
+
+  /**
+   * AgentRegistrationCode createMany
+   */
+  export type AgentRegistrationCodeCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many AgentRegistrationCodes.
+     */
+    data: AgentRegistrationCodeCreateManyInput | AgentRegistrationCodeCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * AgentRegistrationCode createManyAndReturn
+   */
+  export type AgentRegistrationCodeCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AgentRegistrationCode
+     */
+    select?: AgentRegistrationCodeSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AgentRegistrationCode
+     */
+    omit?: AgentRegistrationCodeOmit<ExtArgs> | null
+    /**
+     * The data used to create many AgentRegistrationCodes.
+     */
+    data: AgentRegistrationCodeCreateManyInput | AgentRegistrationCodeCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * AgentRegistrationCode update
+   */
+  export type AgentRegistrationCodeUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AgentRegistrationCode
+     */
+    select?: AgentRegistrationCodeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AgentRegistrationCode
+     */
+    omit?: AgentRegistrationCodeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AgentRegistrationCodeInclude<ExtArgs> | null
+    /**
+     * The data needed to update a AgentRegistrationCode.
+     */
+    data: XOR<AgentRegistrationCodeUpdateInput, AgentRegistrationCodeUncheckedUpdateInput>
+    /**
+     * Choose, which AgentRegistrationCode to update.
+     */
+    where: AgentRegistrationCodeWhereUniqueInput
+  }
+
+  /**
+   * AgentRegistrationCode updateMany
+   */
+  export type AgentRegistrationCodeUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update AgentRegistrationCodes.
+     */
+    data: XOR<AgentRegistrationCodeUpdateManyMutationInput, AgentRegistrationCodeUncheckedUpdateManyInput>
+    /**
+     * Filter which AgentRegistrationCodes to update
+     */
+    where?: AgentRegistrationCodeWhereInput
+    /**
+     * Limit how many AgentRegistrationCodes to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * AgentRegistrationCode updateManyAndReturn
+   */
+  export type AgentRegistrationCodeUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AgentRegistrationCode
+     */
+    select?: AgentRegistrationCodeSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AgentRegistrationCode
+     */
+    omit?: AgentRegistrationCodeOmit<ExtArgs> | null
+    /**
+     * The data used to update AgentRegistrationCodes.
+     */
+    data: XOR<AgentRegistrationCodeUpdateManyMutationInput, AgentRegistrationCodeUncheckedUpdateManyInput>
+    /**
+     * Filter which AgentRegistrationCodes to update
+     */
+    where?: AgentRegistrationCodeWhereInput
+    /**
+     * Limit how many AgentRegistrationCodes to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * AgentRegistrationCode upsert
+   */
+  export type AgentRegistrationCodeUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AgentRegistrationCode
+     */
+    select?: AgentRegistrationCodeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AgentRegistrationCode
+     */
+    omit?: AgentRegistrationCodeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AgentRegistrationCodeInclude<ExtArgs> | null
+    /**
+     * The filter to search for the AgentRegistrationCode to update in case it exists.
+     */
+    where: AgentRegistrationCodeWhereUniqueInput
+    /**
+     * In case the AgentRegistrationCode found by the `where` argument doesn't exist, create a new AgentRegistrationCode with this data.
+     */
+    create: XOR<AgentRegistrationCodeCreateInput, AgentRegistrationCodeUncheckedCreateInput>
+    /**
+     * In case the AgentRegistrationCode was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<AgentRegistrationCodeUpdateInput, AgentRegistrationCodeUncheckedUpdateInput>
+  }
+
+  /**
+   * AgentRegistrationCode delete
+   */
+  export type AgentRegistrationCodeDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AgentRegistrationCode
+     */
+    select?: AgentRegistrationCodeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AgentRegistrationCode
+     */
+    omit?: AgentRegistrationCodeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AgentRegistrationCodeInclude<ExtArgs> | null
+    /**
+     * Filter which AgentRegistrationCode to delete.
+     */
+    where: AgentRegistrationCodeWhereUniqueInput
+  }
+
+  /**
+   * AgentRegistrationCode deleteMany
+   */
+  export type AgentRegistrationCodeDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AgentRegistrationCodes to delete
+     */
+    where?: AgentRegistrationCodeWhereInput
+    /**
+     * Limit how many AgentRegistrationCodes to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * AgentRegistrationCode.agents
+   */
+  export type AgentRegistrationCode$agentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Agent
+     */
+    select?: AgentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Agent
+     */
+    omit?: AgentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AgentInclude<ExtArgs> | null
+    where?: AgentWhereInput
+    orderBy?: AgentOrderByWithRelationInput | AgentOrderByWithRelationInput[]
+    cursor?: AgentWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: AgentScalarFieldEnum | AgentScalarFieldEnum[]
+  }
+
+  /**
+   * AgentRegistrationCode without action
+   */
+  export type AgentRegistrationCodeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AgentRegistrationCode
+     */
+    select?: AgentRegistrationCodeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AgentRegistrationCode
+     */
+    omit?: AgentRegistrationCodeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AgentRegistrationCodeInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Task
+   */
+
+  export type AggregateTask = {
+    _count: TaskCountAggregateOutputType | null
+    _avg: TaskAvgAggregateOutputType | null
+    _sum: TaskSumAggregateOutputType | null
+    _min: TaskMinAggregateOutputType | null
+    _max: TaskMaxAggregateOutputType | null
+  }
+
+  export type TaskAvgAggregateOutputType = {
+    id: number | null
+    agentId: number | null
+  }
+
+  export type TaskSumAggregateOutputType = {
+    id: number | null
+    agentId: number | null
+  }
+
+  export type TaskMinAggregateOutputType = {
+    id: number | null
+    title: string | null
+    description: string | null
+    status: $Enums.TaskStatus | null
+    priority: $Enums.TaskPriority | null
+    dueDate: Date | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    assignedBy: string | null
+    agentId: number | null
+  }
+
+  export type TaskMaxAggregateOutputType = {
+    id: number | null
+    title: string | null
+    description: string | null
+    status: $Enums.TaskStatus | null
+    priority: $Enums.TaskPriority | null
+    dueDate: Date | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    assignedBy: string | null
+    agentId: number | null
+  }
+
+  export type TaskCountAggregateOutputType = {
+    id: number
+    title: number
+    description: number
+    status: number
+    priority: number
+    dueDate: number
+    createdAt: number
+    updatedAt: number
+    assignedBy: number
+    agentId: number
+    _all: number
+  }
+
+
+  export type TaskAvgAggregateInputType = {
+    id?: true
+    agentId?: true
+  }
+
+  export type TaskSumAggregateInputType = {
+    id?: true
+    agentId?: true
+  }
+
+  export type TaskMinAggregateInputType = {
+    id?: true
+    title?: true
+    description?: true
+    status?: true
+    priority?: true
+    dueDate?: true
+    createdAt?: true
+    updatedAt?: true
+    assignedBy?: true
+    agentId?: true
+  }
+
+  export type TaskMaxAggregateInputType = {
+    id?: true
+    title?: true
+    description?: true
+    status?: true
+    priority?: true
+    dueDate?: true
+    createdAt?: true
+    updatedAt?: true
+    assignedBy?: true
+    agentId?: true
+  }
+
+  export type TaskCountAggregateInputType = {
+    id?: true
+    title?: true
+    description?: true
+    status?: true
+    priority?: true
+    dueDate?: true
+    createdAt?: true
+    updatedAt?: true
+    assignedBy?: true
+    agentId?: true
+    _all?: true
+  }
+
+  export type TaskAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Task to aggregate.
+     */
+    where?: TaskWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Tasks to fetch.
+     */
+    orderBy?: TaskOrderByWithRelationInput | TaskOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: TaskWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Tasks from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Tasks.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Tasks
+    **/
+    _count?: true | TaskCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: TaskAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: TaskSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: TaskMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: TaskMaxAggregateInputType
+  }
+
+  export type GetTaskAggregateType<T extends TaskAggregateArgs> = {
+        [P in keyof T & keyof AggregateTask]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateTask[P]>
+      : GetScalarType<T[P], AggregateTask[P]>
+  }
+
+
+
+
+  export type TaskGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TaskWhereInput
+    orderBy?: TaskOrderByWithAggregationInput | TaskOrderByWithAggregationInput[]
+    by: TaskScalarFieldEnum[] | TaskScalarFieldEnum
+    having?: TaskScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: TaskCountAggregateInputType | true
+    _avg?: TaskAvgAggregateInputType
+    _sum?: TaskSumAggregateInputType
+    _min?: TaskMinAggregateInputType
+    _max?: TaskMaxAggregateInputType
+  }
+
+  export type TaskGroupByOutputType = {
+    id: number
+    title: string
+    description: string | null
+    status: $Enums.TaskStatus
+    priority: $Enums.TaskPriority
+    dueDate: Date | null
+    createdAt: Date
+    updatedAt: Date
+    assignedBy: string
+    agentId: number
+    _count: TaskCountAggregateOutputType | null
+    _avg: TaskAvgAggregateOutputType | null
+    _sum: TaskSumAggregateOutputType | null
+    _min: TaskMinAggregateOutputType | null
+    _max: TaskMaxAggregateOutputType | null
+  }
+
+  type GetTaskGroupByPayload<T extends TaskGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<TaskGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof TaskGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], TaskGroupByOutputType[P]>
+            : GetScalarType<T[P], TaskGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type TaskSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    description?: boolean
+    status?: boolean
+    priority?: boolean
+    dueDate?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    assignedBy?: boolean
+    agentId?: boolean
+    agent?: boolean | AgentDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["task"]>
+
+  export type TaskSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    description?: boolean
+    status?: boolean
+    priority?: boolean
+    dueDate?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    assignedBy?: boolean
+    agentId?: boolean
+    agent?: boolean | AgentDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["task"]>
+
+  export type TaskSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    description?: boolean
+    status?: boolean
+    priority?: boolean
+    dueDate?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    assignedBy?: boolean
+    agentId?: boolean
+    agent?: boolean | AgentDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["task"]>
+
+  export type TaskSelectScalar = {
+    id?: boolean
+    title?: boolean
+    description?: boolean
+    status?: boolean
+    priority?: boolean
+    dueDate?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    assignedBy?: boolean
+    agentId?: boolean
+  }
+
+  export type TaskOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "status" | "priority" | "dueDate" | "createdAt" | "updatedAt" | "assignedBy" | "agentId", ExtArgs["result"]["task"]>
+  export type TaskInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    agent?: boolean | AgentDefaultArgs<ExtArgs>
+  }
+  export type TaskIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    agent?: boolean | AgentDefaultArgs<ExtArgs>
+  }
+  export type TaskIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    agent?: boolean | AgentDefaultArgs<ExtArgs>
+  }
+
+  export type $TaskPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Task"
+    objects: {
+      agent: Prisma.$AgentPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      title: string
+      description: string | null
+      status: $Enums.TaskStatus
+      priority: $Enums.TaskPriority
+      dueDate: Date | null
+      createdAt: Date
+      updatedAt: Date
+      assignedBy: string
+      agentId: number
+    }, ExtArgs["result"]["task"]>
+    composites: {}
+  }
+
+  type TaskGetPayload<S extends boolean | null | undefined | TaskDefaultArgs> = $Result.GetResult<Prisma.$TaskPayload, S>
+
+  type TaskCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<TaskFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: TaskCountAggregateInputType | true
+    }
+
+  export interface TaskDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Task'], meta: { name: 'Task' } }
+    /**
+     * Find zero or one Task that matches the filter.
+     * @param {TaskFindUniqueArgs} args - Arguments to find a Task
+     * @example
+     * // Get one Task
+     * const task = await prisma.task.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends TaskFindUniqueArgs>(args: SelectSubset<T, TaskFindUniqueArgs<ExtArgs>>): Prisma__TaskClient<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "findUnique", ClientOptions> | null, null, ExtArgs, ClientOptions>
+
+    /**
+     * Find one Task that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {TaskFindUniqueOrThrowArgs} args - Arguments to find a Task
+     * @example
+     * // Get one Task
+     * const task = await prisma.task.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends TaskFindUniqueOrThrowArgs>(args: SelectSubset<T, TaskFindUniqueOrThrowArgs<ExtArgs>>): Prisma__TaskClient<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Find the first Task that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TaskFindFirstArgs} args - Arguments to find a Task
+     * @example
+     * // Get one Task
+     * const task = await prisma.task.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends TaskFindFirstArgs>(args?: SelectSubset<T, TaskFindFirstArgs<ExtArgs>>): Prisma__TaskClient<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "findFirst", ClientOptions> | null, null, ExtArgs, ClientOptions>
+
+    /**
+     * Find the first Task that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TaskFindFirstOrThrowArgs} args - Arguments to find a Task
+     * @example
+     * // Get one Task
+     * const task = await prisma.task.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends TaskFindFirstOrThrowArgs>(args?: SelectSubset<T, TaskFindFirstOrThrowArgs<ExtArgs>>): Prisma__TaskClient<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "findFirstOrThrow", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Find zero or more Tasks that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TaskFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Tasks
+     * const tasks = await prisma.task.findMany()
+     * 
+     * // Get first 10 Tasks
+     * const tasks = await prisma.task.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const taskWithIdOnly = await prisma.task.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends TaskFindManyArgs>(args?: SelectSubset<T, TaskFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "findMany", ClientOptions>>
+
+    /**
+     * Create a Task.
+     * @param {TaskCreateArgs} args - Arguments to create a Task.
+     * @example
+     * // Create one Task
+     * const Task = await prisma.task.create({
+     *   data: {
+     *     // ... data to create a Task
+     *   }
+     * })
+     * 
+     */
+    create<T extends TaskCreateArgs>(args: SelectSubset<T, TaskCreateArgs<ExtArgs>>): Prisma__TaskClient<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "create", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Create many Tasks.
+     * @param {TaskCreateManyArgs} args - Arguments to create many Tasks.
+     * @example
+     * // Create many Tasks
+     * const task = await prisma.task.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends TaskCreateManyArgs>(args?: SelectSubset<T, TaskCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Tasks and returns the data saved in the database.
+     * @param {TaskCreateManyAndReturnArgs} args - Arguments to create many Tasks.
+     * @example
+     * // Create many Tasks
+     * const task = await prisma.task.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Tasks and only return the `id`
+     * const taskWithIdOnly = await prisma.task.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends TaskCreateManyAndReturnArgs>(args?: SelectSubset<T, TaskCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "createManyAndReturn", ClientOptions>>
+
+    /**
+     * Delete a Task.
+     * @param {TaskDeleteArgs} args - Arguments to delete one Task.
+     * @example
+     * // Delete one Task
+     * const Task = await prisma.task.delete({
+     *   where: {
+     *     // ... filter to delete one Task
+     *   }
+     * })
+     * 
+     */
+    delete<T extends TaskDeleteArgs>(args: SelectSubset<T, TaskDeleteArgs<ExtArgs>>): Prisma__TaskClient<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "delete", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Update one Task.
+     * @param {TaskUpdateArgs} args - Arguments to update one Task.
+     * @example
+     * // Update one Task
+     * const task = await prisma.task.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends TaskUpdateArgs>(args: SelectSubset<T, TaskUpdateArgs<ExtArgs>>): Prisma__TaskClient<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "update", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Delete zero or more Tasks.
+     * @param {TaskDeleteManyArgs} args - Arguments to filter Tasks to delete.
+     * @example
+     * // Delete a few Tasks
+     * const { count } = await prisma.task.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends TaskDeleteManyArgs>(args?: SelectSubset<T, TaskDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Tasks.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TaskUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Tasks
+     * const task = await prisma.task.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends TaskUpdateManyArgs>(args: SelectSubset<T, TaskUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Tasks and returns the data updated in the database.
+     * @param {TaskUpdateManyAndReturnArgs} args - Arguments to update many Tasks.
+     * @example
+     * // Update many Tasks
+     * const task = await prisma.task.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Tasks and only return the `id`
+     * const taskWithIdOnly = await prisma.task.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends TaskUpdateManyAndReturnArgs>(args: SelectSubset<T, TaskUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "updateManyAndReturn", ClientOptions>>
+
+    /**
+     * Create or update one Task.
+     * @param {TaskUpsertArgs} args - Arguments to update or create a Task.
+     * @example
+     * // Update or create a Task
+     * const task = await prisma.task.upsert({
+     *   create: {
+     *     // ... data to create a Task
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Task we want to update
+     *   }
+     * })
+     */
+    upsert<T extends TaskUpsertArgs>(args: SelectSubset<T, TaskUpsertArgs<ExtArgs>>): Prisma__TaskClient<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "upsert", ClientOptions>, never, ExtArgs, ClientOptions>
+
+
+    /**
+     * Count the number of Tasks.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TaskCountArgs} args - Arguments to filter Tasks to count.
+     * @example
+     * // Count the number of Tasks
+     * const count = await prisma.task.count({
+     *   where: {
+     *     // ... the filter for the Tasks we want to count
+     *   }
+     * })
+    **/
+    count<T extends TaskCountArgs>(
+      args?: Subset<T, TaskCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], TaskCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Task.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TaskAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends TaskAggregateArgs>(args: Subset<T, TaskAggregateArgs>): Prisma.PrismaPromise<GetTaskAggregateType<T>>
+
+    /**
+     * Group by Task.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TaskGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends TaskGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: TaskGroupByArgs['orderBy'] }
+        : { orderBy?: TaskGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, TaskGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetTaskGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Task model
+   */
+  readonly fields: TaskFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Task.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__TaskClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    agent<T extends AgentDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AgentDefaultArgs<ExtArgs>>): Prisma__AgentClient<$Result.GetResult<Prisma.$AgentPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | Null, Null, ExtArgs, ClientOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Task model
+   */ 
+  interface TaskFieldRefs {
+    readonly id: FieldRef<"Task", 'Int'>
+    readonly title: FieldRef<"Task", 'String'>
+    readonly description: FieldRef<"Task", 'String'>
+    readonly status: FieldRef<"Task", 'TaskStatus'>
+    readonly priority: FieldRef<"Task", 'TaskPriority'>
+    readonly dueDate: FieldRef<"Task", 'DateTime'>
+    readonly createdAt: FieldRef<"Task", 'DateTime'>
+    readonly updatedAt: FieldRef<"Task", 'DateTime'>
+    readonly assignedBy: FieldRef<"Task", 'String'>
+    readonly agentId: FieldRef<"Task", 'Int'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Task findUnique
+   */
+  export type TaskFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Task
+     */
+    select?: TaskSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Task
+     */
+    omit?: TaskOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TaskInclude<ExtArgs> | null
+    /**
+     * Filter, which Task to fetch.
+     */
+    where: TaskWhereUniqueInput
+  }
+
+  /**
+   * Task findUniqueOrThrow
+   */
+  export type TaskFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Task
+     */
+    select?: TaskSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Task
+     */
+    omit?: TaskOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TaskInclude<ExtArgs> | null
+    /**
+     * Filter, which Task to fetch.
+     */
+    where: TaskWhereUniqueInput
+  }
+
+  /**
+   * Task findFirst
+   */
+  export type TaskFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Task
+     */
+    select?: TaskSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Task
+     */
+    omit?: TaskOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TaskInclude<ExtArgs> | null
+    /**
+     * Filter, which Task to fetch.
+     */
+    where?: TaskWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Tasks to fetch.
+     */
+    orderBy?: TaskOrderByWithRelationInput | TaskOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Tasks.
+     */
+    cursor?: TaskWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Tasks from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Tasks.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Tasks.
+     */
+    distinct?: TaskScalarFieldEnum | TaskScalarFieldEnum[]
+  }
+
+  /**
+   * Task findFirstOrThrow
+   */
+  export type TaskFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Task
+     */
+    select?: TaskSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Task
+     */
+    omit?: TaskOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TaskInclude<ExtArgs> | null
+    /**
+     * Filter, which Task to fetch.
+     */
+    where?: TaskWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Tasks to fetch.
+     */
+    orderBy?: TaskOrderByWithRelationInput | TaskOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Tasks.
+     */
+    cursor?: TaskWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Tasks from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Tasks.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Tasks.
+     */
+    distinct?: TaskScalarFieldEnum | TaskScalarFieldEnum[]
+  }
+
+  /**
+   * Task findMany
+   */
+  export type TaskFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Task
+     */
+    select?: TaskSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Task
+     */
+    omit?: TaskOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TaskInclude<ExtArgs> | null
+    /**
+     * Filter, which Tasks to fetch.
+     */
+    where?: TaskWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Tasks to fetch.
+     */
+    orderBy?: TaskOrderByWithRelationInput | TaskOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Tasks.
+     */
+    cursor?: TaskWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Tasks from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Tasks.
+     */
+    skip?: number
+    distinct?: TaskScalarFieldEnum | TaskScalarFieldEnum[]
+  }
+
+  /**
+   * Task create
+   */
+  export type TaskCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Task
+     */
+    select?: TaskSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Task
+     */
+    omit?: TaskOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TaskInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Task.
+     */
+    data: XOR<TaskCreateInput, TaskUncheckedCreateInput>
+  }
+
+  /**
+   * Task createMany
+   */
+  export type TaskCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Tasks.
+     */
+    data: TaskCreateManyInput | TaskCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Task createManyAndReturn
+   */
+  export type TaskCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Task
+     */
+    select?: TaskSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Task
+     */
+    omit?: TaskOmit<ExtArgs> | null
+    /**
+     * The data used to create many Tasks.
+     */
+    data: TaskCreateManyInput | TaskCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TaskIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Task update
+   */
+  export type TaskUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Task
+     */
+    select?: TaskSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Task
+     */
+    omit?: TaskOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TaskInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Task.
+     */
+    data: XOR<TaskUpdateInput, TaskUncheckedUpdateInput>
+    /**
+     * Choose, which Task to update.
+     */
+    where: TaskWhereUniqueInput
+  }
+
+  /**
+   * Task updateMany
+   */
+  export type TaskUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Tasks.
+     */
+    data: XOR<TaskUpdateManyMutationInput, TaskUncheckedUpdateManyInput>
+    /**
+     * Filter which Tasks to update
+     */
+    where?: TaskWhereInput
+    /**
+     * Limit how many Tasks to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Task updateManyAndReturn
+   */
+  export type TaskUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Task
+     */
+    select?: TaskSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Task
+     */
+    omit?: TaskOmit<ExtArgs> | null
+    /**
+     * The data used to update Tasks.
+     */
+    data: XOR<TaskUpdateManyMutationInput, TaskUncheckedUpdateManyInput>
+    /**
+     * Filter which Tasks to update
+     */
+    where?: TaskWhereInput
+    /**
+     * Limit how many Tasks to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TaskIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Task upsert
+   */
+  export type TaskUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Task
+     */
+    select?: TaskSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Task
+     */
+    omit?: TaskOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TaskInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Task to update in case it exists.
+     */
+    where: TaskWhereUniqueInput
+    /**
+     * In case the Task found by the `where` argument doesn't exist, create a new Task with this data.
+     */
+    create: XOR<TaskCreateInput, TaskUncheckedCreateInput>
+    /**
+     * In case the Task was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<TaskUpdateInput, TaskUncheckedUpdateInput>
+  }
+
+  /**
+   * Task delete
+   */
+  export type TaskDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Task
+     */
+    select?: TaskSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Task
+     */
+    omit?: TaskOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TaskInclude<ExtArgs> | null
+    /**
+     * Filter which Task to delete.
+     */
+    where: TaskWhereUniqueInput
+  }
+
+  /**
+   * Task deleteMany
+   */
+  export type TaskDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Tasks to delete
+     */
+    where?: TaskWhereInput
+    /**
+     * Limit how many Tasks to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Task without action
+   */
+  export type TaskDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Task
+     */
+    select?: TaskSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Task
+     */
+    omit?: TaskOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TaskInclude<ExtArgs> | null
   }
 
 
@@ -12789,6 +16759,3536 @@ export namespace Prisma {
 
 
   /**
+   * Model AdminSettings
+   */
+
+  export type AggregateAdminSettings = {
+    _count: AdminSettingsCountAggregateOutputType | null
+    _avg: AdminSettingsAvgAggregateOutputType | null
+    _sum: AdminSettingsSumAggregateOutputType | null
+    _min: AdminSettingsMinAggregateOutputType | null
+    _max: AdminSettingsMaxAggregateOutputType | null
+  }
+
+  export type AdminSettingsAvgAggregateOutputType = {
+    id: number | null
+    maxPropertiesPerLandlord: number | null
+    commissionRate: number | null
+  }
+
+  export type AdminSettingsSumAggregateOutputType = {
+    id: number | null
+    maxPropertiesPerLandlord: number | null
+    commissionRate: number | null
+  }
+
+  export type AdminSettingsMinAggregateOutputType = {
+    id: number | null
+    siteName: string | null
+    siteDescription: string | null
+    maintenanceMode: boolean | null
+    allowRegistration: boolean | null
+    maxPropertiesPerLandlord: number | null
+    commissionRate: number | null
+    emailNotifications: boolean | null
+    smsNotifications: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type AdminSettingsMaxAggregateOutputType = {
+    id: number | null
+    siteName: string | null
+    siteDescription: string | null
+    maintenanceMode: boolean | null
+    allowRegistration: boolean | null
+    maxPropertiesPerLandlord: number | null
+    commissionRate: number | null
+    emailNotifications: boolean | null
+    smsNotifications: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type AdminSettingsCountAggregateOutputType = {
+    id: number
+    siteName: number
+    siteDescription: number
+    maintenanceMode: number
+    allowRegistration: number
+    maxPropertiesPerLandlord: number
+    commissionRate: number
+    emailNotifications: number
+    smsNotifications: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type AdminSettingsAvgAggregateInputType = {
+    id?: true
+    maxPropertiesPerLandlord?: true
+    commissionRate?: true
+  }
+
+  export type AdminSettingsSumAggregateInputType = {
+    id?: true
+    maxPropertiesPerLandlord?: true
+    commissionRate?: true
+  }
+
+  export type AdminSettingsMinAggregateInputType = {
+    id?: true
+    siteName?: true
+    siteDescription?: true
+    maintenanceMode?: true
+    allowRegistration?: true
+    maxPropertiesPerLandlord?: true
+    commissionRate?: true
+    emailNotifications?: true
+    smsNotifications?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type AdminSettingsMaxAggregateInputType = {
+    id?: true
+    siteName?: true
+    siteDescription?: true
+    maintenanceMode?: true
+    allowRegistration?: true
+    maxPropertiesPerLandlord?: true
+    commissionRate?: true
+    emailNotifications?: true
+    smsNotifications?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type AdminSettingsCountAggregateInputType = {
+    id?: true
+    siteName?: true
+    siteDescription?: true
+    maintenanceMode?: true
+    allowRegistration?: true
+    maxPropertiesPerLandlord?: true
+    commissionRate?: true
+    emailNotifications?: true
+    smsNotifications?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type AdminSettingsAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AdminSettings to aggregate.
+     */
+    where?: AdminSettingsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AdminSettings to fetch.
+     */
+    orderBy?: AdminSettingsOrderByWithRelationInput | AdminSettingsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: AdminSettingsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AdminSettings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AdminSettings.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned AdminSettings
+    **/
+    _count?: true | AdminSettingsCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: AdminSettingsAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: AdminSettingsSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: AdminSettingsMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: AdminSettingsMaxAggregateInputType
+  }
+
+  export type GetAdminSettingsAggregateType<T extends AdminSettingsAggregateArgs> = {
+        [P in keyof T & keyof AggregateAdminSettings]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateAdminSettings[P]>
+      : GetScalarType<T[P], AggregateAdminSettings[P]>
+  }
+
+
+
+
+  export type AdminSettingsGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AdminSettingsWhereInput
+    orderBy?: AdminSettingsOrderByWithAggregationInput | AdminSettingsOrderByWithAggregationInput[]
+    by: AdminSettingsScalarFieldEnum[] | AdminSettingsScalarFieldEnum
+    having?: AdminSettingsScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: AdminSettingsCountAggregateInputType | true
+    _avg?: AdminSettingsAvgAggregateInputType
+    _sum?: AdminSettingsSumAggregateInputType
+    _min?: AdminSettingsMinAggregateInputType
+    _max?: AdminSettingsMaxAggregateInputType
+  }
+
+  export type AdminSettingsGroupByOutputType = {
+    id: number
+    siteName: string
+    siteDescription: string
+    maintenanceMode: boolean
+    allowRegistration: boolean
+    maxPropertiesPerLandlord: number
+    commissionRate: number
+    emailNotifications: boolean
+    smsNotifications: boolean
+    createdAt: Date
+    updatedAt: Date
+    _count: AdminSettingsCountAggregateOutputType | null
+    _avg: AdminSettingsAvgAggregateOutputType | null
+    _sum: AdminSettingsSumAggregateOutputType | null
+    _min: AdminSettingsMinAggregateOutputType | null
+    _max: AdminSettingsMaxAggregateOutputType | null
+  }
+
+  type GetAdminSettingsGroupByPayload<T extends AdminSettingsGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<AdminSettingsGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof AdminSettingsGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], AdminSettingsGroupByOutputType[P]>
+            : GetScalarType<T[P], AdminSettingsGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type AdminSettingsSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    siteName?: boolean
+    siteDescription?: boolean
+    maintenanceMode?: boolean
+    allowRegistration?: boolean
+    maxPropertiesPerLandlord?: boolean
+    commissionRate?: boolean
+    emailNotifications?: boolean
+    smsNotifications?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["adminSettings"]>
+
+  export type AdminSettingsSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    siteName?: boolean
+    siteDescription?: boolean
+    maintenanceMode?: boolean
+    allowRegistration?: boolean
+    maxPropertiesPerLandlord?: boolean
+    commissionRate?: boolean
+    emailNotifications?: boolean
+    smsNotifications?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["adminSettings"]>
+
+  export type AdminSettingsSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    siteName?: boolean
+    siteDescription?: boolean
+    maintenanceMode?: boolean
+    allowRegistration?: boolean
+    maxPropertiesPerLandlord?: boolean
+    commissionRate?: boolean
+    emailNotifications?: boolean
+    smsNotifications?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["adminSettings"]>
+
+  export type AdminSettingsSelectScalar = {
+    id?: boolean
+    siteName?: boolean
+    siteDescription?: boolean
+    maintenanceMode?: boolean
+    allowRegistration?: boolean
+    maxPropertiesPerLandlord?: boolean
+    commissionRate?: boolean
+    emailNotifications?: boolean
+    smsNotifications?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type AdminSettingsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "siteName" | "siteDescription" | "maintenanceMode" | "allowRegistration" | "maxPropertiesPerLandlord" | "commissionRate" | "emailNotifications" | "smsNotifications" | "createdAt" | "updatedAt", ExtArgs["result"]["adminSettings"]>
+
+  export type $AdminSettingsPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "AdminSettings"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      siteName: string
+      siteDescription: string
+      maintenanceMode: boolean
+      allowRegistration: boolean
+      maxPropertiesPerLandlord: number
+      commissionRate: number
+      emailNotifications: boolean
+      smsNotifications: boolean
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["adminSettings"]>
+    composites: {}
+  }
+
+  type AdminSettingsGetPayload<S extends boolean | null | undefined | AdminSettingsDefaultArgs> = $Result.GetResult<Prisma.$AdminSettingsPayload, S>
+
+  type AdminSettingsCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<AdminSettingsFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: AdminSettingsCountAggregateInputType | true
+    }
+
+  export interface AdminSettingsDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['AdminSettings'], meta: { name: 'AdminSettings' } }
+    /**
+     * Find zero or one AdminSettings that matches the filter.
+     * @param {AdminSettingsFindUniqueArgs} args - Arguments to find a AdminSettings
+     * @example
+     * // Get one AdminSettings
+     * const adminSettings = await prisma.adminSettings.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends AdminSettingsFindUniqueArgs>(args: SelectSubset<T, AdminSettingsFindUniqueArgs<ExtArgs>>): Prisma__AdminSettingsClient<$Result.GetResult<Prisma.$AdminSettingsPayload<ExtArgs>, T, "findUnique", ClientOptions> | null, null, ExtArgs, ClientOptions>
+
+    /**
+     * Find one AdminSettings that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {AdminSettingsFindUniqueOrThrowArgs} args - Arguments to find a AdminSettings
+     * @example
+     * // Get one AdminSettings
+     * const adminSettings = await prisma.adminSettings.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends AdminSettingsFindUniqueOrThrowArgs>(args: SelectSubset<T, AdminSettingsFindUniqueOrThrowArgs<ExtArgs>>): Prisma__AdminSettingsClient<$Result.GetResult<Prisma.$AdminSettingsPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Find the first AdminSettings that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AdminSettingsFindFirstArgs} args - Arguments to find a AdminSettings
+     * @example
+     * // Get one AdminSettings
+     * const adminSettings = await prisma.adminSettings.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends AdminSettingsFindFirstArgs>(args?: SelectSubset<T, AdminSettingsFindFirstArgs<ExtArgs>>): Prisma__AdminSettingsClient<$Result.GetResult<Prisma.$AdminSettingsPayload<ExtArgs>, T, "findFirst", ClientOptions> | null, null, ExtArgs, ClientOptions>
+
+    /**
+     * Find the first AdminSettings that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AdminSettingsFindFirstOrThrowArgs} args - Arguments to find a AdminSettings
+     * @example
+     * // Get one AdminSettings
+     * const adminSettings = await prisma.adminSettings.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends AdminSettingsFindFirstOrThrowArgs>(args?: SelectSubset<T, AdminSettingsFindFirstOrThrowArgs<ExtArgs>>): Prisma__AdminSettingsClient<$Result.GetResult<Prisma.$AdminSettingsPayload<ExtArgs>, T, "findFirstOrThrow", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Find zero or more AdminSettings that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AdminSettingsFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all AdminSettings
+     * const adminSettings = await prisma.adminSettings.findMany()
+     * 
+     * // Get first 10 AdminSettings
+     * const adminSettings = await prisma.adminSettings.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const adminSettingsWithIdOnly = await prisma.adminSettings.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends AdminSettingsFindManyArgs>(args?: SelectSubset<T, AdminSettingsFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AdminSettingsPayload<ExtArgs>, T, "findMany", ClientOptions>>
+
+    /**
+     * Create a AdminSettings.
+     * @param {AdminSettingsCreateArgs} args - Arguments to create a AdminSettings.
+     * @example
+     * // Create one AdminSettings
+     * const AdminSettings = await prisma.adminSettings.create({
+     *   data: {
+     *     // ... data to create a AdminSettings
+     *   }
+     * })
+     * 
+     */
+    create<T extends AdminSettingsCreateArgs>(args: SelectSubset<T, AdminSettingsCreateArgs<ExtArgs>>): Prisma__AdminSettingsClient<$Result.GetResult<Prisma.$AdminSettingsPayload<ExtArgs>, T, "create", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Create many AdminSettings.
+     * @param {AdminSettingsCreateManyArgs} args - Arguments to create many AdminSettings.
+     * @example
+     * // Create many AdminSettings
+     * const adminSettings = await prisma.adminSettings.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends AdminSettingsCreateManyArgs>(args?: SelectSubset<T, AdminSettingsCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many AdminSettings and returns the data saved in the database.
+     * @param {AdminSettingsCreateManyAndReturnArgs} args - Arguments to create many AdminSettings.
+     * @example
+     * // Create many AdminSettings
+     * const adminSettings = await prisma.adminSettings.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many AdminSettings and only return the `id`
+     * const adminSettingsWithIdOnly = await prisma.adminSettings.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends AdminSettingsCreateManyAndReturnArgs>(args?: SelectSubset<T, AdminSettingsCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AdminSettingsPayload<ExtArgs>, T, "createManyAndReturn", ClientOptions>>
+
+    /**
+     * Delete a AdminSettings.
+     * @param {AdminSettingsDeleteArgs} args - Arguments to delete one AdminSettings.
+     * @example
+     * // Delete one AdminSettings
+     * const AdminSettings = await prisma.adminSettings.delete({
+     *   where: {
+     *     // ... filter to delete one AdminSettings
+     *   }
+     * })
+     * 
+     */
+    delete<T extends AdminSettingsDeleteArgs>(args: SelectSubset<T, AdminSettingsDeleteArgs<ExtArgs>>): Prisma__AdminSettingsClient<$Result.GetResult<Prisma.$AdminSettingsPayload<ExtArgs>, T, "delete", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Update one AdminSettings.
+     * @param {AdminSettingsUpdateArgs} args - Arguments to update one AdminSettings.
+     * @example
+     * // Update one AdminSettings
+     * const adminSettings = await prisma.adminSettings.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends AdminSettingsUpdateArgs>(args: SelectSubset<T, AdminSettingsUpdateArgs<ExtArgs>>): Prisma__AdminSettingsClient<$Result.GetResult<Prisma.$AdminSettingsPayload<ExtArgs>, T, "update", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Delete zero or more AdminSettings.
+     * @param {AdminSettingsDeleteManyArgs} args - Arguments to filter AdminSettings to delete.
+     * @example
+     * // Delete a few AdminSettings
+     * const { count } = await prisma.adminSettings.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends AdminSettingsDeleteManyArgs>(args?: SelectSubset<T, AdminSettingsDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AdminSettings.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AdminSettingsUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many AdminSettings
+     * const adminSettings = await prisma.adminSettings.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends AdminSettingsUpdateManyArgs>(args: SelectSubset<T, AdminSettingsUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AdminSettings and returns the data updated in the database.
+     * @param {AdminSettingsUpdateManyAndReturnArgs} args - Arguments to update many AdminSettings.
+     * @example
+     * // Update many AdminSettings
+     * const adminSettings = await prisma.adminSettings.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more AdminSettings and only return the `id`
+     * const adminSettingsWithIdOnly = await prisma.adminSettings.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends AdminSettingsUpdateManyAndReturnArgs>(args: SelectSubset<T, AdminSettingsUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AdminSettingsPayload<ExtArgs>, T, "updateManyAndReturn", ClientOptions>>
+
+    /**
+     * Create or update one AdminSettings.
+     * @param {AdminSettingsUpsertArgs} args - Arguments to update or create a AdminSettings.
+     * @example
+     * // Update or create a AdminSettings
+     * const adminSettings = await prisma.adminSettings.upsert({
+     *   create: {
+     *     // ... data to create a AdminSettings
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the AdminSettings we want to update
+     *   }
+     * })
+     */
+    upsert<T extends AdminSettingsUpsertArgs>(args: SelectSubset<T, AdminSettingsUpsertArgs<ExtArgs>>): Prisma__AdminSettingsClient<$Result.GetResult<Prisma.$AdminSettingsPayload<ExtArgs>, T, "upsert", ClientOptions>, never, ExtArgs, ClientOptions>
+
+
+    /**
+     * Count the number of AdminSettings.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AdminSettingsCountArgs} args - Arguments to filter AdminSettings to count.
+     * @example
+     * // Count the number of AdminSettings
+     * const count = await prisma.adminSettings.count({
+     *   where: {
+     *     // ... the filter for the AdminSettings we want to count
+     *   }
+     * })
+    **/
+    count<T extends AdminSettingsCountArgs>(
+      args?: Subset<T, AdminSettingsCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], AdminSettingsCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a AdminSettings.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AdminSettingsAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends AdminSettingsAggregateArgs>(args: Subset<T, AdminSettingsAggregateArgs>): Prisma.PrismaPromise<GetAdminSettingsAggregateType<T>>
+
+    /**
+     * Group by AdminSettings.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AdminSettingsGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends AdminSettingsGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: AdminSettingsGroupByArgs['orderBy'] }
+        : { orderBy?: AdminSettingsGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, AdminSettingsGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAdminSettingsGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the AdminSettings model
+   */
+  readonly fields: AdminSettingsFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for AdminSettings.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__AdminSettingsClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the AdminSettings model
+   */ 
+  interface AdminSettingsFieldRefs {
+    readonly id: FieldRef<"AdminSettings", 'Int'>
+    readonly siteName: FieldRef<"AdminSettings", 'String'>
+    readonly siteDescription: FieldRef<"AdminSettings", 'String'>
+    readonly maintenanceMode: FieldRef<"AdminSettings", 'Boolean'>
+    readonly allowRegistration: FieldRef<"AdminSettings", 'Boolean'>
+    readonly maxPropertiesPerLandlord: FieldRef<"AdminSettings", 'Int'>
+    readonly commissionRate: FieldRef<"AdminSettings", 'Float'>
+    readonly emailNotifications: FieldRef<"AdminSettings", 'Boolean'>
+    readonly smsNotifications: FieldRef<"AdminSettings", 'Boolean'>
+    readonly createdAt: FieldRef<"AdminSettings", 'DateTime'>
+    readonly updatedAt: FieldRef<"AdminSettings", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * AdminSettings findUnique
+   */
+  export type AdminSettingsFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AdminSettings
+     */
+    select?: AdminSettingsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AdminSettings
+     */
+    omit?: AdminSettingsOmit<ExtArgs> | null
+    /**
+     * Filter, which AdminSettings to fetch.
+     */
+    where: AdminSettingsWhereUniqueInput
+  }
+
+  /**
+   * AdminSettings findUniqueOrThrow
+   */
+  export type AdminSettingsFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AdminSettings
+     */
+    select?: AdminSettingsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AdminSettings
+     */
+    omit?: AdminSettingsOmit<ExtArgs> | null
+    /**
+     * Filter, which AdminSettings to fetch.
+     */
+    where: AdminSettingsWhereUniqueInput
+  }
+
+  /**
+   * AdminSettings findFirst
+   */
+  export type AdminSettingsFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AdminSettings
+     */
+    select?: AdminSettingsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AdminSettings
+     */
+    omit?: AdminSettingsOmit<ExtArgs> | null
+    /**
+     * Filter, which AdminSettings to fetch.
+     */
+    where?: AdminSettingsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AdminSettings to fetch.
+     */
+    orderBy?: AdminSettingsOrderByWithRelationInput | AdminSettingsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AdminSettings.
+     */
+    cursor?: AdminSettingsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AdminSettings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AdminSettings.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AdminSettings.
+     */
+    distinct?: AdminSettingsScalarFieldEnum | AdminSettingsScalarFieldEnum[]
+  }
+
+  /**
+   * AdminSettings findFirstOrThrow
+   */
+  export type AdminSettingsFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AdminSettings
+     */
+    select?: AdminSettingsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AdminSettings
+     */
+    omit?: AdminSettingsOmit<ExtArgs> | null
+    /**
+     * Filter, which AdminSettings to fetch.
+     */
+    where?: AdminSettingsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AdminSettings to fetch.
+     */
+    orderBy?: AdminSettingsOrderByWithRelationInput | AdminSettingsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AdminSettings.
+     */
+    cursor?: AdminSettingsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AdminSettings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AdminSettings.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AdminSettings.
+     */
+    distinct?: AdminSettingsScalarFieldEnum | AdminSettingsScalarFieldEnum[]
+  }
+
+  /**
+   * AdminSettings findMany
+   */
+  export type AdminSettingsFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AdminSettings
+     */
+    select?: AdminSettingsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AdminSettings
+     */
+    omit?: AdminSettingsOmit<ExtArgs> | null
+    /**
+     * Filter, which AdminSettings to fetch.
+     */
+    where?: AdminSettingsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AdminSettings to fetch.
+     */
+    orderBy?: AdminSettingsOrderByWithRelationInput | AdminSettingsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing AdminSettings.
+     */
+    cursor?: AdminSettingsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AdminSettings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AdminSettings.
+     */
+    skip?: number
+    distinct?: AdminSettingsScalarFieldEnum | AdminSettingsScalarFieldEnum[]
+  }
+
+  /**
+   * AdminSettings create
+   */
+  export type AdminSettingsCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AdminSettings
+     */
+    select?: AdminSettingsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AdminSettings
+     */
+    omit?: AdminSettingsOmit<ExtArgs> | null
+    /**
+     * The data needed to create a AdminSettings.
+     */
+    data: XOR<AdminSettingsCreateInput, AdminSettingsUncheckedCreateInput>
+  }
+
+  /**
+   * AdminSettings createMany
+   */
+  export type AdminSettingsCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many AdminSettings.
+     */
+    data: AdminSettingsCreateManyInput | AdminSettingsCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * AdminSettings createManyAndReturn
+   */
+  export type AdminSettingsCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AdminSettings
+     */
+    select?: AdminSettingsSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AdminSettings
+     */
+    omit?: AdminSettingsOmit<ExtArgs> | null
+    /**
+     * The data used to create many AdminSettings.
+     */
+    data: AdminSettingsCreateManyInput | AdminSettingsCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * AdminSettings update
+   */
+  export type AdminSettingsUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AdminSettings
+     */
+    select?: AdminSettingsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AdminSettings
+     */
+    omit?: AdminSettingsOmit<ExtArgs> | null
+    /**
+     * The data needed to update a AdminSettings.
+     */
+    data: XOR<AdminSettingsUpdateInput, AdminSettingsUncheckedUpdateInput>
+    /**
+     * Choose, which AdminSettings to update.
+     */
+    where: AdminSettingsWhereUniqueInput
+  }
+
+  /**
+   * AdminSettings updateMany
+   */
+  export type AdminSettingsUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update AdminSettings.
+     */
+    data: XOR<AdminSettingsUpdateManyMutationInput, AdminSettingsUncheckedUpdateManyInput>
+    /**
+     * Filter which AdminSettings to update
+     */
+    where?: AdminSettingsWhereInput
+    /**
+     * Limit how many AdminSettings to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * AdminSettings updateManyAndReturn
+   */
+  export type AdminSettingsUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AdminSettings
+     */
+    select?: AdminSettingsSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AdminSettings
+     */
+    omit?: AdminSettingsOmit<ExtArgs> | null
+    /**
+     * The data used to update AdminSettings.
+     */
+    data: XOR<AdminSettingsUpdateManyMutationInput, AdminSettingsUncheckedUpdateManyInput>
+    /**
+     * Filter which AdminSettings to update
+     */
+    where?: AdminSettingsWhereInput
+    /**
+     * Limit how many AdminSettings to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * AdminSettings upsert
+   */
+  export type AdminSettingsUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AdminSettings
+     */
+    select?: AdminSettingsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AdminSettings
+     */
+    omit?: AdminSettingsOmit<ExtArgs> | null
+    /**
+     * The filter to search for the AdminSettings to update in case it exists.
+     */
+    where: AdminSettingsWhereUniqueInput
+    /**
+     * In case the AdminSettings found by the `where` argument doesn't exist, create a new AdminSettings with this data.
+     */
+    create: XOR<AdminSettingsCreateInput, AdminSettingsUncheckedCreateInput>
+    /**
+     * In case the AdminSettings was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<AdminSettingsUpdateInput, AdminSettingsUncheckedUpdateInput>
+  }
+
+  /**
+   * AdminSettings delete
+   */
+  export type AdminSettingsDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AdminSettings
+     */
+    select?: AdminSettingsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AdminSettings
+     */
+    omit?: AdminSettingsOmit<ExtArgs> | null
+    /**
+     * Filter which AdminSettings to delete.
+     */
+    where: AdminSettingsWhereUniqueInput
+  }
+
+  /**
+   * AdminSettings deleteMany
+   */
+  export type AdminSettingsDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AdminSettings to delete
+     */
+    where?: AdminSettingsWhereInput
+    /**
+     * Limit how many AdminSettings to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * AdminSettings without action
+   */
+  export type AdminSettingsDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AdminSettings
+     */
+    select?: AdminSettingsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AdminSettings
+     */
+    omit?: AdminSettingsOmit<ExtArgs> | null
+  }
+
+
+  /**
+   * Model TenantSurvey
+   */
+
+  export type AggregateTenantSurvey = {
+    _count: TenantSurveyCountAggregateOutputType | null
+    _avg: TenantSurveyAvgAggregateOutputType | null
+    _sum: TenantSurveySumAggregateOutputType | null
+    _min: TenantSurveyMinAggregateOutputType | null
+    _max: TenantSurveyMaxAggregateOutputType | null
+  }
+
+  export type TenantSurveyAvgAggregateOutputType = {
+    id: number | null
+  }
+
+  export type TenantSurveySumAggregateOutputType = {
+    id: number | null
+  }
+
+  export type TenantSurveyMinAggregateOutputType = {
+    id: number | null
+    fullName: string | null
+    email: string | null
+    currentLocation: string | null
+    rentingStatus: string | null
+    scamExperience: string | null
+    scamDetails: string | null
+    propertyListingRating: string | null
+    dashboardRating: string | null
+    maintenanceRating: string | null
+    rentCollectionRating: string | null
+    customerSupportRating: string | null
+    monthlyReportRating: string | null
+    wishEasier: string | null
+    launchNotification: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type TenantSurveyMaxAggregateOutputType = {
+    id: number | null
+    fullName: string | null
+    email: string | null
+    currentLocation: string | null
+    rentingStatus: string | null
+    scamExperience: string | null
+    scamDetails: string | null
+    propertyListingRating: string | null
+    dashboardRating: string | null
+    maintenanceRating: string | null
+    rentCollectionRating: string | null
+    customerSupportRating: string | null
+    monthlyReportRating: string | null
+    wishEasier: string | null
+    launchNotification: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type TenantSurveyCountAggregateOutputType = {
+    id: number
+    fullName: number
+    email: number
+    currentLocation: number
+    rentingStatus: number
+    housingType: number
+    frustrations: number
+    scamExperience: number
+    scamDetails: number
+    propertyListingRating: number
+    dashboardRating: number
+    maintenanceRating: number
+    rentCollectionRating: number
+    customerSupportRating: number
+    monthlyReportRating: number
+    wishEasier: number
+    launchNotification: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type TenantSurveyAvgAggregateInputType = {
+    id?: true
+  }
+
+  export type TenantSurveySumAggregateInputType = {
+    id?: true
+  }
+
+  export type TenantSurveyMinAggregateInputType = {
+    id?: true
+    fullName?: true
+    email?: true
+    currentLocation?: true
+    rentingStatus?: true
+    scamExperience?: true
+    scamDetails?: true
+    propertyListingRating?: true
+    dashboardRating?: true
+    maintenanceRating?: true
+    rentCollectionRating?: true
+    customerSupportRating?: true
+    monthlyReportRating?: true
+    wishEasier?: true
+    launchNotification?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type TenantSurveyMaxAggregateInputType = {
+    id?: true
+    fullName?: true
+    email?: true
+    currentLocation?: true
+    rentingStatus?: true
+    scamExperience?: true
+    scamDetails?: true
+    propertyListingRating?: true
+    dashboardRating?: true
+    maintenanceRating?: true
+    rentCollectionRating?: true
+    customerSupportRating?: true
+    monthlyReportRating?: true
+    wishEasier?: true
+    launchNotification?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type TenantSurveyCountAggregateInputType = {
+    id?: true
+    fullName?: true
+    email?: true
+    currentLocation?: true
+    rentingStatus?: true
+    housingType?: true
+    frustrations?: true
+    scamExperience?: true
+    scamDetails?: true
+    propertyListingRating?: true
+    dashboardRating?: true
+    maintenanceRating?: true
+    rentCollectionRating?: true
+    customerSupportRating?: true
+    monthlyReportRating?: true
+    wishEasier?: true
+    launchNotification?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type TenantSurveyAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which TenantSurvey to aggregate.
+     */
+    where?: TenantSurveyWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TenantSurveys to fetch.
+     */
+    orderBy?: TenantSurveyOrderByWithRelationInput | TenantSurveyOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: TenantSurveyWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TenantSurveys from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TenantSurveys.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned TenantSurveys
+    **/
+    _count?: true | TenantSurveyCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: TenantSurveyAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: TenantSurveySumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: TenantSurveyMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: TenantSurveyMaxAggregateInputType
+  }
+
+  export type GetTenantSurveyAggregateType<T extends TenantSurveyAggregateArgs> = {
+        [P in keyof T & keyof AggregateTenantSurvey]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateTenantSurvey[P]>
+      : GetScalarType<T[P], AggregateTenantSurvey[P]>
+  }
+
+
+
+
+  export type TenantSurveyGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TenantSurveyWhereInput
+    orderBy?: TenantSurveyOrderByWithAggregationInput | TenantSurveyOrderByWithAggregationInput[]
+    by: TenantSurveyScalarFieldEnum[] | TenantSurveyScalarFieldEnum
+    having?: TenantSurveyScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: TenantSurveyCountAggregateInputType | true
+    _avg?: TenantSurveyAvgAggregateInputType
+    _sum?: TenantSurveySumAggregateInputType
+    _min?: TenantSurveyMinAggregateInputType
+    _max?: TenantSurveyMaxAggregateInputType
+  }
+
+  export type TenantSurveyGroupByOutputType = {
+    id: number
+    fullName: string
+    email: string
+    currentLocation: string
+    rentingStatus: string
+    housingType: string[]
+    frustrations: string[]
+    scamExperience: string
+    scamDetails: string | null
+    propertyListingRating: string
+    dashboardRating: string
+    maintenanceRating: string
+    rentCollectionRating: string
+    customerSupportRating: string
+    monthlyReportRating: string
+    wishEasier: string
+    launchNotification: string
+    createdAt: Date
+    updatedAt: Date
+    _count: TenantSurveyCountAggregateOutputType | null
+    _avg: TenantSurveyAvgAggregateOutputType | null
+    _sum: TenantSurveySumAggregateOutputType | null
+    _min: TenantSurveyMinAggregateOutputType | null
+    _max: TenantSurveyMaxAggregateOutputType | null
+  }
+
+  type GetTenantSurveyGroupByPayload<T extends TenantSurveyGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<TenantSurveyGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof TenantSurveyGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], TenantSurveyGroupByOutputType[P]>
+            : GetScalarType<T[P], TenantSurveyGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type TenantSurveySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    fullName?: boolean
+    email?: boolean
+    currentLocation?: boolean
+    rentingStatus?: boolean
+    housingType?: boolean
+    frustrations?: boolean
+    scamExperience?: boolean
+    scamDetails?: boolean
+    propertyListingRating?: boolean
+    dashboardRating?: boolean
+    maintenanceRating?: boolean
+    rentCollectionRating?: boolean
+    customerSupportRating?: boolean
+    monthlyReportRating?: boolean
+    wishEasier?: boolean
+    launchNotification?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["tenantSurvey"]>
+
+  export type TenantSurveySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    fullName?: boolean
+    email?: boolean
+    currentLocation?: boolean
+    rentingStatus?: boolean
+    housingType?: boolean
+    frustrations?: boolean
+    scamExperience?: boolean
+    scamDetails?: boolean
+    propertyListingRating?: boolean
+    dashboardRating?: boolean
+    maintenanceRating?: boolean
+    rentCollectionRating?: boolean
+    customerSupportRating?: boolean
+    monthlyReportRating?: boolean
+    wishEasier?: boolean
+    launchNotification?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["tenantSurvey"]>
+
+  export type TenantSurveySelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    fullName?: boolean
+    email?: boolean
+    currentLocation?: boolean
+    rentingStatus?: boolean
+    housingType?: boolean
+    frustrations?: boolean
+    scamExperience?: boolean
+    scamDetails?: boolean
+    propertyListingRating?: boolean
+    dashboardRating?: boolean
+    maintenanceRating?: boolean
+    rentCollectionRating?: boolean
+    customerSupportRating?: boolean
+    monthlyReportRating?: boolean
+    wishEasier?: boolean
+    launchNotification?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["tenantSurvey"]>
+
+  export type TenantSurveySelectScalar = {
+    id?: boolean
+    fullName?: boolean
+    email?: boolean
+    currentLocation?: boolean
+    rentingStatus?: boolean
+    housingType?: boolean
+    frustrations?: boolean
+    scamExperience?: boolean
+    scamDetails?: boolean
+    propertyListingRating?: boolean
+    dashboardRating?: boolean
+    maintenanceRating?: boolean
+    rentCollectionRating?: boolean
+    customerSupportRating?: boolean
+    monthlyReportRating?: boolean
+    wishEasier?: boolean
+    launchNotification?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type TenantSurveyOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "fullName" | "email" | "currentLocation" | "rentingStatus" | "housingType" | "frustrations" | "scamExperience" | "scamDetails" | "propertyListingRating" | "dashboardRating" | "maintenanceRating" | "rentCollectionRating" | "customerSupportRating" | "monthlyReportRating" | "wishEasier" | "launchNotification" | "createdAt" | "updatedAt", ExtArgs["result"]["tenantSurvey"]>
+
+  export type $TenantSurveyPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "TenantSurvey"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      fullName: string
+      email: string
+      currentLocation: string
+      rentingStatus: string
+      housingType: string[]
+      frustrations: string[]
+      scamExperience: string
+      scamDetails: string | null
+      propertyListingRating: string
+      dashboardRating: string
+      maintenanceRating: string
+      rentCollectionRating: string
+      customerSupportRating: string
+      monthlyReportRating: string
+      wishEasier: string
+      launchNotification: string
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["tenantSurvey"]>
+    composites: {}
+  }
+
+  type TenantSurveyGetPayload<S extends boolean | null | undefined | TenantSurveyDefaultArgs> = $Result.GetResult<Prisma.$TenantSurveyPayload, S>
+
+  type TenantSurveyCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<TenantSurveyFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: TenantSurveyCountAggregateInputType | true
+    }
+
+  export interface TenantSurveyDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['TenantSurvey'], meta: { name: 'TenantSurvey' } }
+    /**
+     * Find zero or one TenantSurvey that matches the filter.
+     * @param {TenantSurveyFindUniqueArgs} args - Arguments to find a TenantSurvey
+     * @example
+     * // Get one TenantSurvey
+     * const tenantSurvey = await prisma.tenantSurvey.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends TenantSurveyFindUniqueArgs>(args: SelectSubset<T, TenantSurveyFindUniqueArgs<ExtArgs>>): Prisma__TenantSurveyClient<$Result.GetResult<Prisma.$TenantSurveyPayload<ExtArgs>, T, "findUnique", ClientOptions> | null, null, ExtArgs, ClientOptions>
+
+    /**
+     * Find one TenantSurvey that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {TenantSurveyFindUniqueOrThrowArgs} args - Arguments to find a TenantSurvey
+     * @example
+     * // Get one TenantSurvey
+     * const tenantSurvey = await prisma.tenantSurvey.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends TenantSurveyFindUniqueOrThrowArgs>(args: SelectSubset<T, TenantSurveyFindUniqueOrThrowArgs<ExtArgs>>): Prisma__TenantSurveyClient<$Result.GetResult<Prisma.$TenantSurveyPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Find the first TenantSurvey that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TenantSurveyFindFirstArgs} args - Arguments to find a TenantSurvey
+     * @example
+     * // Get one TenantSurvey
+     * const tenantSurvey = await prisma.tenantSurvey.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends TenantSurveyFindFirstArgs>(args?: SelectSubset<T, TenantSurveyFindFirstArgs<ExtArgs>>): Prisma__TenantSurveyClient<$Result.GetResult<Prisma.$TenantSurveyPayload<ExtArgs>, T, "findFirst", ClientOptions> | null, null, ExtArgs, ClientOptions>
+
+    /**
+     * Find the first TenantSurvey that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TenantSurveyFindFirstOrThrowArgs} args - Arguments to find a TenantSurvey
+     * @example
+     * // Get one TenantSurvey
+     * const tenantSurvey = await prisma.tenantSurvey.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends TenantSurveyFindFirstOrThrowArgs>(args?: SelectSubset<T, TenantSurveyFindFirstOrThrowArgs<ExtArgs>>): Prisma__TenantSurveyClient<$Result.GetResult<Prisma.$TenantSurveyPayload<ExtArgs>, T, "findFirstOrThrow", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Find zero or more TenantSurveys that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TenantSurveyFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all TenantSurveys
+     * const tenantSurveys = await prisma.tenantSurvey.findMany()
+     * 
+     * // Get first 10 TenantSurveys
+     * const tenantSurveys = await prisma.tenantSurvey.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const tenantSurveyWithIdOnly = await prisma.tenantSurvey.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends TenantSurveyFindManyArgs>(args?: SelectSubset<T, TenantSurveyFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TenantSurveyPayload<ExtArgs>, T, "findMany", ClientOptions>>
+
+    /**
+     * Create a TenantSurvey.
+     * @param {TenantSurveyCreateArgs} args - Arguments to create a TenantSurvey.
+     * @example
+     * // Create one TenantSurvey
+     * const TenantSurvey = await prisma.tenantSurvey.create({
+     *   data: {
+     *     // ... data to create a TenantSurvey
+     *   }
+     * })
+     * 
+     */
+    create<T extends TenantSurveyCreateArgs>(args: SelectSubset<T, TenantSurveyCreateArgs<ExtArgs>>): Prisma__TenantSurveyClient<$Result.GetResult<Prisma.$TenantSurveyPayload<ExtArgs>, T, "create", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Create many TenantSurveys.
+     * @param {TenantSurveyCreateManyArgs} args - Arguments to create many TenantSurveys.
+     * @example
+     * // Create many TenantSurveys
+     * const tenantSurvey = await prisma.tenantSurvey.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends TenantSurveyCreateManyArgs>(args?: SelectSubset<T, TenantSurveyCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many TenantSurveys and returns the data saved in the database.
+     * @param {TenantSurveyCreateManyAndReturnArgs} args - Arguments to create many TenantSurveys.
+     * @example
+     * // Create many TenantSurveys
+     * const tenantSurvey = await prisma.tenantSurvey.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many TenantSurveys and only return the `id`
+     * const tenantSurveyWithIdOnly = await prisma.tenantSurvey.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends TenantSurveyCreateManyAndReturnArgs>(args?: SelectSubset<T, TenantSurveyCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TenantSurveyPayload<ExtArgs>, T, "createManyAndReturn", ClientOptions>>
+
+    /**
+     * Delete a TenantSurvey.
+     * @param {TenantSurveyDeleteArgs} args - Arguments to delete one TenantSurvey.
+     * @example
+     * // Delete one TenantSurvey
+     * const TenantSurvey = await prisma.tenantSurvey.delete({
+     *   where: {
+     *     // ... filter to delete one TenantSurvey
+     *   }
+     * })
+     * 
+     */
+    delete<T extends TenantSurveyDeleteArgs>(args: SelectSubset<T, TenantSurveyDeleteArgs<ExtArgs>>): Prisma__TenantSurveyClient<$Result.GetResult<Prisma.$TenantSurveyPayload<ExtArgs>, T, "delete", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Update one TenantSurvey.
+     * @param {TenantSurveyUpdateArgs} args - Arguments to update one TenantSurvey.
+     * @example
+     * // Update one TenantSurvey
+     * const tenantSurvey = await prisma.tenantSurvey.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends TenantSurveyUpdateArgs>(args: SelectSubset<T, TenantSurveyUpdateArgs<ExtArgs>>): Prisma__TenantSurveyClient<$Result.GetResult<Prisma.$TenantSurveyPayload<ExtArgs>, T, "update", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Delete zero or more TenantSurveys.
+     * @param {TenantSurveyDeleteManyArgs} args - Arguments to filter TenantSurveys to delete.
+     * @example
+     * // Delete a few TenantSurveys
+     * const { count } = await prisma.tenantSurvey.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends TenantSurveyDeleteManyArgs>(args?: SelectSubset<T, TenantSurveyDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more TenantSurveys.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TenantSurveyUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many TenantSurveys
+     * const tenantSurvey = await prisma.tenantSurvey.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends TenantSurveyUpdateManyArgs>(args: SelectSubset<T, TenantSurveyUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more TenantSurveys and returns the data updated in the database.
+     * @param {TenantSurveyUpdateManyAndReturnArgs} args - Arguments to update many TenantSurveys.
+     * @example
+     * // Update many TenantSurveys
+     * const tenantSurvey = await prisma.tenantSurvey.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more TenantSurveys and only return the `id`
+     * const tenantSurveyWithIdOnly = await prisma.tenantSurvey.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends TenantSurveyUpdateManyAndReturnArgs>(args: SelectSubset<T, TenantSurveyUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TenantSurveyPayload<ExtArgs>, T, "updateManyAndReturn", ClientOptions>>
+
+    /**
+     * Create or update one TenantSurvey.
+     * @param {TenantSurveyUpsertArgs} args - Arguments to update or create a TenantSurvey.
+     * @example
+     * // Update or create a TenantSurvey
+     * const tenantSurvey = await prisma.tenantSurvey.upsert({
+     *   create: {
+     *     // ... data to create a TenantSurvey
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the TenantSurvey we want to update
+     *   }
+     * })
+     */
+    upsert<T extends TenantSurveyUpsertArgs>(args: SelectSubset<T, TenantSurveyUpsertArgs<ExtArgs>>): Prisma__TenantSurveyClient<$Result.GetResult<Prisma.$TenantSurveyPayload<ExtArgs>, T, "upsert", ClientOptions>, never, ExtArgs, ClientOptions>
+
+
+    /**
+     * Count the number of TenantSurveys.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TenantSurveyCountArgs} args - Arguments to filter TenantSurveys to count.
+     * @example
+     * // Count the number of TenantSurveys
+     * const count = await prisma.tenantSurvey.count({
+     *   where: {
+     *     // ... the filter for the TenantSurveys we want to count
+     *   }
+     * })
+    **/
+    count<T extends TenantSurveyCountArgs>(
+      args?: Subset<T, TenantSurveyCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], TenantSurveyCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a TenantSurvey.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TenantSurveyAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends TenantSurveyAggregateArgs>(args: Subset<T, TenantSurveyAggregateArgs>): Prisma.PrismaPromise<GetTenantSurveyAggregateType<T>>
+
+    /**
+     * Group by TenantSurvey.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TenantSurveyGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends TenantSurveyGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: TenantSurveyGroupByArgs['orderBy'] }
+        : { orderBy?: TenantSurveyGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, TenantSurveyGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetTenantSurveyGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the TenantSurvey model
+   */
+  readonly fields: TenantSurveyFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for TenantSurvey.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__TenantSurveyClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the TenantSurvey model
+   */ 
+  interface TenantSurveyFieldRefs {
+    readonly id: FieldRef<"TenantSurvey", 'Int'>
+    readonly fullName: FieldRef<"TenantSurvey", 'String'>
+    readonly email: FieldRef<"TenantSurvey", 'String'>
+    readonly currentLocation: FieldRef<"TenantSurvey", 'String'>
+    readonly rentingStatus: FieldRef<"TenantSurvey", 'String'>
+    readonly housingType: FieldRef<"TenantSurvey", 'String[]'>
+    readonly frustrations: FieldRef<"TenantSurvey", 'String[]'>
+    readonly scamExperience: FieldRef<"TenantSurvey", 'String'>
+    readonly scamDetails: FieldRef<"TenantSurvey", 'String'>
+    readonly propertyListingRating: FieldRef<"TenantSurvey", 'String'>
+    readonly dashboardRating: FieldRef<"TenantSurvey", 'String'>
+    readonly maintenanceRating: FieldRef<"TenantSurvey", 'String'>
+    readonly rentCollectionRating: FieldRef<"TenantSurvey", 'String'>
+    readonly customerSupportRating: FieldRef<"TenantSurvey", 'String'>
+    readonly monthlyReportRating: FieldRef<"TenantSurvey", 'String'>
+    readonly wishEasier: FieldRef<"TenantSurvey", 'String'>
+    readonly launchNotification: FieldRef<"TenantSurvey", 'String'>
+    readonly createdAt: FieldRef<"TenantSurvey", 'DateTime'>
+    readonly updatedAt: FieldRef<"TenantSurvey", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * TenantSurvey findUnique
+   */
+  export type TenantSurveyFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TenantSurvey
+     */
+    select?: TenantSurveySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TenantSurvey
+     */
+    omit?: TenantSurveyOmit<ExtArgs> | null
+    /**
+     * Filter, which TenantSurvey to fetch.
+     */
+    where: TenantSurveyWhereUniqueInput
+  }
+
+  /**
+   * TenantSurvey findUniqueOrThrow
+   */
+  export type TenantSurveyFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TenantSurvey
+     */
+    select?: TenantSurveySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TenantSurvey
+     */
+    omit?: TenantSurveyOmit<ExtArgs> | null
+    /**
+     * Filter, which TenantSurvey to fetch.
+     */
+    where: TenantSurveyWhereUniqueInput
+  }
+
+  /**
+   * TenantSurvey findFirst
+   */
+  export type TenantSurveyFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TenantSurvey
+     */
+    select?: TenantSurveySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TenantSurvey
+     */
+    omit?: TenantSurveyOmit<ExtArgs> | null
+    /**
+     * Filter, which TenantSurvey to fetch.
+     */
+    where?: TenantSurveyWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TenantSurveys to fetch.
+     */
+    orderBy?: TenantSurveyOrderByWithRelationInput | TenantSurveyOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for TenantSurveys.
+     */
+    cursor?: TenantSurveyWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TenantSurveys from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TenantSurveys.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of TenantSurveys.
+     */
+    distinct?: TenantSurveyScalarFieldEnum | TenantSurveyScalarFieldEnum[]
+  }
+
+  /**
+   * TenantSurvey findFirstOrThrow
+   */
+  export type TenantSurveyFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TenantSurvey
+     */
+    select?: TenantSurveySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TenantSurvey
+     */
+    omit?: TenantSurveyOmit<ExtArgs> | null
+    /**
+     * Filter, which TenantSurvey to fetch.
+     */
+    where?: TenantSurveyWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TenantSurveys to fetch.
+     */
+    orderBy?: TenantSurveyOrderByWithRelationInput | TenantSurveyOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for TenantSurveys.
+     */
+    cursor?: TenantSurveyWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TenantSurveys from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TenantSurveys.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of TenantSurveys.
+     */
+    distinct?: TenantSurveyScalarFieldEnum | TenantSurveyScalarFieldEnum[]
+  }
+
+  /**
+   * TenantSurvey findMany
+   */
+  export type TenantSurveyFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TenantSurvey
+     */
+    select?: TenantSurveySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TenantSurvey
+     */
+    omit?: TenantSurveyOmit<ExtArgs> | null
+    /**
+     * Filter, which TenantSurveys to fetch.
+     */
+    where?: TenantSurveyWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TenantSurveys to fetch.
+     */
+    orderBy?: TenantSurveyOrderByWithRelationInput | TenantSurveyOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing TenantSurveys.
+     */
+    cursor?: TenantSurveyWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TenantSurveys from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TenantSurveys.
+     */
+    skip?: number
+    distinct?: TenantSurveyScalarFieldEnum | TenantSurveyScalarFieldEnum[]
+  }
+
+  /**
+   * TenantSurvey create
+   */
+  export type TenantSurveyCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TenantSurvey
+     */
+    select?: TenantSurveySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TenantSurvey
+     */
+    omit?: TenantSurveyOmit<ExtArgs> | null
+    /**
+     * The data needed to create a TenantSurvey.
+     */
+    data: XOR<TenantSurveyCreateInput, TenantSurveyUncheckedCreateInput>
+  }
+
+  /**
+   * TenantSurvey createMany
+   */
+  export type TenantSurveyCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many TenantSurveys.
+     */
+    data: TenantSurveyCreateManyInput | TenantSurveyCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * TenantSurvey createManyAndReturn
+   */
+  export type TenantSurveyCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TenantSurvey
+     */
+    select?: TenantSurveySelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the TenantSurvey
+     */
+    omit?: TenantSurveyOmit<ExtArgs> | null
+    /**
+     * The data used to create many TenantSurveys.
+     */
+    data: TenantSurveyCreateManyInput | TenantSurveyCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * TenantSurvey update
+   */
+  export type TenantSurveyUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TenantSurvey
+     */
+    select?: TenantSurveySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TenantSurvey
+     */
+    omit?: TenantSurveyOmit<ExtArgs> | null
+    /**
+     * The data needed to update a TenantSurvey.
+     */
+    data: XOR<TenantSurveyUpdateInput, TenantSurveyUncheckedUpdateInput>
+    /**
+     * Choose, which TenantSurvey to update.
+     */
+    where: TenantSurveyWhereUniqueInput
+  }
+
+  /**
+   * TenantSurvey updateMany
+   */
+  export type TenantSurveyUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update TenantSurveys.
+     */
+    data: XOR<TenantSurveyUpdateManyMutationInput, TenantSurveyUncheckedUpdateManyInput>
+    /**
+     * Filter which TenantSurveys to update
+     */
+    where?: TenantSurveyWhereInput
+    /**
+     * Limit how many TenantSurveys to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * TenantSurvey updateManyAndReturn
+   */
+  export type TenantSurveyUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TenantSurvey
+     */
+    select?: TenantSurveySelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the TenantSurvey
+     */
+    omit?: TenantSurveyOmit<ExtArgs> | null
+    /**
+     * The data used to update TenantSurveys.
+     */
+    data: XOR<TenantSurveyUpdateManyMutationInput, TenantSurveyUncheckedUpdateManyInput>
+    /**
+     * Filter which TenantSurveys to update
+     */
+    where?: TenantSurveyWhereInput
+    /**
+     * Limit how many TenantSurveys to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * TenantSurvey upsert
+   */
+  export type TenantSurveyUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TenantSurvey
+     */
+    select?: TenantSurveySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TenantSurvey
+     */
+    omit?: TenantSurveyOmit<ExtArgs> | null
+    /**
+     * The filter to search for the TenantSurvey to update in case it exists.
+     */
+    where: TenantSurveyWhereUniqueInput
+    /**
+     * In case the TenantSurvey found by the `where` argument doesn't exist, create a new TenantSurvey with this data.
+     */
+    create: XOR<TenantSurveyCreateInput, TenantSurveyUncheckedCreateInput>
+    /**
+     * In case the TenantSurvey was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<TenantSurveyUpdateInput, TenantSurveyUncheckedUpdateInput>
+  }
+
+  /**
+   * TenantSurvey delete
+   */
+  export type TenantSurveyDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TenantSurvey
+     */
+    select?: TenantSurveySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TenantSurvey
+     */
+    omit?: TenantSurveyOmit<ExtArgs> | null
+    /**
+     * Filter which TenantSurvey to delete.
+     */
+    where: TenantSurveyWhereUniqueInput
+  }
+
+  /**
+   * TenantSurvey deleteMany
+   */
+  export type TenantSurveyDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which TenantSurveys to delete
+     */
+    where?: TenantSurveyWhereInput
+    /**
+     * Limit how many TenantSurveys to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * TenantSurvey without action
+   */
+  export type TenantSurveyDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TenantSurvey
+     */
+    select?: TenantSurveySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TenantSurvey
+     */
+    omit?: TenantSurveyOmit<ExtArgs> | null
+  }
+
+
+  /**
+   * Model LandlordSurvey
+   */
+
+  export type AggregateLandlordSurvey = {
+    _count: LandlordSurveyCountAggregateOutputType | null
+    _avg: LandlordSurveyAvgAggregateOutputType | null
+    _sum: LandlordSurveySumAggregateOutputType | null
+    _min: LandlordSurveyMinAggregateOutputType | null
+    _max: LandlordSurveyMaxAggregateOutputType | null
+  }
+
+  export type LandlordSurveyAvgAggregateOutputType = {
+    id: number | null
+  }
+
+  export type LandlordSurveySumAggregateOutputType = {
+    id: number | null
+  }
+
+  export type LandlordSurveyMinAggregateOutputType = {
+    id: number | null
+    fullName: string | null
+    email: string | null
+    propertyLocation: string | null
+    numberOfProperties: string | null
+    agentIssues: string | null
+    platformInterest: string | null
+    propertyListingRating: string | null
+    dashboardRating: string | null
+    maintenanceRating: string | null
+    rentCollectionRating: string | null
+    customerSupportRating: string | null
+    monthlyReportRating: string | null
+    wishEasier: string | null
+    launchNotification: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type LandlordSurveyMaxAggregateOutputType = {
+    id: number | null
+    fullName: string | null
+    email: string | null
+    propertyLocation: string | null
+    numberOfProperties: string | null
+    agentIssues: string | null
+    platformInterest: string | null
+    propertyListingRating: string | null
+    dashboardRating: string | null
+    maintenanceRating: string | null
+    rentCollectionRating: string | null
+    customerSupportRating: string | null
+    monthlyReportRating: string | null
+    wishEasier: string | null
+    launchNotification: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type LandlordSurveyCountAggregateOutputType = {
+    id: number
+    fullName: number
+    email: number
+    propertyLocation: number
+    numberOfProperties: number
+    propertyTypes: number
+    tenantManagement: number
+    biggestChallenges: number
+    agentIssues: number
+    platformInterest: number
+    propertyListingRating: number
+    dashboardRating: number
+    maintenanceRating: number
+    rentCollectionRating: number
+    customerSupportRating: number
+    monthlyReportRating: number
+    wishEasier: number
+    launchNotification: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type LandlordSurveyAvgAggregateInputType = {
+    id?: true
+  }
+
+  export type LandlordSurveySumAggregateInputType = {
+    id?: true
+  }
+
+  export type LandlordSurveyMinAggregateInputType = {
+    id?: true
+    fullName?: true
+    email?: true
+    propertyLocation?: true
+    numberOfProperties?: true
+    agentIssues?: true
+    platformInterest?: true
+    propertyListingRating?: true
+    dashboardRating?: true
+    maintenanceRating?: true
+    rentCollectionRating?: true
+    customerSupportRating?: true
+    monthlyReportRating?: true
+    wishEasier?: true
+    launchNotification?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type LandlordSurveyMaxAggregateInputType = {
+    id?: true
+    fullName?: true
+    email?: true
+    propertyLocation?: true
+    numberOfProperties?: true
+    agentIssues?: true
+    platformInterest?: true
+    propertyListingRating?: true
+    dashboardRating?: true
+    maintenanceRating?: true
+    rentCollectionRating?: true
+    customerSupportRating?: true
+    monthlyReportRating?: true
+    wishEasier?: true
+    launchNotification?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type LandlordSurveyCountAggregateInputType = {
+    id?: true
+    fullName?: true
+    email?: true
+    propertyLocation?: true
+    numberOfProperties?: true
+    propertyTypes?: true
+    tenantManagement?: true
+    biggestChallenges?: true
+    agentIssues?: true
+    platformInterest?: true
+    propertyListingRating?: true
+    dashboardRating?: true
+    maintenanceRating?: true
+    rentCollectionRating?: true
+    customerSupportRating?: true
+    monthlyReportRating?: true
+    wishEasier?: true
+    launchNotification?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type LandlordSurveyAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which LandlordSurvey to aggregate.
+     */
+    where?: LandlordSurveyWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LandlordSurveys to fetch.
+     */
+    orderBy?: LandlordSurveyOrderByWithRelationInput | LandlordSurveyOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: LandlordSurveyWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LandlordSurveys from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LandlordSurveys.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned LandlordSurveys
+    **/
+    _count?: true | LandlordSurveyCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: LandlordSurveyAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: LandlordSurveySumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: LandlordSurveyMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: LandlordSurveyMaxAggregateInputType
+  }
+
+  export type GetLandlordSurveyAggregateType<T extends LandlordSurveyAggregateArgs> = {
+        [P in keyof T & keyof AggregateLandlordSurvey]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateLandlordSurvey[P]>
+      : GetScalarType<T[P], AggregateLandlordSurvey[P]>
+  }
+
+
+
+
+  export type LandlordSurveyGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: LandlordSurveyWhereInput
+    orderBy?: LandlordSurveyOrderByWithAggregationInput | LandlordSurveyOrderByWithAggregationInput[]
+    by: LandlordSurveyScalarFieldEnum[] | LandlordSurveyScalarFieldEnum
+    having?: LandlordSurveyScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: LandlordSurveyCountAggregateInputType | true
+    _avg?: LandlordSurveyAvgAggregateInputType
+    _sum?: LandlordSurveySumAggregateInputType
+    _min?: LandlordSurveyMinAggregateInputType
+    _max?: LandlordSurveyMaxAggregateInputType
+  }
+
+  export type LandlordSurveyGroupByOutputType = {
+    id: number
+    fullName: string
+    email: string
+    propertyLocation: string
+    numberOfProperties: string
+    propertyTypes: string[]
+    tenantManagement: string[]
+    biggestChallenges: string[]
+    agentIssues: string
+    platformInterest: string
+    propertyListingRating: string
+    dashboardRating: string
+    maintenanceRating: string
+    rentCollectionRating: string
+    customerSupportRating: string
+    monthlyReportRating: string
+    wishEasier: string
+    launchNotification: string
+    createdAt: Date
+    updatedAt: Date
+    _count: LandlordSurveyCountAggregateOutputType | null
+    _avg: LandlordSurveyAvgAggregateOutputType | null
+    _sum: LandlordSurveySumAggregateOutputType | null
+    _min: LandlordSurveyMinAggregateOutputType | null
+    _max: LandlordSurveyMaxAggregateOutputType | null
+  }
+
+  type GetLandlordSurveyGroupByPayload<T extends LandlordSurveyGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<LandlordSurveyGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof LandlordSurveyGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], LandlordSurveyGroupByOutputType[P]>
+            : GetScalarType<T[P], LandlordSurveyGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type LandlordSurveySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    fullName?: boolean
+    email?: boolean
+    propertyLocation?: boolean
+    numberOfProperties?: boolean
+    propertyTypes?: boolean
+    tenantManagement?: boolean
+    biggestChallenges?: boolean
+    agentIssues?: boolean
+    platformInterest?: boolean
+    propertyListingRating?: boolean
+    dashboardRating?: boolean
+    maintenanceRating?: boolean
+    rentCollectionRating?: boolean
+    customerSupportRating?: boolean
+    monthlyReportRating?: boolean
+    wishEasier?: boolean
+    launchNotification?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["landlordSurvey"]>
+
+  export type LandlordSurveySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    fullName?: boolean
+    email?: boolean
+    propertyLocation?: boolean
+    numberOfProperties?: boolean
+    propertyTypes?: boolean
+    tenantManagement?: boolean
+    biggestChallenges?: boolean
+    agentIssues?: boolean
+    platformInterest?: boolean
+    propertyListingRating?: boolean
+    dashboardRating?: boolean
+    maintenanceRating?: boolean
+    rentCollectionRating?: boolean
+    customerSupportRating?: boolean
+    monthlyReportRating?: boolean
+    wishEasier?: boolean
+    launchNotification?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["landlordSurvey"]>
+
+  export type LandlordSurveySelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    fullName?: boolean
+    email?: boolean
+    propertyLocation?: boolean
+    numberOfProperties?: boolean
+    propertyTypes?: boolean
+    tenantManagement?: boolean
+    biggestChallenges?: boolean
+    agentIssues?: boolean
+    platformInterest?: boolean
+    propertyListingRating?: boolean
+    dashboardRating?: boolean
+    maintenanceRating?: boolean
+    rentCollectionRating?: boolean
+    customerSupportRating?: boolean
+    monthlyReportRating?: boolean
+    wishEasier?: boolean
+    launchNotification?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["landlordSurvey"]>
+
+  export type LandlordSurveySelectScalar = {
+    id?: boolean
+    fullName?: boolean
+    email?: boolean
+    propertyLocation?: boolean
+    numberOfProperties?: boolean
+    propertyTypes?: boolean
+    tenantManagement?: boolean
+    biggestChallenges?: boolean
+    agentIssues?: boolean
+    platformInterest?: boolean
+    propertyListingRating?: boolean
+    dashboardRating?: boolean
+    maintenanceRating?: boolean
+    rentCollectionRating?: boolean
+    customerSupportRating?: boolean
+    monthlyReportRating?: boolean
+    wishEasier?: boolean
+    launchNotification?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type LandlordSurveyOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "fullName" | "email" | "propertyLocation" | "numberOfProperties" | "propertyTypes" | "tenantManagement" | "biggestChallenges" | "agentIssues" | "platformInterest" | "propertyListingRating" | "dashboardRating" | "maintenanceRating" | "rentCollectionRating" | "customerSupportRating" | "monthlyReportRating" | "wishEasier" | "launchNotification" | "createdAt" | "updatedAt", ExtArgs["result"]["landlordSurvey"]>
+
+  export type $LandlordSurveyPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "LandlordSurvey"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      fullName: string
+      email: string
+      propertyLocation: string
+      numberOfProperties: string
+      propertyTypes: string[]
+      tenantManagement: string[]
+      biggestChallenges: string[]
+      agentIssues: string
+      platformInterest: string
+      propertyListingRating: string
+      dashboardRating: string
+      maintenanceRating: string
+      rentCollectionRating: string
+      customerSupportRating: string
+      monthlyReportRating: string
+      wishEasier: string
+      launchNotification: string
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["landlordSurvey"]>
+    composites: {}
+  }
+
+  type LandlordSurveyGetPayload<S extends boolean | null | undefined | LandlordSurveyDefaultArgs> = $Result.GetResult<Prisma.$LandlordSurveyPayload, S>
+
+  type LandlordSurveyCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<LandlordSurveyFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: LandlordSurveyCountAggregateInputType | true
+    }
+
+  export interface LandlordSurveyDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['LandlordSurvey'], meta: { name: 'LandlordSurvey' } }
+    /**
+     * Find zero or one LandlordSurvey that matches the filter.
+     * @param {LandlordSurveyFindUniqueArgs} args - Arguments to find a LandlordSurvey
+     * @example
+     * // Get one LandlordSurvey
+     * const landlordSurvey = await prisma.landlordSurvey.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends LandlordSurveyFindUniqueArgs>(args: SelectSubset<T, LandlordSurveyFindUniqueArgs<ExtArgs>>): Prisma__LandlordSurveyClient<$Result.GetResult<Prisma.$LandlordSurveyPayload<ExtArgs>, T, "findUnique", ClientOptions> | null, null, ExtArgs, ClientOptions>
+
+    /**
+     * Find one LandlordSurvey that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {LandlordSurveyFindUniqueOrThrowArgs} args - Arguments to find a LandlordSurvey
+     * @example
+     * // Get one LandlordSurvey
+     * const landlordSurvey = await prisma.landlordSurvey.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends LandlordSurveyFindUniqueOrThrowArgs>(args: SelectSubset<T, LandlordSurveyFindUniqueOrThrowArgs<ExtArgs>>): Prisma__LandlordSurveyClient<$Result.GetResult<Prisma.$LandlordSurveyPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Find the first LandlordSurvey that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LandlordSurveyFindFirstArgs} args - Arguments to find a LandlordSurvey
+     * @example
+     * // Get one LandlordSurvey
+     * const landlordSurvey = await prisma.landlordSurvey.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends LandlordSurveyFindFirstArgs>(args?: SelectSubset<T, LandlordSurveyFindFirstArgs<ExtArgs>>): Prisma__LandlordSurveyClient<$Result.GetResult<Prisma.$LandlordSurveyPayload<ExtArgs>, T, "findFirst", ClientOptions> | null, null, ExtArgs, ClientOptions>
+
+    /**
+     * Find the first LandlordSurvey that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LandlordSurveyFindFirstOrThrowArgs} args - Arguments to find a LandlordSurvey
+     * @example
+     * // Get one LandlordSurvey
+     * const landlordSurvey = await prisma.landlordSurvey.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends LandlordSurveyFindFirstOrThrowArgs>(args?: SelectSubset<T, LandlordSurveyFindFirstOrThrowArgs<ExtArgs>>): Prisma__LandlordSurveyClient<$Result.GetResult<Prisma.$LandlordSurveyPayload<ExtArgs>, T, "findFirstOrThrow", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Find zero or more LandlordSurveys that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LandlordSurveyFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all LandlordSurveys
+     * const landlordSurveys = await prisma.landlordSurvey.findMany()
+     * 
+     * // Get first 10 LandlordSurveys
+     * const landlordSurveys = await prisma.landlordSurvey.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const landlordSurveyWithIdOnly = await prisma.landlordSurvey.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends LandlordSurveyFindManyArgs>(args?: SelectSubset<T, LandlordSurveyFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LandlordSurveyPayload<ExtArgs>, T, "findMany", ClientOptions>>
+
+    /**
+     * Create a LandlordSurvey.
+     * @param {LandlordSurveyCreateArgs} args - Arguments to create a LandlordSurvey.
+     * @example
+     * // Create one LandlordSurvey
+     * const LandlordSurvey = await prisma.landlordSurvey.create({
+     *   data: {
+     *     // ... data to create a LandlordSurvey
+     *   }
+     * })
+     * 
+     */
+    create<T extends LandlordSurveyCreateArgs>(args: SelectSubset<T, LandlordSurveyCreateArgs<ExtArgs>>): Prisma__LandlordSurveyClient<$Result.GetResult<Prisma.$LandlordSurveyPayload<ExtArgs>, T, "create", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Create many LandlordSurveys.
+     * @param {LandlordSurveyCreateManyArgs} args - Arguments to create many LandlordSurveys.
+     * @example
+     * // Create many LandlordSurveys
+     * const landlordSurvey = await prisma.landlordSurvey.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends LandlordSurveyCreateManyArgs>(args?: SelectSubset<T, LandlordSurveyCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many LandlordSurveys and returns the data saved in the database.
+     * @param {LandlordSurveyCreateManyAndReturnArgs} args - Arguments to create many LandlordSurveys.
+     * @example
+     * // Create many LandlordSurveys
+     * const landlordSurvey = await prisma.landlordSurvey.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many LandlordSurveys and only return the `id`
+     * const landlordSurveyWithIdOnly = await prisma.landlordSurvey.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends LandlordSurveyCreateManyAndReturnArgs>(args?: SelectSubset<T, LandlordSurveyCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LandlordSurveyPayload<ExtArgs>, T, "createManyAndReturn", ClientOptions>>
+
+    /**
+     * Delete a LandlordSurvey.
+     * @param {LandlordSurveyDeleteArgs} args - Arguments to delete one LandlordSurvey.
+     * @example
+     * // Delete one LandlordSurvey
+     * const LandlordSurvey = await prisma.landlordSurvey.delete({
+     *   where: {
+     *     // ... filter to delete one LandlordSurvey
+     *   }
+     * })
+     * 
+     */
+    delete<T extends LandlordSurveyDeleteArgs>(args: SelectSubset<T, LandlordSurveyDeleteArgs<ExtArgs>>): Prisma__LandlordSurveyClient<$Result.GetResult<Prisma.$LandlordSurveyPayload<ExtArgs>, T, "delete", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Update one LandlordSurvey.
+     * @param {LandlordSurveyUpdateArgs} args - Arguments to update one LandlordSurvey.
+     * @example
+     * // Update one LandlordSurvey
+     * const landlordSurvey = await prisma.landlordSurvey.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends LandlordSurveyUpdateArgs>(args: SelectSubset<T, LandlordSurveyUpdateArgs<ExtArgs>>): Prisma__LandlordSurveyClient<$Result.GetResult<Prisma.$LandlordSurveyPayload<ExtArgs>, T, "update", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Delete zero or more LandlordSurveys.
+     * @param {LandlordSurveyDeleteManyArgs} args - Arguments to filter LandlordSurveys to delete.
+     * @example
+     * // Delete a few LandlordSurveys
+     * const { count } = await prisma.landlordSurvey.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends LandlordSurveyDeleteManyArgs>(args?: SelectSubset<T, LandlordSurveyDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more LandlordSurveys.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LandlordSurveyUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many LandlordSurveys
+     * const landlordSurvey = await prisma.landlordSurvey.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends LandlordSurveyUpdateManyArgs>(args: SelectSubset<T, LandlordSurveyUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more LandlordSurveys and returns the data updated in the database.
+     * @param {LandlordSurveyUpdateManyAndReturnArgs} args - Arguments to update many LandlordSurveys.
+     * @example
+     * // Update many LandlordSurveys
+     * const landlordSurvey = await prisma.landlordSurvey.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more LandlordSurveys and only return the `id`
+     * const landlordSurveyWithIdOnly = await prisma.landlordSurvey.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends LandlordSurveyUpdateManyAndReturnArgs>(args: SelectSubset<T, LandlordSurveyUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LandlordSurveyPayload<ExtArgs>, T, "updateManyAndReturn", ClientOptions>>
+
+    /**
+     * Create or update one LandlordSurvey.
+     * @param {LandlordSurveyUpsertArgs} args - Arguments to update or create a LandlordSurvey.
+     * @example
+     * // Update or create a LandlordSurvey
+     * const landlordSurvey = await prisma.landlordSurvey.upsert({
+     *   create: {
+     *     // ... data to create a LandlordSurvey
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the LandlordSurvey we want to update
+     *   }
+     * })
+     */
+    upsert<T extends LandlordSurveyUpsertArgs>(args: SelectSubset<T, LandlordSurveyUpsertArgs<ExtArgs>>): Prisma__LandlordSurveyClient<$Result.GetResult<Prisma.$LandlordSurveyPayload<ExtArgs>, T, "upsert", ClientOptions>, never, ExtArgs, ClientOptions>
+
+
+    /**
+     * Count the number of LandlordSurveys.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LandlordSurveyCountArgs} args - Arguments to filter LandlordSurveys to count.
+     * @example
+     * // Count the number of LandlordSurveys
+     * const count = await prisma.landlordSurvey.count({
+     *   where: {
+     *     // ... the filter for the LandlordSurveys we want to count
+     *   }
+     * })
+    **/
+    count<T extends LandlordSurveyCountArgs>(
+      args?: Subset<T, LandlordSurveyCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], LandlordSurveyCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a LandlordSurvey.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LandlordSurveyAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends LandlordSurveyAggregateArgs>(args: Subset<T, LandlordSurveyAggregateArgs>): Prisma.PrismaPromise<GetLandlordSurveyAggregateType<T>>
+
+    /**
+     * Group by LandlordSurvey.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LandlordSurveyGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends LandlordSurveyGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: LandlordSurveyGroupByArgs['orderBy'] }
+        : { orderBy?: LandlordSurveyGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, LandlordSurveyGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetLandlordSurveyGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the LandlordSurvey model
+   */
+  readonly fields: LandlordSurveyFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for LandlordSurvey.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__LandlordSurveyClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the LandlordSurvey model
+   */ 
+  interface LandlordSurveyFieldRefs {
+    readonly id: FieldRef<"LandlordSurvey", 'Int'>
+    readonly fullName: FieldRef<"LandlordSurvey", 'String'>
+    readonly email: FieldRef<"LandlordSurvey", 'String'>
+    readonly propertyLocation: FieldRef<"LandlordSurvey", 'String'>
+    readonly numberOfProperties: FieldRef<"LandlordSurvey", 'String'>
+    readonly propertyTypes: FieldRef<"LandlordSurvey", 'String[]'>
+    readonly tenantManagement: FieldRef<"LandlordSurvey", 'String[]'>
+    readonly biggestChallenges: FieldRef<"LandlordSurvey", 'String[]'>
+    readonly agentIssues: FieldRef<"LandlordSurvey", 'String'>
+    readonly platformInterest: FieldRef<"LandlordSurvey", 'String'>
+    readonly propertyListingRating: FieldRef<"LandlordSurvey", 'String'>
+    readonly dashboardRating: FieldRef<"LandlordSurvey", 'String'>
+    readonly maintenanceRating: FieldRef<"LandlordSurvey", 'String'>
+    readonly rentCollectionRating: FieldRef<"LandlordSurvey", 'String'>
+    readonly customerSupportRating: FieldRef<"LandlordSurvey", 'String'>
+    readonly monthlyReportRating: FieldRef<"LandlordSurvey", 'String'>
+    readonly wishEasier: FieldRef<"LandlordSurvey", 'String'>
+    readonly launchNotification: FieldRef<"LandlordSurvey", 'String'>
+    readonly createdAt: FieldRef<"LandlordSurvey", 'DateTime'>
+    readonly updatedAt: FieldRef<"LandlordSurvey", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * LandlordSurvey findUnique
+   */
+  export type LandlordSurveyFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LandlordSurvey
+     */
+    select?: LandlordSurveySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LandlordSurvey
+     */
+    omit?: LandlordSurveyOmit<ExtArgs> | null
+    /**
+     * Filter, which LandlordSurvey to fetch.
+     */
+    where: LandlordSurveyWhereUniqueInput
+  }
+
+  /**
+   * LandlordSurvey findUniqueOrThrow
+   */
+  export type LandlordSurveyFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LandlordSurvey
+     */
+    select?: LandlordSurveySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LandlordSurvey
+     */
+    omit?: LandlordSurveyOmit<ExtArgs> | null
+    /**
+     * Filter, which LandlordSurvey to fetch.
+     */
+    where: LandlordSurveyWhereUniqueInput
+  }
+
+  /**
+   * LandlordSurvey findFirst
+   */
+  export type LandlordSurveyFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LandlordSurvey
+     */
+    select?: LandlordSurveySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LandlordSurvey
+     */
+    omit?: LandlordSurveyOmit<ExtArgs> | null
+    /**
+     * Filter, which LandlordSurvey to fetch.
+     */
+    where?: LandlordSurveyWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LandlordSurveys to fetch.
+     */
+    orderBy?: LandlordSurveyOrderByWithRelationInput | LandlordSurveyOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for LandlordSurveys.
+     */
+    cursor?: LandlordSurveyWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LandlordSurveys from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LandlordSurveys.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of LandlordSurveys.
+     */
+    distinct?: LandlordSurveyScalarFieldEnum | LandlordSurveyScalarFieldEnum[]
+  }
+
+  /**
+   * LandlordSurvey findFirstOrThrow
+   */
+  export type LandlordSurveyFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LandlordSurvey
+     */
+    select?: LandlordSurveySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LandlordSurvey
+     */
+    omit?: LandlordSurveyOmit<ExtArgs> | null
+    /**
+     * Filter, which LandlordSurvey to fetch.
+     */
+    where?: LandlordSurveyWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LandlordSurveys to fetch.
+     */
+    orderBy?: LandlordSurveyOrderByWithRelationInput | LandlordSurveyOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for LandlordSurveys.
+     */
+    cursor?: LandlordSurveyWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LandlordSurveys from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LandlordSurveys.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of LandlordSurveys.
+     */
+    distinct?: LandlordSurveyScalarFieldEnum | LandlordSurveyScalarFieldEnum[]
+  }
+
+  /**
+   * LandlordSurvey findMany
+   */
+  export type LandlordSurveyFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LandlordSurvey
+     */
+    select?: LandlordSurveySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LandlordSurvey
+     */
+    omit?: LandlordSurveyOmit<ExtArgs> | null
+    /**
+     * Filter, which LandlordSurveys to fetch.
+     */
+    where?: LandlordSurveyWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LandlordSurveys to fetch.
+     */
+    orderBy?: LandlordSurveyOrderByWithRelationInput | LandlordSurveyOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing LandlordSurveys.
+     */
+    cursor?: LandlordSurveyWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LandlordSurveys from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LandlordSurveys.
+     */
+    skip?: number
+    distinct?: LandlordSurveyScalarFieldEnum | LandlordSurveyScalarFieldEnum[]
+  }
+
+  /**
+   * LandlordSurvey create
+   */
+  export type LandlordSurveyCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LandlordSurvey
+     */
+    select?: LandlordSurveySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LandlordSurvey
+     */
+    omit?: LandlordSurveyOmit<ExtArgs> | null
+    /**
+     * The data needed to create a LandlordSurvey.
+     */
+    data: XOR<LandlordSurveyCreateInput, LandlordSurveyUncheckedCreateInput>
+  }
+
+  /**
+   * LandlordSurvey createMany
+   */
+  export type LandlordSurveyCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many LandlordSurveys.
+     */
+    data: LandlordSurveyCreateManyInput | LandlordSurveyCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * LandlordSurvey createManyAndReturn
+   */
+  export type LandlordSurveyCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LandlordSurvey
+     */
+    select?: LandlordSurveySelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the LandlordSurvey
+     */
+    omit?: LandlordSurveyOmit<ExtArgs> | null
+    /**
+     * The data used to create many LandlordSurveys.
+     */
+    data: LandlordSurveyCreateManyInput | LandlordSurveyCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * LandlordSurvey update
+   */
+  export type LandlordSurveyUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LandlordSurvey
+     */
+    select?: LandlordSurveySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LandlordSurvey
+     */
+    omit?: LandlordSurveyOmit<ExtArgs> | null
+    /**
+     * The data needed to update a LandlordSurvey.
+     */
+    data: XOR<LandlordSurveyUpdateInput, LandlordSurveyUncheckedUpdateInput>
+    /**
+     * Choose, which LandlordSurvey to update.
+     */
+    where: LandlordSurveyWhereUniqueInput
+  }
+
+  /**
+   * LandlordSurvey updateMany
+   */
+  export type LandlordSurveyUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update LandlordSurveys.
+     */
+    data: XOR<LandlordSurveyUpdateManyMutationInput, LandlordSurveyUncheckedUpdateManyInput>
+    /**
+     * Filter which LandlordSurveys to update
+     */
+    where?: LandlordSurveyWhereInput
+    /**
+     * Limit how many LandlordSurveys to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * LandlordSurvey updateManyAndReturn
+   */
+  export type LandlordSurveyUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LandlordSurvey
+     */
+    select?: LandlordSurveySelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the LandlordSurvey
+     */
+    omit?: LandlordSurveyOmit<ExtArgs> | null
+    /**
+     * The data used to update LandlordSurveys.
+     */
+    data: XOR<LandlordSurveyUpdateManyMutationInput, LandlordSurveyUncheckedUpdateManyInput>
+    /**
+     * Filter which LandlordSurveys to update
+     */
+    where?: LandlordSurveyWhereInput
+    /**
+     * Limit how many LandlordSurveys to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * LandlordSurvey upsert
+   */
+  export type LandlordSurveyUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LandlordSurvey
+     */
+    select?: LandlordSurveySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LandlordSurvey
+     */
+    omit?: LandlordSurveyOmit<ExtArgs> | null
+    /**
+     * The filter to search for the LandlordSurvey to update in case it exists.
+     */
+    where: LandlordSurveyWhereUniqueInput
+    /**
+     * In case the LandlordSurvey found by the `where` argument doesn't exist, create a new LandlordSurvey with this data.
+     */
+    create: XOR<LandlordSurveyCreateInput, LandlordSurveyUncheckedCreateInput>
+    /**
+     * In case the LandlordSurvey was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<LandlordSurveyUpdateInput, LandlordSurveyUncheckedUpdateInput>
+  }
+
+  /**
+   * LandlordSurvey delete
+   */
+  export type LandlordSurveyDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LandlordSurvey
+     */
+    select?: LandlordSurveySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LandlordSurvey
+     */
+    omit?: LandlordSurveyOmit<ExtArgs> | null
+    /**
+     * Filter which LandlordSurvey to delete.
+     */
+    where: LandlordSurveyWhereUniqueInput
+  }
+
+  /**
+   * LandlordSurvey deleteMany
+   */
+  export type LandlordSurveyDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which LandlordSurveys to delete
+     */
+    where?: LandlordSurveyWhereInput
+    /**
+     * Limit how many LandlordSurveys to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * LandlordSurvey without action
+   */
+  export type LandlordSurveyDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LandlordSurvey
+     */
+    select?: LandlordSurveySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LandlordSurvey
+     */
+    omit?: LandlordSurveyOmit<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -12833,7 +20333,8 @@ export namespace Prisma {
     cognitoId: 'cognitoId',
     name: 'name',
     email: 'email',
-    phoneNumber: 'phoneNumber'
+    phoneNumber: 'phoneNumber',
+    registrationCodeId: 'registrationCodeId'
   };
 
   export type LandlordScalarFieldEnum = (typeof LandlordScalarFieldEnum)[keyof typeof LandlordScalarFieldEnum]
@@ -12855,24 +20356,61 @@ export namespace Prisma {
     cognitoId: 'cognitoId',
     name: 'name',
     email: 'email',
-    phoneNumber: 'phoneNumber'
+    phoneNumber: 'phoneNumber',
+    registrationCodeId: 'registrationCodeId'
   };
 
   export type AgentScalarFieldEnum = (typeof AgentScalarFieldEnum)[keyof typeof AgentScalarFieldEnum]
 
 
-  export const LandlordRegistrationTokenScalarFieldEnum: {
+  export const AdminScalarFieldEnum: {
     id: 'id',
-    token: 'token',
-    agentId: 'agentId',
-    isUsed: 'isUsed',
-    expiresAt: 'expiresAt',
-    createdAt: 'createdAt',
-    usedAt: 'usedAt',
-    landlordId: 'landlordId'
+    cognitoId: 'cognitoId',
+    name: 'name',
+    email: 'email',
+    phoneNumber: 'phoneNumber'
   };
 
-  export type LandlordRegistrationTokenScalarFieldEnum = (typeof LandlordRegistrationTokenScalarFieldEnum)[keyof typeof LandlordRegistrationTokenScalarFieldEnum]
+  export type AdminScalarFieldEnum = (typeof AdminScalarFieldEnum)[keyof typeof AdminScalarFieldEnum]
+
+
+  export const LandlordRegistrationCodeScalarFieldEnum: {
+    id: 'id',
+    code: 'code',
+    isUsed: 'isUsed',
+    createdAt: 'createdAt',
+    usedAt: 'usedAt'
+  };
+
+  export type LandlordRegistrationCodeScalarFieldEnum = (typeof LandlordRegistrationCodeScalarFieldEnum)[keyof typeof LandlordRegistrationCodeScalarFieldEnum]
+
+
+  export const AgentRegistrationCodeScalarFieldEnum: {
+    id: 'id',
+    code: 'code',
+    isUsed: 'isUsed',
+    createdAt: 'createdAt',
+    usedAt: 'usedAt',
+    assignedBy: 'assignedBy'
+  };
+
+  export type AgentRegistrationCodeScalarFieldEnum = (typeof AgentRegistrationCodeScalarFieldEnum)[keyof typeof AgentRegistrationCodeScalarFieldEnum]
+
+
+  export const TaskScalarFieldEnum: {
+    id: 'id',
+    title: 'title',
+    description: 'description',
+    status: 'status',
+    priority: 'priority',
+    dueDate: 'dueDate',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+    assignedBy: 'assignedBy',
+    agentId: 'agentId'
+  };
+
+  export type TaskScalarFieldEnum = (typeof TaskScalarFieldEnum)[keyof typeof TaskScalarFieldEnum]
 
 
   export const LocationScalarFieldEnum: {
@@ -12956,6 +20494,74 @@ export namespace Prisma {
   };
 
   export type PaymentScalarFieldEnum = (typeof PaymentScalarFieldEnum)[keyof typeof PaymentScalarFieldEnum]
+
+
+  export const AdminSettingsScalarFieldEnum: {
+    id: 'id',
+    siteName: 'siteName',
+    siteDescription: 'siteDescription',
+    maintenanceMode: 'maintenanceMode',
+    allowRegistration: 'allowRegistration',
+    maxPropertiesPerLandlord: 'maxPropertiesPerLandlord',
+    commissionRate: 'commissionRate',
+    emailNotifications: 'emailNotifications',
+    smsNotifications: 'smsNotifications',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type AdminSettingsScalarFieldEnum = (typeof AdminSettingsScalarFieldEnum)[keyof typeof AdminSettingsScalarFieldEnum]
+
+
+  export const TenantSurveyScalarFieldEnum: {
+    id: 'id',
+    fullName: 'fullName',
+    email: 'email',
+    currentLocation: 'currentLocation',
+    rentingStatus: 'rentingStatus',
+    housingType: 'housingType',
+    frustrations: 'frustrations',
+    scamExperience: 'scamExperience',
+    scamDetails: 'scamDetails',
+    propertyListingRating: 'propertyListingRating',
+    dashboardRating: 'dashboardRating',
+    maintenanceRating: 'maintenanceRating',
+    rentCollectionRating: 'rentCollectionRating',
+    customerSupportRating: 'customerSupportRating',
+    monthlyReportRating: 'monthlyReportRating',
+    wishEasier: 'wishEasier',
+    launchNotification: 'launchNotification',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type TenantSurveyScalarFieldEnum = (typeof TenantSurveyScalarFieldEnum)[keyof typeof TenantSurveyScalarFieldEnum]
+
+
+  export const LandlordSurveyScalarFieldEnum: {
+    id: 'id',
+    fullName: 'fullName',
+    email: 'email',
+    propertyLocation: 'propertyLocation',
+    numberOfProperties: 'numberOfProperties',
+    propertyTypes: 'propertyTypes',
+    tenantManagement: 'tenantManagement',
+    biggestChallenges: 'biggestChallenges',
+    agentIssues: 'agentIssues',
+    platformInterest: 'platformInterest',
+    propertyListingRating: 'propertyListingRating',
+    dashboardRating: 'dashboardRating',
+    maintenanceRating: 'maintenanceRating',
+    rentCollectionRating: 'rentCollectionRating',
+    customerSupportRating: 'customerSupportRating',
+    monthlyReportRating: 'monthlyReportRating',
+    wishEasier: 'wishEasier',
+    launchNotification: 'launchNotification',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type LandlordSurveyScalarFieldEnum = (typeof LandlordSurveyScalarFieldEnum)[keyof typeof LandlordSurveyScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -13089,6 +20695,34 @@ export namespace Prisma {
    * Reference to a field of type 'DateTime[]'
    */
   export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'TaskStatus'
+   */
+  export type EnumTaskStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TaskStatus'>
+    
+
+
+  /**
+   * Reference to a field of type 'TaskStatus[]'
+   */
+  export type ListEnumTaskStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TaskStatus[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'TaskPriority'
+   */
+  export type EnumTaskPriorityFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TaskPriority'>
+    
+
+
+  /**
+   * Reference to a field of type 'TaskPriority[]'
+   */
+  export type ListEnumTaskPriorityFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TaskPriority[]'>
     
 
 
@@ -13279,8 +20913,9 @@ export namespace Prisma {
     name?: StringFilter<"Landlord"> | string
     email?: StringFilter<"Landlord"> | string
     phoneNumber?: StringFilter<"Landlord"> | string
+    registrationCodeId?: IntNullableFilter<"Landlord"> | number | null
     managedProperties?: PropertyListRelationFilter
-    registrationToken?: XOR<LandlordRegistrationTokenNullableScalarRelationFilter, LandlordRegistrationTokenWhereInput> | null
+    registrationCode?: XOR<LandlordRegistrationCodeNullableScalarRelationFilter, LandlordRegistrationCodeWhereInput> | null
   }
 
   export type LandlordOrderByWithRelationInput = {
@@ -13289,8 +20924,9 @@ export namespace Prisma {
     name?: SortOrder
     email?: SortOrder
     phoneNumber?: SortOrder
+    registrationCodeId?: SortOrderInput | SortOrder
     managedProperties?: PropertyOrderByRelationAggregateInput
-    registrationToken?: LandlordRegistrationTokenOrderByWithRelationInput
+    registrationCode?: LandlordRegistrationCodeOrderByWithRelationInput
   }
 
   export type LandlordWhereUniqueInput = Prisma.AtLeast<{
@@ -13302,8 +20938,9 @@ export namespace Prisma {
     name?: StringFilter<"Landlord"> | string
     email?: StringFilter<"Landlord"> | string
     phoneNumber?: StringFilter<"Landlord"> | string
+    registrationCodeId?: IntNullableFilter<"Landlord"> | number | null
     managedProperties?: PropertyListRelationFilter
-    registrationToken?: XOR<LandlordRegistrationTokenNullableScalarRelationFilter, LandlordRegistrationTokenWhereInput> | null
+    registrationCode?: XOR<LandlordRegistrationCodeNullableScalarRelationFilter, LandlordRegistrationCodeWhereInput> | null
   }, "id" | "cognitoId">
 
   export type LandlordOrderByWithAggregationInput = {
@@ -13312,6 +20949,7 @@ export namespace Prisma {
     name?: SortOrder
     email?: SortOrder
     phoneNumber?: SortOrder
+    registrationCodeId?: SortOrderInput | SortOrder
     _count?: LandlordCountOrderByAggregateInput
     _avg?: LandlordAvgOrderByAggregateInput
     _max?: LandlordMaxOrderByAggregateInput
@@ -13328,6 +20966,7 @@ export namespace Prisma {
     name?: StringWithAggregatesFilter<"Landlord"> | string
     email?: StringWithAggregatesFilter<"Landlord"> | string
     phoneNumber?: StringWithAggregatesFilter<"Landlord"> | string
+    registrationCodeId?: IntNullableWithAggregatesFilter<"Landlord"> | number | null
   }
 
   export type TenantWhereInput = {
@@ -13405,7 +21044,9 @@ export namespace Prisma {
     name?: StringFilter<"Agent"> | string
     email?: StringFilter<"Agent"> | string
     phoneNumber?: StringNullableFilter<"Agent"> | string | null
-    registrationTokens?: LandlordRegistrationTokenListRelationFilter
+    registrationCodeId?: IntNullableFilter<"Agent"> | number | null
+    registrationCode?: XOR<AgentRegistrationCodeNullableScalarRelationFilter, AgentRegistrationCodeWhereInput> | null
+    assignedTasks?: TaskListRelationFilter
   }
 
   export type AgentOrderByWithRelationInput = {
@@ -13414,7 +21055,9 @@ export namespace Prisma {
     name?: SortOrder
     email?: SortOrder
     phoneNumber?: SortOrderInput | SortOrder
-    registrationTokens?: LandlordRegistrationTokenOrderByRelationAggregateInput
+    registrationCodeId?: SortOrderInput | SortOrder
+    registrationCode?: AgentRegistrationCodeOrderByWithRelationInput
+    assignedTasks?: TaskOrderByRelationAggregateInput
   }
 
   export type AgentWhereUniqueInput = Prisma.AtLeast<{
@@ -13426,7 +21069,9 @@ export namespace Prisma {
     name?: StringFilter<"Agent"> | string
     email?: StringFilter<"Agent"> | string
     phoneNumber?: StringNullableFilter<"Agent"> | string | null
-    registrationTokens?: LandlordRegistrationTokenListRelationFilter
+    registrationCodeId?: IntNullableFilter<"Agent"> | number | null
+    registrationCode?: XOR<AgentRegistrationCodeNullableScalarRelationFilter, AgentRegistrationCodeWhereInput> | null
+    assignedTasks?: TaskListRelationFilter
   }, "id" | "cognitoId">
 
   export type AgentOrderByWithAggregationInput = {
@@ -13435,6 +21080,7 @@ export namespace Prisma {
     name?: SortOrder
     email?: SortOrder
     phoneNumber?: SortOrderInput | SortOrder
+    registrationCodeId?: SortOrderInput | SortOrder
     _count?: AgentCountOrderByAggregateInput
     _avg?: AgentAvgOrderByAggregateInput
     _max?: AgentMaxOrderByAggregateInput
@@ -13451,81 +21097,262 @@ export namespace Prisma {
     name?: StringWithAggregatesFilter<"Agent"> | string
     email?: StringWithAggregatesFilter<"Agent"> | string
     phoneNumber?: StringNullableWithAggregatesFilter<"Agent"> | string | null
+    registrationCodeId?: IntNullableWithAggregatesFilter<"Agent"> | number | null
   }
 
-  export type LandlordRegistrationTokenWhereInput = {
-    AND?: LandlordRegistrationTokenWhereInput | LandlordRegistrationTokenWhereInput[]
-    OR?: LandlordRegistrationTokenWhereInput[]
-    NOT?: LandlordRegistrationTokenWhereInput | LandlordRegistrationTokenWhereInput[]
-    id?: StringFilter<"LandlordRegistrationToken"> | string
-    token?: StringFilter<"LandlordRegistrationToken"> | string
-    agentId?: IntFilter<"LandlordRegistrationToken"> | number
-    isUsed?: BoolFilter<"LandlordRegistrationToken"> | boolean
-    expiresAt?: DateTimeFilter<"LandlordRegistrationToken"> | Date | string
-    createdAt?: DateTimeFilter<"LandlordRegistrationToken"> | Date | string
-    usedAt?: DateTimeNullableFilter<"LandlordRegistrationToken"> | Date | string | null
-    landlordId?: IntNullableFilter<"LandlordRegistrationToken"> | number | null
-    agent?: XOR<AgentScalarRelationFilter, AgentWhereInput>
-    landlord?: XOR<LandlordNullableScalarRelationFilter, LandlordWhereInput> | null
+  export type AdminWhereInput = {
+    AND?: AdminWhereInput | AdminWhereInput[]
+    OR?: AdminWhereInput[]
+    NOT?: AdminWhereInput | AdminWhereInput[]
+    id?: IntFilter<"Admin"> | number
+    cognitoId?: StringFilter<"Admin"> | string
+    name?: StringFilter<"Admin"> | string
+    email?: StringFilter<"Admin"> | string
+    phoneNumber?: StringNullableFilter<"Admin"> | string | null
   }
 
-  export type LandlordRegistrationTokenOrderByWithRelationInput = {
+  export type AdminOrderByWithRelationInput = {
     id?: SortOrder
-    token?: SortOrder
-    agentId?: SortOrder
+    cognitoId?: SortOrder
+    name?: SortOrder
+    email?: SortOrder
+    phoneNumber?: SortOrderInput | SortOrder
+  }
+
+  export type AdminWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    cognitoId?: string
+    AND?: AdminWhereInput | AdminWhereInput[]
+    OR?: AdminWhereInput[]
+    NOT?: AdminWhereInput | AdminWhereInput[]
+    name?: StringFilter<"Admin"> | string
+    email?: StringFilter<"Admin"> | string
+    phoneNumber?: StringNullableFilter<"Admin"> | string | null
+  }, "id" | "cognitoId">
+
+  export type AdminOrderByWithAggregationInput = {
+    id?: SortOrder
+    cognitoId?: SortOrder
+    name?: SortOrder
+    email?: SortOrder
+    phoneNumber?: SortOrderInput | SortOrder
+    _count?: AdminCountOrderByAggregateInput
+    _avg?: AdminAvgOrderByAggregateInput
+    _max?: AdminMaxOrderByAggregateInput
+    _min?: AdminMinOrderByAggregateInput
+    _sum?: AdminSumOrderByAggregateInput
+  }
+
+  export type AdminScalarWhereWithAggregatesInput = {
+    AND?: AdminScalarWhereWithAggregatesInput | AdminScalarWhereWithAggregatesInput[]
+    OR?: AdminScalarWhereWithAggregatesInput[]
+    NOT?: AdminScalarWhereWithAggregatesInput | AdminScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"Admin"> | number
+    cognitoId?: StringWithAggregatesFilter<"Admin"> | string
+    name?: StringWithAggregatesFilter<"Admin"> | string
+    email?: StringWithAggregatesFilter<"Admin"> | string
+    phoneNumber?: StringNullableWithAggregatesFilter<"Admin"> | string | null
+  }
+
+  export type LandlordRegistrationCodeWhereInput = {
+    AND?: LandlordRegistrationCodeWhereInput | LandlordRegistrationCodeWhereInput[]
+    OR?: LandlordRegistrationCodeWhereInput[]
+    NOT?: LandlordRegistrationCodeWhereInput | LandlordRegistrationCodeWhereInput[]
+    id?: IntFilter<"LandlordRegistrationCode"> | number
+    code?: StringFilter<"LandlordRegistrationCode"> | string
+    isUsed?: BoolFilter<"LandlordRegistrationCode"> | boolean
+    createdAt?: DateTimeFilter<"LandlordRegistrationCode"> | Date | string
+    usedAt?: DateTimeNullableFilter<"LandlordRegistrationCode"> | Date | string | null
+    landlords?: LandlordListRelationFilter
+  }
+
+  export type LandlordRegistrationCodeOrderByWithRelationInput = {
+    id?: SortOrder
+    code?: SortOrder
     isUsed?: SortOrder
-    expiresAt?: SortOrder
     createdAt?: SortOrder
     usedAt?: SortOrderInput | SortOrder
-    landlordId?: SortOrderInput | SortOrder
+    landlords?: LandlordOrderByRelationAggregateInput
+  }
+
+  export type LandlordRegistrationCodeWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    code?: string
+    AND?: LandlordRegistrationCodeWhereInput | LandlordRegistrationCodeWhereInput[]
+    OR?: LandlordRegistrationCodeWhereInput[]
+    NOT?: LandlordRegistrationCodeWhereInput | LandlordRegistrationCodeWhereInput[]
+    isUsed?: BoolFilter<"LandlordRegistrationCode"> | boolean
+    createdAt?: DateTimeFilter<"LandlordRegistrationCode"> | Date | string
+    usedAt?: DateTimeNullableFilter<"LandlordRegistrationCode"> | Date | string | null
+    landlords?: LandlordListRelationFilter
+  }, "id" | "code">
+
+  export type LandlordRegistrationCodeOrderByWithAggregationInput = {
+    id?: SortOrder
+    code?: SortOrder
+    isUsed?: SortOrder
+    createdAt?: SortOrder
+    usedAt?: SortOrderInput | SortOrder
+    _count?: LandlordRegistrationCodeCountOrderByAggregateInput
+    _avg?: LandlordRegistrationCodeAvgOrderByAggregateInput
+    _max?: LandlordRegistrationCodeMaxOrderByAggregateInput
+    _min?: LandlordRegistrationCodeMinOrderByAggregateInput
+    _sum?: LandlordRegistrationCodeSumOrderByAggregateInput
+  }
+
+  export type LandlordRegistrationCodeScalarWhereWithAggregatesInput = {
+    AND?: LandlordRegistrationCodeScalarWhereWithAggregatesInput | LandlordRegistrationCodeScalarWhereWithAggregatesInput[]
+    OR?: LandlordRegistrationCodeScalarWhereWithAggregatesInput[]
+    NOT?: LandlordRegistrationCodeScalarWhereWithAggregatesInput | LandlordRegistrationCodeScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"LandlordRegistrationCode"> | number
+    code?: StringWithAggregatesFilter<"LandlordRegistrationCode"> | string
+    isUsed?: BoolWithAggregatesFilter<"LandlordRegistrationCode"> | boolean
+    createdAt?: DateTimeWithAggregatesFilter<"LandlordRegistrationCode"> | Date | string
+    usedAt?: DateTimeNullableWithAggregatesFilter<"LandlordRegistrationCode"> | Date | string | null
+  }
+
+  export type AgentRegistrationCodeWhereInput = {
+    AND?: AgentRegistrationCodeWhereInput | AgentRegistrationCodeWhereInput[]
+    OR?: AgentRegistrationCodeWhereInput[]
+    NOT?: AgentRegistrationCodeWhereInput | AgentRegistrationCodeWhereInput[]
+    id?: IntFilter<"AgentRegistrationCode"> | number
+    code?: StringFilter<"AgentRegistrationCode"> | string
+    isUsed?: BoolFilter<"AgentRegistrationCode"> | boolean
+    createdAt?: DateTimeFilter<"AgentRegistrationCode"> | Date | string
+    usedAt?: DateTimeNullableFilter<"AgentRegistrationCode"> | Date | string | null
+    assignedBy?: StringNullableFilter<"AgentRegistrationCode"> | string | null
+    agents?: AgentListRelationFilter
+  }
+
+  export type AgentRegistrationCodeOrderByWithRelationInput = {
+    id?: SortOrder
+    code?: SortOrder
+    isUsed?: SortOrder
+    createdAt?: SortOrder
+    usedAt?: SortOrderInput | SortOrder
+    assignedBy?: SortOrderInput | SortOrder
+    agents?: AgentOrderByRelationAggregateInput
+  }
+
+  export type AgentRegistrationCodeWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    code?: string
+    AND?: AgentRegistrationCodeWhereInput | AgentRegistrationCodeWhereInput[]
+    OR?: AgentRegistrationCodeWhereInput[]
+    NOT?: AgentRegistrationCodeWhereInput | AgentRegistrationCodeWhereInput[]
+    isUsed?: BoolFilter<"AgentRegistrationCode"> | boolean
+    createdAt?: DateTimeFilter<"AgentRegistrationCode"> | Date | string
+    usedAt?: DateTimeNullableFilter<"AgentRegistrationCode"> | Date | string | null
+    assignedBy?: StringNullableFilter<"AgentRegistrationCode"> | string | null
+    agents?: AgentListRelationFilter
+  }, "id" | "code">
+
+  export type AgentRegistrationCodeOrderByWithAggregationInput = {
+    id?: SortOrder
+    code?: SortOrder
+    isUsed?: SortOrder
+    createdAt?: SortOrder
+    usedAt?: SortOrderInput | SortOrder
+    assignedBy?: SortOrderInput | SortOrder
+    _count?: AgentRegistrationCodeCountOrderByAggregateInput
+    _avg?: AgentRegistrationCodeAvgOrderByAggregateInput
+    _max?: AgentRegistrationCodeMaxOrderByAggregateInput
+    _min?: AgentRegistrationCodeMinOrderByAggregateInput
+    _sum?: AgentRegistrationCodeSumOrderByAggregateInput
+  }
+
+  export type AgentRegistrationCodeScalarWhereWithAggregatesInput = {
+    AND?: AgentRegistrationCodeScalarWhereWithAggregatesInput | AgentRegistrationCodeScalarWhereWithAggregatesInput[]
+    OR?: AgentRegistrationCodeScalarWhereWithAggregatesInput[]
+    NOT?: AgentRegistrationCodeScalarWhereWithAggregatesInput | AgentRegistrationCodeScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"AgentRegistrationCode"> | number
+    code?: StringWithAggregatesFilter<"AgentRegistrationCode"> | string
+    isUsed?: BoolWithAggregatesFilter<"AgentRegistrationCode"> | boolean
+    createdAt?: DateTimeWithAggregatesFilter<"AgentRegistrationCode"> | Date | string
+    usedAt?: DateTimeNullableWithAggregatesFilter<"AgentRegistrationCode"> | Date | string | null
+    assignedBy?: StringNullableWithAggregatesFilter<"AgentRegistrationCode"> | string | null
+  }
+
+  export type TaskWhereInput = {
+    AND?: TaskWhereInput | TaskWhereInput[]
+    OR?: TaskWhereInput[]
+    NOT?: TaskWhereInput | TaskWhereInput[]
+    id?: IntFilter<"Task"> | number
+    title?: StringFilter<"Task"> | string
+    description?: StringNullableFilter<"Task"> | string | null
+    status?: EnumTaskStatusFilter<"Task"> | $Enums.TaskStatus
+    priority?: EnumTaskPriorityFilter<"Task"> | $Enums.TaskPriority
+    dueDate?: DateTimeNullableFilter<"Task"> | Date | string | null
+    createdAt?: DateTimeFilter<"Task"> | Date | string
+    updatedAt?: DateTimeFilter<"Task"> | Date | string
+    assignedBy?: StringFilter<"Task"> | string
+    agentId?: IntFilter<"Task"> | number
+    agent?: XOR<AgentScalarRelationFilter, AgentWhereInput>
+  }
+
+  export type TaskOrderByWithRelationInput = {
+    id?: SortOrder
+    title?: SortOrder
+    description?: SortOrderInput | SortOrder
+    status?: SortOrder
+    priority?: SortOrder
+    dueDate?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    assignedBy?: SortOrder
+    agentId?: SortOrder
     agent?: AgentOrderByWithRelationInput
-    landlord?: LandlordOrderByWithRelationInput
   }
 
-  export type LandlordRegistrationTokenWhereUniqueInput = Prisma.AtLeast<{
-    id?: string
-    token?: string
-    landlordId?: number
-    AND?: LandlordRegistrationTokenWhereInput | LandlordRegistrationTokenWhereInput[]
-    OR?: LandlordRegistrationTokenWhereInput[]
-    NOT?: LandlordRegistrationTokenWhereInput | LandlordRegistrationTokenWhereInput[]
-    agentId?: IntFilter<"LandlordRegistrationToken"> | number
-    isUsed?: BoolFilter<"LandlordRegistrationToken"> | boolean
-    expiresAt?: DateTimeFilter<"LandlordRegistrationToken"> | Date | string
-    createdAt?: DateTimeFilter<"LandlordRegistrationToken"> | Date | string
-    usedAt?: DateTimeNullableFilter<"LandlordRegistrationToken"> | Date | string | null
+  export type TaskWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: TaskWhereInput | TaskWhereInput[]
+    OR?: TaskWhereInput[]
+    NOT?: TaskWhereInput | TaskWhereInput[]
+    title?: StringFilter<"Task"> | string
+    description?: StringNullableFilter<"Task"> | string | null
+    status?: EnumTaskStatusFilter<"Task"> | $Enums.TaskStatus
+    priority?: EnumTaskPriorityFilter<"Task"> | $Enums.TaskPriority
+    dueDate?: DateTimeNullableFilter<"Task"> | Date | string | null
+    createdAt?: DateTimeFilter<"Task"> | Date | string
+    updatedAt?: DateTimeFilter<"Task"> | Date | string
+    assignedBy?: StringFilter<"Task"> | string
+    agentId?: IntFilter<"Task"> | number
     agent?: XOR<AgentScalarRelationFilter, AgentWhereInput>
-    landlord?: XOR<LandlordNullableScalarRelationFilter, LandlordWhereInput> | null
-  }, "id" | "token" | "landlordId">
+  }, "id">
 
-  export type LandlordRegistrationTokenOrderByWithAggregationInput = {
+  export type TaskOrderByWithAggregationInput = {
     id?: SortOrder
-    token?: SortOrder
-    agentId?: SortOrder
-    isUsed?: SortOrder
-    expiresAt?: SortOrder
+    title?: SortOrder
+    description?: SortOrderInput | SortOrder
+    status?: SortOrder
+    priority?: SortOrder
+    dueDate?: SortOrderInput | SortOrder
     createdAt?: SortOrder
-    usedAt?: SortOrderInput | SortOrder
-    landlordId?: SortOrderInput | SortOrder
-    _count?: LandlordRegistrationTokenCountOrderByAggregateInput
-    _avg?: LandlordRegistrationTokenAvgOrderByAggregateInput
-    _max?: LandlordRegistrationTokenMaxOrderByAggregateInput
-    _min?: LandlordRegistrationTokenMinOrderByAggregateInput
-    _sum?: LandlordRegistrationTokenSumOrderByAggregateInput
+    updatedAt?: SortOrder
+    assignedBy?: SortOrder
+    agentId?: SortOrder
+    _count?: TaskCountOrderByAggregateInput
+    _avg?: TaskAvgOrderByAggregateInput
+    _max?: TaskMaxOrderByAggregateInput
+    _min?: TaskMinOrderByAggregateInput
+    _sum?: TaskSumOrderByAggregateInput
   }
 
-  export type LandlordRegistrationTokenScalarWhereWithAggregatesInput = {
-    AND?: LandlordRegistrationTokenScalarWhereWithAggregatesInput | LandlordRegistrationTokenScalarWhereWithAggregatesInput[]
-    OR?: LandlordRegistrationTokenScalarWhereWithAggregatesInput[]
-    NOT?: LandlordRegistrationTokenScalarWhereWithAggregatesInput | LandlordRegistrationTokenScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"LandlordRegistrationToken"> | string
-    token?: StringWithAggregatesFilter<"LandlordRegistrationToken"> | string
-    agentId?: IntWithAggregatesFilter<"LandlordRegistrationToken"> | number
-    isUsed?: BoolWithAggregatesFilter<"LandlordRegistrationToken"> | boolean
-    expiresAt?: DateTimeWithAggregatesFilter<"LandlordRegistrationToken"> | Date | string
-    createdAt?: DateTimeWithAggregatesFilter<"LandlordRegistrationToken"> | Date | string
-    usedAt?: DateTimeNullableWithAggregatesFilter<"LandlordRegistrationToken"> | Date | string | null
-    landlordId?: IntNullableWithAggregatesFilter<"LandlordRegistrationToken"> | number | null
+  export type TaskScalarWhereWithAggregatesInput = {
+    AND?: TaskScalarWhereWithAggregatesInput | TaskScalarWhereWithAggregatesInput[]
+    OR?: TaskScalarWhereWithAggregatesInput[]
+    NOT?: TaskScalarWhereWithAggregatesInput | TaskScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"Task"> | number
+    title?: StringWithAggregatesFilter<"Task"> | string
+    description?: StringNullableWithAggregatesFilter<"Task"> | string | null
+    status?: EnumTaskStatusWithAggregatesFilter<"Task"> | $Enums.TaskStatus
+    priority?: EnumTaskPriorityWithAggregatesFilter<"Task"> | $Enums.TaskPriority
+    dueDate?: DateTimeNullableWithAggregatesFilter<"Task"> | Date | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"Task"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Task"> | Date | string
+    assignedBy?: StringWithAggregatesFilter<"Task"> | string
+    agentId?: IntWithAggregatesFilter<"Task"> | number
   }
 
   export type LocationWhereInput = {
@@ -13966,6 +21793,343 @@ export namespace Prisma {
     leaseId?: IntWithAggregatesFilter<"Payment"> | number
   }
 
+  export type AdminSettingsWhereInput = {
+    AND?: AdminSettingsWhereInput | AdminSettingsWhereInput[]
+    OR?: AdminSettingsWhereInput[]
+    NOT?: AdminSettingsWhereInput | AdminSettingsWhereInput[]
+    id?: IntFilter<"AdminSettings"> | number
+    siteName?: StringFilter<"AdminSettings"> | string
+    siteDescription?: StringFilter<"AdminSettings"> | string
+    maintenanceMode?: BoolFilter<"AdminSettings"> | boolean
+    allowRegistration?: BoolFilter<"AdminSettings"> | boolean
+    maxPropertiesPerLandlord?: IntFilter<"AdminSettings"> | number
+    commissionRate?: FloatFilter<"AdminSettings"> | number
+    emailNotifications?: BoolFilter<"AdminSettings"> | boolean
+    smsNotifications?: BoolFilter<"AdminSettings"> | boolean
+    createdAt?: DateTimeFilter<"AdminSettings"> | Date | string
+    updatedAt?: DateTimeFilter<"AdminSettings"> | Date | string
+  }
+
+  export type AdminSettingsOrderByWithRelationInput = {
+    id?: SortOrder
+    siteName?: SortOrder
+    siteDescription?: SortOrder
+    maintenanceMode?: SortOrder
+    allowRegistration?: SortOrder
+    maxPropertiesPerLandlord?: SortOrder
+    commissionRate?: SortOrder
+    emailNotifications?: SortOrder
+    smsNotifications?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type AdminSettingsWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: AdminSettingsWhereInput | AdminSettingsWhereInput[]
+    OR?: AdminSettingsWhereInput[]
+    NOT?: AdminSettingsWhereInput | AdminSettingsWhereInput[]
+    siteName?: StringFilter<"AdminSettings"> | string
+    siteDescription?: StringFilter<"AdminSettings"> | string
+    maintenanceMode?: BoolFilter<"AdminSettings"> | boolean
+    allowRegistration?: BoolFilter<"AdminSettings"> | boolean
+    maxPropertiesPerLandlord?: IntFilter<"AdminSettings"> | number
+    commissionRate?: FloatFilter<"AdminSettings"> | number
+    emailNotifications?: BoolFilter<"AdminSettings"> | boolean
+    smsNotifications?: BoolFilter<"AdminSettings"> | boolean
+    createdAt?: DateTimeFilter<"AdminSettings"> | Date | string
+    updatedAt?: DateTimeFilter<"AdminSettings"> | Date | string
+  }, "id">
+
+  export type AdminSettingsOrderByWithAggregationInput = {
+    id?: SortOrder
+    siteName?: SortOrder
+    siteDescription?: SortOrder
+    maintenanceMode?: SortOrder
+    allowRegistration?: SortOrder
+    maxPropertiesPerLandlord?: SortOrder
+    commissionRate?: SortOrder
+    emailNotifications?: SortOrder
+    smsNotifications?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: AdminSettingsCountOrderByAggregateInput
+    _avg?: AdminSettingsAvgOrderByAggregateInput
+    _max?: AdminSettingsMaxOrderByAggregateInput
+    _min?: AdminSettingsMinOrderByAggregateInput
+    _sum?: AdminSettingsSumOrderByAggregateInput
+  }
+
+  export type AdminSettingsScalarWhereWithAggregatesInput = {
+    AND?: AdminSettingsScalarWhereWithAggregatesInput | AdminSettingsScalarWhereWithAggregatesInput[]
+    OR?: AdminSettingsScalarWhereWithAggregatesInput[]
+    NOT?: AdminSettingsScalarWhereWithAggregatesInput | AdminSettingsScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"AdminSettings"> | number
+    siteName?: StringWithAggregatesFilter<"AdminSettings"> | string
+    siteDescription?: StringWithAggregatesFilter<"AdminSettings"> | string
+    maintenanceMode?: BoolWithAggregatesFilter<"AdminSettings"> | boolean
+    allowRegistration?: BoolWithAggregatesFilter<"AdminSettings"> | boolean
+    maxPropertiesPerLandlord?: IntWithAggregatesFilter<"AdminSettings"> | number
+    commissionRate?: FloatWithAggregatesFilter<"AdminSettings"> | number
+    emailNotifications?: BoolWithAggregatesFilter<"AdminSettings"> | boolean
+    smsNotifications?: BoolWithAggregatesFilter<"AdminSettings"> | boolean
+    createdAt?: DateTimeWithAggregatesFilter<"AdminSettings"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"AdminSettings"> | Date | string
+  }
+
+  export type TenantSurveyWhereInput = {
+    AND?: TenantSurveyWhereInput | TenantSurveyWhereInput[]
+    OR?: TenantSurveyWhereInput[]
+    NOT?: TenantSurveyWhereInput | TenantSurveyWhereInput[]
+    id?: IntFilter<"TenantSurvey"> | number
+    fullName?: StringFilter<"TenantSurvey"> | string
+    email?: StringFilter<"TenantSurvey"> | string
+    currentLocation?: StringFilter<"TenantSurvey"> | string
+    rentingStatus?: StringFilter<"TenantSurvey"> | string
+    housingType?: StringNullableListFilter<"TenantSurvey">
+    frustrations?: StringNullableListFilter<"TenantSurvey">
+    scamExperience?: StringFilter<"TenantSurvey"> | string
+    scamDetails?: StringNullableFilter<"TenantSurvey"> | string | null
+    propertyListingRating?: StringFilter<"TenantSurvey"> | string
+    dashboardRating?: StringFilter<"TenantSurvey"> | string
+    maintenanceRating?: StringFilter<"TenantSurvey"> | string
+    rentCollectionRating?: StringFilter<"TenantSurvey"> | string
+    customerSupportRating?: StringFilter<"TenantSurvey"> | string
+    monthlyReportRating?: StringFilter<"TenantSurvey"> | string
+    wishEasier?: StringFilter<"TenantSurvey"> | string
+    launchNotification?: StringFilter<"TenantSurvey"> | string
+    createdAt?: DateTimeFilter<"TenantSurvey"> | Date | string
+    updatedAt?: DateTimeFilter<"TenantSurvey"> | Date | string
+  }
+
+  export type TenantSurveyOrderByWithRelationInput = {
+    id?: SortOrder
+    fullName?: SortOrder
+    email?: SortOrder
+    currentLocation?: SortOrder
+    rentingStatus?: SortOrder
+    housingType?: SortOrder
+    frustrations?: SortOrder
+    scamExperience?: SortOrder
+    scamDetails?: SortOrderInput | SortOrder
+    propertyListingRating?: SortOrder
+    dashboardRating?: SortOrder
+    maintenanceRating?: SortOrder
+    rentCollectionRating?: SortOrder
+    customerSupportRating?: SortOrder
+    monthlyReportRating?: SortOrder
+    wishEasier?: SortOrder
+    launchNotification?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type TenantSurveyWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: TenantSurveyWhereInput | TenantSurveyWhereInput[]
+    OR?: TenantSurveyWhereInput[]
+    NOT?: TenantSurveyWhereInput | TenantSurveyWhereInput[]
+    fullName?: StringFilter<"TenantSurvey"> | string
+    email?: StringFilter<"TenantSurvey"> | string
+    currentLocation?: StringFilter<"TenantSurvey"> | string
+    rentingStatus?: StringFilter<"TenantSurvey"> | string
+    housingType?: StringNullableListFilter<"TenantSurvey">
+    frustrations?: StringNullableListFilter<"TenantSurvey">
+    scamExperience?: StringFilter<"TenantSurvey"> | string
+    scamDetails?: StringNullableFilter<"TenantSurvey"> | string | null
+    propertyListingRating?: StringFilter<"TenantSurvey"> | string
+    dashboardRating?: StringFilter<"TenantSurvey"> | string
+    maintenanceRating?: StringFilter<"TenantSurvey"> | string
+    rentCollectionRating?: StringFilter<"TenantSurvey"> | string
+    customerSupportRating?: StringFilter<"TenantSurvey"> | string
+    monthlyReportRating?: StringFilter<"TenantSurvey"> | string
+    wishEasier?: StringFilter<"TenantSurvey"> | string
+    launchNotification?: StringFilter<"TenantSurvey"> | string
+    createdAt?: DateTimeFilter<"TenantSurvey"> | Date | string
+    updatedAt?: DateTimeFilter<"TenantSurvey"> | Date | string
+  }, "id">
+
+  export type TenantSurveyOrderByWithAggregationInput = {
+    id?: SortOrder
+    fullName?: SortOrder
+    email?: SortOrder
+    currentLocation?: SortOrder
+    rentingStatus?: SortOrder
+    housingType?: SortOrder
+    frustrations?: SortOrder
+    scamExperience?: SortOrder
+    scamDetails?: SortOrderInput | SortOrder
+    propertyListingRating?: SortOrder
+    dashboardRating?: SortOrder
+    maintenanceRating?: SortOrder
+    rentCollectionRating?: SortOrder
+    customerSupportRating?: SortOrder
+    monthlyReportRating?: SortOrder
+    wishEasier?: SortOrder
+    launchNotification?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: TenantSurveyCountOrderByAggregateInput
+    _avg?: TenantSurveyAvgOrderByAggregateInput
+    _max?: TenantSurveyMaxOrderByAggregateInput
+    _min?: TenantSurveyMinOrderByAggregateInput
+    _sum?: TenantSurveySumOrderByAggregateInput
+  }
+
+  export type TenantSurveyScalarWhereWithAggregatesInput = {
+    AND?: TenantSurveyScalarWhereWithAggregatesInput | TenantSurveyScalarWhereWithAggregatesInput[]
+    OR?: TenantSurveyScalarWhereWithAggregatesInput[]
+    NOT?: TenantSurveyScalarWhereWithAggregatesInput | TenantSurveyScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"TenantSurvey"> | number
+    fullName?: StringWithAggregatesFilter<"TenantSurvey"> | string
+    email?: StringWithAggregatesFilter<"TenantSurvey"> | string
+    currentLocation?: StringWithAggregatesFilter<"TenantSurvey"> | string
+    rentingStatus?: StringWithAggregatesFilter<"TenantSurvey"> | string
+    housingType?: StringNullableListFilter<"TenantSurvey">
+    frustrations?: StringNullableListFilter<"TenantSurvey">
+    scamExperience?: StringWithAggregatesFilter<"TenantSurvey"> | string
+    scamDetails?: StringNullableWithAggregatesFilter<"TenantSurvey"> | string | null
+    propertyListingRating?: StringWithAggregatesFilter<"TenantSurvey"> | string
+    dashboardRating?: StringWithAggregatesFilter<"TenantSurvey"> | string
+    maintenanceRating?: StringWithAggregatesFilter<"TenantSurvey"> | string
+    rentCollectionRating?: StringWithAggregatesFilter<"TenantSurvey"> | string
+    customerSupportRating?: StringWithAggregatesFilter<"TenantSurvey"> | string
+    monthlyReportRating?: StringWithAggregatesFilter<"TenantSurvey"> | string
+    wishEasier?: StringWithAggregatesFilter<"TenantSurvey"> | string
+    launchNotification?: StringWithAggregatesFilter<"TenantSurvey"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"TenantSurvey"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"TenantSurvey"> | Date | string
+  }
+
+  export type LandlordSurveyWhereInput = {
+    AND?: LandlordSurveyWhereInput | LandlordSurveyWhereInput[]
+    OR?: LandlordSurveyWhereInput[]
+    NOT?: LandlordSurveyWhereInput | LandlordSurveyWhereInput[]
+    id?: IntFilter<"LandlordSurvey"> | number
+    fullName?: StringFilter<"LandlordSurvey"> | string
+    email?: StringFilter<"LandlordSurvey"> | string
+    propertyLocation?: StringFilter<"LandlordSurvey"> | string
+    numberOfProperties?: StringFilter<"LandlordSurvey"> | string
+    propertyTypes?: StringNullableListFilter<"LandlordSurvey">
+    tenantManagement?: StringNullableListFilter<"LandlordSurvey">
+    biggestChallenges?: StringNullableListFilter<"LandlordSurvey">
+    agentIssues?: StringFilter<"LandlordSurvey"> | string
+    platformInterest?: StringFilter<"LandlordSurvey"> | string
+    propertyListingRating?: StringFilter<"LandlordSurvey"> | string
+    dashboardRating?: StringFilter<"LandlordSurvey"> | string
+    maintenanceRating?: StringFilter<"LandlordSurvey"> | string
+    rentCollectionRating?: StringFilter<"LandlordSurvey"> | string
+    customerSupportRating?: StringFilter<"LandlordSurvey"> | string
+    monthlyReportRating?: StringFilter<"LandlordSurvey"> | string
+    wishEasier?: StringFilter<"LandlordSurvey"> | string
+    launchNotification?: StringFilter<"LandlordSurvey"> | string
+    createdAt?: DateTimeFilter<"LandlordSurvey"> | Date | string
+    updatedAt?: DateTimeFilter<"LandlordSurvey"> | Date | string
+  }
+
+  export type LandlordSurveyOrderByWithRelationInput = {
+    id?: SortOrder
+    fullName?: SortOrder
+    email?: SortOrder
+    propertyLocation?: SortOrder
+    numberOfProperties?: SortOrder
+    propertyTypes?: SortOrder
+    tenantManagement?: SortOrder
+    biggestChallenges?: SortOrder
+    agentIssues?: SortOrder
+    platformInterest?: SortOrder
+    propertyListingRating?: SortOrder
+    dashboardRating?: SortOrder
+    maintenanceRating?: SortOrder
+    rentCollectionRating?: SortOrder
+    customerSupportRating?: SortOrder
+    monthlyReportRating?: SortOrder
+    wishEasier?: SortOrder
+    launchNotification?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type LandlordSurveyWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: LandlordSurveyWhereInput | LandlordSurveyWhereInput[]
+    OR?: LandlordSurveyWhereInput[]
+    NOT?: LandlordSurveyWhereInput | LandlordSurveyWhereInput[]
+    fullName?: StringFilter<"LandlordSurvey"> | string
+    email?: StringFilter<"LandlordSurvey"> | string
+    propertyLocation?: StringFilter<"LandlordSurvey"> | string
+    numberOfProperties?: StringFilter<"LandlordSurvey"> | string
+    propertyTypes?: StringNullableListFilter<"LandlordSurvey">
+    tenantManagement?: StringNullableListFilter<"LandlordSurvey">
+    biggestChallenges?: StringNullableListFilter<"LandlordSurvey">
+    agentIssues?: StringFilter<"LandlordSurvey"> | string
+    platformInterest?: StringFilter<"LandlordSurvey"> | string
+    propertyListingRating?: StringFilter<"LandlordSurvey"> | string
+    dashboardRating?: StringFilter<"LandlordSurvey"> | string
+    maintenanceRating?: StringFilter<"LandlordSurvey"> | string
+    rentCollectionRating?: StringFilter<"LandlordSurvey"> | string
+    customerSupportRating?: StringFilter<"LandlordSurvey"> | string
+    monthlyReportRating?: StringFilter<"LandlordSurvey"> | string
+    wishEasier?: StringFilter<"LandlordSurvey"> | string
+    launchNotification?: StringFilter<"LandlordSurvey"> | string
+    createdAt?: DateTimeFilter<"LandlordSurvey"> | Date | string
+    updatedAt?: DateTimeFilter<"LandlordSurvey"> | Date | string
+  }, "id">
+
+  export type LandlordSurveyOrderByWithAggregationInput = {
+    id?: SortOrder
+    fullName?: SortOrder
+    email?: SortOrder
+    propertyLocation?: SortOrder
+    numberOfProperties?: SortOrder
+    propertyTypes?: SortOrder
+    tenantManagement?: SortOrder
+    biggestChallenges?: SortOrder
+    agentIssues?: SortOrder
+    platformInterest?: SortOrder
+    propertyListingRating?: SortOrder
+    dashboardRating?: SortOrder
+    maintenanceRating?: SortOrder
+    rentCollectionRating?: SortOrder
+    customerSupportRating?: SortOrder
+    monthlyReportRating?: SortOrder
+    wishEasier?: SortOrder
+    launchNotification?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: LandlordSurveyCountOrderByAggregateInput
+    _avg?: LandlordSurveyAvgOrderByAggregateInput
+    _max?: LandlordSurveyMaxOrderByAggregateInput
+    _min?: LandlordSurveyMinOrderByAggregateInput
+    _sum?: LandlordSurveySumOrderByAggregateInput
+  }
+
+  export type LandlordSurveyScalarWhereWithAggregatesInput = {
+    AND?: LandlordSurveyScalarWhereWithAggregatesInput | LandlordSurveyScalarWhereWithAggregatesInput[]
+    OR?: LandlordSurveyScalarWhereWithAggregatesInput[]
+    NOT?: LandlordSurveyScalarWhereWithAggregatesInput | LandlordSurveyScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"LandlordSurvey"> | number
+    fullName?: StringWithAggregatesFilter<"LandlordSurvey"> | string
+    email?: StringWithAggregatesFilter<"LandlordSurvey"> | string
+    propertyLocation?: StringWithAggregatesFilter<"LandlordSurvey"> | string
+    numberOfProperties?: StringWithAggregatesFilter<"LandlordSurvey"> | string
+    propertyTypes?: StringNullableListFilter<"LandlordSurvey">
+    tenantManagement?: StringNullableListFilter<"LandlordSurvey">
+    biggestChallenges?: StringNullableListFilter<"LandlordSurvey">
+    agentIssues?: StringWithAggregatesFilter<"LandlordSurvey"> | string
+    platformInterest?: StringWithAggregatesFilter<"LandlordSurvey"> | string
+    propertyListingRating?: StringWithAggregatesFilter<"LandlordSurvey"> | string
+    dashboardRating?: StringWithAggregatesFilter<"LandlordSurvey"> | string
+    maintenanceRating?: StringWithAggregatesFilter<"LandlordSurvey"> | string
+    rentCollectionRating?: StringWithAggregatesFilter<"LandlordSurvey"> | string
+    customerSupportRating?: StringWithAggregatesFilter<"LandlordSurvey"> | string
+    monthlyReportRating?: StringWithAggregatesFilter<"LandlordSurvey"> | string
+    wishEasier?: StringWithAggregatesFilter<"LandlordSurvey"> | string
+    launchNotification?: StringWithAggregatesFilter<"LandlordSurvey"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"LandlordSurvey"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"LandlordSurvey"> | Date | string
+  }
+
   export type PropertyCreateInput = {
     name: string
     description: string
@@ -14144,7 +22308,7 @@ export namespace Prisma {
     email: string
     phoneNumber: string
     managedProperties?: PropertyCreateNestedManyWithoutLandlordInput
-    registrationToken?: LandlordRegistrationTokenCreateNestedOneWithoutLandlordInput
+    registrationCode?: LandlordRegistrationCodeCreateNestedOneWithoutLandlordsInput
   }
 
   export type LandlordUncheckedCreateInput = {
@@ -14153,8 +22317,8 @@ export namespace Prisma {
     name: string
     email: string
     phoneNumber: string
+    registrationCodeId?: number | null
     managedProperties?: PropertyUncheckedCreateNestedManyWithoutLandlordInput
-    registrationToken?: LandlordRegistrationTokenUncheckedCreateNestedOneWithoutLandlordInput
   }
 
   export type LandlordUpdateInput = {
@@ -14163,7 +22327,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     phoneNumber?: StringFieldUpdateOperationsInput | string
     managedProperties?: PropertyUpdateManyWithoutLandlordNestedInput
-    registrationToken?: LandlordRegistrationTokenUpdateOneWithoutLandlordNestedInput
+    registrationCode?: LandlordRegistrationCodeUpdateOneWithoutLandlordsNestedInput
   }
 
   export type LandlordUncheckedUpdateInput = {
@@ -14172,8 +22336,8 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     phoneNumber?: StringFieldUpdateOperationsInput | string
+    registrationCodeId?: NullableIntFieldUpdateOperationsInput | number | null
     managedProperties?: PropertyUncheckedUpdateManyWithoutLandlordNestedInput
-    registrationToken?: LandlordRegistrationTokenUncheckedUpdateOneWithoutLandlordNestedInput
   }
 
   export type LandlordCreateManyInput = {
@@ -14182,6 +22346,7 @@ export namespace Prisma {
     name: string
     email: string
     phoneNumber: string
+    registrationCodeId?: number | null
   }
 
   export type LandlordUpdateManyMutationInput = {
@@ -14197,6 +22362,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     phoneNumber?: StringFieldUpdateOperationsInput | string
+    registrationCodeId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type TenantCreateInput = {
@@ -14273,7 +22439,8 @@ export namespace Prisma {
     name: string
     email: string
     phoneNumber?: string | null
-    registrationTokens?: LandlordRegistrationTokenCreateNestedManyWithoutAgentInput
+    registrationCode?: AgentRegistrationCodeCreateNestedOneWithoutAgentsInput
+    assignedTasks?: TaskCreateNestedManyWithoutAgentInput
   }
 
   export type AgentUncheckedCreateInput = {
@@ -14282,7 +22449,8 @@ export namespace Prisma {
     name: string
     email: string
     phoneNumber?: string | null
-    registrationTokens?: LandlordRegistrationTokenUncheckedCreateNestedManyWithoutAgentInput
+    registrationCodeId?: number | null
+    assignedTasks?: TaskUncheckedCreateNestedManyWithoutAgentInput
   }
 
   export type AgentUpdateInput = {
@@ -14290,7 +22458,8 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
-    registrationTokens?: LandlordRegistrationTokenUpdateManyWithoutAgentNestedInput
+    registrationCode?: AgentRegistrationCodeUpdateOneWithoutAgentsNestedInput
+    assignedTasks?: TaskUpdateManyWithoutAgentNestedInput
   }
 
   export type AgentUncheckedUpdateInput = {
@@ -14299,7 +22468,8 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
-    registrationTokens?: LandlordRegistrationTokenUncheckedUpdateManyWithoutAgentNestedInput
+    registrationCodeId?: NullableIntFieldUpdateOperationsInput | number | null
+    assignedTasks?: TaskUncheckedUpdateManyWithoutAgentNestedInput
   }
 
   export type AgentCreateManyInput = {
@@ -14308,6 +22478,7 @@ export namespace Prisma {
     name: string
     email: string
     phoneNumber?: string | null
+    registrationCodeId?: number | null
   }
 
   export type AgentUpdateManyMutationInput = {
@@ -14323,81 +22494,268 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    registrationCodeId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
-  export type LandlordRegistrationTokenCreateInput = {
-    id?: string
-    token: string
+  export type AdminCreateInput = {
+    cognitoId: string
+    name: string
+    email: string
+    phoneNumber?: string | null
+  }
+
+  export type AdminUncheckedCreateInput = {
+    id?: number
+    cognitoId: string
+    name: string
+    email: string
+    phoneNumber?: string | null
+  }
+
+  export type AdminUpdateInput = {
+    cognitoId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type AdminUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    cognitoId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type AdminCreateManyInput = {
+    id?: number
+    cognitoId: string
+    name: string
+    email: string
+    phoneNumber?: string | null
+  }
+
+  export type AdminUpdateManyMutationInput = {
+    cognitoId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type AdminUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    cognitoId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type LandlordRegistrationCodeCreateInput = {
+    code: string
     isUsed?: boolean
-    expiresAt: Date | string
     createdAt?: Date | string
     usedAt?: Date | string | null
-    agent: AgentCreateNestedOneWithoutRegistrationTokensInput
-    landlord?: LandlordCreateNestedOneWithoutRegistrationTokenInput
+    landlords?: LandlordCreateNestedManyWithoutRegistrationCodeInput
   }
 
-  export type LandlordRegistrationTokenUncheckedCreateInput = {
-    id?: string
-    token: string
+  export type LandlordRegistrationCodeUncheckedCreateInput = {
+    id?: number
+    code: string
+    isUsed?: boolean
+    createdAt?: Date | string
+    usedAt?: Date | string | null
+    landlords?: LandlordUncheckedCreateNestedManyWithoutRegistrationCodeInput
+  }
+
+  export type LandlordRegistrationCodeUpdateInput = {
+    code?: StringFieldUpdateOperationsInput | string
+    isUsed?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    usedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    landlords?: LandlordUpdateManyWithoutRegistrationCodeNestedInput
+  }
+
+  export type LandlordRegistrationCodeUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    code?: StringFieldUpdateOperationsInput | string
+    isUsed?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    usedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    landlords?: LandlordUncheckedUpdateManyWithoutRegistrationCodeNestedInput
+  }
+
+  export type LandlordRegistrationCodeCreateManyInput = {
+    id?: number
+    code: string
+    isUsed?: boolean
+    createdAt?: Date | string
+    usedAt?: Date | string | null
+  }
+
+  export type LandlordRegistrationCodeUpdateManyMutationInput = {
+    code?: StringFieldUpdateOperationsInput | string
+    isUsed?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    usedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type LandlordRegistrationCodeUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    code?: StringFieldUpdateOperationsInput | string
+    isUsed?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    usedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type AgentRegistrationCodeCreateInput = {
+    code: string
+    isUsed?: boolean
+    createdAt?: Date | string
+    usedAt?: Date | string | null
+    assignedBy?: string | null
+    agents?: AgentCreateNestedManyWithoutRegistrationCodeInput
+  }
+
+  export type AgentRegistrationCodeUncheckedCreateInput = {
+    id?: number
+    code: string
+    isUsed?: boolean
+    createdAt?: Date | string
+    usedAt?: Date | string | null
+    assignedBy?: string | null
+    agents?: AgentUncheckedCreateNestedManyWithoutRegistrationCodeInput
+  }
+
+  export type AgentRegistrationCodeUpdateInput = {
+    code?: StringFieldUpdateOperationsInput | string
+    isUsed?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    usedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    assignedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    agents?: AgentUpdateManyWithoutRegistrationCodeNestedInput
+  }
+
+  export type AgentRegistrationCodeUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    code?: StringFieldUpdateOperationsInput | string
+    isUsed?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    usedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    assignedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    agents?: AgentUncheckedUpdateManyWithoutRegistrationCodeNestedInput
+  }
+
+  export type AgentRegistrationCodeCreateManyInput = {
+    id?: number
+    code: string
+    isUsed?: boolean
+    createdAt?: Date | string
+    usedAt?: Date | string | null
+    assignedBy?: string | null
+  }
+
+  export type AgentRegistrationCodeUpdateManyMutationInput = {
+    code?: StringFieldUpdateOperationsInput | string
+    isUsed?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    usedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    assignedBy?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type AgentRegistrationCodeUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    code?: StringFieldUpdateOperationsInput | string
+    isUsed?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    usedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    assignedBy?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type TaskCreateInput = {
+    title: string
+    description?: string | null
+    status?: $Enums.TaskStatus
+    priority?: $Enums.TaskPriority
+    dueDate?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    assignedBy: string
+    agent: AgentCreateNestedOneWithoutAssignedTasksInput
+  }
+
+  export type TaskUncheckedCreateInput = {
+    id?: number
+    title: string
+    description?: string | null
+    status?: $Enums.TaskStatus
+    priority?: $Enums.TaskPriority
+    dueDate?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    assignedBy: string
     agentId: number
-    isUsed?: boolean
-    expiresAt: Date | string
-    createdAt?: Date | string
-    usedAt?: Date | string | null
-    landlordId?: number | null
   }
 
-  export type LandlordRegistrationTokenUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    token?: StringFieldUpdateOperationsInput | string
-    isUsed?: BoolFieldUpdateOperationsInput | boolean
-    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  export type TaskUpdateInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
+    priority?: EnumTaskPriorityFieldUpdateOperationsInput | $Enums.TaskPriority
+    dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    usedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    agent?: AgentUpdateOneRequiredWithoutRegistrationTokensNestedInput
-    landlord?: LandlordUpdateOneWithoutRegistrationTokenNestedInput
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    assignedBy?: StringFieldUpdateOperationsInput | string
+    agent?: AgentUpdateOneRequiredWithoutAssignedTasksNestedInput
   }
 
-  export type LandlordRegistrationTokenUncheckedUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    token?: StringFieldUpdateOperationsInput | string
+  export type TaskUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
+    priority?: EnumTaskPriorityFieldUpdateOperationsInput | $Enums.TaskPriority
+    dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    assignedBy?: StringFieldUpdateOperationsInput | string
     agentId?: IntFieldUpdateOperationsInput | number
-    isUsed?: BoolFieldUpdateOperationsInput | boolean
-    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    usedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    landlordId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
-  export type LandlordRegistrationTokenCreateManyInput = {
-    id?: string
-    token: string
+  export type TaskCreateManyInput = {
+    id?: number
+    title: string
+    description?: string | null
+    status?: $Enums.TaskStatus
+    priority?: $Enums.TaskPriority
+    dueDate?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    assignedBy: string
     agentId: number
-    isUsed?: boolean
-    expiresAt: Date | string
-    createdAt?: Date | string
-    usedAt?: Date | string | null
-    landlordId?: number | null
   }
 
-  export type LandlordRegistrationTokenUpdateManyMutationInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    token?: StringFieldUpdateOperationsInput | string
-    isUsed?: BoolFieldUpdateOperationsInput | boolean
-    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  export type TaskUpdateManyMutationInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
+    priority?: EnumTaskPriorityFieldUpdateOperationsInput | $Enums.TaskPriority
+    dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    usedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    assignedBy?: StringFieldUpdateOperationsInput | string
   }
 
-  export type LandlordRegistrationTokenUncheckedUpdateManyInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    token?: StringFieldUpdateOperationsInput | string
+  export type TaskUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
+    priority?: EnumTaskPriorityFieldUpdateOperationsInput | $Enums.TaskPriority
+    dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    assignedBy?: StringFieldUpdateOperationsInput | string
     agentId?: IntFieldUpdateOperationsInput | number
-    isUsed?: BoolFieldUpdateOperationsInput | boolean
-    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    usedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    landlordId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type LocationUpdateInput = {
@@ -14863,6 +23221,410 @@ export namespace Prisma {
     leaseId?: IntFieldUpdateOperationsInput | number
   }
 
+  export type AdminSettingsCreateInput = {
+    siteName?: string
+    siteDescription?: string
+    maintenanceMode?: boolean
+    allowRegistration?: boolean
+    maxPropertiesPerLandlord?: number
+    commissionRate?: number
+    emailNotifications?: boolean
+    smsNotifications?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type AdminSettingsUncheckedCreateInput = {
+    id?: number
+    siteName?: string
+    siteDescription?: string
+    maintenanceMode?: boolean
+    allowRegistration?: boolean
+    maxPropertiesPerLandlord?: number
+    commissionRate?: number
+    emailNotifications?: boolean
+    smsNotifications?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type AdminSettingsUpdateInput = {
+    siteName?: StringFieldUpdateOperationsInput | string
+    siteDescription?: StringFieldUpdateOperationsInput | string
+    maintenanceMode?: BoolFieldUpdateOperationsInput | boolean
+    allowRegistration?: BoolFieldUpdateOperationsInput | boolean
+    maxPropertiesPerLandlord?: IntFieldUpdateOperationsInput | number
+    commissionRate?: FloatFieldUpdateOperationsInput | number
+    emailNotifications?: BoolFieldUpdateOperationsInput | boolean
+    smsNotifications?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AdminSettingsUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    siteName?: StringFieldUpdateOperationsInput | string
+    siteDescription?: StringFieldUpdateOperationsInput | string
+    maintenanceMode?: BoolFieldUpdateOperationsInput | boolean
+    allowRegistration?: BoolFieldUpdateOperationsInput | boolean
+    maxPropertiesPerLandlord?: IntFieldUpdateOperationsInput | number
+    commissionRate?: FloatFieldUpdateOperationsInput | number
+    emailNotifications?: BoolFieldUpdateOperationsInput | boolean
+    smsNotifications?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AdminSettingsCreateManyInput = {
+    id?: number
+    siteName?: string
+    siteDescription?: string
+    maintenanceMode?: boolean
+    allowRegistration?: boolean
+    maxPropertiesPerLandlord?: number
+    commissionRate?: number
+    emailNotifications?: boolean
+    smsNotifications?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type AdminSettingsUpdateManyMutationInput = {
+    siteName?: StringFieldUpdateOperationsInput | string
+    siteDescription?: StringFieldUpdateOperationsInput | string
+    maintenanceMode?: BoolFieldUpdateOperationsInput | boolean
+    allowRegistration?: BoolFieldUpdateOperationsInput | boolean
+    maxPropertiesPerLandlord?: IntFieldUpdateOperationsInput | number
+    commissionRate?: FloatFieldUpdateOperationsInput | number
+    emailNotifications?: BoolFieldUpdateOperationsInput | boolean
+    smsNotifications?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AdminSettingsUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    siteName?: StringFieldUpdateOperationsInput | string
+    siteDescription?: StringFieldUpdateOperationsInput | string
+    maintenanceMode?: BoolFieldUpdateOperationsInput | boolean
+    allowRegistration?: BoolFieldUpdateOperationsInput | boolean
+    maxPropertiesPerLandlord?: IntFieldUpdateOperationsInput | number
+    commissionRate?: FloatFieldUpdateOperationsInput | number
+    emailNotifications?: BoolFieldUpdateOperationsInput | boolean
+    smsNotifications?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TenantSurveyCreateInput = {
+    fullName: string
+    email: string
+    currentLocation: string
+    rentingStatus: string
+    housingType?: TenantSurveyCreatehousingTypeInput | string[]
+    frustrations?: TenantSurveyCreatefrustrationsInput | string[]
+    scamExperience: string
+    scamDetails?: string | null
+    propertyListingRating: string
+    dashboardRating: string
+    maintenanceRating: string
+    rentCollectionRating: string
+    customerSupportRating: string
+    monthlyReportRating: string
+    wishEasier: string
+    launchNotification: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type TenantSurveyUncheckedCreateInput = {
+    id?: number
+    fullName: string
+    email: string
+    currentLocation: string
+    rentingStatus: string
+    housingType?: TenantSurveyCreatehousingTypeInput | string[]
+    frustrations?: TenantSurveyCreatefrustrationsInput | string[]
+    scamExperience: string
+    scamDetails?: string | null
+    propertyListingRating: string
+    dashboardRating: string
+    maintenanceRating: string
+    rentCollectionRating: string
+    customerSupportRating: string
+    monthlyReportRating: string
+    wishEasier: string
+    launchNotification: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type TenantSurveyUpdateInput = {
+    fullName?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    currentLocation?: StringFieldUpdateOperationsInput | string
+    rentingStatus?: StringFieldUpdateOperationsInput | string
+    housingType?: TenantSurveyUpdatehousingTypeInput | string[]
+    frustrations?: TenantSurveyUpdatefrustrationsInput | string[]
+    scamExperience?: StringFieldUpdateOperationsInput | string
+    scamDetails?: NullableStringFieldUpdateOperationsInput | string | null
+    propertyListingRating?: StringFieldUpdateOperationsInput | string
+    dashboardRating?: StringFieldUpdateOperationsInput | string
+    maintenanceRating?: StringFieldUpdateOperationsInput | string
+    rentCollectionRating?: StringFieldUpdateOperationsInput | string
+    customerSupportRating?: StringFieldUpdateOperationsInput | string
+    monthlyReportRating?: StringFieldUpdateOperationsInput | string
+    wishEasier?: StringFieldUpdateOperationsInput | string
+    launchNotification?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TenantSurveyUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    fullName?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    currentLocation?: StringFieldUpdateOperationsInput | string
+    rentingStatus?: StringFieldUpdateOperationsInput | string
+    housingType?: TenantSurveyUpdatehousingTypeInput | string[]
+    frustrations?: TenantSurveyUpdatefrustrationsInput | string[]
+    scamExperience?: StringFieldUpdateOperationsInput | string
+    scamDetails?: NullableStringFieldUpdateOperationsInput | string | null
+    propertyListingRating?: StringFieldUpdateOperationsInput | string
+    dashboardRating?: StringFieldUpdateOperationsInput | string
+    maintenanceRating?: StringFieldUpdateOperationsInput | string
+    rentCollectionRating?: StringFieldUpdateOperationsInput | string
+    customerSupportRating?: StringFieldUpdateOperationsInput | string
+    monthlyReportRating?: StringFieldUpdateOperationsInput | string
+    wishEasier?: StringFieldUpdateOperationsInput | string
+    launchNotification?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TenantSurveyCreateManyInput = {
+    id?: number
+    fullName: string
+    email: string
+    currentLocation: string
+    rentingStatus: string
+    housingType?: TenantSurveyCreatehousingTypeInput | string[]
+    frustrations?: TenantSurveyCreatefrustrationsInput | string[]
+    scamExperience: string
+    scamDetails?: string | null
+    propertyListingRating: string
+    dashboardRating: string
+    maintenanceRating: string
+    rentCollectionRating: string
+    customerSupportRating: string
+    monthlyReportRating: string
+    wishEasier: string
+    launchNotification: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type TenantSurveyUpdateManyMutationInput = {
+    fullName?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    currentLocation?: StringFieldUpdateOperationsInput | string
+    rentingStatus?: StringFieldUpdateOperationsInput | string
+    housingType?: TenantSurveyUpdatehousingTypeInput | string[]
+    frustrations?: TenantSurveyUpdatefrustrationsInput | string[]
+    scamExperience?: StringFieldUpdateOperationsInput | string
+    scamDetails?: NullableStringFieldUpdateOperationsInput | string | null
+    propertyListingRating?: StringFieldUpdateOperationsInput | string
+    dashboardRating?: StringFieldUpdateOperationsInput | string
+    maintenanceRating?: StringFieldUpdateOperationsInput | string
+    rentCollectionRating?: StringFieldUpdateOperationsInput | string
+    customerSupportRating?: StringFieldUpdateOperationsInput | string
+    monthlyReportRating?: StringFieldUpdateOperationsInput | string
+    wishEasier?: StringFieldUpdateOperationsInput | string
+    launchNotification?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TenantSurveyUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    fullName?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    currentLocation?: StringFieldUpdateOperationsInput | string
+    rentingStatus?: StringFieldUpdateOperationsInput | string
+    housingType?: TenantSurveyUpdatehousingTypeInput | string[]
+    frustrations?: TenantSurveyUpdatefrustrationsInput | string[]
+    scamExperience?: StringFieldUpdateOperationsInput | string
+    scamDetails?: NullableStringFieldUpdateOperationsInput | string | null
+    propertyListingRating?: StringFieldUpdateOperationsInput | string
+    dashboardRating?: StringFieldUpdateOperationsInput | string
+    maintenanceRating?: StringFieldUpdateOperationsInput | string
+    rentCollectionRating?: StringFieldUpdateOperationsInput | string
+    customerSupportRating?: StringFieldUpdateOperationsInput | string
+    monthlyReportRating?: StringFieldUpdateOperationsInput | string
+    wishEasier?: StringFieldUpdateOperationsInput | string
+    launchNotification?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LandlordSurveyCreateInput = {
+    fullName: string
+    email: string
+    propertyLocation: string
+    numberOfProperties: string
+    propertyTypes?: LandlordSurveyCreatepropertyTypesInput | string[]
+    tenantManagement?: LandlordSurveyCreatetenantManagementInput | string[]
+    biggestChallenges?: LandlordSurveyCreatebiggestChallengesInput | string[]
+    agentIssues: string
+    platformInterest: string
+    propertyListingRating: string
+    dashboardRating: string
+    maintenanceRating: string
+    rentCollectionRating: string
+    customerSupportRating: string
+    monthlyReportRating: string
+    wishEasier: string
+    launchNotification: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type LandlordSurveyUncheckedCreateInput = {
+    id?: number
+    fullName: string
+    email: string
+    propertyLocation: string
+    numberOfProperties: string
+    propertyTypes?: LandlordSurveyCreatepropertyTypesInput | string[]
+    tenantManagement?: LandlordSurveyCreatetenantManagementInput | string[]
+    biggestChallenges?: LandlordSurveyCreatebiggestChallengesInput | string[]
+    agentIssues: string
+    platformInterest: string
+    propertyListingRating: string
+    dashboardRating: string
+    maintenanceRating: string
+    rentCollectionRating: string
+    customerSupportRating: string
+    monthlyReportRating: string
+    wishEasier: string
+    launchNotification: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type LandlordSurveyUpdateInput = {
+    fullName?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    propertyLocation?: StringFieldUpdateOperationsInput | string
+    numberOfProperties?: StringFieldUpdateOperationsInput | string
+    propertyTypes?: LandlordSurveyUpdatepropertyTypesInput | string[]
+    tenantManagement?: LandlordSurveyUpdatetenantManagementInput | string[]
+    biggestChallenges?: LandlordSurveyUpdatebiggestChallengesInput | string[]
+    agentIssues?: StringFieldUpdateOperationsInput | string
+    platformInterest?: StringFieldUpdateOperationsInput | string
+    propertyListingRating?: StringFieldUpdateOperationsInput | string
+    dashboardRating?: StringFieldUpdateOperationsInput | string
+    maintenanceRating?: StringFieldUpdateOperationsInput | string
+    rentCollectionRating?: StringFieldUpdateOperationsInput | string
+    customerSupportRating?: StringFieldUpdateOperationsInput | string
+    monthlyReportRating?: StringFieldUpdateOperationsInput | string
+    wishEasier?: StringFieldUpdateOperationsInput | string
+    launchNotification?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LandlordSurveyUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    fullName?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    propertyLocation?: StringFieldUpdateOperationsInput | string
+    numberOfProperties?: StringFieldUpdateOperationsInput | string
+    propertyTypes?: LandlordSurveyUpdatepropertyTypesInput | string[]
+    tenantManagement?: LandlordSurveyUpdatetenantManagementInput | string[]
+    biggestChallenges?: LandlordSurveyUpdatebiggestChallengesInput | string[]
+    agentIssues?: StringFieldUpdateOperationsInput | string
+    platformInterest?: StringFieldUpdateOperationsInput | string
+    propertyListingRating?: StringFieldUpdateOperationsInput | string
+    dashboardRating?: StringFieldUpdateOperationsInput | string
+    maintenanceRating?: StringFieldUpdateOperationsInput | string
+    rentCollectionRating?: StringFieldUpdateOperationsInput | string
+    customerSupportRating?: StringFieldUpdateOperationsInput | string
+    monthlyReportRating?: StringFieldUpdateOperationsInput | string
+    wishEasier?: StringFieldUpdateOperationsInput | string
+    launchNotification?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LandlordSurveyCreateManyInput = {
+    id?: number
+    fullName: string
+    email: string
+    propertyLocation: string
+    numberOfProperties: string
+    propertyTypes?: LandlordSurveyCreatepropertyTypesInput | string[]
+    tenantManagement?: LandlordSurveyCreatetenantManagementInput | string[]
+    biggestChallenges?: LandlordSurveyCreatebiggestChallengesInput | string[]
+    agentIssues: string
+    platformInterest: string
+    propertyListingRating: string
+    dashboardRating: string
+    maintenanceRating: string
+    rentCollectionRating: string
+    customerSupportRating: string
+    monthlyReportRating: string
+    wishEasier: string
+    launchNotification: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type LandlordSurveyUpdateManyMutationInput = {
+    fullName?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    propertyLocation?: StringFieldUpdateOperationsInput | string
+    numberOfProperties?: StringFieldUpdateOperationsInput | string
+    propertyTypes?: LandlordSurveyUpdatepropertyTypesInput | string[]
+    tenantManagement?: LandlordSurveyUpdatetenantManagementInput | string[]
+    biggestChallenges?: LandlordSurveyUpdatebiggestChallengesInput | string[]
+    agentIssues?: StringFieldUpdateOperationsInput | string
+    platformInterest?: StringFieldUpdateOperationsInput | string
+    propertyListingRating?: StringFieldUpdateOperationsInput | string
+    dashboardRating?: StringFieldUpdateOperationsInput | string
+    maintenanceRating?: StringFieldUpdateOperationsInput | string
+    rentCollectionRating?: StringFieldUpdateOperationsInput | string
+    customerSupportRating?: StringFieldUpdateOperationsInput | string
+    monthlyReportRating?: StringFieldUpdateOperationsInput | string
+    wishEasier?: StringFieldUpdateOperationsInput | string
+    launchNotification?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LandlordSurveyUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    fullName?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    propertyLocation?: StringFieldUpdateOperationsInput | string
+    numberOfProperties?: StringFieldUpdateOperationsInput | string
+    propertyTypes?: LandlordSurveyUpdatepropertyTypesInput | string[]
+    tenantManagement?: LandlordSurveyUpdatetenantManagementInput | string[]
+    biggestChallenges?: LandlordSurveyUpdatebiggestChallengesInput | string[]
+    agentIssues?: StringFieldUpdateOperationsInput | string
+    platformInterest?: StringFieldUpdateOperationsInput | string
+    propertyListingRating?: StringFieldUpdateOperationsInput | string
+    dashboardRating?: StringFieldUpdateOperationsInput | string
+    maintenanceRating?: StringFieldUpdateOperationsInput | string
+    rentCollectionRating?: StringFieldUpdateOperationsInput | string
+    customerSupportRating?: StringFieldUpdateOperationsInput | string
+    monthlyReportRating?: StringFieldUpdateOperationsInput | string
+    wishEasier?: StringFieldUpdateOperationsInput | string
+    launchNotification?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type IntFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -15223,9 +23985,9 @@ export namespace Prisma {
     none?: PropertyWhereInput
   }
 
-  export type LandlordRegistrationTokenNullableScalarRelationFilter = {
-    is?: LandlordRegistrationTokenWhereInput | null
-    isNot?: LandlordRegistrationTokenWhereInput | null
+  export type LandlordRegistrationCodeNullableScalarRelationFilter = {
+    is?: LandlordRegistrationCodeWhereInput | null
+    isNot?: LandlordRegistrationCodeWhereInput | null
   }
 
   export type PropertyOrderByRelationAggregateInput = {
@@ -15238,10 +24000,12 @@ export namespace Prisma {
     name?: SortOrder
     email?: SortOrder
     phoneNumber?: SortOrder
+    registrationCodeId?: SortOrder
   }
 
   export type LandlordAvgOrderByAggregateInput = {
     id?: SortOrder
+    registrationCodeId?: SortOrder
   }
 
   export type LandlordMaxOrderByAggregateInput = {
@@ -15250,6 +24014,7 @@ export namespace Prisma {
     name?: SortOrder
     email?: SortOrder
     phoneNumber?: SortOrder
+    registrationCodeId?: SortOrder
   }
 
   export type LandlordMinOrderByAggregateInput = {
@@ -15258,10 +24023,12 @@ export namespace Prisma {
     name?: SortOrder
     email?: SortOrder
     phoneNumber?: SortOrder
+    registrationCodeId?: SortOrder
   }
 
   export type LandlordSumOrderByAggregateInput = {
     id?: SortOrder
+    registrationCodeId?: SortOrder
   }
 
   export type TenantCountOrderByAggregateInput = {
@@ -15311,13 +24078,18 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
-  export type LandlordRegistrationTokenListRelationFilter = {
-    every?: LandlordRegistrationTokenWhereInput
-    some?: LandlordRegistrationTokenWhereInput
-    none?: LandlordRegistrationTokenWhereInput
+  export type AgentRegistrationCodeNullableScalarRelationFilter = {
+    is?: AgentRegistrationCodeWhereInput | null
+    isNot?: AgentRegistrationCodeWhereInput | null
   }
 
-  export type LandlordRegistrationTokenOrderByRelationAggregateInput = {
+  export type TaskListRelationFilter = {
+    every?: TaskWhereInput
+    some?: TaskWhereInput
+    none?: TaskWhereInput
+  }
+
+  export type TaskOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -15327,10 +24099,12 @@ export namespace Prisma {
     name?: SortOrder
     email?: SortOrder
     phoneNumber?: SortOrder
+    registrationCodeId?: SortOrder
   }
 
   export type AgentAvgOrderByAggregateInput = {
     id?: SortOrder
+    registrationCodeId?: SortOrder
   }
 
   export type AgentMaxOrderByAggregateInput = {
@@ -15339,6 +24113,7 @@ export namespace Prisma {
     name?: SortOrder
     email?: SortOrder
     phoneNumber?: SortOrder
+    registrationCodeId?: SortOrder
   }
 
   export type AgentMinOrderByAggregateInput = {
@@ -15347,10 +24122,12 @@ export namespace Prisma {
     name?: SortOrder
     email?: SortOrder
     phoneNumber?: SortOrder
+    registrationCodeId?: SortOrder
   }
 
   export type AgentSumOrderByAggregateInput = {
     id?: SortOrder
+    registrationCodeId?: SortOrder
   }
 
   export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -15371,6 +24148,38 @@ export namespace Prisma {
     _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
+  export type AdminCountOrderByAggregateInput = {
+    id?: SortOrder
+    cognitoId?: SortOrder
+    name?: SortOrder
+    email?: SortOrder
+    phoneNumber?: SortOrder
+  }
+
+  export type AdminAvgOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type AdminMaxOrderByAggregateInput = {
+    id?: SortOrder
+    cognitoId?: SortOrder
+    name?: SortOrder
+    email?: SortOrder
+    phoneNumber?: SortOrder
+  }
+
+  export type AdminMinOrderByAggregateInput = {
+    id?: SortOrder
+    cognitoId?: SortOrder
+    name?: SortOrder
+    email?: SortOrder
+    phoneNumber?: SortOrder
+  }
+
+  export type AdminSumOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
   export type DateTimeNullableFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
@@ -15382,57 +24191,46 @@ export namespace Prisma {
     not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
   }
 
-  export type AgentScalarRelationFilter = {
-    is?: AgentWhereInput
-    isNot?: AgentWhereInput
+  export type LandlordListRelationFilter = {
+    every?: LandlordWhereInput
+    some?: LandlordWhereInput
+    none?: LandlordWhereInput
   }
 
-  export type LandlordNullableScalarRelationFilter = {
-    is?: LandlordWhereInput | null
-    isNot?: LandlordWhereInput | null
+  export type LandlordOrderByRelationAggregateInput = {
+    _count?: SortOrder
   }
 
-  export type LandlordRegistrationTokenCountOrderByAggregateInput = {
+  export type LandlordRegistrationCodeCountOrderByAggregateInput = {
     id?: SortOrder
-    token?: SortOrder
-    agentId?: SortOrder
+    code?: SortOrder
     isUsed?: SortOrder
-    expiresAt?: SortOrder
     createdAt?: SortOrder
     usedAt?: SortOrder
-    landlordId?: SortOrder
   }
 
-  export type LandlordRegistrationTokenAvgOrderByAggregateInput = {
-    agentId?: SortOrder
-    landlordId?: SortOrder
-  }
-
-  export type LandlordRegistrationTokenMaxOrderByAggregateInput = {
+  export type LandlordRegistrationCodeAvgOrderByAggregateInput = {
     id?: SortOrder
-    token?: SortOrder
-    agentId?: SortOrder
+  }
+
+  export type LandlordRegistrationCodeMaxOrderByAggregateInput = {
+    id?: SortOrder
+    code?: SortOrder
     isUsed?: SortOrder
-    expiresAt?: SortOrder
     createdAt?: SortOrder
     usedAt?: SortOrder
-    landlordId?: SortOrder
   }
 
-  export type LandlordRegistrationTokenMinOrderByAggregateInput = {
+  export type LandlordRegistrationCodeMinOrderByAggregateInput = {
     id?: SortOrder
-    token?: SortOrder
-    agentId?: SortOrder
+    code?: SortOrder
     isUsed?: SortOrder
-    expiresAt?: SortOrder
     createdAt?: SortOrder
     usedAt?: SortOrder
-    landlordId?: SortOrder
   }
 
-  export type LandlordRegistrationTokenSumOrderByAggregateInput = {
-    agentId?: SortOrder
-    landlordId?: SortOrder
+  export type LandlordRegistrationCodeSumOrderByAggregateInput = {
+    id?: SortOrder
   }
 
   export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -15447,6 +24245,139 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedDateTimeNullableFilter<$PrismaModel>
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  }
+
+  export type AgentListRelationFilter = {
+    every?: AgentWhereInput
+    some?: AgentWhereInput
+    none?: AgentWhereInput
+  }
+
+  export type AgentOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type AgentRegistrationCodeCountOrderByAggregateInput = {
+    id?: SortOrder
+    code?: SortOrder
+    isUsed?: SortOrder
+    createdAt?: SortOrder
+    usedAt?: SortOrder
+    assignedBy?: SortOrder
+  }
+
+  export type AgentRegistrationCodeAvgOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type AgentRegistrationCodeMaxOrderByAggregateInput = {
+    id?: SortOrder
+    code?: SortOrder
+    isUsed?: SortOrder
+    createdAt?: SortOrder
+    usedAt?: SortOrder
+    assignedBy?: SortOrder
+  }
+
+  export type AgentRegistrationCodeMinOrderByAggregateInput = {
+    id?: SortOrder
+    code?: SortOrder
+    isUsed?: SortOrder
+    createdAt?: SortOrder
+    usedAt?: SortOrder
+    assignedBy?: SortOrder
+  }
+
+  export type AgentRegistrationCodeSumOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type EnumTaskStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.TaskStatus | EnumTaskStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.TaskStatus[] | ListEnumTaskStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.TaskStatus[] | ListEnumTaskStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumTaskStatusFilter<$PrismaModel> | $Enums.TaskStatus
+  }
+
+  export type EnumTaskPriorityFilter<$PrismaModel = never> = {
+    equals?: $Enums.TaskPriority | EnumTaskPriorityFieldRefInput<$PrismaModel>
+    in?: $Enums.TaskPriority[] | ListEnumTaskPriorityFieldRefInput<$PrismaModel>
+    notIn?: $Enums.TaskPriority[] | ListEnumTaskPriorityFieldRefInput<$PrismaModel>
+    not?: NestedEnumTaskPriorityFilter<$PrismaModel> | $Enums.TaskPriority
+  }
+
+  export type AgentScalarRelationFilter = {
+    is?: AgentWhereInput
+    isNot?: AgentWhereInput
+  }
+
+  export type TaskCountOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    status?: SortOrder
+    priority?: SortOrder
+    dueDate?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    assignedBy?: SortOrder
+    agentId?: SortOrder
+  }
+
+  export type TaskAvgOrderByAggregateInput = {
+    id?: SortOrder
+    agentId?: SortOrder
+  }
+
+  export type TaskMaxOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    status?: SortOrder
+    priority?: SortOrder
+    dueDate?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    assignedBy?: SortOrder
+    agentId?: SortOrder
+  }
+
+  export type TaskMinOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    status?: SortOrder
+    priority?: SortOrder
+    dueDate?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    assignedBy?: SortOrder
+    agentId?: SortOrder
+  }
+
+  export type TaskSumOrderByAggregateInput = {
+    id?: SortOrder
+    agentId?: SortOrder
+  }
+
+  export type EnumTaskStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.TaskStatus | EnumTaskStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.TaskStatus[] | ListEnumTaskStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.TaskStatus[] | ListEnumTaskStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumTaskStatusWithAggregatesFilter<$PrismaModel> | $Enums.TaskStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumTaskStatusFilter<$PrismaModel>
+    _max?: NestedEnumTaskStatusFilter<$PrismaModel>
+  }
+
+  export type EnumTaskPriorityWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.TaskPriority | EnumTaskPriorityFieldRefInput<$PrismaModel>
+    in?: $Enums.TaskPriority[] | ListEnumTaskPriorityFieldRefInput<$PrismaModel>
+    notIn?: $Enums.TaskPriority[] | ListEnumTaskPriorityFieldRefInput<$PrismaModel>
+    not?: NestedEnumTaskPriorityWithAggregatesFilter<$PrismaModel> | $Enums.TaskPriority
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumTaskPriorityFilter<$PrismaModel>
+    _max?: NestedEnumTaskPriorityFilter<$PrismaModel>
   }
 
   export type LocationCountOrderByAggregateInput = {
@@ -15796,6 +24727,201 @@ export namespace Prisma {
     _max?: NestedEnumPaymentStatusFilter<$PrismaModel>
   }
 
+  export type AdminSettingsCountOrderByAggregateInput = {
+    id?: SortOrder
+    siteName?: SortOrder
+    siteDescription?: SortOrder
+    maintenanceMode?: SortOrder
+    allowRegistration?: SortOrder
+    maxPropertiesPerLandlord?: SortOrder
+    commissionRate?: SortOrder
+    emailNotifications?: SortOrder
+    smsNotifications?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type AdminSettingsAvgOrderByAggregateInput = {
+    id?: SortOrder
+    maxPropertiesPerLandlord?: SortOrder
+    commissionRate?: SortOrder
+  }
+
+  export type AdminSettingsMaxOrderByAggregateInput = {
+    id?: SortOrder
+    siteName?: SortOrder
+    siteDescription?: SortOrder
+    maintenanceMode?: SortOrder
+    allowRegistration?: SortOrder
+    maxPropertiesPerLandlord?: SortOrder
+    commissionRate?: SortOrder
+    emailNotifications?: SortOrder
+    smsNotifications?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type AdminSettingsMinOrderByAggregateInput = {
+    id?: SortOrder
+    siteName?: SortOrder
+    siteDescription?: SortOrder
+    maintenanceMode?: SortOrder
+    allowRegistration?: SortOrder
+    maxPropertiesPerLandlord?: SortOrder
+    commissionRate?: SortOrder
+    emailNotifications?: SortOrder
+    smsNotifications?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type AdminSettingsSumOrderByAggregateInput = {
+    id?: SortOrder
+    maxPropertiesPerLandlord?: SortOrder
+    commissionRate?: SortOrder
+  }
+
+  export type TenantSurveyCountOrderByAggregateInput = {
+    id?: SortOrder
+    fullName?: SortOrder
+    email?: SortOrder
+    currentLocation?: SortOrder
+    rentingStatus?: SortOrder
+    housingType?: SortOrder
+    frustrations?: SortOrder
+    scamExperience?: SortOrder
+    scamDetails?: SortOrder
+    propertyListingRating?: SortOrder
+    dashboardRating?: SortOrder
+    maintenanceRating?: SortOrder
+    rentCollectionRating?: SortOrder
+    customerSupportRating?: SortOrder
+    monthlyReportRating?: SortOrder
+    wishEasier?: SortOrder
+    launchNotification?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type TenantSurveyAvgOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type TenantSurveyMaxOrderByAggregateInput = {
+    id?: SortOrder
+    fullName?: SortOrder
+    email?: SortOrder
+    currentLocation?: SortOrder
+    rentingStatus?: SortOrder
+    scamExperience?: SortOrder
+    scamDetails?: SortOrder
+    propertyListingRating?: SortOrder
+    dashboardRating?: SortOrder
+    maintenanceRating?: SortOrder
+    rentCollectionRating?: SortOrder
+    customerSupportRating?: SortOrder
+    monthlyReportRating?: SortOrder
+    wishEasier?: SortOrder
+    launchNotification?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type TenantSurveyMinOrderByAggregateInput = {
+    id?: SortOrder
+    fullName?: SortOrder
+    email?: SortOrder
+    currentLocation?: SortOrder
+    rentingStatus?: SortOrder
+    scamExperience?: SortOrder
+    scamDetails?: SortOrder
+    propertyListingRating?: SortOrder
+    dashboardRating?: SortOrder
+    maintenanceRating?: SortOrder
+    rentCollectionRating?: SortOrder
+    customerSupportRating?: SortOrder
+    monthlyReportRating?: SortOrder
+    wishEasier?: SortOrder
+    launchNotification?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type TenantSurveySumOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type LandlordSurveyCountOrderByAggregateInput = {
+    id?: SortOrder
+    fullName?: SortOrder
+    email?: SortOrder
+    propertyLocation?: SortOrder
+    numberOfProperties?: SortOrder
+    propertyTypes?: SortOrder
+    tenantManagement?: SortOrder
+    biggestChallenges?: SortOrder
+    agentIssues?: SortOrder
+    platformInterest?: SortOrder
+    propertyListingRating?: SortOrder
+    dashboardRating?: SortOrder
+    maintenanceRating?: SortOrder
+    rentCollectionRating?: SortOrder
+    customerSupportRating?: SortOrder
+    monthlyReportRating?: SortOrder
+    wishEasier?: SortOrder
+    launchNotification?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type LandlordSurveyAvgOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type LandlordSurveyMaxOrderByAggregateInput = {
+    id?: SortOrder
+    fullName?: SortOrder
+    email?: SortOrder
+    propertyLocation?: SortOrder
+    numberOfProperties?: SortOrder
+    agentIssues?: SortOrder
+    platformInterest?: SortOrder
+    propertyListingRating?: SortOrder
+    dashboardRating?: SortOrder
+    maintenanceRating?: SortOrder
+    rentCollectionRating?: SortOrder
+    customerSupportRating?: SortOrder
+    monthlyReportRating?: SortOrder
+    wishEasier?: SortOrder
+    launchNotification?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type LandlordSurveyMinOrderByAggregateInput = {
+    id?: SortOrder
+    fullName?: SortOrder
+    email?: SortOrder
+    propertyLocation?: SortOrder
+    numberOfProperties?: SortOrder
+    agentIssues?: SortOrder
+    platformInterest?: SortOrder
+    propertyListingRating?: SortOrder
+    dashboardRating?: SortOrder
+    maintenanceRating?: SortOrder
+    rentCollectionRating?: SortOrder
+    customerSupportRating?: SortOrder
+    monthlyReportRating?: SortOrder
+    wishEasier?: SortOrder
+    launchNotification?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type LandlordSurveySumOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
   export type PropertyCreatephotoUrlsInput = {
     set: string[]
   }
@@ -16061,10 +25187,10 @@ export namespace Prisma {
     connect?: PropertyWhereUniqueInput | PropertyWhereUniqueInput[]
   }
 
-  export type LandlordRegistrationTokenCreateNestedOneWithoutLandlordInput = {
-    create?: XOR<LandlordRegistrationTokenCreateWithoutLandlordInput, LandlordRegistrationTokenUncheckedCreateWithoutLandlordInput>
-    connectOrCreate?: LandlordRegistrationTokenCreateOrConnectWithoutLandlordInput
-    connect?: LandlordRegistrationTokenWhereUniqueInput
+  export type LandlordRegistrationCodeCreateNestedOneWithoutLandlordsInput = {
+    create?: XOR<LandlordRegistrationCodeCreateWithoutLandlordsInput, LandlordRegistrationCodeUncheckedCreateWithoutLandlordsInput>
+    connectOrCreate?: LandlordRegistrationCodeCreateOrConnectWithoutLandlordsInput
+    connect?: LandlordRegistrationCodeWhereUniqueInput
   }
 
   export type PropertyUncheckedCreateNestedManyWithoutLandlordInput = {
@@ -16072,12 +25198,6 @@ export namespace Prisma {
     connectOrCreate?: PropertyCreateOrConnectWithoutLandlordInput | PropertyCreateOrConnectWithoutLandlordInput[]
     createMany?: PropertyCreateManyLandlordInputEnvelope
     connect?: PropertyWhereUniqueInput | PropertyWhereUniqueInput[]
-  }
-
-  export type LandlordRegistrationTokenUncheckedCreateNestedOneWithoutLandlordInput = {
-    create?: XOR<LandlordRegistrationTokenCreateWithoutLandlordInput, LandlordRegistrationTokenUncheckedCreateWithoutLandlordInput>
-    connectOrCreate?: LandlordRegistrationTokenCreateOrConnectWithoutLandlordInput
-    connect?: LandlordRegistrationTokenWhereUniqueInput
   }
 
   export type PropertyUpdateManyWithoutLandlordNestedInput = {
@@ -16094,14 +25214,14 @@ export namespace Prisma {
     deleteMany?: PropertyScalarWhereInput | PropertyScalarWhereInput[]
   }
 
-  export type LandlordRegistrationTokenUpdateOneWithoutLandlordNestedInput = {
-    create?: XOR<LandlordRegistrationTokenCreateWithoutLandlordInput, LandlordRegistrationTokenUncheckedCreateWithoutLandlordInput>
-    connectOrCreate?: LandlordRegistrationTokenCreateOrConnectWithoutLandlordInput
-    upsert?: LandlordRegistrationTokenUpsertWithoutLandlordInput
-    disconnect?: LandlordRegistrationTokenWhereInput | boolean
-    delete?: LandlordRegistrationTokenWhereInput | boolean
-    connect?: LandlordRegistrationTokenWhereUniqueInput
-    update?: XOR<XOR<LandlordRegistrationTokenUpdateToOneWithWhereWithoutLandlordInput, LandlordRegistrationTokenUpdateWithoutLandlordInput>, LandlordRegistrationTokenUncheckedUpdateWithoutLandlordInput>
+  export type LandlordRegistrationCodeUpdateOneWithoutLandlordsNestedInput = {
+    create?: XOR<LandlordRegistrationCodeCreateWithoutLandlordsInput, LandlordRegistrationCodeUncheckedCreateWithoutLandlordsInput>
+    connectOrCreate?: LandlordRegistrationCodeCreateOrConnectWithoutLandlordsInput
+    upsert?: LandlordRegistrationCodeUpsertWithoutLandlordsInput
+    disconnect?: LandlordRegistrationCodeWhereInput | boolean
+    delete?: LandlordRegistrationCodeWhereInput | boolean
+    connect?: LandlordRegistrationCodeWhereUniqueInput
+    update?: XOR<XOR<LandlordRegistrationCodeUpdateToOneWithWhereWithoutLandlordsInput, LandlordRegistrationCodeUpdateWithoutLandlordsInput>, LandlordRegistrationCodeUncheckedUpdateWithoutLandlordsInput>
   }
 
   export type PropertyUncheckedUpdateManyWithoutLandlordNestedInput = {
@@ -16116,16 +25236,6 @@ export namespace Prisma {
     update?: PropertyUpdateWithWhereUniqueWithoutLandlordInput | PropertyUpdateWithWhereUniqueWithoutLandlordInput[]
     updateMany?: PropertyUpdateManyWithWhereWithoutLandlordInput | PropertyUpdateManyWithWhereWithoutLandlordInput[]
     deleteMany?: PropertyScalarWhereInput | PropertyScalarWhereInput[]
-  }
-
-  export type LandlordRegistrationTokenUncheckedUpdateOneWithoutLandlordNestedInput = {
-    create?: XOR<LandlordRegistrationTokenCreateWithoutLandlordInput, LandlordRegistrationTokenUncheckedCreateWithoutLandlordInput>
-    connectOrCreate?: LandlordRegistrationTokenCreateOrConnectWithoutLandlordInput
-    upsert?: LandlordRegistrationTokenUpsertWithoutLandlordInput
-    disconnect?: LandlordRegistrationTokenWhereInput | boolean
-    delete?: LandlordRegistrationTokenWhereInput | boolean
-    connect?: LandlordRegistrationTokenWhereUniqueInput
-    update?: XOR<XOR<LandlordRegistrationTokenUpdateToOneWithWhereWithoutLandlordInput, LandlordRegistrationTokenUpdateWithoutLandlordInput>, LandlordRegistrationTokenUncheckedUpdateWithoutLandlordInput>
   }
 
   export type PropertyCreateNestedManyWithoutTenantsInput = {
@@ -16288,84 +25398,176 @@ export namespace Prisma {
     deleteMany?: LeaseScalarWhereInput | LeaseScalarWhereInput[]
   }
 
-  export type LandlordRegistrationTokenCreateNestedManyWithoutAgentInput = {
-    create?: XOR<LandlordRegistrationTokenCreateWithoutAgentInput, LandlordRegistrationTokenUncheckedCreateWithoutAgentInput> | LandlordRegistrationTokenCreateWithoutAgentInput[] | LandlordRegistrationTokenUncheckedCreateWithoutAgentInput[]
-    connectOrCreate?: LandlordRegistrationTokenCreateOrConnectWithoutAgentInput | LandlordRegistrationTokenCreateOrConnectWithoutAgentInput[]
-    createMany?: LandlordRegistrationTokenCreateManyAgentInputEnvelope
-    connect?: LandlordRegistrationTokenWhereUniqueInput | LandlordRegistrationTokenWhereUniqueInput[]
+  export type AgentRegistrationCodeCreateNestedOneWithoutAgentsInput = {
+    create?: XOR<AgentRegistrationCodeCreateWithoutAgentsInput, AgentRegistrationCodeUncheckedCreateWithoutAgentsInput>
+    connectOrCreate?: AgentRegistrationCodeCreateOrConnectWithoutAgentsInput
+    connect?: AgentRegistrationCodeWhereUniqueInput
   }
 
-  export type LandlordRegistrationTokenUncheckedCreateNestedManyWithoutAgentInput = {
-    create?: XOR<LandlordRegistrationTokenCreateWithoutAgentInput, LandlordRegistrationTokenUncheckedCreateWithoutAgentInput> | LandlordRegistrationTokenCreateWithoutAgentInput[] | LandlordRegistrationTokenUncheckedCreateWithoutAgentInput[]
-    connectOrCreate?: LandlordRegistrationTokenCreateOrConnectWithoutAgentInput | LandlordRegistrationTokenCreateOrConnectWithoutAgentInput[]
-    createMany?: LandlordRegistrationTokenCreateManyAgentInputEnvelope
-    connect?: LandlordRegistrationTokenWhereUniqueInput | LandlordRegistrationTokenWhereUniqueInput[]
+  export type TaskCreateNestedManyWithoutAgentInput = {
+    create?: XOR<TaskCreateWithoutAgentInput, TaskUncheckedCreateWithoutAgentInput> | TaskCreateWithoutAgentInput[] | TaskUncheckedCreateWithoutAgentInput[]
+    connectOrCreate?: TaskCreateOrConnectWithoutAgentInput | TaskCreateOrConnectWithoutAgentInput[]
+    createMany?: TaskCreateManyAgentInputEnvelope
+    connect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
+  }
+
+  export type TaskUncheckedCreateNestedManyWithoutAgentInput = {
+    create?: XOR<TaskCreateWithoutAgentInput, TaskUncheckedCreateWithoutAgentInput> | TaskCreateWithoutAgentInput[] | TaskUncheckedCreateWithoutAgentInput[]
+    connectOrCreate?: TaskCreateOrConnectWithoutAgentInput | TaskCreateOrConnectWithoutAgentInput[]
+    createMany?: TaskCreateManyAgentInputEnvelope
+    connect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
   }
 
   export type NullableStringFieldUpdateOperationsInput = {
     set?: string | null
   }
 
-  export type LandlordRegistrationTokenUpdateManyWithoutAgentNestedInput = {
-    create?: XOR<LandlordRegistrationTokenCreateWithoutAgentInput, LandlordRegistrationTokenUncheckedCreateWithoutAgentInput> | LandlordRegistrationTokenCreateWithoutAgentInput[] | LandlordRegistrationTokenUncheckedCreateWithoutAgentInput[]
-    connectOrCreate?: LandlordRegistrationTokenCreateOrConnectWithoutAgentInput | LandlordRegistrationTokenCreateOrConnectWithoutAgentInput[]
-    upsert?: LandlordRegistrationTokenUpsertWithWhereUniqueWithoutAgentInput | LandlordRegistrationTokenUpsertWithWhereUniqueWithoutAgentInput[]
-    createMany?: LandlordRegistrationTokenCreateManyAgentInputEnvelope
-    set?: LandlordRegistrationTokenWhereUniqueInput | LandlordRegistrationTokenWhereUniqueInput[]
-    disconnect?: LandlordRegistrationTokenWhereUniqueInput | LandlordRegistrationTokenWhereUniqueInput[]
-    delete?: LandlordRegistrationTokenWhereUniqueInput | LandlordRegistrationTokenWhereUniqueInput[]
-    connect?: LandlordRegistrationTokenWhereUniqueInput | LandlordRegistrationTokenWhereUniqueInput[]
-    update?: LandlordRegistrationTokenUpdateWithWhereUniqueWithoutAgentInput | LandlordRegistrationTokenUpdateWithWhereUniqueWithoutAgentInput[]
-    updateMany?: LandlordRegistrationTokenUpdateManyWithWhereWithoutAgentInput | LandlordRegistrationTokenUpdateManyWithWhereWithoutAgentInput[]
-    deleteMany?: LandlordRegistrationTokenScalarWhereInput | LandlordRegistrationTokenScalarWhereInput[]
+  export type AgentRegistrationCodeUpdateOneWithoutAgentsNestedInput = {
+    create?: XOR<AgentRegistrationCodeCreateWithoutAgentsInput, AgentRegistrationCodeUncheckedCreateWithoutAgentsInput>
+    connectOrCreate?: AgentRegistrationCodeCreateOrConnectWithoutAgentsInput
+    upsert?: AgentRegistrationCodeUpsertWithoutAgentsInput
+    disconnect?: AgentRegistrationCodeWhereInput | boolean
+    delete?: AgentRegistrationCodeWhereInput | boolean
+    connect?: AgentRegistrationCodeWhereUniqueInput
+    update?: XOR<XOR<AgentRegistrationCodeUpdateToOneWithWhereWithoutAgentsInput, AgentRegistrationCodeUpdateWithoutAgentsInput>, AgentRegistrationCodeUncheckedUpdateWithoutAgentsInput>
   }
 
-  export type LandlordRegistrationTokenUncheckedUpdateManyWithoutAgentNestedInput = {
-    create?: XOR<LandlordRegistrationTokenCreateWithoutAgentInput, LandlordRegistrationTokenUncheckedCreateWithoutAgentInput> | LandlordRegistrationTokenCreateWithoutAgentInput[] | LandlordRegistrationTokenUncheckedCreateWithoutAgentInput[]
-    connectOrCreate?: LandlordRegistrationTokenCreateOrConnectWithoutAgentInput | LandlordRegistrationTokenCreateOrConnectWithoutAgentInput[]
-    upsert?: LandlordRegistrationTokenUpsertWithWhereUniqueWithoutAgentInput | LandlordRegistrationTokenUpsertWithWhereUniqueWithoutAgentInput[]
-    createMany?: LandlordRegistrationTokenCreateManyAgentInputEnvelope
-    set?: LandlordRegistrationTokenWhereUniqueInput | LandlordRegistrationTokenWhereUniqueInput[]
-    disconnect?: LandlordRegistrationTokenWhereUniqueInput | LandlordRegistrationTokenWhereUniqueInput[]
-    delete?: LandlordRegistrationTokenWhereUniqueInput | LandlordRegistrationTokenWhereUniqueInput[]
-    connect?: LandlordRegistrationTokenWhereUniqueInput | LandlordRegistrationTokenWhereUniqueInput[]
-    update?: LandlordRegistrationTokenUpdateWithWhereUniqueWithoutAgentInput | LandlordRegistrationTokenUpdateWithWhereUniqueWithoutAgentInput[]
-    updateMany?: LandlordRegistrationTokenUpdateManyWithWhereWithoutAgentInput | LandlordRegistrationTokenUpdateManyWithWhereWithoutAgentInput[]
-    deleteMany?: LandlordRegistrationTokenScalarWhereInput | LandlordRegistrationTokenScalarWhereInput[]
+  export type TaskUpdateManyWithoutAgentNestedInput = {
+    create?: XOR<TaskCreateWithoutAgentInput, TaskUncheckedCreateWithoutAgentInput> | TaskCreateWithoutAgentInput[] | TaskUncheckedCreateWithoutAgentInput[]
+    connectOrCreate?: TaskCreateOrConnectWithoutAgentInput | TaskCreateOrConnectWithoutAgentInput[]
+    upsert?: TaskUpsertWithWhereUniqueWithoutAgentInput | TaskUpsertWithWhereUniqueWithoutAgentInput[]
+    createMany?: TaskCreateManyAgentInputEnvelope
+    set?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
+    disconnect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
+    delete?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
+    connect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
+    update?: TaskUpdateWithWhereUniqueWithoutAgentInput | TaskUpdateWithWhereUniqueWithoutAgentInput[]
+    updateMany?: TaskUpdateManyWithWhereWithoutAgentInput | TaskUpdateManyWithWhereWithoutAgentInput[]
+    deleteMany?: TaskScalarWhereInput | TaskScalarWhereInput[]
   }
 
-  export type AgentCreateNestedOneWithoutRegistrationTokensInput = {
-    create?: XOR<AgentCreateWithoutRegistrationTokensInput, AgentUncheckedCreateWithoutRegistrationTokensInput>
-    connectOrCreate?: AgentCreateOrConnectWithoutRegistrationTokensInput
-    connect?: AgentWhereUniqueInput
+  export type TaskUncheckedUpdateManyWithoutAgentNestedInput = {
+    create?: XOR<TaskCreateWithoutAgentInput, TaskUncheckedCreateWithoutAgentInput> | TaskCreateWithoutAgentInput[] | TaskUncheckedCreateWithoutAgentInput[]
+    connectOrCreate?: TaskCreateOrConnectWithoutAgentInput | TaskCreateOrConnectWithoutAgentInput[]
+    upsert?: TaskUpsertWithWhereUniqueWithoutAgentInput | TaskUpsertWithWhereUniqueWithoutAgentInput[]
+    createMany?: TaskCreateManyAgentInputEnvelope
+    set?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
+    disconnect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
+    delete?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
+    connect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
+    update?: TaskUpdateWithWhereUniqueWithoutAgentInput | TaskUpdateWithWhereUniqueWithoutAgentInput[]
+    updateMany?: TaskUpdateManyWithWhereWithoutAgentInput | TaskUpdateManyWithWhereWithoutAgentInput[]
+    deleteMany?: TaskScalarWhereInput | TaskScalarWhereInput[]
   }
 
-  export type LandlordCreateNestedOneWithoutRegistrationTokenInput = {
-    create?: XOR<LandlordCreateWithoutRegistrationTokenInput, LandlordUncheckedCreateWithoutRegistrationTokenInput>
-    connectOrCreate?: LandlordCreateOrConnectWithoutRegistrationTokenInput
-    connect?: LandlordWhereUniqueInput
+  export type LandlordCreateNestedManyWithoutRegistrationCodeInput = {
+    create?: XOR<LandlordCreateWithoutRegistrationCodeInput, LandlordUncheckedCreateWithoutRegistrationCodeInput> | LandlordCreateWithoutRegistrationCodeInput[] | LandlordUncheckedCreateWithoutRegistrationCodeInput[]
+    connectOrCreate?: LandlordCreateOrConnectWithoutRegistrationCodeInput | LandlordCreateOrConnectWithoutRegistrationCodeInput[]
+    createMany?: LandlordCreateManyRegistrationCodeInputEnvelope
+    connect?: LandlordWhereUniqueInput | LandlordWhereUniqueInput[]
+  }
+
+  export type LandlordUncheckedCreateNestedManyWithoutRegistrationCodeInput = {
+    create?: XOR<LandlordCreateWithoutRegistrationCodeInput, LandlordUncheckedCreateWithoutRegistrationCodeInput> | LandlordCreateWithoutRegistrationCodeInput[] | LandlordUncheckedCreateWithoutRegistrationCodeInput[]
+    connectOrCreate?: LandlordCreateOrConnectWithoutRegistrationCodeInput | LandlordCreateOrConnectWithoutRegistrationCodeInput[]
+    createMany?: LandlordCreateManyRegistrationCodeInputEnvelope
+    connect?: LandlordWhereUniqueInput | LandlordWhereUniqueInput[]
   }
 
   export type NullableDateTimeFieldUpdateOperationsInput = {
     set?: Date | string | null
   }
 
-  export type AgentUpdateOneRequiredWithoutRegistrationTokensNestedInput = {
-    create?: XOR<AgentCreateWithoutRegistrationTokensInput, AgentUncheckedCreateWithoutRegistrationTokensInput>
-    connectOrCreate?: AgentCreateOrConnectWithoutRegistrationTokensInput
-    upsert?: AgentUpsertWithoutRegistrationTokensInput
-    connect?: AgentWhereUniqueInput
-    update?: XOR<XOR<AgentUpdateToOneWithWhereWithoutRegistrationTokensInput, AgentUpdateWithoutRegistrationTokensInput>, AgentUncheckedUpdateWithoutRegistrationTokensInput>
+  export type LandlordUpdateManyWithoutRegistrationCodeNestedInput = {
+    create?: XOR<LandlordCreateWithoutRegistrationCodeInput, LandlordUncheckedCreateWithoutRegistrationCodeInput> | LandlordCreateWithoutRegistrationCodeInput[] | LandlordUncheckedCreateWithoutRegistrationCodeInput[]
+    connectOrCreate?: LandlordCreateOrConnectWithoutRegistrationCodeInput | LandlordCreateOrConnectWithoutRegistrationCodeInput[]
+    upsert?: LandlordUpsertWithWhereUniqueWithoutRegistrationCodeInput | LandlordUpsertWithWhereUniqueWithoutRegistrationCodeInput[]
+    createMany?: LandlordCreateManyRegistrationCodeInputEnvelope
+    set?: LandlordWhereUniqueInput | LandlordWhereUniqueInput[]
+    disconnect?: LandlordWhereUniqueInput | LandlordWhereUniqueInput[]
+    delete?: LandlordWhereUniqueInput | LandlordWhereUniqueInput[]
+    connect?: LandlordWhereUniqueInput | LandlordWhereUniqueInput[]
+    update?: LandlordUpdateWithWhereUniqueWithoutRegistrationCodeInput | LandlordUpdateWithWhereUniqueWithoutRegistrationCodeInput[]
+    updateMany?: LandlordUpdateManyWithWhereWithoutRegistrationCodeInput | LandlordUpdateManyWithWhereWithoutRegistrationCodeInput[]
+    deleteMany?: LandlordScalarWhereInput | LandlordScalarWhereInput[]
   }
 
-  export type LandlordUpdateOneWithoutRegistrationTokenNestedInput = {
-    create?: XOR<LandlordCreateWithoutRegistrationTokenInput, LandlordUncheckedCreateWithoutRegistrationTokenInput>
-    connectOrCreate?: LandlordCreateOrConnectWithoutRegistrationTokenInput
-    upsert?: LandlordUpsertWithoutRegistrationTokenInput
-    disconnect?: LandlordWhereInput | boolean
-    delete?: LandlordWhereInput | boolean
-    connect?: LandlordWhereUniqueInput
-    update?: XOR<XOR<LandlordUpdateToOneWithWhereWithoutRegistrationTokenInput, LandlordUpdateWithoutRegistrationTokenInput>, LandlordUncheckedUpdateWithoutRegistrationTokenInput>
+  export type LandlordUncheckedUpdateManyWithoutRegistrationCodeNestedInput = {
+    create?: XOR<LandlordCreateWithoutRegistrationCodeInput, LandlordUncheckedCreateWithoutRegistrationCodeInput> | LandlordCreateWithoutRegistrationCodeInput[] | LandlordUncheckedCreateWithoutRegistrationCodeInput[]
+    connectOrCreate?: LandlordCreateOrConnectWithoutRegistrationCodeInput | LandlordCreateOrConnectWithoutRegistrationCodeInput[]
+    upsert?: LandlordUpsertWithWhereUniqueWithoutRegistrationCodeInput | LandlordUpsertWithWhereUniqueWithoutRegistrationCodeInput[]
+    createMany?: LandlordCreateManyRegistrationCodeInputEnvelope
+    set?: LandlordWhereUniqueInput | LandlordWhereUniqueInput[]
+    disconnect?: LandlordWhereUniqueInput | LandlordWhereUniqueInput[]
+    delete?: LandlordWhereUniqueInput | LandlordWhereUniqueInput[]
+    connect?: LandlordWhereUniqueInput | LandlordWhereUniqueInput[]
+    update?: LandlordUpdateWithWhereUniqueWithoutRegistrationCodeInput | LandlordUpdateWithWhereUniqueWithoutRegistrationCodeInput[]
+    updateMany?: LandlordUpdateManyWithWhereWithoutRegistrationCodeInput | LandlordUpdateManyWithWhereWithoutRegistrationCodeInput[]
+    deleteMany?: LandlordScalarWhereInput | LandlordScalarWhereInput[]
+  }
+
+  export type AgentCreateNestedManyWithoutRegistrationCodeInput = {
+    create?: XOR<AgentCreateWithoutRegistrationCodeInput, AgentUncheckedCreateWithoutRegistrationCodeInput> | AgentCreateWithoutRegistrationCodeInput[] | AgentUncheckedCreateWithoutRegistrationCodeInput[]
+    connectOrCreate?: AgentCreateOrConnectWithoutRegistrationCodeInput | AgentCreateOrConnectWithoutRegistrationCodeInput[]
+    createMany?: AgentCreateManyRegistrationCodeInputEnvelope
+    connect?: AgentWhereUniqueInput | AgentWhereUniqueInput[]
+  }
+
+  export type AgentUncheckedCreateNestedManyWithoutRegistrationCodeInput = {
+    create?: XOR<AgentCreateWithoutRegistrationCodeInput, AgentUncheckedCreateWithoutRegistrationCodeInput> | AgentCreateWithoutRegistrationCodeInput[] | AgentUncheckedCreateWithoutRegistrationCodeInput[]
+    connectOrCreate?: AgentCreateOrConnectWithoutRegistrationCodeInput | AgentCreateOrConnectWithoutRegistrationCodeInput[]
+    createMany?: AgentCreateManyRegistrationCodeInputEnvelope
+    connect?: AgentWhereUniqueInput | AgentWhereUniqueInput[]
+  }
+
+  export type AgentUpdateManyWithoutRegistrationCodeNestedInput = {
+    create?: XOR<AgentCreateWithoutRegistrationCodeInput, AgentUncheckedCreateWithoutRegistrationCodeInput> | AgentCreateWithoutRegistrationCodeInput[] | AgentUncheckedCreateWithoutRegistrationCodeInput[]
+    connectOrCreate?: AgentCreateOrConnectWithoutRegistrationCodeInput | AgentCreateOrConnectWithoutRegistrationCodeInput[]
+    upsert?: AgentUpsertWithWhereUniqueWithoutRegistrationCodeInput | AgentUpsertWithWhereUniqueWithoutRegistrationCodeInput[]
+    createMany?: AgentCreateManyRegistrationCodeInputEnvelope
+    set?: AgentWhereUniqueInput | AgentWhereUniqueInput[]
+    disconnect?: AgentWhereUniqueInput | AgentWhereUniqueInput[]
+    delete?: AgentWhereUniqueInput | AgentWhereUniqueInput[]
+    connect?: AgentWhereUniqueInput | AgentWhereUniqueInput[]
+    update?: AgentUpdateWithWhereUniqueWithoutRegistrationCodeInput | AgentUpdateWithWhereUniqueWithoutRegistrationCodeInput[]
+    updateMany?: AgentUpdateManyWithWhereWithoutRegistrationCodeInput | AgentUpdateManyWithWhereWithoutRegistrationCodeInput[]
+    deleteMany?: AgentScalarWhereInput | AgentScalarWhereInput[]
+  }
+
+  export type AgentUncheckedUpdateManyWithoutRegistrationCodeNestedInput = {
+    create?: XOR<AgentCreateWithoutRegistrationCodeInput, AgentUncheckedCreateWithoutRegistrationCodeInput> | AgentCreateWithoutRegistrationCodeInput[] | AgentUncheckedCreateWithoutRegistrationCodeInput[]
+    connectOrCreate?: AgentCreateOrConnectWithoutRegistrationCodeInput | AgentCreateOrConnectWithoutRegistrationCodeInput[]
+    upsert?: AgentUpsertWithWhereUniqueWithoutRegistrationCodeInput | AgentUpsertWithWhereUniqueWithoutRegistrationCodeInput[]
+    createMany?: AgentCreateManyRegistrationCodeInputEnvelope
+    set?: AgentWhereUniqueInput | AgentWhereUniqueInput[]
+    disconnect?: AgentWhereUniqueInput | AgentWhereUniqueInput[]
+    delete?: AgentWhereUniqueInput | AgentWhereUniqueInput[]
+    connect?: AgentWhereUniqueInput | AgentWhereUniqueInput[]
+    update?: AgentUpdateWithWhereUniqueWithoutRegistrationCodeInput | AgentUpdateWithWhereUniqueWithoutRegistrationCodeInput[]
+    updateMany?: AgentUpdateManyWithWhereWithoutRegistrationCodeInput | AgentUpdateManyWithWhereWithoutRegistrationCodeInput[]
+    deleteMany?: AgentScalarWhereInput | AgentScalarWhereInput[]
+  }
+
+  export type AgentCreateNestedOneWithoutAssignedTasksInput = {
+    create?: XOR<AgentCreateWithoutAssignedTasksInput, AgentUncheckedCreateWithoutAssignedTasksInput>
+    connectOrCreate?: AgentCreateOrConnectWithoutAssignedTasksInput
+    connect?: AgentWhereUniqueInput
+  }
+
+  export type EnumTaskStatusFieldUpdateOperationsInput = {
+    set?: $Enums.TaskStatus
+  }
+
+  export type EnumTaskPriorityFieldUpdateOperationsInput = {
+    set?: $Enums.TaskPriority
+  }
+
+  export type AgentUpdateOneRequiredWithoutAssignedTasksNestedInput = {
+    create?: XOR<AgentCreateWithoutAssignedTasksInput, AgentUncheckedCreateWithoutAssignedTasksInput>
+    connectOrCreate?: AgentCreateOrConnectWithoutAssignedTasksInput
+    upsert?: AgentUpsertWithoutAssignedTasksInput
+    connect?: AgentWhereUniqueInput
+    update?: XOR<XOR<AgentUpdateToOneWithWhereWithoutAssignedTasksInput, AgentUpdateWithoutAssignedTasksInput>, AgentUncheckedUpdateWithoutAssignedTasksInput>
   }
 
   export type PropertyUpdateManyWithoutLocationNestedInput = {
@@ -16566,6 +25768,51 @@ export namespace Prisma {
     upsert?: LeaseUpsertWithoutPaymentsInput
     connect?: LeaseWhereUniqueInput
     update?: XOR<XOR<LeaseUpdateToOneWithWhereWithoutPaymentsInput, LeaseUpdateWithoutPaymentsInput>, LeaseUncheckedUpdateWithoutPaymentsInput>
+  }
+
+  export type TenantSurveyCreatehousingTypeInput = {
+    set: string[]
+  }
+
+  export type TenantSurveyCreatefrustrationsInput = {
+    set: string[]
+  }
+
+  export type TenantSurveyUpdatehousingTypeInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type TenantSurveyUpdatefrustrationsInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type LandlordSurveyCreatepropertyTypesInput = {
+    set: string[]
+  }
+
+  export type LandlordSurveyCreatetenantManagementInput = {
+    set: string[]
+  }
+
+  export type LandlordSurveyCreatebiggestChallengesInput = {
+    set: string[]
+  }
+
+  export type LandlordSurveyUpdatepropertyTypesInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type LandlordSurveyUpdatetenantManagementInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type LandlordSurveyUpdatebiggestChallengesInput = {
+    set?: string[]
+    push?: string | string[]
   }
 
   export type NestedIntFilter<$PrismaModel = never> = {
@@ -16818,6 +26065,40 @@ export namespace Prisma {
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
+  export type NestedEnumTaskStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.TaskStatus | EnumTaskStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.TaskStatus[] | ListEnumTaskStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.TaskStatus[] | ListEnumTaskStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumTaskStatusFilter<$PrismaModel> | $Enums.TaskStatus
+  }
+
+  export type NestedEnumTaskPriorityFilter<$PrismaModel = never> = {
+    equals?: $Enums.TaskPriority | EnumTaskPriorityFieldRefInput<$PrismaModel>
+    in?: $Enums.TaskPriority[] | ListEnumTaskPriorityFieldRefInput<$PrismaModel>
+    notIn?: $Enums.TaskPriority[] | ListEnumTaskPriorityFieldRefInput<$PrismaModel>
+    not?: NestedEnumTaskPriorityFilter<$PrismaModel> | $Enums.TaskPriority
+  }
+
+  export type NestedEnumTaskStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.TaskStatus | EnumTaskStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.TaskStatus[] | ListEnumTaskStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.TaskStatus[] | ListEnumTaskStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumTaskStatusWithAggregatesFilter<$PrismaModel> | $Enums.TaskStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumTaskStatusFilter<$PrismaModel>
+    _max?: NestedEnumTaskStatusFilter<$PrismaModel>
+  }
+
+  export type NestedEnumTaskPriorityWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.TaskPriority | EnumTaskPriorityFieldRefInput<$PrismaModel>
+    in?: $Enums.TaskPriority[] | ListEnumTaskPriorityFieldRefInput<$PrismaModel>
+    notIn?: $Enums.TaskPriority[] | ListEnumTaskPriorityFieldRefInput<$PrismaModel>
+    not?: NestedEnumTaskPriorityWithAggregatesFilter<$PrismaModel> | $Enums.TaskPriority
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumTaskPriorityFilter<$PrismaModel>
+    _max?: NestedEnumTaskPriorityFilter<$PrismaModel>
+  }
+
   export type NestedEnumApplicationStatusFilter<$PrismaModel = never> = {
     equals?: $Enums.ApplicationStatus | EnumApplicationStatusFieldRefInput<$PrismaModel>
     in?: $Enums.ApplicationStatus[] | ListEnumApplicationStatusFieldRefInput<$PrismaModel>
@@ -16870,7 +26151,7 @@ export namespace Prisma {
     name: string
     email: string
     phoneNumber: string
-    registrationToken?: LandlordRegistrationTokenCreateNestedOneWithoutLandlordInput
+    registrationCode?: LandlordRegistrationCodeCreateNestedOneWithoutLandlordsInput
   }
 
   export type LandlordUncheckedCreateWithoutManagedPropertiesInput = {
@@ -16879,7 +26160,7 @@ export namespace Prisma {
     name: string
     email: string
     phoneNumber: string
-    registrationToken?: LandlordRegistrationTokenUncheckedCreateNestedOneWithoutLandlordInput
+    registrationCodeId?: number | null
   }
 
   export type LandlordCreateOrConnectWithoutManagedPropertiesInput = {
@@ -17099,7 +26380,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     phoneNumber?: StringFieldUpdateOperationsInput | string
-    registrationToken?: LandlordRegistrationTokenUpdateOneWithoutLandlordNestedInput
+    registrationCode?: LandlordRegistrationCodeUpdateOneWithoutLandlordsNestedInput
   }
 
   export type LandlordUncheckedUpdateWithoutManagedPropertiesInput = {
@@ -17108,7 +26389,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     phoneNumber?: StringFieldUpdateOperationsInput | string
-    registrationToken?: LandlordRegistrationTokenUncheckedUpdateOneWithoutLandlordNestedInput
+    registrationCodeId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type LeaseUpsertWithWhereUniqueWithoutPropertyInput = {
@@ -17305,29 +26586,24 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type LandlordRegistrationTokenCreateWithoutLandlordInput = {
-    id?: string
-    token: string
+  export type LandlordRegistrationCodeCreateWithoutLandlordsInput = {
+    code: string
     isUsed?: boolean
-    expiresAt: Date | string
-    createdAt?: Date | string
-    usedAt?: Date | string | null
-    agent: AgentCreateNestedOneWithoutRegistrationTokensInput
-  }
-
-  export type LandlordRegistrationTokenUncheckedCreateWithoutLandlordInput = {
-    id?: string
-    token: string
-    agentId: number
-    isUsed?: boolean
-    expiresAt: Date | string
     createdAt?: Date | string
     usedAt?: Date | string | null
   }
 
-  export type LandlordRegistrationTokenCreateOrConnectWithoutLandlordInput = {
-    where: LandlordRegistrationTokenWhereUniqueInput
-    create: XOR<LandlordRegistrationTokenCreateWithoutLandlordInput, LandlordRegistrationTokenUncheckedCreateWithoutLandlordInput>
+  export type LandlordRegistrationCodeUncheckedCreateWithoutLandlordsInput = {
+    id?: number
+    code: string
+    isUsed?: boolean
+    createdAt?: Date | string
+    usedAt?: Date | string | null
+  }
+
+  export type LandlordRegistrationCodeCreateOrConnectWithoutLandlordsInput = {
+    where: LandlordRegistrationCodeWhereUniqueInput
+    create: XOR<LandlordRegistrationCodeCreateWithoutLandlordsInput, LandlordRegistrationCodeUncheckedCreateWithoutLandlordsInput>
   }
 
   export type PropertyUpsertWithWhereUniqueWithoutLandlordInput = {
@@ -17372,33 +26648,28 @@ export namespace Prisma {
     landlordCognitoId?: StringFilter<"Property"> | string
   }
 
-  export type LandlordRegistrationTokenUpsertWithoutLandlordInput = {
-    update: XOR<LandlordRegistrationTokenUpdateWithoutLandlordInput, LandlordRegistrationTokenUncheckedUpdateWithoutLandlordInput>
-    create: XOR<LandlordRegistrationTokenCreateWithoutLandlordInput, LandlordRegistrationTokenUncheckedCreateWithoutLandlordInput>
-    where?: LandlordRegistrationTokenWhereInput
+  export type LandlordRegistrationCodeUpsertWithoutLandlordsInput = {
+    update: XOR<LandlordRegistrationCodeUpdateWithoutLandlordsInput, LandlordRegistrationCodeUncheckedUpdateWithoutLandlordsInput>
+    create: XOR<LandlordRegistrationCodeCreateWithoutLandlordsInput, LandlordRegistrationCodeUncheckedCreateWithoutLandlordsInput>
+    where?: LandlordRegistrationCodeWhereInput
   }
 
-  export type LandlordRegistrationTokenUpdateToOneWithWhereWithoutLandlordInput = {
-    where?: LandlordRegistrationTokenWhereInput
-    data: XOR<LandlordRegistrationTokenUpdateWithoutLandlordInput, LandlordRegistrationTokenUncheckedUpdateWithoutLandlordInput>
+  export type LandlordRegistrationCodeUpdateToOneWithWhereWithoutLandlordsInput = {
+    where?: LandlordRegistrationCodeWhereInput
+    data: XOR<LandlordRegistrationCodeUpdateWithoutLandlordsInput, LandlordRegistrationCodeUncheckedUpdateWithoutLandlordsInput>
   }
 
-  export type LandlordRegistrationTokenUpdateWithoutLandlordInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    token?: StringFieldUpdateOperationsInput | string
+  export type LandlordRegistrationCodeUpdateWithoutLandlordsInput = {
+    code?: StringFieldUpdateOperationsInput | string
     isUsed?: BoolFieldUpdateOperationsInput | boolean
-    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     usedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    agent?: AgentUpdateOneRequiredWithoutRegistrationTokensNestedInput
   }
 
-  export type LandlordRegistrationTokenUncheckedUpdateWithoutLandlordInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    token?: StringFieldUpdateOperationsInput | string
-    agentId?: IntFieldUpdateOperationsInput | number
+  export type LandlordRegistrationCodeUncheckedUpdateWithoutLandlordsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    code?: StringFieldUpdateOperationsInput | string
     isUsed?: BoolFieldUpdateOperationsInput | boolean
-    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     usedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
@@ -17701,87 +26972,122 @@ export namespace Prisma {
     data: XOR<LeaseUpdateManyMutationInput, LeaseUncheckedUpdateManyWithoutTenantInput>
   }
 
-  export type LandlordRegistrationTokenCreateWithoutAgentInput = {
-    id?: string
-    token: string
+  export type AgentRegistrationCodeCreateWithoutAgentsInput = {
+    code: string
     isUsed?: boolean
-    expiresAt: Date | string
     createdAt?: Date | string
     usedAt?: Date | string | null
-    landlord?: LandlordCreateNestedOneWithoutRegistrationTokenInput
+    assignedBy?: string | null
   }
 
-  export type LandlordRegistrationTokenUncheckedCreateWithoutAgentInput = {
-    id?: string
-    token: string
+  export type AgentRegistrationCodeUncheckedCreateWithoutAgentsInput = {
+    id?: number
+    code: string
     isUsed?: boolean
-    expiresAt: Date | string
     createdAt?: Date | string
     usedAt?: Date | string | null
-    landlordId?: number | null
+    assignedBy?: string | null
   }
 
-  export type LandlordRegistrationTokenCreateOrConnectWithoutAgentInput = {
-    where: LandlordRegistrationTokenWhereUniqueInput
-    create: XOR<LandlordRegistrationTokenCreateWithoutAgentInput, LandlordRegistrationTokenUncheckedCreateWithoutAgentInput>
+  export type AgentRegistrationCodeCreateOrConnectWithoutAgentsInput = {
+    where: AgentRegistrationCodeWhereUniqueInput
+    create: XOR<AgentRegistrationCodeCreateWithoutAgentsInput, AgentRegistrationCodeUncheckedCreateWithoutAgentsInput>
   }
 
-  export type LandlordRegistrationTokenCreateManyAgentInputEnvelope = {
-    data: LandlordRegistrationTokenCreateManyAgentInput | LandlordRegistrationTokenCreateManyAgentInput[]
+  export type TaskCreateWithoutAgentInput = {
+    title: string
+    description?: string | null
+    status?: $Enums.TaskStatus
+    priority?: $Enums.TaskPriority
+    dueDate?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    assignedBy: string
+  }
+
+  export type TaskUncheckedCreateWithoutAgentInput = {
+    id?: number
+    title: string
+    description?: string | null
+    status?: $Enums.TaskStatus
+    priority?: $Enums.TaskPriority
+    dueDate?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    assignedBy: string
+  }
+
+  export type TaskCreateOrConnectWithoutAgentInput = {
+    where: TaskWhereUniqueInput
+    create: XOR<TaskCreateWithoutAgentInput, TaskUncheckedCreateWithoutAgentInput>
+  }
+
+  export type TaskCreateManyAgentInputEnvelope = {
+    data: TaskCreateManyAgentInput | TaskCreateManyAgentInput[]
     skipDuplicates?: boolean
   }
 
-  export type LandlordRegistrationTokenUpsertWithWhereUniqueWithoutAgentInput = {
-    where: LandlordRegistrationTokenWhereUniqueInput
-    update: XOR<LandlordRegistrationTokenUpdateWithoutAgentInput, LandlordRegistrationTokenUncheckedUpdateWithoutAgentInput>
-    create: XOR<LandlordRegistrationTokenCreateWithoutAgentInput, LandlordRegistrationTokenUncheckedCreateWithoutAgentInput>
+  export type AgentRegistrationCodeUpsertWithoutAgentsInput = {
+    update: XOR<AgentRegistrationCodeUpdateWithoutAgentsInput, AgentRegistrationCodeUncheckedUpdateWithoutAgentsInput>
+    create: XOR<AgentRegistrationCodeCreateWithoutAgentsInput, AgentRegistrationCodeUncheckedCreateWithoutAgentsInput>
+    where?: AgentRegistrationCodeWhereInput
   }
 
-  export type LandlordRegistrationTokenUpdateWithWhereUniqueWithoutAgentInput = {
-    where: LandlordRegistrationTokenWhereUniqueInput
-    data: XOR<LandlordRegistrationTokenUpdateWithoutAgentInput, LandlordRegistrationTokenUncheckedUpdateWithoutAgentInput>
+  export type AgentRegistrationCodeUpdateToOneWithWhereWithoutAgentsInput = {
+    where?: AgentRegistrationCodeWhereInput
+    data: XOR<AgentRegistrationCodeUpdateWithoutAgentsInput, AgentRegistrationCodeUncheckedUpdateWithoutAgentsInput>
   }
 
-  export type LandlordRegistrationTokenUpdateManyWithWhereWithoutAgentInput = {
-    where: LandlordRegistrationTokenScalarWhereInput
-    data: XOR<LandlordRegistrationTokenUpdateManyMutationInput, LandlordRegistrationTokenUncheckedUpdateManyWithoutAgentInput>
+  export type AgentRegistrationCodeUpdateWithoutAgentsInput = {
+    code?: StringFieldUpdateOperationsInput | string
+    isUsed?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    usedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    assignedBy?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
-  export type LandlordRegistrationTokenScalarWhereInput = {
-    AND?: LandlordRegistrationTokenScalarWhereInput | LandlordRegistrationTokenScalarWhereInput[]
-    OR?: LandlordRegistrationTokenScalarWhereInput[]
-    NOT?: LandlordRegistrationTokenScalarWhereInput | LandlordRegistrationTokenScalarWhereInput[]
-    id?: StringFilter<"LandlordRegistrationToken"> | string
-    token?: StringFilter<"LandlordRegistrationToken"> | string
-    agentId?: IntFilter<"LandlordRegistrationToken"> | number
-    isUsed?: BoolFilter<"LandlordRegistrationToken"> | boolean
-    expiresAt?: DateTimeFilter<"LandlordRegistrationToken"> | Date | string
-    createdAt?: DateTimeFilter<"LandlordRegistrationToken"> | Date | string
-    usedAt?: DateTimeNullableFilter<"LandlordRegistrationToken"> | Date | string | null
-    landlordId?: IntNullableFilter<"LandlordRegistrationToken"> | number | null
+  export type AgentRegistrationCodeUncheckedUpdateWithoutAgentsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    code?: StringFieldUpdateOperationsInput | string
+    isUsed?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    usedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    assignedBy?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
-  export type AgentCreateWithoutRegistrationTokensInput = {
-    cognitoId: string
-    name: string
-    email: string
-    phoneNumber?: string | null
+  export type TaskUpsertWithWhereUniqueWithoutAgentInput = {
+    where: TaskWhereUniqueInput
+    update: XOR<TaskUpdateWithoutAgentInput, TaskUncheckedUpdateWithoutAgentInput>
+    create: XOR<TaskCreateWithoutAgentInput, TaskUncheckedCreateWithoutAgentInput>
   }
 
-  export type AgentUncheckedCreateWithoutRegistrationTokensInput = {
-    id?: number
-    cognitoId: string
-    name: string
-    email: string
-    phoneNumber?: string | null
+  export type TaskUpdateWithWhereUniqueWithoutAgentInput = {
+    where: TaskWhereUniqueInput
+    data: XOR<TaskUpdateWithoutAgentInput, TaskUncheckedUpdateWithoutAgentInput>
   }
 
-  export type AgentCreateOrConnectWithoutRegistrationTokensInput = {
-    where: AgentWhereUniqueInput
-    create: XOR<AgentCreateWithoutRegistrationTokensInput, AgentUncheckedCreateWithoutRegistrationTokensInput>
+  export type TaskUpdateManyWithWhereWithoutAgentInput = {
+    where: TaskScalarWhereInput
+    data: XOR<TaskUpdateManyMutationInput, TaskUncheckedUpdateManyWithoutAgentInput>
   }
 
-  export type LandlordCreateWithoutRegistrationTokenInput = {
+  export type TaskScalarWhereInput = {
+    AND?: TaskScalarWhereInput | TaskScalarWhereInput[]
+    OR?: TaskScalarWhereInput[]
+    NOT?: TaskScalarWhereInput | TaskScalarWhereInput[]
+    id?: IntFilter<"Task"> | number
+    title?: StringFilter<"Task"> | string
+    description?: StringNullableFilter<"Task"> | string | null
+    status?: EnumTaskStatusFilter<"Task"> | $Enums.TaskStatus
+    priority?: EnumTaskPriorityFilter<"Task"> | $Enums.TaskPriority
+    dueDate?: DateTimeNullableFilter<"Task"> | Date | string | null
+    createdAt?: DateTimeFilter<"Task"> | Date | string
+    updatedAt?: DateTimeFilter<"Task"> | Date | string
+    assignedBy?: StringFilter<"Task"> | string
+    agentId?: IntFilter<"Task"> | number
+  }
+
+  export type LandlordCreateWithoutRegistrationCodeInput = {
     cognitoId: string
     name: string
     email: string
@@ -17789,7 +27095,7 @@ export namespace Prisma {
     managedProperties?: PropertyCreateNestedManyWithoutLandlordInput
   }
 
-  export type LandlordUncheckedCreateWithoutRegistrationTokenInput = {
+  export type LandlordUncheckedCreateWithoutRegistrationCodeInput = {
     id?: number
     cognitoId: string
     name: string
@@ -17798,63 +27104,147 @@ export namespace Prisma {
     managedProperties?: PropertyUncheckedCreateNestedManyWithoutLandlordInput
   }
 
-  export type LandlordCreateOrConnectWithoutRegistrationTokenInput = {
+  export type LandlordCreateOrConnectWithoutRegistrationCodeInput = {
     where: LandlordWhereUniqueInput
-    create: XOR<LandlordCreateWithoutRegistrationTokenInput, LandlordUncheckedCreateWithoutRegistrationTokenInput>
+    create: XOR<LandlordCreateWithoutRegistrationCodeInput, LandlordUncheckedCreateWithoutRegistrationCodeInput>
   }
 
-  export type AgentUpsertWithoutRegistrationTokensInput = {
-    update: XOR<AgentUpdateWithoutRegistrationTokensInput, AgentUncheckedUpdateWithoutRegistrationTokensInput>
-    create: XOR<AgentCreateWithoutRegistrationTokensInput, AgentUncheckedCreateWithoutRegistrationTokensInput>
+  export type LandlordCreateManyRegistrationCodeInputEnvelope = {
+    data: LandlordCreateManyRegistrationCodeInput | LandlordCreateManyRegistrationCodeInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type LandlordUpsertWithWhereUniqueWithoutRegistrationCodeInput = {
+    where: LandlordWhereUniqueInput
+    update: XOR<LandlordUpdateWithoutRegistrationCodeInput, LandlordUncheckedUpdateWithoutRegistrationCodeInput>
+    create: XOR<LandlordCreateWithoutRegistrationCodeInput, LandlordUncheckedCreateWithoutRegistrationCodeInput>
+  }
+
+  export type LandlordUpdateWithWhereUniqueWithoutRegistrationCodeInput = {
+    where: LandlordWhereUniqueInput
+    data: XOR<LandlordUpdateWithoutRegistrationCodeInput, LandlordUncheckedUpdateWithoutRegistrationCodeInput>
+  }
+
+  export type LandlordUpdateManyWithWhereWithoutRegistrationCodeInput = {
+    where: LandlordScalarWhereInput
+    data: XOR<LandlordUpdateManyMutationInput, LandlordUncheckedUpdateManyWithoutRegistrationCodeInput>
+  }
+
+  export type LandlordScalarWhereInput = {
+    AND?: LandlordScalarWhereInput | LandlordScalarWhereInput[]
+    OR?: LandlordScalarWhereInput[]
+    NOT?: LandlordScalarWhereInput | LandlordScalarWhereInput[]
+    id?: IntFilter<"Landlord"> | number
+    cognitoId?: StringFilter<"Landlord"> | string
+    name?: StringFilter<"Landlord"> | string
+    email?: StringFilter<"Landlord"> | string
+    phoneNumber?: StringFilter<"Landlord"> | string
+    registrationCodeId?: IntNullableFilter<"Landlord"> | number | null
+  }
+
+  export type AgentCreateWithoutRegistrationCodeInput = {
+    cognitoId: string
+    name: string
+    email: string
+    phoneNumber?: string | null
+    assignedTasks?: TaskCreateNestedManyWithoutAgentInput
+  }
+
+  export type AgentUncheckedCreateWithoutRegistrationCodeInput = {
+    id?: number
+    cognitoId: string
+    name: string
+    email: string
+    phoneNumber?: string | null
+    assignedTasks?: TaskUncheckedCreateNestedManyWithoutAgentInput
+  }
+
+  export type AgentCreateOrConnectWithoutRegistrationCodeInput = {
+    where: AgentWhereUniqueInput
+    create: XOR<AgentCreateWithoutRegistrationCodeInput, AgentUncheckedCreateWithoutRegistrationCodeInput>
+  }
+
+  export type AgentCreateManyRegistrationCodeInputEnvelope = {
+    data: AgentCreateManyRegistrationCodeInput | AgentCreateManyRegistrationCodeInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type AgentUpsertWithWhereUniqueWithoutRegistrationCodeInput = {
+    where: AgentWhereUniqueInput
+    update: XOR<AgentUpdateWithoutRegistrationCodeInput, AgentUncheckedUpdateWithoutRegistrationCodeInput>
+    create: XOR<AgentCreateWithoutRegistrationCodeInput, AgentUncheckedCreateWithoutRegistrationCodeInput>
+  }
+
+  export type AgentUpdateWithWhereUniqueWithoutRegistrationCodeInput = {
+    where: AgentWhereUniqueInput
+    data: XOR<AgentUpdateWithoutRegistrationCodeInput, AgentUncheckedUpdateWithoutRegistrationCodeInput>
+  }
+
+  export type AgentUpdateManyWithWhereWithoutRegistrationCodeInput = {
+    where: AgentScalarWhereInput
+    data: XOR<AgentUpdateManyMutationInput, AgentUncheckedUpdateManyWithoutRegistrationCodeInput>
+  }
+
+  export type AgentScalarWhereInput = {
+    AND?: AgentScalarWhereInput | AgentScalarWhereInput[]
+    OR?: AgentScalarWhereInput[]
+    NOT?: AgentScalarWhereInput | AgentScalarWhereInput[]
+    id?: IntFilter<"Agent"> | number
+    cognitoId?: StringFilter<"Agent"> | string
+    name?: StringFilter<"Agent"> | string
+    email?: StringFilter<"Agent"> | string
+    phoneNumber?: StringNullableFilter<"Agent"> | string | null
+    registrationCodeId?: IntNullableFilter<"Agent"> | number | null
+  }
+
+  export type AgentCreateWithoutAssignedTasksInput = {
+    cognitoId: string
+    name: string
+    email: string
+    phoneNumber?: string | null
+    registrationCode?: AgentRegistrationCodeCreateNestedOneWithoutAgentsInput
+  }
+
+  export type AgentUncheckedCreateWithoutAssignedTasksInput = {
+    id?: number
+    cognitoId: string
+    name: string
+    email: string
+    phoneNumber?: string | null
+    registrationCodeId?: number | null
+  }
+
+  export type AgentCreateOrConnectWithoutAssignedTasksInput = {
+    where: AgentWhereUniqueInput
+    create: XOR<AgentCreateWithoutAssignedTasksInput, AgentUncheckedCreateWithoutAssignedTasksInput>
+  }
+
+  export type AgentUpsertWithoutAssignedTasksInput = {
+    update: XOR<AgentUpdateWithoutAssignedTasksInput, AgentUncheckedUpdateWithoutAssignedTasksInput>
+    create: XOR<AgentCreateWithoutAssignedTasksInput, AgentUncheckedCreateWithoutAssignedTasksInput>
     where?: AgentWhereInput
   }
 
-  export type AgentUpdateToOneWithWhereWithoutRegistrationTokensInput = {
+  export type AgentUpdateToOneWithWhereWithoutAssignedTasksInput = {
     where?: AgentWhereInput
-    data: XOR<AgentUpdateWithoutRegistrationTokensInput, AgentUncheckedUpdateWithoutRegistrationTokensInput>
+    data: XOR<AgentUpdateWithoutAssignedTasksInput, AgentUncheckedUpdateWithoutAssignedTasksInput>
   }
 
-  export type AgentUpdateWithoutRegistrationTokensInput = {
+  export type AgentUpdateWithoutAssignedTasksInput = {
     cognitoId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    registrationCode?: AgentRegistrationCodeUpdateOneWithoutAgentsNestedInput
   }
 
-  export type AgentUncheckedUpdateWithoutRegistrationTokensInput = {
+  export type AgentUncheckedUpdateWithoutAssignedTasksInput = {
     id?: IntFieldUpdateOperationsInput | number
     cognitoId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
-  export type LandlordUpsertWithoutRegistrationTokenInput = {
-    update: XOR<LandlordUpdateWithoutRegistrationTokenInput, LandlordUncheckedUpdateWithoutRegistrationTokenInput>
-    create: XOR<LandlordCreateWithoutRegistrationTokenInput, LandlordUncheckedCreateWithoutRegistrationTokenInput>
-    where?: LandlordWhereInput
-  }
-
-  export type LandlordUpdateToOneWithWhereWithoutRegistrationTokenInput = {
-    where?: LandlordWhereInput
-    data: XOR<LandlordUpdateWithoutRegistrationTokenInput, LandlordUncheckedUpdateWithoutRegistrationTokenInput>
-  }
-
-  export type LandlordUpdateWithoutRegistrationTokenInput = {
-    cognitoId?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    phoneNumber?: StringFieldUpdateOperationsInput | string
-    managedProperties?: PropertyUpdateManyWithoutLandlordNestedInput
-  }
-
-  export type LandlordUncheckedUpdateWithoutRegistrationTokenInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    cognitoId?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    phoneNumber?: StringFieldUpdateOperationsInput | string
-    managedProperties?: PropertyUncheckedUpdateManyWithoutLandlordNestedInput
+    registrationCodeId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type PropertyCreateWithoutLocationInput = {
@@ -19341,44 +28731,117 @@ export namespace Prisma {
     propertyId?: IntFieldUpdateOperationsInput | number
   }
 
-  export type LandlordRegistrationTokenCreateManyAgentInput = {
-    id?: string
-    token: string
-    isUsed?: boolean
-    expiresAt: Date | string
+  export type TaskCreateManyAgentInput = {
+    id?: number
+    title: string
+    description?: string | null
+    status?: $Enums.TaskStatus
+    priority?: $Enums.TaskPriority
+    dueDate?: Date | string | null
     createdAt?: Date | string
-    usedAt?: Date | string | null
-    landlordId?: number | null
+    updatedAt?: Date | string
+    assignedBy: string
   }
 
-  export type LandlordRegistrationTokenUpdateWithoutAgentInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    token?: StringFieldUpdateOperationsInput | string
-    isUsed?: BoolFieldUpdateOperationsInput | boolean
-    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  export type TaskUpdateWithoutAgentInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
+    priority?: EnumTaskPriorityFieldUpdateOperationsInput | $Enums.TaskPriority
+    dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    usedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    landlord?: LandlordUpdateOneWithoutRegistrationTokenNestedInput
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    assignedBy?: StringFieldUpdateOperationsInput | string
   }
 
-  export type LandlordRegistrationTokenUncheckedUpdateWithoutAgentInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    token?: StringFieldUpdateOperationsInput | string
-    isUsed?: BoolFieldUpdateOperationsInput | boolean
-    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  export type TaskUncheckedUpdateWithoutAgentInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
+    priority?: EnumTaskPriorityFieldUpdateOperationsInput | $Enums.TaskPriority
+    dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    usedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    landlordId?: NullableIntFieldUpdateOperationsInput | number | null
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    assignedBy?: StringFieldUpdateOperationsInput | string
   }
 
-  export type LandlordRegistrationTokenUncheckedUpdateManyWithoutAgentInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    token?: StringFieldUpdateOperationsInput | string
-    isUsed?: BoolFieldUpdateOperationsInput | boolean
-    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  export type TaskUncheckedUpdateManyWithoutAgentInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
+    priority?: EnumTaskPriorityFieldUpdateOperationsInput | $Enums.TaskPriority
+    dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    usedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    landlordId?: NullableIntFieldUpdateOperationsInput | number | null
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    assignedBy?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type LandlordCreateManyRegistrationCodeInput = {
+    id?: number
+    cognitoId: string
+    name: string
+    email: string
+    phoneNumber: string
+  }
+
+  export type LandlordUpdateWithoutRegistrationCodeInput = {
+    cognitoId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    phoneNumber?: StringFieldUpdateOperationsInput | string
+    managedProperties?: PropertyUpdateManyWithoutLandlordNestedInput
+  }
+
+  export type LandlordUncheckedUpdateWithoutRegistrationCodeInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    cognitoId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    phoneNumber?: StringFieldUpdateOperationsInput | string
+    managedProperties?: PropertyUncheckedUpdateManyWithoutLandlordNestedInput
+  }
+
+  export type LandlordUncheckedUpdateManyWithoutRegistrationCodeInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    cognitoId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    phoneNumber?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type AgentCreateManyRegistrationCodeInput = {
+    id?: number
+    cognitoId: string
+    name: string
+    email: string
+    phoneNumber?: string | null
+  }
+
+  export type AgentUpdateWithoutRegistrationCodeInput = {
+    cognitoId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    assignedTasks?: TaskUpdateManyWithoutAgentNestedInput
+  }
+
+  export type AgentUncheckedUpdateWithoutRegistrationCodeInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    cognitoId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    assignedTasks?: TaskUncheckedUpdateManyWithoutAgentNestedInput
+  }
+
+  export type AgentUncheckedUpdateManyWithoutRegistrationCodeInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    cognitoId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type PropertyUpdateWithoutLocationInput = {

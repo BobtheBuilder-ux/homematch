@@ -12,7 +12,8 @@ export const isPublicPath = (pathname: string): boolean => {
     '/favicon.ico',
     '/login',
     '/signup',
-    '/auth'
+    '/auth',
+    '/coming-soon'
   ];
   
   return publicPaths.some(path => pathname.startsWith(path));

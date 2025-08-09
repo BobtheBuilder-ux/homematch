@@ -14,6 +14,12 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    // Skip auth checks for coming-soon pages
+    if (pathname.startsWith("/coming-soon")) {
+      setIsLoading(false);
+      return;
+    }
+
     if (authUser) {
       const userRole = authUser.userRole?.toLowerCase();
       if (
@@ -31,6 +37,8 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       } else {
         setIsLoading(false);
       }
+    } else {
+      setIsLoading(false);
     }
   }, [authUser, router, pathname]);
 
