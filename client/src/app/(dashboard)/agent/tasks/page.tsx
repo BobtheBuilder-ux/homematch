@@ -219,7 +219,7 @@ const Tasks = () => {
                     No Tasks Available
                   </h3>
                   <p className="text-gray-500 text-center">
-                    You don't have any tasks assigned yet.
+                    You don&apos;t have any tasks assigned yet.
                   </p>
                 </CardContent>
               </Card>
@@ -296,7 +296,7 @@ const Tasks = () => {
                       No {tabValue.charAt(0).toUpperCase() + tabValue.slice(1)} Tasks
                     </h3>
                     <p className="text-gray-500 text-center">
-                      You don't have any {tabValue} tasks.
+                      You don&apos;t have any {tabValue} tasks.
                     </p>
                   </CardContent>
                 </Card>

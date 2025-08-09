@@ -116,7 +116,7 @@ const LandlordSurveyPage = () => {
               </div>
               <h2 className="text-2xl font-bold text-gray-900 mb-2">Thank You!</h2>
               <p className="text-gray-600">
-                Thanks for sharing your feedback! We'll notify you when Homematch launches.
+                Thanks for sharing your feedback! We&apos;ll notify you when Homematch launches.
               </p>
             </div>
           </CardContent>
@@ -400,7 +400,7 @@ const LandlordSurveyPage = () => {
                   </div>
 
                   <div>
-                    <Label htmlFor="wishEasier">What's one thing you wish were easier about finding or managing tenants?</Label>
+                    <Label htmlFor="wishEasier">What&apos;s one thing you wish were easier about finding or managing tenants?</Label>
                     <Textarea
                       id="wishEasier"
                       value={surveyData.wishEasier}

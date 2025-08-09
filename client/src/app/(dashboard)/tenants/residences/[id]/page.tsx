@@ -15,6 +15,7 @@ import {
   useGetPaymentsQuery,
   useGetPropertyQuery,
 } from "@/state/api";
+import PaymentForm from "@/components/PaymentForm";
 import { Lease, Payment, Property } from "@/types/prismaTypes";
 import {
   ArrowDownToLineIcon,
@@ -26,9 +27,13 @@ import {
   Mail,
   MapPin,
   User,
+  Plus,
 } from "lucide-react";
+import { useState } from "react";
 import { useParams } from "next/navigation";
 import React from "react";
+import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 
 const PaymentMethod = () => {
   return (
@@ -150,7 +155,9 @@ const ResidenceCard = ({
   );
 };
 
-const BillingHistory = ({ payments }: { payments: Payment[] }) => {
+const BillingHistory = ({ payments, currentLease }: { payments: Payment[]; currentLease: Lease }) => {
+  const [isPaymentDialogOpen, setIsPaymentDialogOpen] = useState(false);
+
   return (
     <div className="mt-8 bg-white rounded-xl shadow-md overflow-hidden p-6">
       {/* Header */}
@@ -161,7 +168,30 @@ const BillingHistory = ({ payments }: { payments: Payment[] }) => {
             Download your previous plan receipts and usage details.
           </p>
         </div>
-        <div>
+        <div className="flex gap-2">
+          <Dialog open={isPaymentDialogOpen} onOpenChange={setIsPaymentDialogOpen}>
+            <DialogTrigger asChild>
+              <Button className="bg-primary-600 hover:bg-primary-700 text-white">
+                <Plus className="w-4 h-4 mr-2" />
+                Make Payment
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="max-w-md">
+              <DialogHeader>
+                <DialogTitle>Make a Payment</DialogTitle>
+              </DialogHeader>
+              <PaymentForm
+                leaseId={currentLease.id}
+                amount={currentLease.rent}
+                paymentType="rent"
+                onSuccess={() => {
+                  setIsPaymentDialogOpen(false);
+                  // Optionally refresh the page or refetch data
+                  window.location.reload();
+                }}
+              />
+            </DialogContent>
+          </Dialog>
           <button className="bg-white border border-gray-300 text-gray-700 py-2 px-4 rounded-md flex items-center justify-center hover:bg-primary-700 hover:text-primary-50">
             <Download className="w-5 h-5 mr-2" />
             <span>Download All</span>
@@ -260,7 +290,7 @@ const Residence = () => {
           )}
           <PaymentMethod />
         </div>
-        <BillingHistory payments={payments || []} />
+        <BillingHistory payments={payments || []} currentLease={currentLease} />
       </div>
     </div>
   );

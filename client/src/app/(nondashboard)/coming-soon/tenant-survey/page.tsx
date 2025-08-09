@@ -116,7 +116,7 @@ const TenantSurveyPage = () => {
               </div>
               <h2 className="text-2xl font-bold text-gray-900 mb-2">Thank You!</h2>
               <p className="text-gray-600">
-                Thanks for sharing your feedback! We'll notify you when Homematch launches.
+                Thanks for sharing your feedback! We&apos;ll notify you when Homematch launches.
               </p>
             </div>
           </CardContent>
@@ -399,7 +399,7 @@ const TenantSurveyPage = () => {
                   </div>
 
                   <div>
-                    <Label htmlFor="wishExisted">What is one thing you wish existed in the renting process that currently doesn't?</Label>
+                    <Label htmlFor="wishExisted">What is one thing you wish existed in the renting process that currently doesn&apos;t?</Label>
                     <Textarea
                       id="wishExisted"
                       value={surveyData.wishExisted}

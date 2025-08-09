@@ -48,7 +48,7 @@ const ComingSoonPage = () => {
             Homematch
           </h1>
           <p className="text-xl md:text-2xl text-primary-600 mb-8 max-w-3xl mx-auto">
-            Nigeria's direct rental platform connecting tenants and landlords without the middleman
+            Nigeria&apos;s direct rental platform connecting tenants and landlords without the middleman
           </p>
         </div>
 
@@ -60,7 +60,7 @@ const ComingSoonPage = () => {
               <div className="mx-auto mb-4 p-4 bg-secondary-100 rounded-full w-16 h-16 flex items-center justify-center">
                 <Users className="w-8 h-8 text-secondary-600" />
               </div>
-              <CardTitle className="text-2xl text-primary-800">I'm a Tenant</CardTitle>
+              <CardTitle className="text-2xl text-primary-800">I&apos;m a Tenant</CardTitle>
               <CardDescription className="text-primary-600">
                 Looking for a place to rent
               </CardDescription>
@@ -91,7 +91,7 @@ const ComingSoonPage = () => {
               <div className="mx-auto mb-4 p-4 bg-secondary-100 rounded-full w-16 h-16 flex items-center justify-center">
                 <Home className="w-8 h-8 text-secondary-600" />
               </div>
-              <CardTitle className="text-2xl text-primary-800">I'm a Landlord</CardTitle>
+              <CardTitle className="text-2xl text-primary-800">I&apos;m a Landlord</CardTitle>
               <CardDescription className="text-primary-600">
                 I have properties to rent out
               </CardDescription>
@@ -142,7 +142,7 @@ const TenantPage = ({ onBack }: { onBack: () => void }) => {
         
         <div className="text-center mb-12">
           <h1 className="text-4xl md:text-5xl font-bold text-primary-800 mb-6">
-            House Hunting in Nigeria is Broken. Let's Fix It Together.
+            House Hunting in Nigeria is Broken. Let&apos;s Fix It Together.
           </h1>
           <p className="text-xl md:text-2xl text-primary-600 mb-8">
             No more fake listings. No more outrageous agent fees. No more wasted trips.
@@ -178,7 +178,7 @@ const TenantPage = ({ onBack }: { onBack: () => void }) => {
               className="bg-secondary-600 hover:bg-secondary-700 text-white px-8 py-4 text-lg"
               size="lg"
             >
-              I'm a Tenant – Start Survey
+              I&apos;m a Tenant – Start Survey
               <ArrowRight className="ml-2 w-5 h-5" />
             </Button>
           </Link>
@@ -203,7 +203,7 @@ const LandlordPage = ({ onBack }: { onBack: () => void }) => {
         
         <div className="text-center mb-12">
           <h1 className="text-4xl md:text-5xl font-bold text-primary-800 mb-6">
-            Finding Good Tenants Shouldn't Be This Hard. Let's Change That.
+            Finding Good Tenants Shouldn&apos;t Be This Hard. Let&apos;s Change That.
           </h1>
           <p className="text-xl md:text-2xl text-primary-600 mb-8">
             No more unreliable agents. No more empty apartments. No more late rent headaches.
@@ -239,7 +239,7 @@ const LandlordPage = ({ onBack }: { onBack: () => void }) => {
               className="bg-secondary-600 hover:bg-secondary-700 text-white px-8 py-4 text-lg"
               size="lg"
             >
-              I'm a Landlord – Start Survey
+              I&apos;m a Landlord – Start Survey
               <ArrowRight className="ml-2 w-5 h-5" />
             </Button>
           </Link>

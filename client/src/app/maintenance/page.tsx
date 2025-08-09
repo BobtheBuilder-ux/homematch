@@ -17,8 +17,8 @@ const MaintenancePage = () => {
         </CardHeader>
         <CardContent className="text-center space-y-4">
           <p className="text-gray-600 leading-relaxed">
-            We're currently performing scheduled maintenance to improve your experience. 
-            We'll be back online shortly.
+            We&apos;re currently performing scheduled maintenance to improve your experience. 
+            We&apos;ll be back online shortly.
           </p>
           
           <div className="flex items-center justify-center space-x-2 text-sm text-gray-500">

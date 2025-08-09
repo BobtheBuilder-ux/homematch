@@ -33,7 +33,7 @@ const Applications = () => {
   const [updateApplicationStatus] = useUpdateApplicationStatusMutation();
 
   const handleStatusChange = async (id: number, status: string) => {
-    await updateApplicationStatus({ id, status });
+    await updateApplicationStatus({ id, status, userType: "admin" });
   };
 
   if (isLoading) return <Loading />;
