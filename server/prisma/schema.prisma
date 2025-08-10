@@ -66,6 +66,12 @@ enum PaymentStatus {
   Overdue
 }
 
+enum PropertyStatus {
+  Available
+  Closed
+  UnderMaintenance
+}
+
 model Property {
   id                Int          @id @default(autoincrement())
   name              String
@@ -82,6 +88,7 @@ model Property {
   baths             Float
   squareFeet        Int
   propertyType      PropertyType
+  status            PropertyStatus @default(Available)
   postedDate        DateTime     @default(now())
   averageRating     Float?       @default(0)
   numberOfReviews   Int?         @default(0)

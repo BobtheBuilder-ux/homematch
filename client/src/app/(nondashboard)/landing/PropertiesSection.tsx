@@ -42,7 +42,7 @@ const PropertiesSection = () => {
 
         <div className="text-center">
           <Link href="/search">
-            <Button className="bg-primary hover:bg-primary/90 text-white px-8 py-2 rounded-md text-lg">
+            <Button className="bg-secondary-600 hover:bg-secondary-600/90 text-white px-8 py-2 rounded-md text-lg">
               View All Properties
             </Button>
           </Link>

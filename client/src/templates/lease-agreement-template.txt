@@ -41,7 +41,7 @@ Payment shall be made directly to HomeMatch's designated account on behalf of th
 Late payment beyond the agreed start date or renewal date attracts a penalty of ₦{{late_fee}} per day/week.
 
 4. SECURITY DEPOSIT
-Tenant shall pay a refundable security deposit of ₦{{security_deposit}} before moving in.
+Tenant shall pay a refundable security deposit of ₦{{caution_fee}} before moving in.
 
 HomeMatch will hold the deposit in trust for the property owner.
 

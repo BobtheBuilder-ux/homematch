@@ -1,49 +1,44 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { CheckCircle, XCircle, Loader2 } from "lucide-react";
 import { useVerifyPaymentQuery } from "@/state/api";
-import { toast } from "sonner";
 
-const PaymentSuccess = () => {
-  const searchParams = useSearchParams();
+type VerificationStatus = "loading" | "success" | "failed";
+
+const PaymentCallback = () => {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const [verificationStatus, setVerificationStatus] = useState<VerificationStatus>("loading");
+  
   const reference = searchParams.get("reference");
-  const [verificationStatus, setVerificationStatus] = useState<"loading" | "success" | "failed">("loading");
-
-  const {
-    data: verificationResult,
-    error,
-    isLoading,
-  } = useVerifyPaymentQuery(reference || "", {
-    skip: !reference,
-  });
+  const trxref = searchParams.get("trxref");
+  
+  // Use the reference from URL params
+  const paymentReference = reference || trxref;
+  
+  const { data: verificationResult, isLoading, error } = useVerifyPaymentQuery(
+    paymentReference!,
+    { skip: !paymentReference }
+  );
 
   useEffect(() => {
-    if (!reference) {
+    if (!paymentReference) {
       setVerificationStatus("failed");
-      toast.error("No payment reference found");
       return;
     }
 
-    if (verificationResult) {
-      if (verificationResult.success) {
+    if (!isLoading) {
+      if (verificationResult?.success) {
         setVerificationStatus("success");
-        toast.success("Payment verified successfully!");
       } else {
         setVerificationStatus("failed");
-        toast.error("Payment verification failed");
       }
     }
-
-    if (error) {
-      setVerificationStatus("failed");
-      toast.error("Failed to verify payment");
-    }
-  }, [reference, verificationResult, error]);
+  }, [verificationResult, isLoading, paymentReference]);
 
   const handleGoToDashboard = () => {
     router.push("/tenants/residences");
@@ -91,47 +86,51 @@ const PaymentSuccess = () => {
           <CardTitle>
             {verificationStatus === "success" 
               ? "Payment Successful!" 
-              : "Payment Failed"}
+              : "Payment Failed"
+            }
           </CardTitle>
         </CardHeader>
         <CardContent className="text-center space-y-4">
-          <p className="text-gray-600">
-            {verificationStatus === "success"
-              ? "Your payment has been processed successfully. You will receive a confirmation email shortly."
-              : "We couldn't process your payment. Please try again or contact support if the issue persists."}
-          </p>
-          
-          {reference && (
-            <div className="bg-gray-100 p-3 rounded-lg">
-              <p className="text-sm text-gray-600">Reference:</p>
-              <p className="font-mono text-sm">{reference}</p>
-            </div>
-          )}
-
-          <div className="flex flex-col gap-2 pt-4">
-            {verificationStatus === "success" ? (
-              <Button onClick={handleGoToDashboard} className="w-full">
-                Go to Dashboard
-              </Button>
-            ) : (
-              <>
-                <Button onClick={handleRetryPayment} className="w-full">
+          {verificationStatus === "success" ? (
+            <>
+              <p className="text-gray-600">
+                Your payment has been successfully processed. You will receive a confirmation email shortly with your tenancy agreement.
+              </p>
+              <div className="space-y-2">
+                <Button 
+                  onClick={handleGoToDashboard}
+                  className="w-full bg-green-600 hover:bg-green-700"
+                >
+                  Go to Dashboard
+                </Button>
+              </div>
+            </>
+          ) : (
+            <>
+              <p className="text-gray-600">
+                There was an issue processing your payment. Please try again or contact support.
+              </p>
+              <div className="space-y-2">
+                <Button 
+                  onClick={handleRetryPayment}
+                  className="w-full bg-blue-600 hover:bg-blue-700"
+                >
                   Try Again
                 </Button>
                 <Button 
-                  onClick={handleGoToDashboard} 
-                  variant="outline" 
+                  onClick={handleGoToDashboard}
+                  variant="outline"
                   className="w-full"
                 >
                   Go to Dashboard
                 </Button>
-              </>
-            )}
-          </div>
+              </div>
+            </>
+          )}
         </CardContent>
       </Card>
     </div>
   );
 };
 
-export default PaymentSuccess;
+export default PaymentCallback;

@@ -336,7 +336,7 @@ export const api = createApi({
     }),
 
     verifyPayment: build.query<
-      { status: string; data: any },
+      { success: boolean; payment?: any; message?: string },
       string
     >({
       query: (reference) => `payments/verify/${reference}`,

@@ -1,9 +1,8 @@
 import { Request, Response } from "express";
 import { PrismaClient } from "@prisma/client";
 import axios from "axios";
-import fs from "fs";
-import path from "path";
 import { sendEmail } from "../utils/emailService";
+import { generateLeaseAgreement } from "../utils/leaseAgreementGenerator";
 
 const prisma = new PrismaClient();
 
@@ -199,6 +198,14 @@ export const verifyPayment = async (
             }
           }
         });
+
+        // Mark property as closed
+        await prisma.property.update({
+          where: { id: propertyId },
+          data: {
+            status: "Closed"
+          }
+        });
       } else if (paymentType === "deposit") {
         // For deposit payment, update tenant's inspection limit
         const property = await prisma.property.findUnique({
@@ -287,10 +294,7 @@ export const verifyPayment = async (
         });
       }
 
-      // Generate lease agreement if this is the first payment (rent + deposit)
-      if (paymentType === "initial_payment") {
-        await generateLeaseAgreement(updatedPayment.lease);
-      }
+
 
       // Send confirmation email
       if (paymentType === "deposit") {
@@ -324,24 +328,126 @@ export const verifyPayment = async (
           });
         }
       } else if (updatedPayment.lease) {
-        await sendEmail({
-          to: updatedPayment.lease.tenant.email,
-          subject: "Payment Confirmation - Homematch",
-          body: `
-            <h2>Payment Successful!</h2>
-            <p>Dear ${updatedPayment.lease.tenant.name},</p>
-            <p>Your payment of ₦${updatedPayment.amountPaid} has been successfully processed.</p>
-            <p>Payment Details:</p>
-            <ul>
-              <li>Amount: ₦${updatedPayment.amountPaid}</li>
-              <li>Property: ${updatedPayment.lease.property.location.address}</li>
-              <li>Payment Date: ${new Date().toLocaleDateString()}</li>
-              <li>Reference: ${reference}</li>
-            </ul>
-            ${paymentType === "initial_payment" ? "<p>Your lease agreement has been generated and will be sent to you shortly.</p>" : ""}
-            <p>Thank you for choosing Homematch!</p>
-          `
-        });
+        if (paymentType === "initial_payment") {
+          // Ensure lease data is available
+          if (!updatedPayment.lease.tenant || !updatedPayment.lease.property) {
+            throw new Error("Incomplete lease data for PDF generation");
+          }
+
+          // Generate lease agreement PDF
+          const leaseAgreementPDF = await generateLeaseAgreement({
+            tenantName: updatedPayment.lease.tenant.name,
+            tenantEmail: updatedPayment.lease.tenant.email,
+            tenantPhone: updatedPayment.lease.tenant.phoneNumber,
+            propertyAddress: updatedPayment.lease.property.location.address,
+            propertyName: updatedPayment.lease.property.name,
+            landlordName: updatedPayment.lease.property.landlord.name,
+            landlordEmail: updatedPayment.lease.property.landlord.email,
+            landlordPhone: updatedPayment.lease.property.landlord.phoneNumber,
+            rentAmount: updatedPayment.lease.rent,
+            securityDeposit: updatedPayment.lease.deposit,
+            leaseStartDate: updatedPayment.lease.startDate,
+            leaseEndDate: updatedPayment.lease.endDate,
+            paymentDate: new Date(),
+            paymentReference: reference
+          });
+
+          // Send congratulatory email with lease agreement
+          await sendEmail({
+            to: updatedPayment.lease.tenant.email,
+            subject: "🎉 Congratulations! Your Property Payment is Complete - Homematch",
+            body: `
+              <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f9f9f9;">
+                <div style="background-color: #10b981; color: white; padding: 20px; text-align: center; border-radius: 8px 8px 0 0;">
+                  <h1 style="margin: 0; font-size: 24px;">🎉 Congratulations!</h1>
+                  <p style="margin: 10px 0 0 0; font-size: 16px;">Your property payment has been successfully completed!</p>
+                </div>
+                
+                <div style="background-color: white; padding: 30px; border-radius: 0 0 8px 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                  <h2 style="color: #1f2937; margin-top: 0;">Dear ${updatedPayment.lease.tenant.name},</h2>
+                  
+                  <p style="color: #4b5563; line-height: 1.6;">We're thrilled to confirm that your payment has been successfully processed! The property is now officially yours, and it has been removed from our search listings.</p>
+                  
+                  <div style="background-color: #f3f4f6; padding: 20px; border-radius: 8px; margin: 20px 0;">
+                    <h3 style="color: #1f2937; margin-top: 0;">📋 Payment Summary</h3>
+                    <table style="width: 100%; border-collapse: collapse;">
+                      <tr style="border-bottom: 1px solid #e5e7eb;">
+                        <td style="padding: 8px 0; color: #6b7280;">Property:</td>
+                        <td style="padding: 8px 0; color: #1f2937; font-weight: bold;">${updatedPayment.lease.property.name}</td>
+                      </tr>
+                      <tr style="border-bottom: 1px solid #e5e7eb;">
+                        <td style="padding: 8px 0; color: #6b7280;">Address:</td>
+                        <td style="padding: 8px 0; color: #1f2937;">${updatedPayment.lease.property.location.address}</td>
+                      </tr>
+                      <tr style="border-bottom: 1px solid #e5e7eb;">
+                        <td style="padding: 8px 0; color: #6b7280;">Amount Paid:</td>
+                        <td style="padding: 8px 0; color: #10b981; font-weight: bold; font-size: 18px;">₦${updatedPayment.amountPaid.toLocaleString()}</td>
+                      </tr>
+                      <tr style="border-bottom: 1px solid #e5e7eb;">
+                        <td style="padding: 8px 0; color: #6b7280;">Payment Date:</td>
+                        <td style="padding: 8px 0; color: #1f2937;">${new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</td>
+                      </tr>
+                      <tr style="border-bottom: 1px solid #e5e7eb;">
+                        <td style="padding: 8px 0; color: #6b7280;">Lease Period:</td>
+                        <td style="padding: 8px 0; color: #1f2937;">${updatedPayment.lease.startDate.toLocaleDateString()} - ${updatedPayment.lease.endDate.toLocaleDateString()}</td>
+                      </tr>
+                      <tr>
+                        <td style="padding: 8px 0; color: #6b7280;">Reference:</td>
+                        <td style="padding: 8px 0; color: #1f2937; font-family: monospace;">${reference}</td>
+                      </tr>
+                    </table>
+                  </div>
+                  
+                  <div style="background-color: #fef3c7; border-left: 4px solid #f59e0b; padding: 15px; margin: 20px 0;">
+                    <h4 style="color: #92400e; margin: 0 0 10px 0;">📄 Tenancy Agreement Attached</h4>
+                    <p style="color: #92400e; margin: 0; font-size: 14px;">Your personalized tenancy agreement is attached to this email. Please review, sign, and keep it for your records.</p>
+                  </div>
+                  
+                  <h3 style="color: #1f2937;">🏠 What's Next?</h3>
+                  <ul style="color: #4b5563; line-height: 1.6;">
+                    <li>Review and sign your tenancy agreement</li>
+                    <li>The property has been removed from search listings</li>
+                    <li>You can now access your property details in your dashboard</li>
+                    <li>Contact your landlord for move-in arrangements</li>
+                  </ul>
+                  
+                  <div style="text-align: center; margin: 30px 0;">
+                    <a href="${process.env.CLIENT_URL}/tenants/residences" style="background-color: #10b981; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold;">View Your Dashboard</a>
+                  </div>
+                  
+                  <p style="color: #4b5563; line-height: 1.6;">If you have any questions or need assistance, please don't hesitate to contact our support team.</p>
+                  
+                  <p style="color: #4b5563; margin-bottom: 0;">Welcome to your new home!</p>
+                  <p style="color: #10b981; font-weight: bold;">The Homematch Team</p>
+                </div>
+              </div>
+            `,
+            attachments: [{
+              filename: `Lease_Agreement_${updatedPayment.lease.property.name.replace(/\s+/g, '_')}_${new Date().toISOString().split('T')[0]}.pdf`,
+              content: leaseAgreementPDF,
+              contentType: 'application/pdf'
+            }]
+          });
+        } else {
+          // Regular payment confirmation
+          await sendEmail({
+            to: updatedPayment.lease.tenant.email,
+            subject: "Payment Confirmation - Homematch",
+            body: `
+              <h2>Payment Successful!</h2>
+              <p>Dear ${updatedPayment.lease.tenant.name},</p>
+              <p>Your payment of ₦${updatedPayment.amountPaid} has been successfully processed.</p>
+              <p>Payment Details:</p>
+              <ul>
+                <li>Amount: ₦${updatedPayment.amountPaid}</li>
+                <li>Property: ${updatedPayment.lease.property.location.address}</li>
+                <li>Payment Date: ${new Date().toLocaleDateString()}</li>
+                <li>Reference: ${reference}</li>
+              </ul>
+              <p>Thank you for choosing Homematch!</p>
+            `
+          });
+        }
       }
 
       res.json({ success: true, payment: updatedPayment });
@@ -355,73 +461,7 @@ export const verifyPayment = async (
 };
 
 // Generate lease agreement
-const generateLeaseAgreement = async (lease: any) => {
-  try {
-    // Read the lease agreement template
-    const templatePath = path.join(__dirname, "../../../client/src/templates/lease-agreement-template.txt");
-    let template = fs.readFileSync(templatePath, "utf8");
 
-    // Get current date components
-    const now = new Date();
-    const endDate = new Date(lease.endDate);
-
-    // Replace template variables
-    const replacements = {
-      "{{agreement_day}}": now.getDate().toString(),
-      "{{agreement_month}}": now.toLocaleString('default', { month: 'long' }),
-      "{{agreement_year}}": now.getFullYear().toString(),
-      "{{rc_number}}": "RC123456", // Replace with actual RC number
-      "{{homematch_address}}": "123 Homematch Street, Lagos, Nigeria",
-      "{{homematch_phone}}": "+234-800-HOMEMATCH",
-      "{{homematch_email}}": "info@homematch.com",
-      "{{tenant_name}}": lease.tenant.name,
-      "{{tenant_address}}": lease.tenant.address || "Address on file",
-      "{{tenant_phone}}": lease.tenant.phoneNumber,
-      "{{tenant_email}}": lease.tenant.email,
-      "{{property_address}}": lease.property.location.address,
-      "{{property_description}}": lease.property.description || "Residential Property",
-      "{{start_day}}": new Date(lease.startDate).getDate().toString(),
-      "{{start_month}}": new Date(lease.startDate).toLocaleString('default', { month: 'long' }),
-      "{{start_year}}": new Date(lease.startDate).getFullYear().toString(),
-      "{{end_day}}": endDate.getDate().toString(),
-      "{{end_month}}": endDate.toLocaleString('default', { month: 'long' }),
-      "{{end_year}}": endDate.getFullYear().toString(),
-      "{{annual_rent}}": lease.rent.toLocaleString(),
-      "{{late_fee}}": "5,000", // Default late fee
-      "{{security_deposit}}": lease.deposit.toLocaleString(),
-      "{{utilities_notes}}": "Tenant is responsible for all utilities unless otherwise specified.",
-      "{{special_conditions}}": "No additional special conditions apply.",
-      "{{homematch_representative_name}}": "John Doe",
-      "{{homematch_representative_position}}": "Property Manager",
-      "{{agreement_date}}": now.toLocaleDateString()
-    };
-
-    // Replace all template variables
-    Object.entries(replacements).forEach(([key, value]) => {
-      template = template.replace(new RegExp(key, 'g'), value);
-    });
-
-    // Send the lease agreement via email
-    await sendEmail({
-      to: lease.tenant.email,
-      subject: "Your Lease Agreement - Homematch",
-      body: `
-        <h2>Your Lease Agreement</h2>
-        <p>Dear ${lease.tenant.name},</p>
-        <p>Please find your lease agreement below. Please review, print, sign, and return a copy to us.</p>
-        <hr>
-        <pre style="white-space: pre-wrap; font-family: Arial, sans-serif; font-size: 12px;">${template}</pre>
-        <hr>
-        <p>If you have any questions, please don't hesitate to contact us.</p>
-        <p>Best regards,<br>Homematch Team</p>
-      `
-    });
-
-    console.log(`Lease agreement generated and sent for lease ID: ${lease.id}`);
-  } catch (error) {
-    console.error("Error generating lease agreement:", error);
-  }
-};
 
 // Get payment history
 export const getPaymentHistory = async (

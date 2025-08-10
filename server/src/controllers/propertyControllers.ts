@@ -137,6 +137,11 @@ export const getProperties = async (
       );
     }
 
+    // Always exclude closed properties from search results
+    whereConditions.push(
+      Prisma.sql`p.status != 'Closed'`
+    );
+
     const completeQuery = Prisma.sql`
       SELECT 
         p.*,
@@ -154,11 +159,7 @@ export const getProperties = async (
         ) as location
       FROM "Property" p
       JOIN "Location" l ON p."locationId" = l.id
-      ${
-        whereConditions.length > 0
-          ? Prisma.sql`WHERE ${Prisma.join(whereConditions, " AND ")}`
-          : Prisma.empty
-      }
+      WHERE ${Prisma.join(whereConditions, " AND ")}
     `;
 
     const properties = await prisma.$queryRaw(completeQuery);

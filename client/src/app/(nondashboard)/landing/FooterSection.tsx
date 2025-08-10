@@ -8,13 +8,21 @@ import {
   faLinkedin,
   faYoutube,
 } from "@fortawesome/free-brands-svg-icons";
+import Image from "next/image";
 
 const FooterSection = () => {
   return (
     <footer className="border-t border-gray-200 py-20">
       <div className="max-w-4xl mx-auto px-6 sm:px-8">
         <div className="flex flex-col md:flex-row justify-between items-center">
-          <div className="mb-4">
+          <div className="mb-4 flex flex-row space-x-3">
+            <Image
+                src="/logo.svg"
+                alt="HomeMatch Logo"
+                width={24}
+                height={24}
+                className="w-6 h-6"
+              />
             <Link href="/" className="text-xl font-bold" scroll={false}>
               HomeMatch
             </Link>
