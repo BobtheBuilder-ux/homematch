@@ -14,11 +14,11 @@ PAYSTACK_SECRET_KEY=sk_test_your_secret_key_here
 PAYSTACK_PUBLIC_KEY=pk_test_your_public_key_here
 CLIENT_URL=http://localhost:3000
 
-# Email Configuration (for lease agreements)
-EMAIL_HOST=smtp.gmail.com
-EMAIL_PORT=587
-EMAIL_USER=your_email@gmail.com
-EMAIL_PASS=your_app_password_here
+# AWS SES Configuration (for lease agreements)
+AWS_REGION=us-east-1
+SES_FROM_EMAIL=noreply@yourdomain.com
+AWS_ACCESS_KEY_ID=your_aws_access_key_id
+AWS_SECRET_ACCESS_KEY=your_aws_secret_access_key
 ```
 
 ### Client Configuration (`/client/.env`)
@@ -38,14 +38,16 @@ NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY=pk_test_your_public_key_here
    - Copy your **Test Public Key** and **Test Secret Key**
    - For production, use your **Live** keys
 
-## Email Configuration (Gmail)
+## AWS SES Configuration
 
-1. **Enable 2-Factor Authentication** on your Gmail account
-2. **Generate an App Password**:
-   - Go to Google Account settings
-   - Security > 2-Step Verification > App passwords
-   - Generate a password for "Mail"
-   - Use this password in the `EMAIL_PASS` variable
+1. **Set up AWS SES**: Follow the detailed setup guide in `AWS_SES_SETUP.md`
+2. **Key Steps**:
+   - Create AWS account and navigate to SES
+   - Verify your email address or domain
+   - Create IAM user with SES permissions
+   - Get AWS access keys
+   - Request production access (for sending to unverified emails)
+3. **Important**: Replace placeholder values with your actual AWS credentials
 
 ## Testing the Integration
 

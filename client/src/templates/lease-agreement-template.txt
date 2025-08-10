@@ -1,5 +1,5 @@
 HOMEMATCH RESIDENTIAL LEASE AGREEMENT
-(Homematch as Landlord's Representative)
+(HomeMatch as Landlord's Representative)
 
 THIS LEASE AGREEMENT is made this {{agreement_day}} day of {{agreement_month}}, {{agreement_year}}
 
@@ -10,7 +10,7 @@ RC No: {{rc_number}}
 Registered Address: {{homematch_address}}
 Phone: {{homematch_phone}} Email: {{homematch_email}}
 
-(Hereinafter referred to as "Homematch" or "Landlord's Representative")
+(Hereinafter referred to as "HomeMatch" or "Landlord's Representative")
 
 AND
 
@@ -21,7 +21,7 @@ Phone: {{tenant_phone}} Email: {{tenant_email}}
 (Individually referred to as "Party" and collectively as "Parties")
 
 1. PROPERTY
-Homematch, acting on behalf of the property owner, hereby leases to the Tenant the residential property located at:
+HomeMatch, acting on behalf of the property owner, hereby leases to the Tenant the residential property located at:
 
 Property Address: {{property_address}}
 Description: {{property_description}}
@@ -31,26 +31,26 @@ Description: {{property_description}}
 2. TERM
 The tenancy shall commence on the {{start_day}} day of {{start_month}}, {{start_year}} and continue for a fixed term of 1 year, ending on the {{end_day}} day of {{end_month}}, {{end_year}}, unless terminated earlier in accordance with this Agreement.
 
-Renewal may be requested at least 30 days before expiry and is subject to approval by Homematch and the property owner.
+Renewal may be requested at least 30 days before expiry and is subject to approval by HomeMatch and the property owner.
 
 3. RENT
 Annual rent is ₦{{annual_rent}}, payable in full in advance before the start date of the tenancy.
 
-Payment shall be made directly to Homematch's designated account on behalf of the landlord.
+Payment shall be made directly to HomeMatch's designated account on behalf of the landlord.
 
 Late payment beyond the agreed start date or renewal date attracts a penalty of ₦{{late_fee}} per day/week.
 
 4. SECURITY DEPOSIT
 Tenant shall pay a refundable security deposit of ₦{{security_deposit}} before moving in.
 
-Homematch will hold the deposit in trust for the property owner.
+HomeMatch will hold the deposit in trust for the property owner.
 
 It will be refunded within 30 days after the Tenant vacates, subject to deductions for unpaid rent, utility arrears, or damages beyond normal wear and tear.
 
 5. USE OF PROPERTY
 The property shall be used solely for private residential purposes by the Tenant and their immediate household.
 
-The Tenant shall not sublet, assign, or transfer this Agreement without Homematch's written consent.
+The Tenant shall not sublet, assign, or transfer this Agreement without HomeMatch's written consent.
 
 Commercial use is prohibited unless otherwise agreed.
 
@@ -58,27 +58,27 @@ Commercial use is prohibited unless otherwise agreed.
 The Tenant shall be responsible for all utility bills (water, electricity, waste disposal, internet, etc.), unless otherwise stated:
 {{utilities_notes}}
 
-Homematch will ensure that all utility connections are functional at the start of the tenancy.
+HomeMatch will ensure that all utility connections are functional at the start of the tenancy.
 
 7. MAINTENANCE & REPAIRS
 Tenant's Responsibilities:
 
 Keep the property clean and habitable.
 
-Promptly report any damages or faults to Homematch.
+Promptly report any damages or faults to HomeMatch.
 
 Not make alterations without prior written consent.
 
-Homematch's Responsibilities:
+HomeMatch's Responsibilities:
 
 Coordinate repairs and maintenance on behalf of the landlord.
 
 Maintain structural integrity and essential services of the property.
 
 8. INSPECTIONS
-Homematch may conduct inspections with at least 24 hours' notice to the Tenant.
+HomeMatch may conduct inspections with at least 24 hours' notice to the Tenant.
 
-In emergencies, Homematch may enter the property without notice.
+In emergencies, HomeMatch may enter the property without notice.
 
 9. DAMAGES
 Tenant is responsible for any damages caused by negligence, misuse, or intentional acts.

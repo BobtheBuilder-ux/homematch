@@ -73,7 +73,7 @@ const Clients = () => {
                   <div>
                     <div className="font-medium">{client.propertiesCount} properties</div>
                     <div className="text-sm text-gray-500">
-                      ${client.totalValue?.toLocaleString()} total value
+                      ₦{client.totalValue?.toLocaleString()} total value
                     </div>
                   </div>
                 </TableCell>

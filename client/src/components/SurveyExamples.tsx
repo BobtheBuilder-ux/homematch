@@ -259,8 +259,10 @@ export const PropertyApplicationSurvey = () => {
 };
 
 // Export all survey examples
-export default {
+const SurveyExamples = {
   FeedbackSurvey,
   ContactFormSurvey,
   PropertyApplicationSurvey
 };
+
+export default SurveyExamples;

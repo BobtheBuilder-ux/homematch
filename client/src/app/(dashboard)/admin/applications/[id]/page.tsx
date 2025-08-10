@@ -72,11 +72,11 @@ const ApplicationDetail = () => {
             </div>
             <div>
               <h3 className="font-medium">Monthly Rent</h3>
-              <p>${application.property.pricePerYear.toLocaleString()}</p>
+              <p>₦{application.property.pricePerYear.toLocaleString()}</p>
             </div>
             <div>
               <h3 className="font-medium">Security Deposit</h3>
-              <p>${application.property.securityDeposit.toLocaleString()}</p>
+              <p>₦{application.property.securityDeposit.toLocaleString()}</p>
             </div>
           </CardContent>
         </Card>
@@ -166,7 +166,7 @@ const ApplicationDetail = () => {
               </div>
               <div>
                 <h3 className="font-medium">Monthly Income</h3>
-                <p>${application.monthlyIncome?.toLocaleString()}</p>
+                <p>₦{application.monthlyIncome?.toLocaleString()}</p>
               </div>
               <div>
                 <h3 className="font-medium">Current Address Duration</h3>

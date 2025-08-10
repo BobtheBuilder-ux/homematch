@@ -73,8 +73,8 @@ const createPropertyMarker = (property: Property, map: mapboxgl.Map) => {
           <div class="marker-popup-image"></div>
           <div>
             <a href="/search/${property.id}" target="_blank" class="marker-popup-title">${property.name}</a>
-            <p class="marker-popup-price">
-              $${property.pricePerYear}
+                  <p class="marker-popup-price">
+                    ₦${property.pricePerYear}
               <span class="marker-popup-price-unit"> / month</span>
             </p>
           </div>

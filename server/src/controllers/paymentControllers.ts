@@ -13,25 +13,44 @@ export const initializePayment = async (
   res: Response
 ): Promise<void> => {
   try {
-    const { leaseId, amount, email, paymentType } = req.body;
+    const { leaseId, propertyId, tenantId, amount, email, paymentType } = req.body;
 
-    // Validate lease exists
-    const lease = await prisma.lease.findUnique({
-      where: { id: leaseId },
-      include: {
-        tenant: true,
-        property: {
-          include: {
-            location: true,
-            landlord: true
+    let lease = null;
+    let property = null;
+
+    if (paymentType === "initial_payment" || paymentType === "deposit") {
+      // For initial payment and deposit, validate property exists
+      property = await prisma.property.findUnique({
+        where: { id: propertyId },
+        include: {
+          location: true,
+          landlord: true
+        }
+      });
+
+      if (!property) {
+        res.status(404).json({ message: "Property not found" });
+        return;
+      }
+    } else {
+      // For other payment types, validate lease exists
+      lease = await prisma.lease.findUnique({
+        where: { id: leaseId },
+        include: {
+          tenant: true,
+          property: {
+            include: {
+              location: true,
+              landlord: true
+            }
           }
         }
-      }
-    });
+      });
 
-    if (!lease) {
-      res.status(404).json({ message: "Lease not found" });
-      return;
+      if (!lease) {
+        res.status(404).json({ message: "Lease not found" });
+        return;
+      }
     }
 
     // Create payment record
@@ -42,7 +61,7 @@ export const initializePayment = async (
         dueDate: new Date(),
         paymentDate: new Date(),
         paymentStatus: "Pending",
-        leaseId: leaseId
+        leaseId: (paymentType === "initial_payment" || paymentType === "deposit") ? null : leaseId
       }
     });
 
@@ -56,9 +75,10 @@ export const initializePayment = async (
         callback_url: `${process.env.CLIENT_URL}/payment/callback`,
         metadata: {
           paymentId: payment.id,
-          leaseId: leaseId,
+          leaseId: (paymentType === "initial_payment" || paymentType === "deposit") ? null : leaseId,
+          propertyId: (paymentType === "initial_payment" || paymentType === "deposit") ? propertyId : null,
           paymentType: paymentType,
-          tenantId: lease.tenantCognitoId
+          tenantId: (paymentType === "initial_payment" || paymentType === "deposit") ? tenantId : lease?.tenantCognitoId
         }
       },
       {
@@ -71,7 +91,7 @@ export const initializePayment = async (
 
     res.json({
       paymentId: payment.id,
-      authorizationUrl: paystackResponse.data.data.authorization_url,
+      url: paystackResponse.data.data.authorization_url,
       reference: paystackResponse.data.data.reference
     });
   } catch (error: any) {
@@ -103,30 +123,169 @@ export const verifyPayment = async (
     if (data.status === "success") {
       const paymentId = data.metadata.paymentId;
       const leaseId = data.metadata.leaseId;
+      const propertyId = data.metadata.propertyId;
       const paymentType = data.metadata.paymentType;
+      const tenantId = data.metadata.tenantId;
 
-      // Update payment record
-      const updatedPayment = await prisma.payment.update({
-        where: { id: paymentId },
-        data: {
-          amountPaid: data.amount / 100, // Convert from kobo to naira
-          paymentStatus: "Paid",
-          paymentDate: new Date()
-        },
-        include: {
-          lease: {
-            include: {
-              tenant: true,
-              property: {
-                include: {
-                  location: true,
-                  landlord: true
+      let updatedPayment;
+
+      if (paymentType === "initial_payment") {
+        // For initial payment, we need to create a lease first
+        const property = await prisma.property.findUnique({
+          where: { id: propertyId },
+          include: {
+            location: true,
+            landlord: true
+          }
+        });
+
+        if (!property) {
+          res.status(404).json({ success: false, message: "Property not found" });
+          return;
+        }
+
+        // Get tenant information from the request or session
+         // For now, we'll need to get tenant info from the payment metadata or request
+         const tenant = await prisma.tenant.findUnique({
+           where: { cognitoId: tenantId || data.customer.email } // Fallback to email if tenantId not available
+         });
+
+        if (!tenant) {
+          res.status(404).json({ success: false, message: "Tenant not found" });
+          return;
+        }
+
+        // Create lease
+         const newLease = await prisma.lease.create({
+           data: {
+             rent: property.pricePerYear,
+             deposit: property.securityDeposit,
+             startDate: new Date(),
+             endDate: new Date(new Date().setFullYear(new Date().getFullYear() + 1)),
+             tenantCognitoId: tenant.cognitoId,
+             propertyId: property.id
+           },
+          include: {
+            tenant: true,
+            property: {
+              include: {
+                location: true,
+                landlord: true
+              }
+            }
+          }
+        });
+
+        // Update payment record with the new lease
+        updatedPayment = await prisma.payment.update({
+          where: { id: paymentId },
+          data: {
+            amountPaid: data.amount / 100,
+            paymentStatus: "Paid",
+            paymentDate: new Date(),
+            leaseId: newLease.id
+          },
+          include: {
+            lease: {
+              include: {
+                tenant: true,
+                property: {
+                  include: {
+                    location: true,
+                    landlord: true
+                  }
                 }
               }
             }
           }
+        });
+      } else if (paymentType === "deposit") {
+        // For deposit payment, update tenant's inspection limit
+        const property = await prisma.property.findUnique({
+          where: { id: propertyId },
+          include: {
+            location: true,
+            landlord: true
+          }
+        });
+
+        if (!property) {
+          res.status(404).json({ success: false, message: "Property not found" });
+          return;
         }
-      });
+
+        const tenant = await prisma.tenant.findUnique({
+          where: { cognitoId: tenantId }
+        });
+
+        if (!tenant) {
+          res.status(404).json({ success: false, message: "Tenant not found" });
+          return;
+        }
+
+        // Update tenant's inspection limit to unlimited for one year
+        const InspectionLimit = (prisma as any).inspectionLimit;
+        await InspectionLimit.upsert({
+          where: { tenantCognitoId: tenantId },
+          update: {
+            hasUnlimited: true,
+            unlimitedUntil: new Date(new Date().setFullYear(new Date().getFullYear() + 1))
+          },
+          create: {
+            tenantCognitoId: tenantId,
+            freeInspections: 2,
+            usedInspections: 0,
+            hasUnlimited: true,
+            unlimitedUntil: new Date(new Date().setFullYear(new Date().getFullYear() + 1))
+          }
+        });
+
+        // Update payment record for initial payment
+        updatedPayment = await prisma.payment.update({
+          where: { id: paymentId },
+          data: {
+            amountPaid: data.amount / 100,
+            paymentStatus: "Paid",
+            paymentDate: new Date()
+          },
+          include: {
+            lease: {
+              include: {
+                tenant: true,
+                property: {
+                  include: {
+                    location: true,
+                    landlord: true
+                  }
+                }
+              }
+            }
+          }
+        });
+      } else {
+        // Update payment record for existing lease payments
+        updatedPayment = await prisma.payment.update({
+          where: { id: paymentId },
+          data: {
+            amountPaid: data.amount / 100,
+            paymentStatus: "Paid",
+            paymentDate: new Date()
+          },
+          include: {
+            lease: {
+              include: {
+                tenant: true,
+                property: {
+                  include: {
+                    location: true,
+                    landlord: true
+                  }
+                }
+              }
+            }
+          }
+        });
+      }
 
       // Generate lease agreement if this is the first payment (rent + deposit)
       if (paymentType === "initial_payment") {
@@ -134,24 +293,56 @@ export const verifyPayment = async (
       }
 
       // Send confirmation email
-      await sendEmail({
-        to: updatedPayment.lease.tenant.email,
-        subject: "Payment Confirmation - Homematch",
-        body: `
-          <h2>Payment Successful!</h2>
-          <p>Dear ${updatedPayment.lease.tenant.name},</p>
-          <p>Your payment of ₦${updatedPayment.amountPaid} has been successfully processed.</p>
-          <p>Payment Details:</p>
-          <ul>
-            <li>Amount: ₦${updatedPayment.amountPaid}</li>
-            <li>Property: ${updatedPayment.lease.property.location.address}</li>
-            <li>Payment Date: ${new Date().toLocaleDateString()}</li>
-            <li>Reference: ${reference}</li>
-          </ul>
-          ${paymentType === "initial_payment" ? "<p>Your lease agreement has been generated and will be sent to you shortly.</p>" : ""}
-          <p>Thank you for choosing Homematch!</p>
-        `
-      });
+      if (paymentType === "deposit") {
+        // Handle deposit payment email separately
+        const tenant = await prisma.tenant.findUnique({
+          where: { cognitoId: tenantId }
+        });
+        const property = await prisma.property.findUnique({
+          where: { id: propertyId },
+          include: { location: true }
+        });
+        
+        if (tenant && property) {
+          await sendEmail({
+            to: tenant.email,
+            subject: "Deposit Payment Confirmation - Homematch",
+            body: `
+              <h2>Deposit Payment Successful!</h2>
+              <p>Dear ${tenant.name},</p>
+              <p>Your deposit payment of ₦${updatedPayment.amountPaid} has been successfully processed.</p>
+              <p>Payment Details:</p>
+              <ul>
+                <li>Amount: ₦${updatedPayment.amountPaid}</li>
+                <li>Property: ${property.location.address}</li>
+                <li>Payment Date: ${new Date().toLocaleDateString()}</li>
+                <li>Reference: ${reference}</li>
+              </ul>
+              <p>Your inspection limit has been upgraded to unlimited for one year!</p>
+              <p>Thank you for choosing Homematch!</p>
+            `
+          });
+        }
+      } else if (updatedPayment.lease) {
+        await sendEmail({
+          to: updatedPayment.lease.tenant.email,
+          subject: "Payment Confirmation - Homematch",
+          body: `
+            <h2>Payment Successful!</h2>
+            <p>Dear ${updatedPayment.lease.tenant.name},</p>
+            <p>Your payment of ₦${updatedPayment.amountPaid} has been successfully processed.</p>
+            <p>Payment Details:</p>
+            <ul>
+              <li>Amount: ₦${updatedPayment.amountPaid}</li>
+              <li>Property: ${updatedPayment.lease.property.location.address}</li>
+              <li>Payment Date: ${new Date().toLocaleDateString()}</li>
+              <li>Reference: ${reference}</li>
+            </ul>
+            ${paymentType === "initial_payment" ? "<p>Your lease agreement has been generated and will be sent to you shortly.</p>" : ""}
+            <p>Thank you for choosing Homematch!</p>
+          `
+        });
+      }
 
       res.json({ success: true, payment: updatedPayment });
     } else {

@@ -106,7 +106,7 @@ const LandlordRegistrationsPage = () => {
             <div className="flex-1">
               <div className="flex gap-2">
                 <Input
-                  placeholder="Search by code (e.g., homematch-landlord/1)"
+                  placeholder="Search by code (e.g., HomeMatch-landlord/1)"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   className="flex-1"

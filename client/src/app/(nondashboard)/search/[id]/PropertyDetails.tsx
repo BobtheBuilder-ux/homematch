@@ -87,7 +87,7 @@ const PropertyDetails = ({ propertyId }: PropertyDetailsProps) => {
                 Application Fee (10% of yearly rent)
               </span>
               <span className="text-primary-700">
-                ${(property.pricePerYear * 0.1).toLocaleString()}
+                ₦{(property.pricePerYear * 0.1).toLocaleString()}
               </span>
             </div>
             <hr />
@@ -96,7 +96,7 @@ const PropertyDetails = ({ propertyId }: PropertyDetailsProps) => {
                 Caution Fee (20% of yearly rent)
               </span>
               <span className="text-primary-700">
-                ${(property.pricePerYear * 0.2).toLocaleString()}
+                ₦{(property.pricePerYear * 0.2).toLocaleString()}
               </span>
             </div>
             <hr />

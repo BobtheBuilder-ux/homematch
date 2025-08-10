@@ -55,7 +55,7 @@ const SearchPage = () => {
 
     const cleanedFilters = cleanParams(initialFilters);
     dispatch(setFilters(cleanedFilters));
-  }, [searchParams]); // Add searchParams as dependency
+  }, [searchParams, dispatch]); // Add searchParams and dispatch as dependencies
 
   return (
     <div

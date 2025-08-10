@@ -1,7 +1,7 @@
 -- CreateTable
 CREATE TABLE "AdminSettings" (
     "id" SERIAL NOT NULL,
-    "siteName" TEXT NOT NULL DEFAULT 'Rentiful',
+    "siteName" TEXT NOT NULL DEFAULT 'HomeMatch',
     "siteDescription" TEXT NOT NULL DEFAULT 'Find your perfect rental property',
     "maintenanceMode" BOOLEAN NOT NULL DEFAULT false,
     "allowRegistration" BOOLEAN NOT NULL DEFAULT true,

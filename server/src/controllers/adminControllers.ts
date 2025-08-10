@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { PrismaClient } from "@prisma/client";
 import { createUserInCognito } from "../utils/cognitoService";
+import { addToEmailList } from "../utils/emailSubscriptionService";
 
 const prisma = new PrismaClient();
 
@@ -327,6 +328,19 @@ export const createAgent = async (
     });
     console.log("Agent created in database:", agent);
 
+    // Add agent to email list
+    try {
+      await addToEmailList({
+        email: agent.email,
+        fullName: agent.name,
+        subscriptionType: 'newsletter'
+      });
+      console.log(`Added agent ${agent.email} to email list`);
+    } catch (emailError) {
+      console.error('Error adding agent to email list:', emailError);
+      // Don't fail the agent creation if email subscription fails
+    }
+
     res.status(201).json({
       message: "Agent created successfully",
       agent: {
@@ -387,6 +401,19 @@ export const createAdmin = async (
       },
     });
     console.log("Admin created in database:", admin);
+
+    // Add admin to email list
+    try {
+      await addToEmailList({
+        email: admin.email,
+        fullName: admin.name,
+        subscriptionType: 'newsletter'
+      });
+      console.log(`Added admin ${admin.email} to email list`);
+    } catch (emailError) {
+      console.error('Error adding admin to email list:', emailError);
+      // Don't fail the admin creation if email subscription fails
+    }
 
     res.status(201).json({
       message: "Admin created successfully",

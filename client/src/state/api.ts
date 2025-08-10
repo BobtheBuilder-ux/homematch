@@ -42,6 +42,8 @@ export const api = createApi({
     "LandlordRegistrations",
     "AdminTasks",
     "AdminTaskStats",
+    "Inspections",
+    "InspectionLimits",
 
   ],
   endpoints: (build) => ({
@@ -317,7 +319,7 @@ export const api = createApi({
 
     initializePayment: build.mutation<
       { authorization_url: string; access_code: string; reference: string },
-      { leaseId: number; amount: number; email: string; paymentType: string }
+      { leaseId?: number; propertyId?: number; tenantId?: string; amount: number; email: string; paymentType: string }
     >({
       query: (paymentData) => ({
         url: "payments/initialize",
@@ -732,6 +734,103 @@ export const api = createApi({
       },
     }),
 
+    // Inspection endpoints
+    getTenantInspectionLimit: build.query<any, string>({
+      query: (tenantCognitoId) => `inspections/limit/${tenantCognitoId}`,
+      providesTags: ["InspectionLimits"],
+      async onQueryStarted(_, { queryFulfilled }) {
+        await withToast(queryFulfilled, {
+          success: "",
+          error: "Failed to fetch inspection limit.",
+        });
+      },
+    }),
+
+    createInspectionRequest: build.mutation<any, {
+      propertyId: number;
+      tenantCognitoId: string;
+      tenantName: string;
+      tenantEmail: string;
+      tenantPhone: string;
+      preferredTime: string;
+      message?: string;
+      priceRange?: string;
+    }>({
+      query: (inspectionData) => ({
+        url: "inspections/request",
+        method: "POST",
+        body: inspectionData,
+      }),
+      invalidatesTags: ["Inspections", "InspectionLimits"],
+      async onQueryStarted(_, { queryFulfilled }) {
+        await withToast(queryFulfilled, {
+          success: "Inspection request submitted successfully!",
+          error: "Failed to submit inspection request.",
+        });
+      },
+    }),
+
+    getTenantInspections: build.query<any[], string>({
+      query: (tenantCognitoId) => `inspections/tenant/${tenantCognitoId}`,
+      providesTags: ["Inspections"],
+      async onQueryStarted(_, { queryFulfilled }) {
+        await withToast(queryFulfilled, {
+          success: "",
+          error: "Failed to fetch inspections.",
+        });
+      },
+    }),
+
+    getAllInspections: build.query<any[], void>({
+      query: () => "inspections/all",
+      providesTags: ["Inspections"],
+      async onQueryStarted(_, { queryFulfilled }) {
+        await withToast(queryFulfilled, {
+          success: "",
+          error: "Failed to fetch all inspections.",
+        });
+      },
+    }),
+
+    updateInspectionStatus: build.mutation<any, {
+      inspectionId: number;
+      status: string;
+      userType: string;
+    }>({
+      query: ({ inspectionId, status, userType }) => ({
+        url: `inspections/${inspectionId}/status`,
+        method: "PUT",
+        body: { status, userType },
+      }),
+      invalidatesTags: ["Inspections"],
+      async onQueryStarted(_, { queryFulfilled }) {
+        await withToast(queryFulfilled, {
+          success: "Inspection status updated successfully!",
+          error: "Failed to update inspection status.",
+        });
+      },
+    }),
+
+    processInspectionDeposit: build.mutation<any, {
+      tenantCognitoId: string;
+      propertyId: number;
+      paymentReference: string;
+      amount: number;
+    }>({
+      query: (depositData) => ({
+        url: "inspections/deposit/payment",
+        method: "POST",
+        body: depositData,
+      }),
+      invalidatesTags: ["InspectionLimits"],
+      async onQueryStarted(_, { queryFulfilled }) {
+        await withToast(queryFulfilled, {
+          success: "Deposit processed successfully! You now have unlimited inspections.",
+          error: "Failed to process deposit.",
+        });
+      },
+    }),
+
 
   }),
 });
@@ -785,5 +884,11 @@ export const {
   useCreateAdminTaskMutation,
   useUpdateAdminTaskMutation,
   useDeleteAdminTaskMutation,
-
+  // Inspection hooks
+  useGetTenantInspectionLimitQuery,
+  useCreateInspectionRequestMutation,
+  useGetTenantInspectionsQuery,
+  useGetAllInspectionsQuery,
+  useUpdateInspectionStatusMutation,
+  useProcessInspectionDepositMutation,
 } = api;

@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { PrismaClient } from '@prisma/client';
 import { Parser } from 'json2csv';
+import { addToEmailList, sendSurveyConfirmationEmail } from '../utils/emailSubscriptionService';
 
 const router = Router();
 const prisma = new PrismaClient();
@@ -48,6 +49,22 @@ router.post('/tenant', async (req, res) => {
         launchNotification
       }
     });
+
+    // Send confirmation email and add to email list
+    try {
+      await Promise.all([
+        sendSurveyConfirmationEmail(email, fullName, 'tenant'),
+        addToEmailList({
+          email,
+          fullName,
+          subscriptionType: 'tenant_survey'
+        })
+      ]);
+      console.log(`Email sent and user added to list: ${email}`);
+    } catch (emailError) {
+      console.error('Error with email operations:', emailError);
+      // Don't fail the survey submission if email fails
+    }
 
     res.status(201).json({ success: true, data: survey });
   } catch (error) {
@@ -100,6 +117,22 @@ router.post('/landlord', async (req, res) => {
         launchNotification
       }
     });
+
+    // Send confirmation email and add to email list
+    try {
+      await Promise.all([
+        sendSurveyConfirmationEmail(email, fullName, 'landlord'),
+        addToEmailList({
+          email,
+          fullName,
+          subscriptionType: 'landlord_survey'
+        })
+      ]);
+      console.log(`Email sent and user added to list: ${email}`);
+    } catch (emailError) {
+      console.error('Error with email operations:', emailError);
+      // Don't fail the survey submission if email fails
+    }
 
     res.status(201).json({ success: true, data: survey });
   } catch (error) {

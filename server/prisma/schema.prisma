@@ -94,6 +94,7 @@ model Property {
   applications Application[]
   favoritedBy  Tenant[]      @relation("TenantFavorites")
   tenants      Tenant[]      @relation("TenantProperties")
+  inspections  Inspection[]
 }
 
 model Landlord {
@@ -115,10 +116,12 @@ model Tenant {
   email       String
   phoneNumber String
 
-  properties   Property[]    @relation("TenantProperties")
-  favorites    Property[]    @relation("TenantFavorites")
-  applications Application[]
-  leases       Lease[]
+  properties      Property[]       @relation("TenantProperties")
+  favorites       Property[]       @relation("TenantFavorites")
+  applications    Application[]
+  leases          Lease[]
+  inspections     Inspection[]
+  inspectionLimit InspectionLimit?
 }
 
 model Agent {
@@ -131,6 +134,7 @@ model Agent {
 
   registrationCode  AgentRegistrationCode? @relation(fields: [registrationCodeId], references: [id])
   assignedTasks     Task[] @relation("AgentTasks")
+  inspections       Inspection[]
 }
 
 model Admin {
@@ -271,14 +275,14 @@ model Payment {
   dueDate       DateTime
   paymentDate   DateTime
   paymentStatus PaymentStatus
-  leaseId       Int
+  leaseId       Int?
 
-  lease Lease @relation(fields: [leaseId], references: [id])
+  lease Lease? @relation(fields: [leaseId], references: [id])
 }
 
 model AdminSettings {
   id                        Int     @id @default(autoincrement())
-  siteName                  String  @default("Rentiful")
+  siteName                  String  @default("HomeMatch")
   siteDescription           String  @default("Find your perfect rental property")
   maintenanceMode           Boolean @default(false)
   allowRegistration         Boolean @default(true)
@@ -333,4 +337,61 @@ model LandlordSurvey {
   launchNotification        String
   createdAt                 DateTime @default(now())
   updatedAt                 DateTime @updatedAt
+}
+
+model EmailSubscription {
+  id            Int      @id @default(autoincrement())
+  email         String   @unique
+  fullName      String
+  subscriptionType String // "tenant_survey", "landlord_survey", "newsletter", etc.
+  isActive      Boolean  @default(true)
+  subscribedAt  DateTime @default(now())
+  unsubscribedAt DateTime?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+enum InspectionStatus {
+  Pending
+  Approved
+  Rejected
+  Completed
+  Cancelled
+}
+
+model Inspection {
+  id                Int              @id @default(autoincrement())
+  propertyId        Int
+  tenantCognitoId   String
+  scheduledDate     DateTime
+  status            InspectionStatus @default(Pending)
+  tenantName        String
+  tenantEmail       String
+  tenantPhone       String
+  preferredTime     String
+  message           String?
+  adminNotes        String?
+  agentId           Int?
+  depositPaid       Boolean          @default(false)
+  depositAmount     Float?
+  paymentReference  String?
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+
+  property Property @relation(fields: [propertyId], references: [id])
+  tenant   Tenant   @relation(fields: [tenantCognitoId], references: [cognitoId])
+  agent    Agent?   @relation(fields: [agentId], references: [id])
+}
+
+model InspectionLimit {
+  id              Int      @id @default(autoincrement())
+  tenantCognitoId String   @unique
+  freeInspections Int      @default(2)
+  usedInspections Int      @default(0)
+  hasUnlimited    Boolean  @default(false)
+  unlimitedUntil  DateTime?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  tenant Tenant @relation(fields: [tenantCognitoId], references: [cognitoId])
 }

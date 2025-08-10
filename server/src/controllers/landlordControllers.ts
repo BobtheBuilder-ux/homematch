@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { PrismaClient, Prisma } from "../../node_modules/.prisma/client"; // Added Prisma import
 import { wktToGeoJSON } from "@terraformer/wkt";
+import { addToEmailList } from "../utils/emailSubscriptionService";
 
 const prisma = new PrismaClient();
 
@@ -46,6 +47,19 @@ export const createLandlord = async (
         phoneNumber,
       },
     });
+
+    // Add landlord to email list
+    try {
+      await addToEmailList({
+        email: landlord.email,
+        fullName: landlord.name,
+        subscriptionType: 'newsletter'
+      });
+      console.log(`Added landlord ${landlord.email} to email list`);
+    } catch (emailError) {
+      console.error('Error adding landlord to email list:', emailError);
+      // Don't fail the landlord creation if email subscription fails
+    }
 
     res.status(201).json(landlord);
   } catch (error: any) {
@@ -96,6 +110,19 @@ export const registerLandlordWithCode = async (
         usedAt: new Date(),
       },
     });
+
+    // Add landlord to email list
+    try {
+      await addToEmailList({
+        email: landlord.email,
+        fullName: landlord.name,
+        subscriptionType: 'newsletter'
+      });
+      console.log(`Added landlord ${landlord.email} to email list`);
+    } catch (emailError) {
+      console.error('Error adding landlord to email list:', emailError);
+      // Don't fail the landlord creation if email subscription fails
+    }
 
     res.status(201).json(landlord);
   } catch (error: any) {

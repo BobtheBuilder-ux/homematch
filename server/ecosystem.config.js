@@ -1,7 +1,7 @@
 module.exports = {
   apps: [
     {
-      name: "Homematch Server",
+      name: "HomeMatch Server",
       script: "npm",
       args: "run dev",
       env: {

@@ -11,31 +11,31 @@ async function seedAgents() {
       {
         cognitoId: 'agent-001-cognito-id',
         name: 'John Smith',
-        email: 'john.smith@homematch.com',
+        email: 'john.smith@HomeMatch.com',
         phoneNumber: '+1-555-0101'
       },
       {
         cognitoId: 'agent-002-cognito-id',
         name: 'Sarah Johnson',
-        email: 'sarah.johnson@homematch.com',
+        email: 'sarah.johnson@HomeMatch.com',
         phoneNumber: '+1-555-0102'
       },
       {
         cognitoId: 'agent-003-cognito-id',
         name: 'Michael Brown',
-        email: 'michael.brown@homematch.com',
+        email: 'michael.brown@HomeMatch.com',
         phoneNumber: '+1-555-0103'
       },
       {
         cognitoId: 'agent-004-cognito-id',
         name: 'Emily Davis',
-        email: 'emily.davis@homematch.com',
+        email: 'emily.davis@HomeMatch.com',
         phoneNumber: '+1-555-0104'
       },
       {
         cognitoId: 'agent-005-cognito-id',
         name: 'David Wilson',
-        email: 'david.wilson@homematch.com',
+        email: 'david.wilson@HomeMatch.com',
         phoneNumber: '+1-555-0105'
       }
     ];

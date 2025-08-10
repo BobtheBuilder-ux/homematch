@@ -297,7 +297,7 @@ const ApplicationModal = ({
                 />
                 <CustomFormField
                   name="consentToVerification"
-                  label="I authorize Homematch and the landlord to verify this information."
+                  label="I authorize HomeMatch and the landlord to verify this information."
                   type="switch"
                 />
                 <CustomFormField
@@ -307,7 +307,7 @@ const ApplicationModal = ({
                 />
                 <CustomFormField
                   name="consentToPrivacyPolicy"
-                  label="I agree to Homematch's terms and privacy policy."
+                  label="I agree to HomeMatch's terms and privacy policy."
                   type="switch"
                 />
               </div>

@@ -17,6 +17,8 @@ import publicAgentRoutes from "./routes/publicAgentRoutes";
 import agentRoutes from "./routes/agentRoutes";
 import surveyRoutes from "./routes/surveyRoutes";
 import paymentRoutes from "./routes/paymentRoutes";
+import inspectionRoutes from "./routes/inspectionRoutes";
+// import emailRoutes from "./routes/emailRoutes";
 
 /* CONFIGURATIONS */
 dotenv.config();
@@ -49,6 +51,11 @@ app.use("/properties", propertyRoutes);
 app.use("/leases", leaseRoutes);
 app.use("/payments", paymentRoutes);
 app.use(
+  "/inspections",
+  authMiddleware(["tenant", "landlord", "agent", "admin"]),
+  inspectionRoutes
+);
+app.use(
   "/tenants",
   authMiddleware(["tenant", "landlord", "agent", "admin"]),
   tenantRoutes
@@ -62,6 +69,7 @@ app.use("/surveys", surveyRoutes);
 // Protected admin routes (authentication required)
 app.use("/admin", authMiddleware(["admin"]), adminRoutes);
 app.use("/agent", authMiddleware(["agent"]), agentRoutes);
+// app.use("/emails", emailRoutes);
 
 /* SERVER */
 const port = Number(process.env.PORT) || 3002;

@@ -1,20 +1,81 @@
-import { Button } from "@/components/ui/button";
-import { useGetAuthUserQuery } from "@/state/api";
-import { Phone } from "lucide-react";
-import { useRouter } from "next/navigation";
-import React from "react";
+"use client";
 
-const ContactWidget = ({ onOpenModal }: ContactWidgetProps) => {
+import { Button } from "@/components/ui/button";
+import { useGetAuthUserQuery, useGetPropertyQuery, useInitializePaymentMutation } from "@/state/api";
+import { Phone, Eye } from "lucide-react";
+import { useRouter } from "next/navigation";
+import React, { useState } from "react";
+import InspectionModal from "./InspectionModal";
+import CheckoutSummary from "@/components/CheckoutSummary";
+
+interface ContactWidgetProps {
+  onOpenModal: () => void;
+  propertyId: number;
+}
+
+type ViewState = 'contact' | 'checkout' | 'application';
+
+const ContactWidget = ({ onOpenModal, propertyId }: ContactWidgetProps) => {
   const { data: authUser } = useGetAuthUserQuery();
+  const { data: property } = useGetPropertyQuery(propertyId);
   const router = useRouter();
+  const [isInspectionModalOpen, setIsInspectionModalOpen] = useState(false);
+  const [currentView, setCurrentView] = useState<ViewState>('contact');
+  const [initializePayment, { isLoading: isPaymentLoading }] = useInitializePaymentMutation();
 
   const handleButtonClick = () => {
     if (authUser) {
-      onOpenModal();
+      setCurrentView('checkout');
     } else {
       router.push("/signin");
     }
   };
+
+  const handleProceedToPayment = async (totalAmount: number) => {
+    if (!authUser?.userInfo?.email || !authUser?.cognitoInfo?.userId) return;
+
+    try {
+      const result = await initializePayment({
+        amount: totalAmount,
+        email: authUser.userInfo.email,
+        paymentType: "initial_payment",
+        propertyId: propertyId,
+        tenantId: authUser.cognitoInfo.userId,
+      }).unwrap();
+
+      if (result.authorization_url) {
+        window.location.href = result.authorization_url;
+      }
+    } catch (error) {
+      console.error("Payment initialization failed:", error);
+    }
+  };
+
+  const handleBackToContact = () => {
+    setCurrentView('contact');
+  };
+
+  if (currentView === 'checkout' && property) {
+    return (
+      <div className="bg-white border border-primary-200 rounded-2xl p-7 h-fit min-w-[300px]">
+        <div className="mb-4">
+          <Button
+            onClick={handleBackToContact}
+            variant="outline"
+            size="sm"
+            className="mb-4"
+          >
+            ← Back
+          </Button>
+        </div>
+        <CheckoutSummary
+          property={property}
+          onProceedToPayment={handleProceedToPayment}
+          isLoading={isPaymentLoading}
+        />
+      </div>
+    );
+  }
 
   return (
     <div className="bg-white border border-primary-200 rounded-2xl p-7 h-fit min-w-[300px]">
@@ -30,12 +91,24 @@ const ContactWidget = ({ onOpenModal }: ContactWidgetProps) => {
           </div>
         </div>
       </div>
-      <Button
-        className="w-full bg-primary-700 text-white hover:bg-primary-600"
-        onClick={handleButtonClick}
-      >
-        {authUser ? "Submit Application" : "Sign In to Apply"}
-      </Button>
+      <div className="space-y-3">
+        <Button
+          className="w-full bg-primary-700 text-white hover:bg-primary-600"
+          onClick={handleButtonClick}
+        >
+          {authUser ? "Submit Application" : "Sign In to Apply"}
+        </Button>
+        
+        {authUser && (
+          <Button
+            onClick={() => setIsInspectionModalOpen(true)}
+            className="w-full bg-green-600 text-white hover:bg-green-700 flex items-center justify-center space-x-2"
+          >
+            <Eye className="h-5 w-5" />
+            <span>Schedule Inspection</span>
+          </Button>
+        )}
+      </div>
 
       <hr className="my-4" />
       <div className="text-sm">
@@ -44,6 +117,13 @@ const ContactWidget = ({ onOpenModal }: ContactWidgetProps) => {
           Open by appointment on Monday - Sunday
         </div>
       </div>
+      
+      <InspectionModal
+        isOpen={isInspectionModalOpen}
+        onClose={() => setIsInspectionModalOpen(false)}
+        propertyId={propertyId}
+        propertyName={property?.name || "Property"}
+      />
     </div>
   );
 };
