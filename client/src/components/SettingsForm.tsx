@@ -57,6 +57,13 @@ const SettingsForm = ({
               label="Phone Number"
               disabled={!editMode}
             />
+            {userType === "agent" && (
+              <CustomFormField
+                name="address"
+                label="Address"
+                disabled={!editMode}
+              />
+            )}
 
             <div className="pt-4 flex justify-between">
               <Button

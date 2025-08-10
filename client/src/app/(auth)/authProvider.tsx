@@ -205,6 +205,7 @@ const Auth = ({ children }: { children: React.ReactNode }) => {
             name: username, // Use username as name
             email,
             phoneNumber: '', // Provide a default empty string for phoneNumber
+            address: '', // Provide a default empty string for address
             invitationCode 
           }),
         });

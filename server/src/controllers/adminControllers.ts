@@ -282,7 +282,7 @@ export const createAgent = async (
 ): Promise<void> => {
   try {
     console.log("Creating agent with request body:", req.body);
-    const { name, email, phoneNumber, invitationCode } = req.body;
+    const { name, email, phoneNumber, address, invitationCode } = req.body;
 
     // Validate invitation code
     if (invitationCode !== process.env.AGENT_INVITATION_CODE) {
@@ -324,6 +324,7 @@ export const createAgent = async (
         name,
         email,
         phoneNumber: phoneNumber || '',
+        address: address || '',
       },
     });
     console.log("Agent created in database:", agent);
@@ -348,6 +349,7 @@ export const createAgent = async (
         name: agent.name,
         email: agent.email,
         phoneNumber: agent.phoneNumber,
+        address: agent.address,
       },
     });
   } catch (error: any) {
@@ -471,6 +473,7 @@ export const getAgent = async (
         name: true,
         email: true,
         phoneNumber: true,
+        address: true,
       },
     });
 
@@ -611,7 +614,8 @@ export const getAgentRegistrations = async (
             cognitoId: true,
             name: true,
             email: true,
-            phoneNumber: true
+            phoneNumber: true,
+            address: true
           }
         }
       },

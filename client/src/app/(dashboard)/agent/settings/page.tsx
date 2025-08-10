@@ -17,6 +17,7 @@ const AgentSettings = () => {
     name: authUser?.userInfo.name,
     email: authUser?.userInfo.email,
     phoneNumber: authUser?.userInfo.phoneNumber,
+    address: authUser?.userInfo.address,
   };
 
   const handleSubmit = async (data: typeof initialData) => {

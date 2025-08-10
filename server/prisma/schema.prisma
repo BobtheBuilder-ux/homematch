@@ -137,6 +137,7 @@ model Agent {
   name        String
   email       String
   phoneNumber String?
+  address     String?
   registrationCodeId Int?
 
   registrationCode  AgentRegistrationCode? @relation(fields: [registrationCodeId], references: [id])

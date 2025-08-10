@@ -204,16 +204,28 @@ export const updateAgentSettings = async (
 ): Promise<void> => {
   try {
     const { cognitoId } = req.params;
-    const { name, email, phoneNumber } = req.body;
+    const { name, email, phoneNumber, address } = req.body;
 
-    // In a real implementation, you'd have an Agent model
-    // For now, we'll just return success
+    // Update agent in database
+    const updatedAgent = await prisma.agent.update({
+      where: { cognitoId },
+      data: {
+        name,
+        email,
+        phoneNumber,
+        address,
+      },
+    });
+
     res.json({ 
       message: "Agent settings updated successfully",
-      cognitoId,
-      name,
-      email,
-      phoneNumber,
+      agent: {
+        cognitoId: updatedAgent.cognitoId,
+        name: updatedAgent.name,
+        email: updatedAgent.email,
+        phoneNumber: updatedAgent.phoneNumber,
+        address: updatedAgent.address,
+      },
     });
   } catch (error: any) {
     res.status(500).json({ message: `Error updating agent settings: ${error.message}` });
