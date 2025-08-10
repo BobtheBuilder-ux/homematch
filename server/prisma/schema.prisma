@@ -292,7 +292,6 @@ model AdminSettings {
   id                        Int     @id @default(autoincrement())
   siteName                  String  @default("HomeMatch")
   siteDescription           String  @default("Find your perfect rental property")
-  maintenanceMode           Boolean @default(false)
   allowRegistration         Boolean @default(true)
   maxPropertiesPerLandlord  Int     @default(50)
   commissionRate            Float   @default(5.0)
