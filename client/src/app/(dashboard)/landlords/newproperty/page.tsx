@@ -21,8 +21,6 @@ const NewProperty = () => {
       name: "",
       description: "",
       pricePerYear: 1000,
-      securityDeposit: 500,
-      applicationFee: 100,
       isPetsAllowed: true,
       isParkingIncluded: true,
       photoUrls: [],
@@ -95,21 +93,9 @@ const NewProperty = () => {
               <h2 className="text-lg font-semibold mb-4">Fees</h2>
               <CustomFormField
                 name="pricePerYear"
-                label="Price per Month"
+                label="Price per Year"
                 type="number"
               />
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <CustomFormField
-                  name="securityDeposit"
-                  label="Security Deposit"
-                  type="number"
-                />
-                <CustomFormField
-                  name="applicationFee"
-                  label="Application Fee"
-                  type="number"
-                />
-              </div>
             </div>
 
             <hr className="my-6 border-gray-200" />

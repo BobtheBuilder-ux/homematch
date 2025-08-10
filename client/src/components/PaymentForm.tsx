@@ -45,8 +45,8 @@ const PaymentForm: React.FC<PaymentFormProps> = ({
       }).unwrap();
 
       // Redirect to Paystack payment page
-      if (response.authorization_url) {
-        window.location.href = response.authorization_url;
+      if (response.url) {
+        window.location.href = response.url;
       } else {
         toast.error("Failed to initialize payment");
       }

@@ -86,9 +86,9 @@ const InspectionModal = ({ isOpen, onClose, propertyId, propertyName }: Inspecti
       
       const response = await initializePayment(paymentData).unwrap();
       
-      if (response.authorization_url) {
+      if (response.url) {
         // Redirect to payment gateway
-        window.location.href = response.authorization_url;
+        window.location.href = response.url;
       } else {
         alert("Failed to initialize payment. Please try again.");
       }

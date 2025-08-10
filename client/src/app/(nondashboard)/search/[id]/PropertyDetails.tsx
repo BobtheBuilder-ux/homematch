@@ -93,10 +93,10 @@ const PropertyDetails = ({ propertyId }: PropertyDetailsProps) => {
             <hr />
             <div className="flex justify-between py-2 bg-secondary-50">
               <span className="text-primary-700 font-medium">
-                Caution Fee (20% of yearly rent)
+                Caution Fee (15% of yearly rent)
               </span>
               <span className="text-primary-700">
-                ₦{(property.pricePerYear * 0.2).toLocaleString()}
+                ₦{(property.pricePerYear * 0.15).toLocaleString()}
               </span>
             </div>
             <hr />

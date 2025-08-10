@@ -318,7 +318,7 @@ export const api = createApi({
     }),
 
     initializePayment: build.mutation<
-      { authorization_url: string; access_code: string; reference: string },
+      { url: string; paymentId: number; reference: string },
       { leaseId?: number; propertyId?: number; tenantId?: string; amount: number; email: string; paymentType: string }
     >({
       query: (paymentData) => ({

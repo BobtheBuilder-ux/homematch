@@ -53,7 +53,9 @@ export const generateLeaseAgreement = async (data: LeaseAgreementData): Promise<
         "{{end_month}}": endDate.toLocaleString('default', { month: 'long' }),
         "{{end_year}}": endDate.getFullYear().toString(),
         "{{annual_rent}}": data.rentAmount.toLocaleString(),
-        "{{security_deposit}}": data.securityDeposit.toLocaleString(),
+        "{{caution_fee}}": data.securityDeposit.toLocaleString(),
+        "{{late_fee}}": "5,000", // Default late fee amount
+        "{{utilities_notes}}": "All utilities are tenant's responsibility unless otherwise specified.",
         "{{special_conditions}}": "Standard terms and conditions apply.",
         "{{homematch_representative_name}}": "HomeMatch Representative",
         "{{homematch_representative_position}}": "Property Manager",

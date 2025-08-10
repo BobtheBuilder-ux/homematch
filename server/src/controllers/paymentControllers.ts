@@ -120,11 +120,29 @@ export const verifyPayment = async (
     const { data } = paystackResponse.data;
 
     if (data.status === "success") {
-      const paymentId = data.metadata.paymentId;
-      const leaseId = data.metadata.leaseId;
-      const propertyId = data.metadata.propertyId;
+      const paymentId = parseInt(data.metadata.paymentId, 10);
+      const leaseId = data.metadata.leaseId ? parseInt(data.metadata.leaseId, 10) : null;
+      const propertyId = parseInt(data.metadata.propertyId, 10);
       const paymentType = data.metadata.paymentType;
       const tenantId = data.metadata.tenantId;
+
+      // Validate that propertyId is a valid number
+      if (isNaN(propertyId)) {
+        res.status(400).json({ success: false, message: "Invalid property ID" });
+        return;
+      }
+
+      // Validate that paymentId is a valid number
+      if (isNaN(paymentId)) {
+        res.status(400).json({ success: false, message: "Invalid payment ID" });
+        return;
+      }
+
+      // Validate leaseId if it exists
+      if (data.metadata.leaseId && isNaN(leaseId!)) {
+        res.status(400).json({ success: false, message: "Invalid lease ID" });
+        return;
+      }
 
       let updatedPayment;
 
@@ -199,11 +217,14 @@ export const verifyPayment = async (
           }
         });
 
-        // Mark property as closed
+        // Connect tenant to property and mark property as closed
         await prisma.property.update({
           where: { id: propertyId },
           data: {
-            status: "Closed"
+            status: "Closed",
+            tenants: {
+              connect: { cognitoId: tenant.cognitoId }
+            }
           }
         });
       } else if (paymentType === "deposit") {

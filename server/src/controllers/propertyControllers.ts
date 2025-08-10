@@ -294,8 +294,8 @@ export const createProperty = async (
         isPetsAllowed: propertyData.isPetsAllowed === "true",
         isParkingIncluded: propertyData.isParkingIncluded === "true",
         pricePerYear: parseFloat(propertyData.pricePerYear),
-        securityDeposit: parseFloat(propertyData.securityDeposit),
-        applicationFee: parseFloat(propertyData.applicationFee),
+        securityDeposit: parseFloat(propertyData.pricePerYear) * 0.15, // 15% caution fee
+        applicationFee: parseFloat(propertyData.pricePerYear) * 0.10, // 10% application fee
         beds: parseInt(propertyData.beds),
         baths: parseFloat(propertyData.baths),
         squareFeet: parseInt(propertyData.squareFeet),

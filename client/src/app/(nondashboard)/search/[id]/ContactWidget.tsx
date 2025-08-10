@@ -43,8 +43,8 @@ const ContactWidget = ({ onOpenModal, propertyId }: ContactWidgetProps) => {
         tenantId: authUser.cognitoInfo.userId,
       }).unwrap();
 
-      if (result.authorization_url) {
-        window.location.href = result.authorization_url;
+      if (result.url) {
+        window.location.href = result.url;
       }
     } catch (error) {
       console.error("Payment initialization failed:", error);
