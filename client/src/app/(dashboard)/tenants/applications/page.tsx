@@ -34,7 +34,7 @@ const Applications = () => {
         propertyId: application.propertyId,
         tenantId: authUser?.cognitoInfo?.userId,
         amount: totalAmount,
-        email: authUser?.email || application.tenant.email,
+        email: authUser?.userInfo.email || application.tenant.email,
         paymentType: "initial_payment"
       }).unwrap();
       
