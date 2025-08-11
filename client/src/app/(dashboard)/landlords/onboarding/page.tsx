@@ -1,6 +1,7 @@
 "use client";
 
 import { CustomFormField } from "@/components/FormField";
+import Loading from "@/components/Loading";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -48,7 +49,7 @@ const LandlordOnboarding = () => {
     },
   });
 
-  if (isLoading) return <div className="flex justify-center items-center min-h-screen">Loading...</div>;
+  if (isLoading) return <Loading />;
 
   const onSubmit = async (data: LandlordOnboardingFormData) => {
     if (!authUser?.cognitoInfo?.userId) {

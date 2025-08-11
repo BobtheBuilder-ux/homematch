@@ -20,6 +20,7 @@ const ApplicationModal = ({
   isOpen,
   onClose,
   propertyId,
+  onApplicationSubmitted,
 }: ApplicationModalProps) => {
   const [createApplication] = useCreateApplicationMutation();
   const { data: authUser } = useGetAuthUserQuery();
@@ -86,6 +87,9 @@ const ApplicationModal = ({
       tenantCognitoId: authUser.cognitoInfo.userId,
     });
     onClose();
+    if (onApplicationSubmitted) {
+      onApplicationSubmitted();
+    }
   };
 
   return (

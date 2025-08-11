@@ -6,6 +6,7 @@ import { Phone, Eye } from "lucide-react";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import InspectionModal from "./InspectionModal";
+import ApplicationModal from "./ApplicationModal";
 import CheckoutSummary from "@/components/CheckoutSummary";
 
 interface ContactWidgetProps {
@@ -20,15 +21,21 @@ const ContactWidget = ({ onOpenModal, propertyId }: ContactWidgetProps) => {
   const { data: property } = useGetPropertyQuery(propertyId);
   const router = useRouter();
   const [isInspectionModalOpen, setIsInspectionModalOpen] = useState(false);
+  const [isApplicationModalOpen, setIsApplicationModalOpen] = useState(false);
   const [currentView, setCurrentView] = useState<ViewState>('contact');
   const [initializePayment, { isLoading: isPaymentLoading }] = useInitializePaymentMutation();
 
   const handleButtonClick = () => {
     if (authUser) {
-      setCurrentView('checkout');
+      setIsApplicationModalOpen(true);
     } else {
       router.push("/signin");
     }
+  };
+
+  const handleApplicationSubmitted = () => {
+    setIsApplicationModalOpen(false);
+    setCurrentView('checkout');
   };
 
   const handleProceedToPayment = async (totalAmount: number) => {
@@ -123,6 +130,13 @@ const ContactWidget = ({ onOpenModal, propertyId }: ContactWidgetProps) => {
         onClose={() => setIsInspectionModalOpen(false)}
         propertyId={propertyId}
         propertyName={property?.name || "Property"}
+      />
+      
+      <ApplicationModal
+        isOpen={isApplicationModalOpen}
+        onClose={() => setIsApplicationModalOpen(false)}
+        propertyId={propertyId}
+        onApplicationSubmitted={handleApplicationSubmitted}
       />
     </div>
   );

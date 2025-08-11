@@ -67,6 +67,7 @@ declare global {
     isOpen: boolean;
     onClose: () => void;
     propertyId: number;
+    onApplicationSubmitted?: () => void;
   }
 
   interface ContactWidgetProps {
