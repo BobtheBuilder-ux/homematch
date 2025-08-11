@@ -103,7 +103,6 @@ export const landlordOnboardingSchema = z.object({
   bankName: z.string().min(2, "Bank name is required"),
   accountNumber: z.string().min(10, "Account number must be at least 10 digits"),
   accountName: z.string().min(2, "Account name is required"),
-  bankCode: z.string().min(3, "Bank code is required"),
   
   // Business Information (Optional)
   businessName: z.string().optional(),

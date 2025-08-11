@@ -178,7 +178,7 @@ export const completeLandlordOnboarding = async (
       bankName,
       accountNumber,
       accountName,
-      bankCode,
+
       businessName,
       businessType,
       taxId,
@@ -205,7 +205,7 @@ export const completeLandlordOnboarding = async (
         bankName,
         accountNumber,
         accountName,
-        bankCode,
+
         businessName,
         businessType,
         taxId,

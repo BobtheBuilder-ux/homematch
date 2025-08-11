@@ -38,7 +38,6 @@ const LandlordOnboarding = () => {
       bankName: '',
       accountNumber: '',
       accountName: '',
-      bankCode: '',
       businessName: '',
       businessType: '',
       taxId: '',
@@ -238,11 +237,7 @@ const LandlordOnboarding = () => {
                       placeholder="e.g., First Bank of Nigeria"
                     />
                     
-                    <CustomFormField 
-                      name="bankCode" 
-                      label="Bank Code" 
-                      placeholder="e.g., 011"
-                    />
+
                     
                     <CustomFormField 
                       name="accountNumber" 

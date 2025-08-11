@@ -6,7 +6,7 @@ import { Form } from "@/components/ui/form";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { LandlordOnboardingFormData, landlordOnboardingSchema } from "@/lib/schemas";
-import { useGetAuthUserQuery, useUpdateLandlordSettingsMutation } from "@/state/api";
+import { useGetAuthUserQuery, useCompleteLandlordOnboardingMutation } from "@/state/api";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { User, MapPin, CreditCard, Building, UserCheck, Edit, Save, X } from "lucide-react";
 import React, { useState } from "react";
@@ -15,7 +15,7 @@ import { toast } from "sonner";
 
 const LandlordSettings = () => {
   const { data: authUser, isLoading } = useGetAuthUserQuery();
-  const [updateLandlord] = useUpdateLandlordSettingsMutation();
+  const [updateLandlord] = useCompleteLandlordOnboardingMutation();
   const [editMode, setEditMode] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -36,7 +36,6 @@ const LandlordSettings = () => {
       bankName: authUser?.userInfo.bankName || '',
       accountNumber: authUser?.userInfo.accountNumber || '',
       accountName: authUser?.userInfo.accountName || '',
-      bankCode: authUser?.userInfo.bankCode || '',
       businessName: authUser?.userInfo.businessName || '',
       businessType: authUser?.userInfo.businessType || '',
       taxId: authUser?.userInfo.taxId || '',
@@ -246,12 +245,7 @@ const LandlordSettings = () => {
                       disabled={!editMode}
                     />
                     
-                    <CustomFormField 
-                      name="bankCode" 
-                      label="Bank Code" 
-                      placeholder="e.g., 011"
-                      disabled={!editMode}
-                    />
+
                     
                     <CustomFormField 
                       name="accountNumber" 
