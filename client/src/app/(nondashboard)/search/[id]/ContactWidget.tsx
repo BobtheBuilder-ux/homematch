@@ -14,7 +14,7 @@ interface ContactWidgetProps {
   propertyId: number;
 }
 
-type ViewState = 'contact' | 'checkout' | 'application';
+type ViewState = 'contact' | 'checkout' | 'application' | 'success';
 
 const ContactWidget = ({ onOpenModal, propertyId }: ContactWidgetProps) => {
   const { data: authUser } = useGetAuthUserQuery();
@@ -35,7 +35,7 @@ const ContactWidget = ({ onOpenModal, propertyId }: ContactWidgetProps) => {
 
   const handleApplicationSubmitted = () => {
     setIsApplicationModalOpen(false);
-    setCurrentView('checkout');
+    setCurrentView('success');
   };
 
   const handleProceedToPayment = async (totalAmount: number) => {
@@ -61,6 +61,34 @@ const ContactWidget = ({ onOpenModal, propertyId }: ContactWidgetProps) => {
   const handleBackToContact = () => {
     setCurrentView('contact');
   };
+
+  if (currentView === 'success') {
+    return (
+      <div className="bg-white border border-primary-200 rounded-2xl p-7 h-fit min-w-[300px]">
+        <div className="text-center space-y-4">
+          <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto">
+            <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+            </svg>
+          </div>
+          <div>
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">
+              Application Submitted Successfully!
+            </h3>
+            <p className="text-gray-600 text-sm mb-4">
+              Your application has been submitted and is now under review. You will be notified once the admin approves your application, and then you can proceed with the payment.
+            </p>
+          </div>
+          <Button
+            onClick={handleBackToContact}
+            className="w-full bg-primary-700 text-white hover:bg-primary-600"
+          >
+            Back to Property
+          </Button>
+        </div>
+      </div>
+    );
+  }
 
   if (currentView === 'checkout' && property) {
     return (

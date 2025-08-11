@@ -149,7 +149,7 @@ export const createApplication = async (
           startDate: new Date(),
           endDate: new Date(new Date().setFullYear(new Date().getFullYear() + 1)),
           rent: property.pricePerYear,
-          deposit: property.securityDeposit,
+          deposit: property.securityDeposit || 0,
           property: {
             connect: { id: propertyId },
           },
@@ -228,7 +228,7 @@ export const createApplication = async (
           property.location.address,
           new Date(applicationDate).toLocaleDateString(),
           property.pricePerYear,
-          property.securityDeposit
+          property.securityDeposit || 0
         )
       });
 
