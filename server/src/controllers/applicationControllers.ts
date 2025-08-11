@@ -1,6 +1,10 @@
 import { Request, Response } from "express";
 import { PrismaClient, Prisma } from "../../node_modules/.prisma/client";
 import { sendEmail } from "../utils/emailService";
+import { 
+  applicationSubmittedTemplate, 
+  applicationApprovedTemplate 
+} from "../utils/emailTemplates";
 
 const prisma = new PrismaClient();
 
@@ -37,7 +41,11 @@ export const listApplications = async (
           },
         },
         tenant: true,
-        lease: true,
+        lease: {
+          include: {
+            payments: true,
+          },
+        },
       },
       orderBy: {
         applicationDate: 'desc',
@@ -211,24 +219,17 @@ export const createApplication = async (
         },
       });
 
-      // Send email to tenant
+      // Send email to tenant using template
       await sendEmail({
         to: email,
-        subject: "Application Received - Property Rental",
-        body: `
-          <h2>Your Application Has Been Received</h2>
-          <p>Dear ${name},</p>
-          <p>Your application for the property at ${property.location.address} has been received and is being processed.</p>
-          <p>Application Details:</p>
-          <ul>
-            <li>Property: ${property.location.address}</li>
-            <li>Annual Rent: $${property.pricePerYear}</li>
-            <li>Security Deposit: $${property.securityDeposit}</li>
-            <li>Application Date: ${new Date(applicationDate).toLocaleDateString()}</li>
-          </ul>
-          <p>We will notify you once the landlord has reviewed your application.</p>
-          <p>Thank you for choosing our platform!</p>
-        `
+        subject: applicationSubmittedTemplate.subject,
+        body: applicationSubmittedTemplate.body(
+          name,
+          property.location.address,
+          new Date(applicationDate).toLocaleDateString(),
+          property.pricePerYear,
+          property.securityDeposit
+        )
       });
 
       // Send email to landlord
@@ -316,23 +317,17 @@ export const updateApplicationStatus = async (
         data: { status, leaseId: newLease.id },
       });
 
-      // Send approval email to tenant
+      // Send approval email to tenant using template
       await sendEmail({
         to: application.tenant.email,
-        subject: "Your Rental Application Has Been Approved!",
-        body: `
-          <h2>Congratulations! Your Application Has Been Approved</h2>
-          <p>Dear ${application.tenant.name},</p>
-          <p>We're pleased to inform you that your application for ${application.property.location.address} has been approved!</p>
-          <p>Next Steps:</p>
-          <ul>
-            <li>Please log in to your dashboard to review and sign the lease agreement</li>
-            <li>Complete the security deposit payment of $${application.property.securityDeposit}</li>
-            <li>Set up your annual rent payments of $${application.property.pricePerYear}</li>
-          </ul>
-          <p>Your lease will begin on ${new Date().toLocaleDateString()}.</p>
-          <p>If you have any questions, please don't hesitate to contact us.</p>
-        `
+        subject: applicationApprovedTemplate.subject,
+        body: applicationApprovedTemplate.body(
+          application.tenant.name,
+          application.property.location.address,
+          application.propertyId,
+          application.property.pricePerYear,
+          application.property.securityDeposit
+        )
       });
     } else if (status === "Denied") {
       await prisma.application.update({

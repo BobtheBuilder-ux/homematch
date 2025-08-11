@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { PrismaClient } from "../../node_modules/.prisma/client";
 import { wktToGeoJSON } from "@terraformer/wkt";
-import { addToEmailList } from "../utils/emailSubscriptionService";
+import { addToEmailList, sendTenantWelcomeEmail } from "../utils/emailSubscriptionService";
 
 const prisma = new PrismaClient();
 
@@ -63,17 +63,20 @@ export const createTenant = async (
     });
     console.log("Tenant created in database:", tenant);
 
-    // Add tenant to email list
+    // Send welcome email and add tenant to email list
     try {
-      await addToEmailList({
-        email: tenant.email,
-        fullName: tenant.name,
-        subscriptionType: 'newsletter'
-      });
-      console.log(`Added tenant ${tenant.email} to email list`);
+      await Promise.all([
+        sendTenantWelcomeEmail(tenant.email, tenant.name),
+        addToEmailList({
+          email: tenant.email,
+          fullName: tenant.name,
+          subscriptionType: 'newsletter'
+        })
+      ]);
+      console.log(`Welcome email sent and tenant ${tenant.email} added to email list`);
     } catch (emailError) {
-      console.error('Error adding tenant to email list:', emailError);
-      // Don't fail the tenant creation if email subscription fails
+      console.error('Error sending welcome email or adding tenant to email list:', emailError);
+      // Don't fail the tenant creation if email operations fail
     }
 
     res.status(201).json(tenant);

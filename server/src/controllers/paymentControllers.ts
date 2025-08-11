@@ -3,6 +3,7 @@ import { PrismaClient } from "@prisma/client";
 import axios from "axios";
 import { sendEmail } from "../utils/emailService";
 import { generateLeaseAgreement } from "../utils/leaseAgreementGenerator";
+import { propertyRentedNotificationTemplate } from "../utils/emailTemplates";
 
 const prisma = new PrismaClient();
 
@@ -227,6 +228,21 @@ export const verifyPayment = async (
             }
           }
         });
+
+        // Send notification email to landlord
+        if (newLease.property.landlord?.email) {
+          await sendEmail({
+            to: newLease.property.landlord.email,
+            subject: propertyRentedNotificationTemplate.subject,
+            body: propertyRentedNotificationTemplate.body(
+              newLease.property.landlord.name,
+              newLease.property.location.address,
+              newLease.tenant.name,
+              newLease.tenant.phoneNumber,
+              newLease.property.pricePerYear
+            )
+          });
+        }
       } else if (paymentType === "deposit") {
         // For deposit payment, update tenant's inspection limit
         const property = await prisma.property.findUnique({

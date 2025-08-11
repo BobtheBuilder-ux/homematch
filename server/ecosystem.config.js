@@ -2,8 +2,8 @@ module.exports = {
   apps: [
     {
       name: "HomeMatch Server",
-      script: "npm",
-      args: "run dev",
+      script: "npx",
+      args: "ts-node src/index.ts",
       env: {
         NODE_ENV: "development",
       },
