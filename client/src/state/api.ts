@@ -630,6 +630,24 @@ export const api = createApi({
       },
     }),
 
+    completeLandlordOnboarding: build.mutation<
+      Landlord,
+      { cognitoId: string } & any
+    >({
+      query: ({ cognitoId, ...onboardingData }) => ({
+        url: `landlords/${cognitoId}/onboarding`,
+        method: "PUT",
+        body: onboardingData,
+      }),
+      invalidatesTags: ["Landlords"],
+      async onQueryStarted(_, { queryFulfilled }) {
+        await withToast(queryFulfilled, {
+          success: "Onboarding completed successfully!",
+          error: "Failed to complete onboarding.",
+        });
+      },
+    }),
+
     getLandlordRegistrations: build.query<
       any[],
       { codeFilter?: string; usedFilter?: string }
@@ -876,6 +894,7 @@ export const {
   useUpdateTaskStatusMutation,
   useUpdateAgentSettingsMutation,
   useRegisterLandlordWithCodeMutation,
+  useCompleteLandlordOnboardingMutation,
   useGetLandlordRegistrationsQuery,
   useGetLandlordRegistrationStatsQuery,
   // Admin Task Management hooks

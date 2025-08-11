@@ -157,6 +157,74 @@ export const updateLandlord = async (
   }
 };
 
+export const completeLandlordOnboarding = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const { cognitoId } = req.params;
+    const {
+      name,
+      email,
+      phoneNumber,
+      dateOfBirth,
+      nationality,
+      occupation,
+      currentAddress,
+      city,
+      state,
+      country,
+      postalCode,
+      bankName,
+      accountNumber,
+      accountName,
+      bankCode,
+      businessName,
+      businessType,
+      taxId,
+      emergencyContactName,
+      emergencyContactPhone,
+      isOnboardingComplete,
+      onboardedAt,
+    } = req.body;
+
+    const updatedLandlord = await prisma.landlord.update({
+      where: { cognitoId },
+      data: {
+        name,
+        email,
+        phoneNumber,
+        dateOfBirth: dateOfBirth ? new Date(dateOfBirth) : null,
+        nationality,
+        occupation,
+        currentAddress,
+        city,
+        state,
+        country,
+        postalCode,
+        bankName,
+        accountNumber,
+        accountName,
+        bankCode,
+        businessName,
+        businessType,
+        taxId,
+        emergencyContactName,
+        emergencyContactPhone,
+        isOnboardingComplete: isOnboardingComplete || true,
+        onboardedAt: onboardedAt ? new Date(onboardedAt) : new Date(),
+        updatedAt: new Date(),
+      },
+    });
+
+    res.json(updatedLandlord);
+  } catch (error: any) {
+    res
+      .status(500)
+      .json({ message: `Error completing landlord onboarding: ${error.message}` });
+  }
+};
+
 export const getLandlordProperties = async (
   req: Request,
   res: Response

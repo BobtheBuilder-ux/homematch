@@ -73,6 +73,39 @@ model Landlord {
   email       String
   phoneNumber String
   registrationCodeId Int?
+  
+  // Address Information
+  currentAddress    String?
+  city             String?
+  state            String?
+  country          String?
+  postalCode       String?
+  
+  // Bank Details
+  bankName         String?
+  accountNumber    String?
+  accountName      String?
+  bankCode         String?
+  
+  // Business Information
+  businessName     String?
+  businessType     String?
+  taxId            String?
+  
+  // Additional Information
+  dateOfBirth      DateTime?
+  nationality      String?
+  occupation       String?
+  emergencyContactName   String?
+  emergencyContactPhone  String?
+  
+  // Onboarding Status
+  isOnboardingComplete Boolean @default(false)
+  onboardedAt          DateTime?
+  
+  // Timestamps
+  createdAt            DateTime  @default(now())
+  updatedAt            DateTime  @default(now()) @updatedAt
 
   managedProperties Property[]
   registrationCode  LandlordRegistrationCode? @relation(fields: [registrationCodeId], references: [id])

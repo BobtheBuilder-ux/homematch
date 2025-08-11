@@ -83,5 +83,46 @@ export const agentOnboardingSchema = z.object({
   address: z.string().min(5, "Business address is required"),
 });
 
+export const landlordOnboardingSchema = z.object({
+  // Personal Information
+  name: z.string().min(2, "Full name must be at least 2 characters"),
+  email: z.string().email("Invalid email address"),
+  phoneNumber: z.string().min(10, "Phone number must be at least 10 digits"),
+  dateOfBirth: z.date().optional(),
+  nationality: z.string().min(2, "Nationality is required"),
+  occupation: z.string().min(2, "Occupation is required"),
+  
+  // Current Address
+  currentAddress: z.string().min(5, "Current address is required"),
+  city: z.string().min(2, "City is required"),
+  state: z.string().min(2, "State is required"),
+  country: z.string().min(2, "Country is required"),
+  postalCode: z.string().min(3, "Postal code is required"),
+  
+  // Bank Details
+  bankName: z.string().min(2, "Bank name is required"),
+  accountNumber: z.string().min(10, "Account number must be at least 10 digits"),
+  accountName: z.string().min(2, "Account name is required"),
+  bankCode: z.string().min(3, "Bank code is required"),
+  
+  // Business Information (Optional)
+  businessName: z.string().optional(),
+  businessType: z.string().optional(),
+  taxId: z.string().optional(),
+  
+  // Emergency Contact
+  emergencyContactName: z.string().min(2, "Emergency contact name is required"),
+  emergencyContactPhone: z.string().min(10, "Emergency contact phone must be at least 10 digits"),
+  
+  // Terms and Conditions
+  agreeToTerms: z.boolean().refine(val => val === true, {
+    message: "You must agree to the terms and conditions",
+  }),
+  agreeToPrivacyPolicy: z.boolean().refine(val => val === true, {
+    message: "You must agree to the privacy policy",
+  }),
+});
+
 export type SettingsFormData = z.infer<typeof settingsSchema>;
 export type AgentOnboardingFormData = z.infer<typeof agentOnboardingSchema>;
+export type LandlordOnboardingFormData = z.infer<typeof landlordOnboardingSchema>;
