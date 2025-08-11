@@ -48,8 +48,8 @@ const SearchPage = () => {
       initialFilters.location = searchParams.get("location");
     }
 
-    // Ensure name search is set from the search params
-    if (searchParams.get("name")) {
+    // Only set name search if no coordinates are available (prioritize location search over name search)
+    if (searchParams.get("name") && !initialFilters.coordinates) {
       initialFilters.name = searchParams.get("name");
     }
 

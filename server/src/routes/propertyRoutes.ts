@@ -4,6 +4,7 @@ import {
   getProperty,
   createProperty,
 } from "../controllers/propertyControllers";
+import { getPropertyLeases } from "../controllers/leaseControllers";
 import multer from "multer";
 import { authMiddleware } from "../middleware/authMiddleware";
 
@@ -14,6 +15,11 @@ const router = express.Router();
 
 router.get("/", getProperties);
 router.get("/:id", getProperty);
+router.get(
+  "/:propertyId/leases",
+  authMiddleware(["landlord", "tenant", "admin"]),
+  getPropertyLeases
+);
 router.post(
   "/",
   authMiddleware(["landlord"]),

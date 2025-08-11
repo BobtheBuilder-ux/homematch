@@ -81,14 +81,14 @@ export const getProperties = async (
       );
     }
     
-    // Search by property name
-    if (name) {
+    // Search by property name (only if no location coordinates are provided)
+    if (name && !latitude && !longitude) {
       whereConditions.push(
         Prisma.sql`p.name ILIKE ${`%${name}%`}`
       );
     }
     
-    // Search by location text
+    // Search by location text (only if no coordinates are provided)
     if (location && !latitude && !longitude) {
       whereConditions.push(
         Prisma.sql`(
@@ -217,6 +217,9 @@ export const createProperty = async (
   res: Response
 ): Promise<void> => {
   try {
+    console.log('Creating property with data:', req.body);
+    console.log('Files received:', req.files);
+    
     const files = req.files as Express.Multer.File[];
     const {
       address,
@@ -228,23 +231,14 @@ export const createProperty = async (
       ...propertyData
     } = req.body;
 
-    const photoUrls = await Promise.all(
-      files.map(async (file) => {
-        const uploadParams = {
-          Bucket: process.env.S3_BUCKET_NAME!,
-          Key: `properties/${Date.now()}-${file.originalname}`,
-          Body: file.buffer,
-          ContentType: file.mimetype,
-        };
-
-        const uploadResult = await new Upload({
-          client: s3Client,
-          params: uploadParams,
-        }).done();
-
-        return uploadResult.Location;
-      })
-    );
+    let photoUrls: string[] = [];
+    
+    // Temporarily disable S3 uploads due to configuration issues
+    // TODO: Fix S3 bucket permissions and configuration
+    console.log('S3 uploads temporarily disabled - property will be created without photos');
+    if (files && files.length > 0) {
+      console.log(`Skipping upload of ${files.length} files due to S3 configuration issues`);
+    }
 
     const geocodingUrl = `https://nominatim.openstreetmap.org/search?${new URLSearchParams(
       {
@@ -262,7 +256,7 @@ export const createProperty = async (
       },
     });
     const [longitude, latitude] =
-      geocodingResponse.data[0]?.lon && geocodingResponse.data[0]?.lat
+      geocodingResponse.data && geocodingResponse.data.length > 0 && geocodingResponse.data[0]?.lon && geocodingResponse.data[0]?.lat
         ? [
             parseFloat(geocodingResponse.data[0]?.lon),
             parseFloat(geocodingResponse.data[0]?.lat),
@@ -308,6 +302,7 @@ export const createProperty = async (
 
     res.status(201).json(newProperty);
   } catch (err: any) {
+    console.error('Error creating property:', err);
     res
       .status(500)
       .json({ message: `Error creating property: ${err.message}` });

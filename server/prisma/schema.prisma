@@ -10,47 +10,11 @@ datasource db {
   extensions = [postgis]
 }
 
-enum Highlight {
-  HighSpeedInternetAccess
-  WasherDryer
-  AirConditioning
-  Heating
-  SmokeFree
-  CableReady
-  SatelliteTV
-  DoubleVanities
-  TubShower
-  Intercom
-  SprinklerSystem
-  RecentlyRenovated
-  CloseToTransit
-  GreatView
-  QuietNeighborhood
-}
-
-enum Amenity {
-  WasherDryer
-  AirConditioning
-  Dishwasher
-  HighSpeedInternet
-  HardwoodFloors
-  WalkInClosets
-  Microwave
-  Refrigerator
-  Pool
-  Gym
-  Parking
-  PetsAllowed
-  WiFi
-}
-
 enum PropertyType {
-  Rooms
-  Tinyhouse
+  SelfContain
   Apartment
-  Villa
-  Townhouse
-  Cottage
+  Bungalow
+  Duplex
 }
 
 enum ApplicationStatus {
@@ -77,12 +41,9 @@ model Property {
   name              String
   description       String
   pricePerYear     Float
-  securityDeposit   Float
-  applicationFee    Float
   photoUrls         String[]
-  amenities         Amenity[]
-  highlights        Highlight[]
-  isPetsAllowed     Boolean      @default(false)
+  amenities         String?
+  highlights        String?
   isParkingIncluded Boolean      @default(false)
   beds              Int
   baths             Float
@@ -266,7 +227,6 @@ model Lease {
   startDate       DateTime
   endDate         DateTime
   rent            Float
-  deposit         Float
   propertyId      Int
   tenantCognitoId String
 

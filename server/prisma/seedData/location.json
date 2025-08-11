@@ -1,92 +1,92 @@
 [
   {
     "id": 1,
-    "country": "United States",
-    "city": "Pasadena",
-    "state": "CA",
-    "address": "123 Colorado Blvd",
-    "postalCode": "91105",
-    "coordinates": "POINT(-118.144516 34.147785)"
+    "country": "Nigeria",
+    "city": "Abuja",
+    "state": "FCT",
+    "address": "123 Ahmadu Bello Way, Garki",
+    "postalCode": "900001",
+    "coordinates": "POINT(7.398574 9.072264)"
   },
   {
     "id": 2,
-    "country": "United States",
-    "city": "Santa Monica",
-    "state": "CA",
-    "address": "456 Ocean Ave",
-    "postalCode": "90401",
-    "coordinates": "POINT(-118.496513 34.013654)"
+    "country": "Nigeria",
+    "city": "Abuja",
+    "state": "FCT",
+    "address": "456 Shehu Shagari Way, Maitama",
+    "postalCode": "900271",
+    "coordinates": "POINT(7.494653 9.082571)"
   },
   {
     "id": 3,
-    "country": "United States",
-    "city": "Burbank",
-    "state": "CA",
-    "address": "789 Hollywood Way",
-    "postalCode": "91505",
-    "coordinates": "POINT(-118.328661 34.180839)"
+    "country": "Nigeria",
+    "city": "Abuja",
+    "state": "FCT",
+    "address": "789 Constitution Avenue, Central Area",
+    "postalCode": "900001",
+    "coordinates": "POINT(7.489553 9.057001)"
   },
   {
     "id": 4,
-    "country": "United States",
-    "city": "Long Beach",
-    "state": "CA",
-    "address": "101 Pine Ave",
-    "postalCode": "90802",
-    "coordinates": "POINT(-118.192604 33.766720)"
+    "country": "Nigeria",
+    "city": "Abuja",
+    "state": "FCT",
+    "address": "101 Tafawa Balewa Way, Garki",
+    "postalCode": "900001",
+    "coordinates": "POINT(7.490413 9.041582)"
   },
   {
     "id": 5,
-    "country": "United States",
-    "city": "New York",
-    "state": "NY",
-    "address": "555 Manhattan Ave",
-    "postalCode": "10001",
-    "coordinates": "POINT(-74.005941 40.712784)"
+    "country": "Nigeria",
+    "city": "Abuja",
+    "state": "FCT",
+    "address": "555 Yakubu Gowon Crescent, Asokoro",
+    "postalCode": "900231",
+    "coordinates": "POINT(7.534653 9.028571)"
   },
   {
     "id": 6,
-    "country": "United States",
-    "city": "Malibu",
-    "state": "CA",
-    "address": "888 Malibu Road",
-    "postalCode": "90265",
-    "coordinates": "POINT(-118.774518 34.025922)"
+    "country": "Nigeria",
+    "city": "Abuja",
+    "state": "FCT",
+    "address": "888 Olusegun Obasanjo Way, Wuse II",
+    "postalCode": "900288",
+    "coordinates": "POINT(7.448574 9.062264)"
   },
   {
     "id": 7,
-    "country": "United States",
-    "city": "Glendale",
-    "state": "CA",
-    "address": "777 Brand Blvd",
-    "postalCode": "91203",
-    "coordinates": "POINT(-118.254708 34.142508)"
+    "country": "Nigeria",
+    "city": "Abuja",
+    "state": "FCT",
+    "address": "777 Nnamdi Azikiwe Street, Wuse I",
+    "postalCode": "900001",
+    "coordinates": "POINT(7.458574 9.052264)"
   },
   {
     "id": 8,
-    "country": "United States",
-    "city": "Torrance",
-    "state": "CA",
-    "address": "555 Torrance Blvd",
-    "postalCode": "90503",
-    "coordinates": "POINT(-118.352575 33.835849)"
+    "country": "Nigeria",
+    "city": "Abuja",
+    "state": "FCT",
+    "address": "555 Herbert Macaulay Way, Wuse Zone 4",
+    "postalCode": "900001",
+    "coordinates": "POINT(7.468574 9.042264)"
   },
   {
     "id": 9,
-    "country": "United States",
-    "city": "Miami",
-    "state": "FL",
-    "address": "1234 Ocean Dr",
-    "postalCode": "33139",
-    "coordinates": "POINT(-80.130045 25.782551)"
+    "country": "Nigeria",
+    "city": "Abuja",
+    "state": "FCT",
+    "address": "1234 Lokogoma District, Lokogoma",
+    "postalCode": "900001",
+    "coordinates": "POINT(7.398574 8.972264)"
   },
   {
     "id": 10,
-    "country": "United States",
-    "city": "Beverly Hills",
-    "state": "CA",
-    "address": "789 Rodeo Dr",
-    "postalCode": "90210",
-    "coordinates": "POINT(-118.400356 34.073620)"
+    "country": "Nigeria",
+    "city": "Abuja",
+    "state": "FCT",
+    "address": "789 Gwarinpa Estate, Gwarinpa",
+    "postalCode": "900001",
+    "coordinates": "POINT(7.408574 9.122264)"
   }
 ]
