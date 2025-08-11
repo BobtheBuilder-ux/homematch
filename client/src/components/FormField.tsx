@@ -134,12 +134,20 @@ export const CustomFormField: React.FC<FormFieldProps> = ({
           <FilePond
             className={`${inputClassName}`}
             onupdatefiles={(fileItems) => {
-              const files = fileItems.map((fileItem) => fileItem.file);
-              field.onChange(files);
+              if (multiple) {
+                const files = fileItems.map((fileItem) => fileItem.file);
+                field.onChange(files);
+              } else {
+                // For single file uploads, return the first file or null
+                const file = fileItems.length > 0 ? fileItems[0].file : null;
+                field.onChange(file);
+              }
             }}
-            allowMultiple={true}
-            labelIdle={`Drag & Drop your images or <span class="filepond--label-action">Browse</span>`}
+            allowMultiple={multiple}
+            maxFiles={multiple ? undefined : 1}
+            labelIdle={`Drag & Drop your ${multiple ? 'files' : 'file'} or <span class="filepond--label-action">Browse</span>`}
             credits={false}
+            acceptedFileTypes={accept ? accept.split(',') : undefined}
           />
         );
       case "number":

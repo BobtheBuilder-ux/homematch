@@ -196,6 +196,7 @@ const ApplicationModal = ({
                   name="idDocumentUrl"
                   label="Upload Valid ID"
                   type="file"
+                  accept="image/*"
                 />
                 <CustomFormField
                   name="durationAtCurrentAddress"
@@ -269,6 +270,7 @@ const ApplicationModal = ({
                     name="incomeProofUrl"
                     label="Upload Proof of Income (payslip, bank statement)"
                     type="file"
+                    accept="application/pdf,image/*"
                   />
                 </div>
               </div>
