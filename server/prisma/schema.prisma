@@ -41,6 +41,7 @@ model Property {
   name              String
   description       String
   pricePerYear     Float
+  securityDeposit   Float
   photoUrls         String[]
   amenities         String?
   highlights        String?
@@ -227,6 +228,7 @@ model Lease {
   startDate       DateTime
   endDate         DateTime
   rent            Float
+  deposit         Float
   propertyId      Int
   tenantCognitoId String
 
