@@ -4,6 +4,7 @@
     "name": "Sunny Downtown Apartment",
     "description": "A beautiful apartment in the heart of downtown with plenty of natural light.",
     "pricePerYear": 1200000.0,
+    "securityDeposit": 100000.0,
     "photoUrls": [
       "https://example.com/apartment1_1.jpg",
       "https://example.com/apartment1_2.jpg"
@@ -26,6 +27,7 @@
     "name": "Cozy Beach House",
     "description": "A charming beach house with stunning ocean views.",
     "pricePerYear": 1800000.0,
+    "securityDeposit": 150000.0,
     "photoUrls": [
       "https://example.com/beachhouse1.jpg",
       "https://example.com/beachhouse2.jpg"
@@ -48,6 +50,7 @@
     "name": "Modern City Loft",
     "description": "Sleek and stylish loft in the heart of the city.",
     "pricePerYear": 1500000.0,
+    "securityDeposit": 125000.0,
     "photoUrls": [
       "https://example.com/cityloft1.jpg",
       "https://example.com/cityloft2.jpg"
@@ -70,6 +73,7 @@
     "name": "Spacious Family Home",
     "description": "Large family home with a beautiful backyard and modern amenities.",
     "pricePerYear": 2000000.0,
+    "securityDeposit": 166000.0,
     "photoUrls": [
       "https://example.com/familyhome1.jpg",
       "https://example.com/familyhome2.jpg"
@@ -92,6 +96,7 @@
     "name": "Luxury Penthouse",
     "description": "Stunning penthouse with panoramic city views and high-end finishes.",
     "pricePerYear": 1900000.0,
+    "securityDeposit": 158000.0,
     "photoUrls": [
       "https://example.com/penthouse1.jpg",
       "https://example.com/penthouse2.jpg"
@@ -114,6 +119,7 @@
     "name": "Cozy Studio Apartment",
     "description": "Efficient studio apartment perfect for students or young professionals.",
     "pricePerYear": 900000.0,
+    "securityDeposit": 75000.0,
     "photoUrls": [
       "https://example.com/studio1.jpg",
       "https://example.com/studio2.jpg"
@@ -136,6 +142,7 @@
     "name": "Historic Brownstone",
     "description": "Charming brownstone with original features and modern updates.",
     "pricePerYear": 1600000.0,
+    "securityDeposit": 133000.0,
     "photoUrls": [
       "https://example.com/brownstone1.jpg",
       "https://example.com/brownstone2.jpg"
@@ -158,6 +165,7 @@
     "name": "Urban Micro-Apartment",
     "description": "Compact and efficient living space in the heart of the city.",
     "pricePerYear": 800000.0,
+    "securityDeposit": 66000.0,
     "photoUrls": [
       "https://example.com/micro1.jpg",
       "https://example.com/micro2.jpg"
@@ -180,6 +188,7 @@
     "name": "Mountain View Cabin",
     "description": "Rustic cabin with breathtaking mountain views and modern amenities.",
     "pricePerYear": 1300000.0,
+    "securityDeposit": 108000.0,
     "photoUrls": [
       "https://example.com/cabin1.jpg",
       "https://example.com/cabin2.jpg"
@@ -202,6 +211,7 @@
     "name": "Eco-Friendly Tiny House",
     "description": "Sustainable living in a compact, well-designed tiny house.",
     "pricePerYear": 850000.0,
+    "securityDeposit": 70000.0,
     "photoUrls": [
       "https://example.com/tinyhouse1.jpg",
       "https://example.com/tinyhouse2.jpg"
