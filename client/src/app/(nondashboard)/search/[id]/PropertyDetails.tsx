@@ -23,20 +23,38 @@ const PropertyDetails = ({ propertyId }: PropertyDetailsProps) => {
       <div>
         <h2 className="text-xl font-semibold my-3">Property Amenities</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-          {property.amenities.map((amenity: AmenityEnum) => {
-            const Icon = AmenityIcons[amenity as AmenityEnum] || HelpCircle;
-            return (
-              <div
-                key={amenity}
-                className="flex flex-col items-center border rounded-xl py-8 px-4"
-              >
-                <Icon className="w-8 h-8 mb-2 text-gray-700" />
-                <span className="text-sm text-center text-gray-700">
-                  {formatEnumString(amenity)}
-                </span>
-              </div>
-            );
-          })}
+          {property.amenities && typeof property.amenities === 'string' 
+            ? property.amenities.split(',').map((amenity: string) => {
+                const trimmedAmenity = amenity.trim();
+                const Icon = AmenityIcons[trimmedAmenity as AmenityEnum] || HelpCircle;
+                return (
+                  <div
+                    key={trimmedAmenity}
+                    className="flex flex-col items-center border rounded-xl py-8 px-4"
+                  >
+                    <Icon className="w-8 h-8 mb-2 text-gray-700" />
+                    <span className="text-sm text-center text-gray-700">
+                      {formatEnumString(trimmedAmenity)}
+                    </span>
+                  </div>
+                );
+              })
+            : Array.isArray(property.amenities) 
+              ? property.amenities.map((amenity: AmenityEnum) => {
+                  const Icon = AmenityIcons[amenity as AmenityEnum] || HelpCircle;
+                  return (
+                    <div
+                      key={amenity}
+                      className="flex flex-col items-center border rounded-xl py-8 px-4"
+                    >
+                      <Icon className="w-8 h-8 mb-2 text-gray-700" />
+                      <span className="text-sm text-center text-gray-700">
+                        {formatEnumString(amenity)}
+                      </span>
+                    </div>
+                  );
+                })
+              : null}
         </div>
       </div>
 
@@ -46,21 +64,38 @@ const PropertyDetails = ({ propertyId }: PropertyDetailsProps) => {
           Highlights
         </h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 mt-4 w-full">
-          {property.highlights.map((highlight: HighlightEnum) => {
-            const Icon =
-              HighlightIcons[highlight as HighlightEnum] || HelpCircle;
-            return (
-              <div
-                key={highlight}
-                className="flex flex-col items-center border rounded-xl py-8 px-4"
-              >
-                <Icon className="w-8 h-8 mb-2 text-primary-600 dark:text-primary-300" />
-                <span className="text-sm text-center text-primary-600 dark:text-primary-300">
-                  {formatEnumString(highlight)}
-                </span>
-              </div>
-            );
-          })}
+          {property.highlights && typeof property.highlights === 'string'
+            ? property.highlights.split(',').map((highlight: string) => {
+                const trimmedHighlight = highlight.trim();
+                const Icon = HighlightIcons[trimmedHighlight as HighlightEnum] || HelpCircle;
+                return (
+                  <div
+                    key={trimmedHighlight}
+                    className="flex flex-col items-center border rounded-xl py-8 px-4"
+                  >
+                    <Icon className="w-8 h-8 mb-2 text-primary-600 dark:text-primary-300" />
+                    <span className="text-sm text-center text-primary-600 dark:text-primary-300">
+                      {formatEnumString(trimmedHighlight)}
+                    </span>
+                  </div>
+                );
+              })
+            : Array.isArray(property.highlights)
+              ? property.highlights.map((highlight: HighlightEnum) => {
+                  const Icon = HighlightIcons[highlight as HighlightEnum] || HelpCircle;
+                  return (
+                    <div
+                      key={highlight}
+                      className="flex flex-col items-center border rounded-xl py-8 px-4"
+                    >
+                      <Icon className="w-8 h-8 mb-2 text-primary-600 dark:text-primary-300" />
+                      <span className="text-sm text-center text-primary-600 dark:text-primary-300">
+                        {formatEnumString(highlight)}
+                      </span>
+                    </div>
+                  );
+                })
+              : null}
         </div>
       </div>
 
