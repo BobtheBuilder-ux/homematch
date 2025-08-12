@@ -3,10 +3,19 @@ export const surveyConfirmationTemplate = {
     subject: "Thank you for completing our Tenant Survey!",
     body: (fullName: string) => `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f9f9f9;">
-        <div style="background-color: white; padding: 30px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
-          <h2 style="color: #2563eb; margin-bottom: 20px;">Thank You for Your Feedback!</h2>
+        <style>
+          @media only screen and (max-width: 600px) {
+            .email-container { padding: 10px !important; }
+            .email-content { padding: 20px !important; }
+            .email-button { padding: 10px 20px !important; font-size: 14px !important; }
+            .email-text { font-size: 14px !important; }
+            .email-heading { font-size: 20px !important; }
+          }
+        </style>
+        <div class="email-content" style="background-color: white; padding: 30px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+          <h2 class="email-heading" style="color: #2563eb; margin-bottom: 20px;">Thank You for Your Feedback!</h2>
           
-          <p style="color: #374151; font-size: 16px; line-height: 1.6;">Dear ${fullName},</p>
+          <p class="email-text" style="color: #374151; font-size: 16px; line-height: 1.6;">Dear ${fullName},</p>
           
           <p style="color: #374151; font-size: 16px; line-height: 1.6;">
             Thank you for taking the time to complete our tenant survey. Your feedback is invaluable in helping us create a better rental experience for everyone.

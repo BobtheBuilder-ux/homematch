@@ -10,10 +10,12 @@ import { cleanParams } from "@/lib/utils";
 import { setFilters } from "@/state";
 import Map from "./Map";
 import Listings from "./Listings";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const SearchPage = () => {
   const searchParams = useSearchParams();
   const dispatch = useAppDispatch();
+  const isMobile = useIsMobile();
   const isFiltersFullOpen = useAppSelector(
     (state) => state.global.isFiltersFullOpen
   );
@@ -65,18 +67,18 @@ const SearchPage = () => {
       }}
     >
       <FiltersBar />
-      <div className="flex justify-between flex-1 overflow-hidden gap-3 mb-5">
+      <div className={`flex justify-between flex-1 overflow-hidden gap-3 mb-5 ${isMobile ? 'flex-col' : ''}`}>
         <div
           className={`h-full overflow-auto transition-all duration-300 ease-in-out ${
             isFiltersFullOpen
               ? "w-3/12 opacity-100 visible"
               : "w-0 opacity-0 invisible"
-          }`}
+          } ${isMobile ? 'hidden' : ''}`}
         >
           <FiltersFull />
         </div>
-        <Map />
-        <div className="basis-4/12 overflow-y-auto">
+        {!isMobile && <Map />}
+        <div className={`${isMobile ? 'flex-1' : 'basis-4/12'} overflow-y-auto`}>
           <Listings />
         </div>
       </div>

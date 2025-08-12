@@ -80,6 +80,12 @@ body,
   @apply pt-8 pb-5 px-8;
 }
 
+@media (max-width: 768px) {
+  .dashboard-container {
+    @apply px-4 pt-4 pb-3;
+  }
+}
+
 .mapboxgl-popup-content {
   @apply !bg-primary-700;
   @apply !rounded-lg;

@@ -2,8 +2,10 @@ import Loading from "@/components/Loading";
 import { useGetPropertyQuery } from "@/state/api";
 import { MapPin, Star } from "lucide-react";
 import React from "react";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const PropertyOverview = ({ propertyId }: PropertyOverviewProps) => {
+  const isMobile = useIsMobile();
   const {
     data: property,
     isError,
@@ -45,24 +47,24 @@ const PropertyOverview = ({ propertyId }: PropertyOverviewProps) => {
 
       {/* Details */}
       <div className="border border-primary-200 rounded-xl p-6 mb-6">
-        <div className="flex justify-between items-center gap-4 px-5">
+        <div className={`${isMobile ? 'grid grid-cols-2 gap-4' : 'flex justify-between items-center gap-4'} px-5`}>
           <div>
             <div className="text-sm text-gray-500">Price Per Year</div>
             <div className="font-semibold">
               ₦{property.pricePerYear.toLocaleString()}
             </div>
           </div>
-          <div className="border-l border-gray-300 h-10"></div>
+          {!isMobile && <div className="border-l border-gray-300 h-10"></div>}
           <div>
             <div className="text-sm text-gray-500">Bedrooms</div>
             <div className="font-semibold">{property.beds} bd</div>
           </div>
-          <div className="border-l border-gray-300 h-10"></div>
+          {!isMobile && <div className="border-l border-gray-300 h-10"></div>}
           <div>
             <div className="text-sm text-gray-500">Bathrooms</div>
             <div className="font-semibold">{property.baths} ba</div>
           </div>
-          <div className="border-l border-gray-300 h-10"></div>
+          {!isMobile && <div className="border-l border-gray-300 h-10"></div>}
           <div>
             <div className="text-sm text-gray-500">Square Feet</div>
             <div className="font-semibold">

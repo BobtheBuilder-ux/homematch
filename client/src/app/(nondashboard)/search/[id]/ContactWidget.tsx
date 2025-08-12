@@ -8,6 +8,7 @@ import React, { useState } from "react";
 import InspectionModal from "./InspectionModal";
 import ApplicationModal from "./ApplicationModal";
 import CheckoutSummary from "@/components/CheckoutSummary";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface ContactWidgetProps {
   onOpenModal: () => void;
@@ -20,6 +21,7 @@ const ContactWidget = ({ onOpenModal, propertyId }: ContactWidgetProps) => {
   const { data: authUser } = useGetAuthUserQuery();
   const { data: property } = useGetPropertyQuery(propertyId);
   const router = useRouter();
+  const isMobile = useIsMobile();
   const [isInspectionModalOpen, setIsInspectionModalOpen] = useState(false);
   const [isApplicationModalOpen, setIsApplicationModalOpen] = useState(false);
   const [currentView, setCurrentView] = useState<ViewState>('contact');
@@ -64,7 +66,7 @@ const ContactWidget = ({ onOpenModal, propertyId }: ContactWidgetProps) => {
 
   if (currentView === 'success') {
     return (
-      <div className="bg-white border border-primary-200 rounded-2xl p-7 h-fit min-w-[300px]">
+      <div className={`bg-white border border-primary-200 rounded-2xl p-7 h-fit ${isMobile ? 'w-full' : 'min-w-[300px]'}`}>
         <div className="text-center space-y-4">
           <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto">
             <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -92,7 +94,7 @@ const ContactWidget = ({ onOpenModal, propertyId }: ContactWidgetProps) => {
 
   if (currentView === 'checkout' && property) {
     return (
-      <div className="bg-white border border-primary-200 rounded-2xl p-7 h-fit min-w-[300px]">
+      <div className={`bg-white border border-primary-200 rounded-2xl p-7 h-fit ${isMobile ? 'w-full' : 'min-w-[300px]'}`}>
         <div className="mb-4">
           <Button
             onClick={handleBackToContact}
@@ -113,7 +115,7 @@ const ContactWidget = ({ onOpenModal, propertyId }: ContactWidgetProps) => {
   }
 
   return (
-    <div className="bg-white border border-primary-200 rounded-2xl p-7 h-fit min-w-[300px]">
+    <div className={`bg-white border border-primary-200 rounded-2xl p-7 h-fit ${isMobile ? 'w-full' : 'min-w-[300px]'}`}>
       {/* Contact Property */}
       <div className="flex items-center gap-5 mb-4 border border-primary-200 p-4 rounded-xl">
         <div className="flex items-center p-4 bg-primary-900 rounded-full">
