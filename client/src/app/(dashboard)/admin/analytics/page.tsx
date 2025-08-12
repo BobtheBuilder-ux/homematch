@@ -18,7 +18,7 @@ import {
   LineChart,
   Line,
 } from "recharts";
-import { Building, Users, FileText, DollarSign } from "lucide-react";
+import { Building, Users, FileText, Banknote } from "lucide-react";
 
 const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
 
@@ -83,7 +83,7 @@ const Analytics = () => {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Revenue</CardTitle>
-            <DollarSign className="h-4 w-4 text-muted-foreground" />
+            <Banknote className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">₦{analytics.totalRevenue.toLocaleString()}</div>

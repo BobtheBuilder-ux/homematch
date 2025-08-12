@@ -19,6 +19,7 @@ import surveyRoutes from "./routes/surveyRoutes";
 import paymentRoutes from "./routes/paymentRoutes";
 import inspectionRoutes from "./routes/inspectionRoutes";
 import emailRoutes from "./routes/emailRoutes";
+import earningsRoutes from "./routes/earningsRoutes";
 
 /* CONFIGURATIONS */
 dotenv.config();
@@ -70,6 +71,7 @@ app.use("/surveys", surveyRoutes);
 app.use("/admin", authMiddleware(["admin"]), adminRoutes);
 app.use("/agent", authMiddleware(["agent"]), agentRoutes);
 app.use("/emails", emailRoutes);
+app.use("/earnings", authMiddleware(["landlord", "admin"]), earningsRoutes);
 
 /* SERVER */
 const port = Number(process.env.PORT) || 3002;

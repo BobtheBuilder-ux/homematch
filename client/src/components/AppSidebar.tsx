@@ -22,6 +22,7 @@ import {
   UserCheck,
   ClipboardList,
   File,
+  Banknote,
 } from "lucide-react";
 import { NAVBAR_HEIGHT } from "@/lib/constants";
 import { cn } from "@/lib/utils";
@@ -41,6 +42,7 @@ const AppSidebar = ({ userType }: AppSidebarProps) => {
         return [
           { icon: Building, label: "Properties", href: "/landlords/properties" },
           { icon: FileText, label: "Applications", href: "/landlords/applications" },
+          { icon: Banknote, label: "Earnings", href: "/landlords/earnings" },
           { icon: Settings, label: "Settings", href: "/landlords/settings" },
         ];
       case "tenant":

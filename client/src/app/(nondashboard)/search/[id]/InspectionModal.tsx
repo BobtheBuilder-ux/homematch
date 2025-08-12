@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { X, Calendar, FileText, DollarSign } from "lucide-react";
+import { X, Calendar, FileText, Banknote } from "lucide-react";
 import { useCreateInspectionRequestMutation, useGetTenantInspectionLimitQuery, useProcessInspectionDepositMutation, useGetAuthUserQuery, useInitializePaymentMutation } from "@/state/api";
 
 interface InspectionModalProps {
@@ -165,7 +165,7 @@ const InspectionModal = ({ isOpen, onClose, propertyId, propertyName }: Inspecti
         {needsDeposit && (
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              <DollarSign className="inline h-4 w-4 mr-1" />
+              <Banknote className="inline h-4 w-4 mr-1" />
               Price Range (Required for deposit)
             </label>
             <select
@@ -189,7 +189,7 @@ const InspectionModal = ({ isOpen, onClose, propertyId, propertyName }: Inspecti
       {needsDeposit && (
         <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
           <div className="flex items-center space-x-2">
-            <DollarSign className="h-5 w-5 text-yellow-600" />
+            <Banknote className="h-5 w-5 text-yellow-600" />
             <span className="font-medium text-yellow-900">Deposit Required</span>
           </div>
           <p className="mt-2 text-sm text-yellow-800">

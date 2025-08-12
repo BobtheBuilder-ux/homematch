@@ -194,7 +194,7 @@ export const PropertyApplicationSurvey = () => {
           {
             type: "text",
             name: "monthlyIncome",
-            title: "Monthly Income ($)",
+            title: "Monthly Income (₦)",
             isRequired: true,
             inputType: "number"
           },

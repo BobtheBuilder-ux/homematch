@@ -80,7 +80,7 @@ const SurveyPage = () => {
           {
             type: "nouislider",
             name: "priceRange",
-            title: "Monthly Budget Range ($)",
+            title: "Monthly Budget Range (₦)",
             isRequired: true,
             rangeMin: 500,
             rangeMax: 5000,

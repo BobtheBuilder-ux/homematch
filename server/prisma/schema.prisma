@@ -36,6 +36,14 @@ enum PropertyStatus {
   UnderMaintenance
 }
 
+enum WithdrawalStatus {
+  Pending
+  Processing
+  Completed
+  Failed
+  Cancelled
+}
+
 model Property {
   id                Int          @id @default(autoincrement())
   name              String
@@ -109,6 +117,7 @@ model Landlord {
 
   managedProperties Property[]
   registrationCode  LandlordRegistrationCode? @relation(fields: [registrationCodeId], references: [id])
+  withdrawals       Withdrawal[]
 }
 
 model Tenant {
@@ -396,4 +405,22 @@ model InspectionLimit {
   updatedAt       DateTime @updatedAt
 
   tenant Tenant @relation(fields: [tenantCognitoId], references: [cognitoId])
+}
+
+model Withdrawal {
+  id                Int              @id @default(autoincrement())
+  amount            Float
+  status            WithdrawalStatus @default(Pending)
+  requestDate       DateTime         @default(now())
+  processedDate     DateTime?
+  landlordCognitoId String
+  bankName          String?
+  accountNumber     String?
+  accountName       String?
+  reference         String?          @unique
+  notes             String?
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+
+  landlord Landlord @relation(fields: [landlordCognitoId], references: [cognitoId])
 }

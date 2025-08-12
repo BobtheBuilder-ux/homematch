@@ -171,7 +171,7 @@ console.log('SES Configuration:', {
 ## Cost Optimization
 
 - **Free Tier**: 62,000 emails per month free when sent from EC2
-- **Pricing**: $0.10 per 1,000 emails after free tier
+- **Pricing**: Check AWS pricing for your region after free tier
 - **Data Transfer**: Additional charges for data transfer
 
 ## Support Resources

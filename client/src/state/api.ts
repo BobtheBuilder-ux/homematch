@@ -44,7 +44,8 @@ export const api = createApi({
     "AdminTaskStats",
     "Inspections",
     "InspectionLimits",
-
+    "Earnings",
+    "Withdrawals",
   ],
   endpoints: (build) => ({
     getAuthUser: build.query<User, void>({
@@ -849,6 +850,51 @@ export const api = createApi({
       },
     }),
 
+    // Earnings endpoints
+    getLandlordEarnings: build.query<any, string>({
+      query: (cognitoId) => `earnings/landlord/${cognitoId}`,
+      providesTags: ["Earnings"],
+      async onQueryStarted(_, { queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch (error) {
+          console.error("Error fetching landlord earnings:", error);
+        }
+      },
+    }),
+
+    createWithdrawalRequest: build.mutation<any, {
+      cognitoId: string;
+      amount: number;
+      notes?: string;
+    }>({
+      query: ({ cognitoId, ...withdrawalData }) => ({
+        url: `earnings/landlord/${cognitoId}/withdraw`,
+        method: "POST",
+        body: withdrawalData,
+      }),
+      invalidatesTags: ["Earnings", "Withdrawals"],
+      async onQueryStarted(_, { queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch (error) {
+          console.error("Error creating withdrawal request:", error);
+        }
+      },
+    }),
+
+    getWithdrawalHistory: build.query<any[], string>({
+      query: (cognitoId) => `earnings/landlord/${cognitoId}/withdrawals`,
+      providesTags: ["Withdrawals"],
+      async onQueryStarted(_, { queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch (error) {
+          console.error("Error fetching withdrawal history:", error);
+        }
+      },
+    }),
+
 
   }),
 });
@@ -910,4 +956,8 @@ export const {
   useGetAllInspectionsQuery,
   useUpdateInspectionStatusMutation,
   useProcessInspectionDepositMutation,
+  // Earnings hooks
+  useGetLandlordEarningsQuery,
+  useCreateWithdrawalRequestMutation,
+  useGetWithdrawalHistoryQuery,
 } = api;
