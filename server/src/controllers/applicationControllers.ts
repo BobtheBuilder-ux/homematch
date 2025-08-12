@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { PrismaClient, Prisma } from "../../node_modules/.prisma/client";
+import { PrismaClient, Prisma } from "@prisma/client";
 import { sendEmail } from "../utils/emailService";
 import { 
   applicationSubmittedTemplate, 

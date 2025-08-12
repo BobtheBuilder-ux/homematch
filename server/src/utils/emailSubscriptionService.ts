@@ -1,4 +1,4 @@
-import { PrismaClient } from '../../node_modules/.prisma/client';
+import { PrismaClient } from '@prisma/client';
 import { sendEmail } from './emailService';
 import { surveyConfirmationTemplate, welcomeToEmailListTemplate, inspectionRequestTemplate, inspectionApprovedTemplate, tenantWelcomeTemplate } from './emailTemplates';
 

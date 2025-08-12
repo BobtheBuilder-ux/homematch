@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { PrismaClient } from "../../node_modules/.prisma/client";
+import { PrismaClient } from "@prisma/client";
 import { wktToGeoJSON } from "@terraformer/wkt";
 import { addToEmailList, sendTenantWelcomeEmail } from "../utils/emailSubscriptionService";
 
