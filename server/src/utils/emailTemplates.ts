@@ -317,7 +317,7 @@ export const inspectionApprovedTemplate = {
 // Tenant Application Email Templates
 export const applicationSubmittedTemplate = {
   subject: "Application Received - Under Review",
-  body: (tenantName: string, propertyAddress: string, applicationDate: string, annualRent: number, securityDeposit: number) => `
+  body: (tenantName: string, propertyAddress: string, applicationDate: string, annualRent: number, securityDeposit: number, applicationFee: number) => `
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f9f9f9;">
       <div style="background-color: white; padding: 30px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
         <h2 style="color: #3b82f6; margin-bottom: 20px;">📋 Application Received Successfully!</h2>
@@ -333,8 +333,9 @@ export const applicationSubmittedTemplate = {
           <ul style="color: #374151; margin: 0; padding-left: 20px; list-style: none;">
             <li style="margin-bottom: 8px;"><strong>Property:</strong> ${propertyAddress}</li>
             <li style="margin-bottom: 8px;"><strong>Application Date:</strong> ${applicationDate}</li>
-            <li style="margin-bottom: 8px;"><strong>Annual Rent:</strong> $${annualRent.toLocaleString()}</li>
-            <li style="margin-bottom: 8px;"><strong>Security Deposit:</strong> $${securityDeposit.toLocaleString()}</li>
+            <li style="margin-bottom: 8px;"><strong>Annual Rent:</strong> ₦${annualRent.toLocaleString()}</li>
+            <li style="margin-bottom: 8px;"><strong>Security Deposit:</strong> ₦${securityDeposit.toLocaleString()}</li>
+            <li style="margin-bottom: 8px;"><strong>Application Fee:</strong> ₦${applicationFee.toLocaleString()}</li>
             <li style="margin-bottom: 8px;"><strong>Status:</strong> <span style="color: #f59e0b; font-weight: bold;">Under Review</span></li>
           </ul>
         </div>
@@ -369,7 +370,7 @@ export const applicationSubmittedTemplate = {
 
 export const applicationApprovedTemplate = {
   subject: "🎉 Your Rental Application Has Been Approved!",
-  body: (tenantName: string, propertyAddress: string, propertyId: number, annualRent: number, securityDeposit: number) => `
+  body: (tenantName: string, propertyAddress: string, propertyId: number, annualRent: number, securityDeposit: number, applicationFee: number) => `
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f9f9f9;">
       <div style="background-color: white; padding: 30px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
         <h2 style="color: #10b981; margin-bottom: 20px;">🎉 Congratulations! Your Application Has Been Approved!</h2>
@@ -384,8 +385,9 @@ export const applicationApprovedTemplate = {
           <h3 style="color: #047857; margin: 0 0 15px 0;">🏠 Property Details:</h3>
           <ul style="color: #374151; margin: 0; padding-left: 20px; list-style: none;">
             <li style="margin-bottom: 8px;"><strong>Property:</strong> ${propertyAddress}</li>
-            <li style="margin-bottom: 8px;"><strong>Annual Rent:</strong> $${annualRent.toLocaleString()}</li>
-            <li style="margin-bottom: 8px;"><strong>Security Deposit:</strong> $${securityDeposit.toLocaleString()}</li>
+            <li style="margin-bottom: 8px;"><strong>Annual Rent:</strong> ₦${annualRent.toLocaleString()}</li>
+            <li style="margin-bottom: 8px;"><strong>Security Deposit:</strong> ₦${securityDeposit.toLocaleString()}</li>
+            <li style="margin-bottom: 8px;"><strong>Application Fee:</strong> ₦${applicationFee.toLocaleString()}</li>
             <li style="margin-bottom: 8px;"><strong>Status:</strong> <span style="color: #10b981; font-weight: bold;">Approved</span></li>
           </ul>
         </div>

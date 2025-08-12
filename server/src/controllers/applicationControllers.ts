@@ -228,7 +228,8 @@ export const createApplication = async (
           property.location.address,
           new Date(applicationDate).toLocaleDateString(),
           property.pricePerYear,
-          property.securityDeposit || 0
+          property.securityDeposit || 0,
+          property.pricePerYear * 0.1
         )
       });
 
@@ -326,7 +327,8 @@ export const updateApplicationStatus = async (
           application.property.location.address,
           application.propertyId,
           application.property.pricePerYear,
-          application.property.securityDeposit
+          application.property.securityDeposit,
+          application.property.pricePerYear * 0.1
         )
       });
     } else if (status === "Denied") {
