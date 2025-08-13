@@ -56,6 +56,31 @@ output "cognito_user_pool_client_id" {
   value       = aws_cognito_user_pool_client.user_pool_client.id
 }
 
+output "route53_zone_id" {
+  description = "Route53 Hosted Zone ID"
+  value       = aws_route53_zone.main.zone_id
+}
+
+output "route53_name_servers" {
+  description = "Route53 Name Servers"
+  value       = aws_route53_zone.main.name_servers
+}
+
+output "ssl_certificate_arn" {
+  description = "SSL Certificate ARN"
+  value       = aws_acm_certificate.ssl_cert.arn
+}
+
+output "domain_name" {
+  description = "Domain name"
+  value       = var.domain_name
+}
+
+output "api_domain" {
+  description = "API subdomain"
+  value       = "api.${var.domain_name}"
+}
+
 output "s3_bucket_name" {
   description = "Name of the S3 bucket"
   value       = aws_s3_bucket.app_storage.bucket
