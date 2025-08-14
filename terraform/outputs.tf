@@ -95,3 +95,13 @@ output "internet_gateway_id" {
   description = "ID of the Internet Gateway"
   value       = aws_internet_gateway.main_igw.id
 }
+
+output "sns_bounces_topic_arn" {
+  description = "ARN of the SNS topic for SES bounces"
+  value       = aws_sns_topic.ses_bounces.arn
+}
+
+output "sns_complaints_topic_arn" {
+  description = "ARN of the SNS topic for SES complaints"
+  value       = aws_sns_topic.ses_complaints.arn
+}

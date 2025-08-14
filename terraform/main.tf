@@ -784,6 +784,21 @@ resource "aws_iam_role_policy" "ec2_policy" {
           "ec2messages:*"
         ]
         Resource = "*"
+      },
+      {
+        Sid    = "SNSAccess"
+        Effect = "Allow"
+        Action = [
+          "sns:Subscribe",
+          "sns:Unsubscribe",
+          "sns:Receive",
+          "sns:GetTopicAttributes",
+          "sns:ListSubscriptionsByTopic"
+        ]
+        Resource = [
+          aws_sns_topic.ses_bounces.arn,
+          aws_sns_topic.ses_complaints.arn
+        ]
       }
     ]
   })
@@ -799,3 +814,76 @@ resource "aws_iam_instance_profile" "ec2_profile" {
     Type = "compute"
   })
 }
+
+# SNS Topic for SES Bounces
+resource "aws_sns_topic" "ses_bounces" {
+  name = "${var.project_name}-ses-bounces"
+
+  tags = merge(var.tags, {
+    Name = "${var.project_name}-ses-bounces"
+    Type = "notification"
+  })
+}
+
+# SNS Topic for SES Complaints
+resource "aws_sns_topic" "ses_complaints" {
+  name = "${var.project_name}-ses-complaints"
+
+  tags = merge(var.tags, {
+    Name = "${var.project_name}-ses-complaints"
+    Type = "notification"
+  })
+}
+
+# SNS Topic Policy for SES Bounces
+resource "aws_sns_topic_policy" "ses_bounces_policy" {
+  arn = aws_sns_topic.ses_bounces.arn
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Sid    = "AllowSESToPublish"
+        Effect = "Allow"
+        Principal = {
+          Service = "ses.amazonaws.com"
+        }
+        Action   = "sns:Publish"
+        Resource = aws_sns_topic.ses_bounces.arn
+        Condition = {
+          StringEquals = {
+            "aws:SourceAccount" = data.aws_caller_identity.current.account_id
+          }
+        }
+      }
+    ]
+  })
+}
+
+# SNS Topic Policy for SES Complaints
+resource "aws_sns_topic_policy" "ses_complaints_policy" {
+  arn = aws_sns_topic.ses_complaints.arn
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Sid    = "AllowSESToPublish"
+        Effect = "Allow"
+        Principal = {
+          Service = "ses.amazonaws.com"
+        }
+        Action   = "sns:Publish"
+        Resource = aws_sns_topic.ses_complaints.arn
+        Condition = {
+          StringEquals = {
+            "aws:SourceAccount" = data.aws_caller_identity.current.account_id
+          }
+        }
+      }
+    ]
+  })
+}
+
+# Data source for current AWS account ID
+data "aws_caller_identity" "current" {}
