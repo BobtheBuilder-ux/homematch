@@ -165,7 +165,7 @@ const createApplication = (req, res) => __awaiter(void 0, void 0, void 0, functi
             yield (0, emailService_1.sendEmail)({
                 to: email,
                 subject: emailTemplates_1.applicationSubmittedTemplate.subject,
-                body: emailTemplates_1.applicationSubmittedTemplate.body(name, property.location.address, new Date(applicationDate).toLocaleDateString(), property.pricePerYear, property.securityDeposit || 0)
+                body: emailTemplates_1.applicationSubmittedTemplate.body(name, property.location.address, new Date(applicationDate).toLocaleDateString(), property.pricePerYear, property.securityDeposit || 0, property.pricePerYear * 0.1)
             });
             // Send email to landlord
             if ((_a = property.landlord) === null || _a === void 0 ? void 0 : _a.email) {
@@ -245,7 +245,7 @@ const updateApplicationStatus = (req, res) => __awaiter(void 0, void 0, void 0, 
             yield (0, emailService_1.sendEmail)({
                 to: application.tenant.email,
                 subject: emailTemplates_1.applicationApprovedTemplate.subject,
-                body: emailTemplates_1.applicationApprovedTemplate.body(application.tenant.name, application.property.location.address, application.propertyId, application.property.pricePerYear, application.property.securityDeposit)
+                body: emailTemplates_1.applicationApprovedTemplate.body(application.tenant.name, application.property.location.address, application.propertyId, application.property.pricePerYear, application.property.securityDeposit, application.property.pricePerYear * 0.1)
             });
         }
         else if (status === "Denied") {

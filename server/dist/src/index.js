@@ -24,6 +24,7 @@ const surveyRoutes_1 = __importDefault(require("./routes/surveyRoutes"));
 const paymentRoutes_1 = __importDefault(require("./routes/paymentRoutes"));
 const inspectionRoutes_1 = __importDefault(require("./routes/inspectionRoutes"));
 const emailRoutes_1 = __importDefault(require("./routes/emailRoutes"));
+const earningsRoutes_1 = __importDefault(require("./routes/earningsRoutes"));
 /* CONFIGURATIONS */
 dotenv_1.default.config();
 const app = (0, express_1.default)();
@@ -60,6 +61,7 @@ app.use("/surveys", surveyRoutes_1.default);
 app.use("/admin", (0, authMiddleware_1.authMiddleware)(["admin"]), adminRoutes_1.default);
 app.use("/agent", (0, authMiddleware_1.authMiddleware)(["agent"]), agentRoutes_1.default);
 app.use("/emails", emailRoutes_1.default);
+app.use("/earnings", (0, authMiddleware_1.authMiddleware)(["landlord", "admin"]), earningsRoutes_1.default);
 /* SERVER */
 const port = Number(process.env.PORT) || 3002;
 app.listen(port, "0.0.0.0", () => {
