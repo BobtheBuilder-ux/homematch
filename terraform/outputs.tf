@@ -7,12 +7,12 @@ output "vpc_id" {
 
 output "private_subnet_ids" {
   description = "IDs of the private subnets"
-  value       = [aws_subnet.private_subnet_1.id, aws_subnet.private_subnet_2.id]
+  value       = aws_subnet.private_subnets[*].id
 }
 
 output "public_subnet_ids" {
   description = "IDs of the public subnets"
-  value       = [aws_subnet.public_subnet_1.id, aws_subnet.public_subnet_2.id]
+  value       = aws_subnet.public_subnets[*].id
 }
 
 output "alb_dns_name" {
@@ -25,20 +25,15 @@ output "alb_zone_id" {
   value       = aws_lb.app_alb.zone_id
 }
 
-# output "ec2_instance_id" {
-#   description = "ID of the EC2 instance"
-#   value       = aws_instance.web_server.id
-# }
+output "auto_scaling_group_arn" {
+  description = "ARN of the Auto Scaling Group"
+  value       = aws_autoscaling_group.app_asg.arn
+}
 
-# output "ec2_public_ip" {
-#   description = "Public IP of the EC2 instance"
-#   value       = aws_instance.web_server.public_ip
-# }
-
-# output "ec2_private_ip" {
-#   description = "Private IP of the EC2 instance"
-#   value       = aws_instance.web_server.private_ip
-# }
+output "launch_template_id" {
+  description = "ID of the Launch Template"
+  value       = aws_launch_template.app_template.id
+}
 
 output "rds_endpoint" {
   description = "RDS instance endpoint"
@@ -91,17 +86,12 @@ output "cloudwatch_log_group_name" {
   value       = aws_cloudwatch_log_group.app_logs.name
 }
 
-# output "route53_zone_id" {
-#   description = "Route53 hosted zone ID"
-#   value       = aws_route53_zone.main.zone_id
-# }
+output "nat_gateway_id" {
+  description = "ID of the NAT Gateway"
+  value       = aws_nat_gateway.main_nat.id
+}
 
-# output "load_balancer_dns" {
-#   description = "DNS name of the load balancer"
-#   value       = aws_lb.app_lb.dns_name
-# }
-
-# output "load_balancer_arn" {
-#   description = "ARN of the load balancer"
-#   value       = aws_lb.app_lb.arn
-# }
+output "internet_gateway_id" {
+  description = "ID of the Internet Gateway"
+  value       = aws_internet_gateway.main_igw.id
+}

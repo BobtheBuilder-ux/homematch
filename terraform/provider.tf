@@ -12,7 +12,7 @@ terraform {
 # AWS Provider configuration
 provider "aws" {
   region = "us-east-1"
-  
+
   # Use default AWS credentials from AWS CLI or environment variables
   # Make sure you have run 'aws configure' or set AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY
 }
@@ -21,7 +21,7 @@ provider "aws" {
 provider "aws" {
   alias  = "default"
   region = "us-east-1"
-  
+
   default_tags {
     tags = {
       Project     = "HomeMatch"
