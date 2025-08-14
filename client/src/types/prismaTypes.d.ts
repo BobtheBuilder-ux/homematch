@@ -88,58 +88,36 @@ export type TenantSurvey = $Result.DefaultSelection<Prisma.$TenantSurveyPayload>
  * 
  */
 export type LandlordSurvey = $Result.DefaultSelection<Prisma.$LandlordSurveyPayload>
+/**
+ * Model EmailSubscription
+ * 
+ */
+export type EmailSubscription = $Result.DefaultSelection<Prisma.$EmailSubscriptionPayload>
+/**
+ * Model Inspection
+ * 
+ */
+export type Inspection = $Result.DefaultSelection<Prisma.$InspectionPayload>
+/**
+ * Model InspectionLimit
+ * 
+ */
+export type InspectionLimit = $Result.DefaultSelection<Prisma.$InspectionLimitPayload>
+/**
+ * Model Withdrawal
+ * 
+ */
+export type Withdrawal = $Result.DefaultSelection<Prisma.$WithdrawalPayload>
 
 /**
  * Enums
  */
 export namespace $Enums {
-  export const Highlight: {
-  HighSpeedInternetAccess: 'HighSpeedInternetAccess',
-  WasherDryer: 'WasherDryer',
-  AirConditioning: 'AirConditioning',
-  Heating: 'Heating',
-  SmokeFree: 'SmokeFree',
-  CableReady: 'CableReady',
-  SatelliteTV: 'SatelliteTV',
-  DoubleVanities: 'DoubleVanities',
-  TubShower: 'TubShower',
-  Intercom: 'Intercom',
-  SprinklerSystem: 'SprinklerSystem',
-  RecentlyRenovated: 'RecentlyRenovated',
-  CloseToTransit: 'CloseToTransit',
-  GreatView: 'GreatView',
-  QuietNeighborhood: 'QuietNeighborhood'
-};
-
-export type Highlight = (typeof Highlight)[keyof typeof Highlight]
-
-
-export const Amenity: {
-  WasherDryer: 'WasherDryer',
-  AirConditioning: 'AirConditioning',
-  Dishwasher: 'Dishwasher',
-  HighSpeedInternet: 'HighSpeedInternet',
-  HardwoodFloors: 'HardwoodFloors',
-  WalkInClosets: 'WalkInClosets',
-  Microwave: 'Microwave',
-  Refrigerator: 'Refrigerator',
-  Pool: 'Pool',
-  Gym: 'Gym',
-  Parking: 'Parking',
-  PetsAllowed: 'PetsAllowed',
-  WiFi: 'WiFi'
-};
-
-export type Amenity = (typeof Amenity)[keyof typeof Amenity]
-
-
-export const PropertyType: {
-  Rooms: 'Rooms',
-  Tinyhouse: 'Tinyhouse',
+  export const PropertyType: {
+  SelfContain: 'SelfContain',
   Apartment: 'Apartment',
-  Villa: 'Villa',
-  Townhouse: 'Townhouse',
-  Cottage: 'Cottage'
+  Bungalow: 'Bungalow',
+  Duplex: 'Duplex'
 };
 
 export type PropertyType = (typeof PropertyType)[keyof typeof PropertyType]
@@ -164,6 +142,26 @@ export const PaymentStatus: {
 export type PaymentStatus = (typeof PaymentStatus)[keyof typeof PaymentStatus]
 
 
+export const PropertyStatus: {
+  Available: 'Available',
+  Closed: 'Closed',
+  UnderMaintenance: 'UnderMaintenance'
+};
+
+export type PropertyStatus = (typeof PropertyStatus)[keyof typeof PropertyStatus]
+
+
+export const WithdrawalStatus: {
+  Pending: 'Pending',
+  Processing: 'Processing',
+  Completed: 'Completed',
+  Failed: 'Failed',
+  Cancelled: 'Cancelled'
+};
+
+export type WithdrawalStatus = (typeof WithdrawalStatus)[keyof typeof WithdrawalStatus]
+
+
 export const TaskStatus: {
   Pending: 'Pending',
   InProgress: 'InProgress',
@@ -183,15 +181,18 @@ export const TaskPriority: {
 
 export type TaskPriority = (typeof TaskPriority)[keyof typeof TaskPriority]
 
+
+export const InspectionStatus: {
+  Pending: 'Pending',
+  Approved: 'Approved',
+  Rejected: 'Rejected',
+  Completed: 'Completed',
+  Cancelled: 'Cancelled'
+};
+
+export type InspectionStatus = (typeof InspectionStatus)[keyof typeof InspectionStatus]
+
 }
-
-export type Highlight = $Enums.Highlight
-
-export const Highlight: typeof $Enums.Highlight
-
-export type Amenity = $Enums.Amenity
-
-export const Amenity: typeof $Enums.Amenity
 
 export type PropertyType = $Enums.PropertyType
 
@@ -205,6 +206,14 @@ export type PaymentStatus = $Enums.PaymentStatus
 
 export const PaymentStatus: typeof $Enums.PaymentStatus
 
+export type PropertyStatus = $Enums.PropertyStatus
+
+export const PropertyStatus: typeof $Enums.PropertyStatus
+
+export type WithdrawalStatus = $Enums.WithdrawalStatus
+
+export const WithdrawalStatus: typeof $Enums.WithdrawalStatus
+
 export type TaskStatus = $Enums.TaskStatus
 
 export const TaskStatus: typeof $Enums.TaskStatus
@@ -212,6 +221,10 @@ export const TaskStatus: typeof $Enums.TaskStatus
 export type TaskPriority = $Enums.TaskPriority
 
 export const TaskPriority: typeof $Enums.TaskPriority
+
+export type InspectionStatus = $Enums.InspectionStatus
+
+export const InspectionStatus: typeof $Enums.InspectionStatus
 
 /**
  * ##  Prisma Client ʲˢ
@@ -487,6 +500,46 @@ export class PrismaClient<
     * ```
     */
   get landlordSurvey(): Prisma.LandlordSurveyDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.emailSubscription`: Exposes CRUD operations for the **EmailSubscription** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more EmailSubscriptions
+    * const emailSubscriptions = await prisma.emailSubscription.findMany()
+    * ```
+    */
+  get emailSubscription(): Prisma.EmailSubscriptionDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.inspection`: Exposes CRUD operations for the **Inspection** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Inspections
+    * const inspections = await prisma.inspection.findMany()
+    * ```
+    */
+  get inspection(): Prisma.InspectionDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.inspectionLimit`: Exposes CRUD operations for the **InspectionLimit** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more InspectionLimits
+    * const inspectionLimits = await prisma.inspectionLimit.findMany()
+    * ```
+    */
+  get inspectionLimit(): Prisma.InspectionLimitDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.withdrawal`: Exposes CRUD operations for the **Withdrawal** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Withdrawals
+    * const withdrawals = await prisma.withdrawal.findMany()
+    * ```
+    */
+  get withdrawal(): Prisma.WithdrawalDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -941,7 +994,11 @@ export namespace Prisma {
     Payment: 'Payment',
     AdminSettings: 'AdminSettings',
     TenantSurvey: 'TenantSurvey',
-    LandlordSurvey: 'LandlordSurvey'
+    LandlordSurvey: 'LandlordSurvey',
+    EmailSubscription: 'EmailSubscription',
+    Inspection: 'Inspection',
+    InspectionLimit: 'InspectionLimit',
+    Withdrawal: 'Withdrawal'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -957,7 +1014,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> = {
     meta: {
-      modelProps: "property" | "landlord" | "tenant" | "agent" | "admin" | "landlordRegistrationCode" | "agentRegistrationCode" | "task" | "location" | "application" | "lease" | "payment" | "adminSettings" | "tenantSurvey" | "landlordSurvey"
+      modelProps: "property" | "landlord" | "tenant" | "agent" | "admin" | "landlordRegistrationCode" | "agentRegistrationCode" | "task" | "location" | "application" | "lease" | "payment" | "adminSettings" | "tenantSurvey" | "landlordSurvey" | "emailSubscription" | "inspection" | "inspectionLimit" | "withdrawal"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -2055,6 +2112,302 @@ export namespace Prisma {
           }
         }
       }
+      EmailSubscription: {
+        payload: Prisma.$EmailSubscriptionPayload<ExtArgs>
+        fields: Prisma.EmailSubscriptionFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.EmailSubscriptionFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EmailSubscriptionPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.EmailSubscriptionFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EmailSubscriptionPayload>
+          }
+          findFirst: {
+            args: Prisma.EmailSubscriptionFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EmailSubscriptionPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.EmailSubscriptionFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EmailSubscriptionPayload>
+          }
+          findMany: {
+            args: Prisma.EmailSubscriptionFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EmailSubscriptionPayload>[]
+          }
+          create: {
+            args: Prisma.EmailSubscriptionCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EmailSubscriptionPayload>
+          }
+          createMany: {
+            args: Prisma.EmailSubscriptionCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.EmailSubscriptionCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EmailSubscriptionPayload>[]
+          }
+          delete: {
+            args: Prisma.EmailSubscriptionDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EmailSubscriptionPayload>
+          }
+          update: {
+            args: Prisma.EmailSubscriptionUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EmailSubscriptionPayload>
+          }
+          deleteMany: {
+            args: Prisma.EmailSubscriptionDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.EmailSubscriptionUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.EmailSubscriptionUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EmailSubscriptionPayload>[]
+          }
+          upsert: {
+            args: Prisma.EmailSubscriptionUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EmailSubscriptionPayload>
+          }
+          aggregate: {
+            args: Prisma.EmailSubscriptionAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateEmailSubscription>
+          }
+          groupBy: {
+            args: Prisma.EmailSubscriptionGroupByArgs<ExtArgs>
+            result: $Utils.Optional<EmailSubscriptionGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.EmailSubscriptionCountArgs<ExtArgs>
+            result: $Utils.Optional<EmailSubscriptionCountAggregateOutputType> | number
+          }
+        }
+      }
+      Inspection: {
+        payload: Prisma.$InspectionPayload<ExtArgs>
+        fields: Prisma.InspectionFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.InspectionFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InspectionPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.InspectionFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InspectionPayload>
+          }
+          findFirst: {
+            args: Prisma.InspectionFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InspectionPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.InspectionFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InspectionPayload>
+          }
+          findMany: {
+            args: Prisma.InspectionFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InspectionPayload>[]
+          }
+          create: {
+            args: Prisma.InspectionCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InspectionPayload>
+          }
+          createMany: {
+            args: Prisma.InspectionCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.InspectionCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InspectionPayload>[]
+          }
+          delete: {
+            args: Prisma.InspectionDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InspectionPayload>
+          }
+          update: {
+            args: Prisma.InspectionUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InspectionPayload>
+          }
+          deleteMany: {
+            args: Prisma.InspectionDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.InspectionUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.InspectionUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InspectionPayload>[]
+          }
+          upsert: {
+            args: Prisma.InspectionUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InspectionPayload>
+          }
+          aggregate: {
+            args: Prisma.InspectionAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateInspection>
+          }
+          groupBy: {
+            args: Prisma.InspectionGroupByArgs<ExtArgs>
+            result: $Utils.Optional<InspectionGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.InspectionCountArgs<ExtArgs>
+            result: $Utils.Optional<InspectionCountAggregateOutputType> | number
+          }
+        }
+      }
+      InspectionLimit: {
+        payload: Prisma.$InspectionLimitPayload<ExtArgs>
+        fields: Prisma.InspectionLimitFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.InspectionLimitFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InspectionLimitPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.InspectionLimitFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InspectionLimitPayload>
+          }
+          findFirst: {
+            args: Prisma.InspectionLimitFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InspectionLimitPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.InspectionLimitFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InspectionLimitPayload>
+          }
+          findMany: {
+            args: Prisma.InspectionLimitFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InspectionLimitPayload>[]
+          }
+          create: {
+            args: Prisma.InspectionLimitCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InspectionLimitPayload>
+          }
+          createMany: {
+            args: Prisma.InspectionLimitCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.InspectionLimitCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InspectionLimitPayload>[]
+          }
+          delete: {
+            args: Prisma.InspectionLimitDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InspectionLimitPayload>
+          }
+          update: {
+            args: Prisma.InspectionLimitUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InspectionLimitPayload>
+          }
+          deleteMany: {
+            args: Prisma.InspectionLimitDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.InspectionLimitUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.InspectionLimitUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InspectionLimitPayload>[]
+          }
+          upsert: {
+            args: Prisma.InspectionLimitUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InspectionLimitPayload>
+          }
+          aggregate: {
+            args: Prisma.InspectionLimitAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateInspectionLimit>
+          }
+          groupBy: {
+            args: Prisma.InspectionLimitGroupByArgs<ExtArgs>
+            result: $Utils.Optional<InspectionLimitGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.InspectionLimitCountArgs<ExtArgs>
+            result: $Utils.Optional<InspectionLimitCountAggregateOutputType> | number
+          }
+        }
+      }
+      Withdrawal: {
+        payload: Prisma.$WithdrawalPayload<ExtArgs>
+        fields: Prisma.WithdrawalFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.WithdrawalFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WithdrawalPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.WithdrawalFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WithdrawalPayload>
+          }
+          findFirst: {
+            args: Prisma.WithdrawalFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WithdrawalPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.WithdrawalFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WithdrawalPayload>
+          }
+          findMany: {
+            args: Prisma.WithdrawalFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WithdrawalPayload>[]
+          }
+          create: {
+            args: Prisma.WithdrawalCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WithdrawalPayload>
+          }
+          createMany: {
+            args: Prisma.WithdrawalCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.WithdrawalCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WithdrawalPayload>[]
+          }
+          delete: {
+            args: Prisma.WithdrawalDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WithdrawalPayload>
+          }
+          update: {
+            args: Prisma.WithdrawalUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WithdrawalPayload>
+          }
+          deleteMany: {
+            args: Prisma.WithdrawalDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.WithdrawalUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.WithdrawalUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WithdrawalPayload>[]
+          }
+          upsert: {
+            args: Prisma.WithdrawalUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WithdrawalPayload>
+          }
+          aggregate: {
+            args: Prisma.WithdrawalAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateWithdrawal>
+          }
+          groupBy: {
+            args: Prisma.WithdrawalGroupByArgs<ExtArgs>
+            result: $Utils.Optional<WithdrawalGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.WithdrawalCountArgs<ExtArgs>
+            result: $Utils.Optional<WithdrawalCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -2154,6 +2507,10 @@ export namespace Prisma {
     adminSettings?: AdminSettingsOmit
     tenantSurvey?: TenantSurveyOmit
     landlordSurvey?: LandlordSurveyOmit
+    emailSubscription?: EmailSubscriptionOmit
+    inspection?: InspectionOmit
+    inspectionLimit?: InspectionLimitOmit
+    withdrawal?: WithdrawalOmit
   }
 
   /* Types for Logging */
@@ -2252,6 +2609,7 @@ export namespace Prisma {
     applications: number
     favoritedBy: number
     tenants: number
+    inspections: number
   }
 
   export type PropertyCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2259,6 +2617,7 @@ export namespace Prisma {
     applications?: boolean | PropertyCountOutputTypeCountApplicationsArgs
     favoritedBy?: boolean | PropertyCountOutputTypeCountFavoritedByArgs
     tenants?: boolean | PropertyCountOutputTypeCountTenantsArgs
+    inspections?: boolean | PropertyCountOutputTypeCountInspectionsArgs
   }
 
   // Custom InputTypes
@@ -2300,6 +2659,13 @@ export namespace Prisma {
     where?: TenantWhereInput
   }
 
+  /**
+   * PropertyCountOutputType without action
+   */
+  export type PropertyCountOutputTypeCountInspectionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: InspectionWhereInput
+  }
+
 
   /**
    * Count Type LandlordCountOutputType
@@ -2307,10 +2673,12 @@ export namespace Prisma {
 
   export type LandlordCountOutputType = {
     managedProperties: number
+    withdrawals: number
   }
 
   export type LandlordCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     managedProperties?: boolean | LandlordCountOutputTypeCountManagedPropertiesArgs
+    withdrawals?: boolean | LandlordCountOutputTypeCountWithdrawalsArgs
   }
 
   // Custom InputTypes
@@ -2331,6 +2699,13 @@ export namespace Prisma {
     where?: PropertyWhereInput
   }
 
+  /**
+   * LandlordCountOutputType without action
+   */
+  export type LandlordCountOutputTypeCountWithdrawalsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: WithdrawalWhereInput
+  }
+
 
   /**
    * Count Type TenantCountOutputType
@@ -2341,6 +2716,7 @@ export namespace Prisma {
     favorites: number
     applications: number
     leases: number
+    inspections: number
   }
 
   export type TenantCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2348,6 +2724,7 @@ export namespace Prisma {
     favorites?: boolean | TenantCountOutputTypeCountFavoritesArgs
     applications?: boolean | TenantCountOutputTypeCountApplicationsArgs
     leases?: boolean | TenantCountOutputTypeCountLeasesArgs
+    inspections?: boolean | TenantCountOutputTypeCountInspectionsArgs
   }
 
   // Custom InputTypes
@@ -2389,6 +2766,13 @@ export namespace Prisma {
     where?: LeaseWhereInput
   }
 
+  /**
+   * TenantCountOutputType without action
+   */
+  export type TenantCountOutputTypeCountInspectionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: InspectionWhereInput
+  }
+
 
   /**
    * Count Type AgentCountOutputType
@@ -2396,10 +2780,12 @@ export namespace Prisma {
 
   export type AgentCountOutputType = {
     assignedTasks: number
+    inspections: number
   }
 
   export type AgentCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     assignedTasks?: boolean | AgentCountOutputTypeCountAssignedTasksArgs
+    inspections?: boolean | AgentCountOutputTypeCountInspectionsArgs
   }
 
   // Custom InputTypes
@@ -2418,6 +2804,13 @@ export namespace Prisma {
    */
   export type AgentCountOutputTypeCountAssignedTasksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: TaskWhereInput
+  }
+
+  /**
+   * AgentCountOutputType without action
+   */
+  export type AgentCountOutputTypeCountInspectionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: InspectionWhereInput
   }
 
 
@@ -2565,7 +2958,6 @@ export namespace Prisma {
     id: number | null
     pricePerYear: number | null
     securityDeposit: number | null
-    applicationFee: number | null
     beds: number | null
     baths: number | null
     squareFeet: number | null
@@ -2578,7 +2970,6 @@ export namespace Prisma {
     id: number | null
     pricePerYear: number | null
     securityDeposit: number | null
-    applicationFee: number | null
     beds: number | null
     baths: number | null
     squareFeet: number | null
@@ -2593,13 +2984,14 @@ export namespace Prisma {
     description: string | null
     pricePerYear: number | null
     securityDeposit: number | null
-    applicationFee: number | null
-    isPetsAllowed: boolean | null
+    amenities: string | null
+    highlights: string | null
     isParkingIncluded: boolean | null
     beds: number | null
     baths: number | null
     squareFeet: number | null
     propertyType: $Enums.PropertyType | null
+    status: $Enums.PropertyStatus | null
     postedDate: Date | null
     averageRating: number | null
     numberOfReviews: number | null
@@ -2613,13 +3005,14 @@ export namespace Prisma {
     description: string | null
     pricePerYear: number | null
     securityDeposit: number | null
-    applicationFee: number | null
-    isPetsAllowed: boolean | null
+    amenities: string | null
+    highlights: string | null
     isParkingIncluded: boolean | null
     beds: number | null
     baths: number | null
     squareFeet: number | null
     propertyType: $Enums.PropertyType | null
+    status: $Enums.PropertyStatus | null
     postedDate: Date | null
     averageRating: number | null
     numberOfReviews: number | null
@@ -2633,16 +3026,15 @@ export namespace Prisma {
     description: number
     pricePerYear: number
     securityDeposit: number
-    applicationFee: number
     photoUrls: number
     amenities: number
     highlights: number
-    isPetsAllowed: number
     isParkingIncluded: number
     beds: number
     baths: number
     squareFeet: number
     propertyType: number
+    status: number
     postedDate: number
     averageRating: number
     numberOfReviews: number
@@ -2656,7 +3048,6 @@ export namespace Prisma {
     id?: true
     pricePerYear?: true
     securityDeposit?: true
-    applicationFee?: true
     beds?: true
     baths?: true
     squareFeet?: true
@@ -2669,7 +3060,6 @@ export namespace Prisma {
     id?: true
     pricePerYear?: true
     securityDeposit?: true
-    applicationFee?: true
     beds?: true
     baths?: true
     squareFeet?: true
@@ -2684,13 +3074,14 @@ export namespace Prisma {
     description?: true
     pricePerYear?: true
     securityDeposit?: true
-    applicationFee?: true
-    isPetsAllowed?: true
+    amenities?: true
+    highlights?: true
     isParkingIncluded?: true
     beds?: true
     baths?: true
     squareFeet?: true
     propertyType?: true
+    status?: true
     postedDate?: true
     averageRating?: true
     numberOfReviews?: true
@@ -2704,13 +3095,14 @@ export namespace Prisma {
     description?: true
     pricePerYear?: true
     securityDeposit?: true
-    applicationFee?: true
-    isPetsAllowed?: true
+    amenities?: true
+    highlights?: true
     isParkingIncluded?: true
     beds?: true
     baths?: true
     squareFeet?: true
     propertyType?: true
+    status?: true
     postedDate?: true
     averageRating?: true
     numberOfReviews?: true
@@ -2724,16 +3116,15 @@ export namespace Prisma {
     description?: true
     pricePerYear?: true
     securityDeposit?: true
-    applicationFee?: true
     photoUrls?: true
     amenities?: true
     highlights?: true
-    isPetsAllowed?: true
     isParkingIncluded?: true
     beds?: true
     baths?: true
     squareFeet?: true
     propertyType?: true
+    status?: true
     postedDate?: true
     averageRating?: true
     numberOfReviews?: true
@@ -2834,16 +3225,15 @@ export namespace Prisma {
     description: string
     pricePerYear: number
     securityDeposit: number
-    applicationFee: number
     photoUrls: string[]
-    amenities: $Enums.Amenity[]
-    highlights: $Enums.Highlight[]
-    isPetsAllowed: boolean
+    amenities: string | null
+    highlights: string | null
     isParkingIncluded: boolean
     beds: number
     baths: number
     squareFeet: number
     propertyType: $Enums.PropertyType
+    status: $Enums.PropertyStatus
     postedDate: Date
     averageRating: number | null
     numberOfReviews: number | null
@@ -2876,16 +3266,15 @@ export namespace Prisma {
     description?: boolean
     pricePerYear?: boolean
     securityDeposit?: boolean
-    applicationFee?: boolean
     photoUrls?: boolean
     amenities?: boolean
     highlights?: boolean
-    isPetsAllowed?: boolean
     isParkingIncluded?: boolean
     beds?: boolean
     baths?: boolean
     squareFeet?: boolean
     propertyType?: boolean
+    status?: boolean
     postedDate?: boolean
     averageRating?: boolean
     numberOfReviews?: boolean
@@ -2897,6 +3286,7 @@ export namespace Prisma {
     applications?: boolean | Property$applicationsArgs<ExtArgs>
     favoritedBy?: boolean | Property$favoritedByArgs<ExtArgs>
     tenants?: boolean | Property$tenantsArgs<ExtArgs>
+    inspections?: boolean | Property$inspectionsArgs<ExtArgs>
     _count?: boolean | PropertyCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["property"]>
 
@@ -2906,16 +3296,15 @@ export namespace Prisma {
     description?: boolean
     pricePerYear?: boolean
     securityDeposit?: boolean
-    applicationFee?: boolean
     photoUrls?: boolean
     amenities?: boolean
     highlights?: boolean
-    isPetsAllowed?: boolean
     isParkingIncluded?: boolean
     beds?: boolean
     baths?: boolean
     squareFeet?: boolean
     propertyType?: boolean
+    status?: boolean
     postedDate?: boolean
     averageRating?: boolean
     numberOfReviews?: boolean
@@ -2931,16 +3320,15 @@ export namespace Prisma {
     description?: boolean
     pricePerYear?: boolean
     securityDeposit?: boolean
-    applicationFee?: boolean
     photoUrls?: boolean
     amenities?: boolean
     highlights?: boolean
-    isPetsAllowed?: boolean
     isParkingIncluded?: boolean
     beds?: boolean
     baths?: boolean
     squareFeet?: boolean
     propertyType?: boolean
+    status?: boolean
     postedDate?: boolean
     averageRating?: boolean
     numberOfReviews?: boolean
@@ -2956,16 +3344,15 @@ export namespace Prisma {
     description?: boolean
     pricePerYear?: boolean
     securityDeposit?: boolean
-    applicationFee?: boolean
     photoUrls?: boolean
     amenities?: boolean
     highlights?: boolean
-    isPetsAllowed?: boolean
     isParkingIncluded?: boolean
     beds?: boolean
     baths?: boolean
     squareFeet?: boolean
     propertyType?: boolean
+    status?: boolean
     postedDate?: boolean
     averageRating?: boolean
     numberOfReviews?: boolean
@@ -2973,7 +3360,7 @@ export namespace Prisma {
     landlordCognitoId?: boolean
   }
 
-  export type PropertyOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "description" | "pricePerYear" | "securityDeposit" | "applicationFee" | "photoUrls" | "amenities" | "highlights" | "isPetsAllowed" | "isParkingIncluded" | "beds" | "baths" | "squareFeet" | "propertyType" | "postedDate" | "averageRating" | "numberOfReviews" | "locationId" | "landlordCognitoId", ExtArgs["result"]["property"]>
+  export type PropertyOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "description" | "pricePerYear" | "securityDeposit" | "photoUrls" | "amenities" | "highlights" | "isParkingIncluded" | "beds" | "baths" | "squareFeet" | "propertyType" | "status" | "postedDate" | "averageRating" | "numberOfReviews" | "locationId" | "landlordCognitoId", ExtArgs["result"]["property"]>
   export type PropertyInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     location?: boolean | LocationDefaultArgs<ExtArgs>
     landlord?: boolean | LandlordDefaultArgs<ExtArgs>
@@ -2981,6 +3368,7 @@ export namespace Prisma {
     applications?: boolean | Property$applicationsArgs<ExtArgs>
     favoritedBy?: boolean | Property$favoritedByArgs<ExtArgs>
     tenants?: boolean | Property$tenantsArgs<ExtArgs>
+    inspections?: boolean | Property$inspectionsArgs<ExtArgs>
     _count?: boolean | PropertyCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type PropertyIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3001,6 +3389,7 @@ export namespace Prisma {
       applications: Prisma.$ApplicationPayload<ExtArgs>[]
       favoritedBy: Prisma.$TenantPayload<ExtArgs>[]
       tenants: Prisma.$TenantPayload<ExtArgs>[]
+      inspections: Prisma.$InspectionPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -3008,16 +3397,15 @@ export namespace Prisma {
       description: string
       pricePerYear: number
       securityDeposit: number
-      applicationFee: number
       photoUrls: string[]
-      amenities: $Enums.Amenity[]
-      highlights: $Enums.Highlight[]
-      isPetsAllowed: boolean
+      amenities: string | null
+      highlights: string | null
       isParkingIncluded: boolean
       beds: number
       baths: number
       squareFeet: number
       propertyType: $Enums.PropertyType
+      status: $Enums.PropertyStatus
       postedDate: Date
       averageRating: number | null
       numberOfReviews: number | null
@@ -3423,6 +3811,7 @@ export namespace Prisma {
     applications<T extends Property$applicationsArgs<ExtArgs> = {}>(args?: Subset<T, Property$applicationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ApplicationPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
     favoritedBy<T extends Property$favoritedByArgs<ExtArgs> = {}>(args?: Subset<T, Property$favoritedByArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TenantPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
     tenants<T extends Property$tenantsArgs<ExtArgs> = {}>(args?: Subset<T, Property$tenantsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TenantPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
+    inspections<T extends Property$inspectionsArgs<ExtArgs> = {}>(args?: Subset<T, Property$inspectionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InspectionPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3457,16 +3846,15 @@ export namespace Prisma {
     readonly description: FieldRef<"Property", 'String'>
     readonly pricePerYear: FieldRef<"Property", 'Float'>
     readonly securityDeposit: FieldRef<"Property", 'Float'>
-    readonly applicationFee: FieldRef<"Property", 'Float'>
     readonly photoUrls: FieldRef<"Property", 'String[]'>
-    readonly amenities: FieldRef<"Property", 'Amenity[]'>
-    readonly highlights: FieldRef<"Property", 'Highlight[]'>
-    readonly isPetsAllowed: FieldRef<"Property", 'Boolean'>
+    readonly amenities: FieldRef<"Property", 'String'>
+    readonly highlights: FieldRef<"Property", 'String'>
     readonly isParkingIncluded: FieldRef<"Property", 'Boolean'>
     readonly beds: FieldRef<"Property", 'Int'>
     readonly baths: FieldRef<"Property", 'Float'>
     readonly squareFeet: FieldRef<"Property", 'Int'>
     readonly propertyType: FieldRef<"Property", 'PropertyType'>
+    readonly status: FieldRef<"Property", 'PropertyStatus'>
     readonly postedDate: FieldRef<"Property", 'DateTime'>
     readonly averageRating: FieldRef<"Property", 'Float'>
     readonly numberOfReviews: FieldRef<"Property", 'Int'>
@@ -3964,6 +4352,30 @@ export namespace Prisma {
   }
 
   /**
+   * Property.inspections
+   */
+  export type Property$inspectionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Inspection
+     */
+    select?: InspectionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Inspection
+     */
+    omit?: InspectionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InspectionInclude<ExtArgs> | null
+    where?: InspectionWhereInput
+    orderBy?: InspectionOrderByWithRelationInput | InspectionOrderByWithRelationInput[]
+    cursor?: InspectionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: InspectionScalarFieldEnum | InspectionScalarFieldEnum[]
+  }
+
+  /**
    * Property without action
    */
   export type PropertyDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -4011,6 +4423,27 @@ export namespace Prisma {
     email: string | null
     phoneNumber: string | null
     registrationCodeId: number | null
+    currentAddress: string | null
+    city: string | null
+    state: string | null
+    country: string | null
+    postalCode: string | null
+    bankName: string | null
+    accountNumber: string | null
+    accountName: string | null
+    bankCode: string | null
+    businessName: string | null
+    businessType: string | null
+    taxId: string | null
+    dateOfBirth: Date | null
+    nationality: string | null
+    occupation: string | null
+    emergencyContactName: string | null
+    emergencyContactPhone: string | null
+    isOnboardingComplete: boolean | null
+    onboardedAt: Date | null
+    createdAt: Date | null
+    updatedAt: Date | null
   }
 
   export type LandlordMaxAggregateOutputType = {
@@ -4020,6 +4453,27 @@ export namespace Prisma {
     email: string | null
     phoneNumber: string | null
     registrationCodeId: number | null
+    currentAddress: string | null
+    city: string | null
+    state: string | null
+    country: string | null
+    postalCode: string | null
+    bankName: string | null
+    accountNumber: string | null
+    accountName: string | null
+    bankCode: string | null
+    businessName: string | null
+    businessType: string | null
+    taxId: string | null
+    dateOfBirth: Date | null
+    nationality: string | null
+    occupation: string | null
+    emergencyContactName: string | null
+    emergencyContactPhone: string | null
+    isOnboardingComplete: boolean | null
+    onboardedAt: Date | null
+    createdAt: Date | null
+    updatedAt: Date | null
   }
 
   export type LandlordCountAggregateOutputType = {
@@ -4029,6 +4483,27 @@ export namespace Prisma {
     email: number
     phoneNumber: number
     registrationCodeId: number
+    currentAddress: number
+    city: number
+    state: number
+    country: number
+    postalCode: number
+    bankName: number
+    accountNumber: number
+    accountName: number
+    bankCode: number
+    businessName: number
+    businessType: number
+    taxId: number
+    dateOfBirth: number
+    nationality: number
+    occupation: number
+    emergencyContactName: number
+    emergencyContactPhone: number
+    isOnboardingComplete: number
+    onboardedAt: number
+    createdAt: number
+    updatedAt: number
     _all: number
   }
 
@@ -4050,6 +4525,27 @@ export namespace Prisma {
     email?: true
     phoneNumber?: true
     registrationCodeId?: true
+    currentAddress?: true
+    city?: true
+    state?: true
+    country?: true
+    postalCode?: true
+    bankName?: true
+    accountNumber?: true
+    accountName?: true
+    bankCode?: true
+    businessName?: true
+    businessType?: true
+    taxId?: true
+    dateOfBirth?: true
+    nationality?: true
+    occupation?: true
+    emergencyContactName?: true
+    emergencyContactPhone?: true
+    isOnboardingComplete?: true
+    onboardedAt?: true
+    createdAt?: true
+    updatedAt?: true
   }
 
   export type LandlordMaxAggregateInputType = {
@@ -4059,6 +4555,27 @@ export namespace Prisma {
     email?: true
     phoneNumber?: true
     registrationCodeId?: true
+    currentAddress?: true
+    city?: true
+    state?: true
+    country?: true
+    postalCode?: true
+    bankName?: true
+    accountNumber?: true
+    accountName?: true
+    bankCode?: true
+    businessName?: true
+    businessType?: true
+    taxId?: true
+    dateOfBirth?: true
+    nationality?: true
+    occupation?: true
+    emergencyContactName?: true
+    emergencyContactPhone?: true
+    isOnboardingComplete?: true
+    onboardedAt?: true
+    createdAt?: true
+    updatedAt?: true
   }
 
   export type LandlordCountAggregateInputType = {
@@ -4068,6 +4585,27 @@ export namespace Prisma {
     email?: true
     phoneNumber?: true
     registrationCodeId?: true
+    currentAddress?: true
+    city?: true
+    state?: true
+    country?: true
+    postalCode?: true
+    bankName?: true
+    accountNumber?: true
+    accountName?: true
+    bankCode?: true
+    businessName?: true
+    businessType?: true
+    taxId?: true
+    dateOfBirth?: true
+    nationality?: true
+    occupation?: true
+    emergencyContactName?: true
+    emergencyContactPhone?: true
+    isOnboardingComplete?: true
+    onboardedAt?: true
+    createdAt?: true
+    updatedAt?: true
     _all?: true
   }
 
@@ -4164,6 +4702,27 @@ export namespace Prisma {
     email: string
     phoneNumber: string
     registrationCodeId: number | null
+    currentAddress: string | null
+    city: string | null
+    state: string | null
+    country: string | null
+    postalCode: string | null
+    bankName: string | null
+    accountNumber: string | null
+    accountName: string | null
+    bankCode: string | null
+    businessName: string | null
+    businessType: string | null
+    taxId: string | null
+    dateOfBirth: Date | null
+    nationality: string | null
+    occupation: string | null
+    emergencyContactName: string | null
+    emergencyContactPhone: string | null
+    isOnboardingComplete: boolean
+    onboardedAt: Date | null
+    createdAt: Date
+    updatedAt: Date
     _count: LandlordCountAggregateOutputType | null
     _avg: LandlordAvgAggregateOutputType | null
     _sum: LandlordSumAggregateOutputType | null
@@ -4192,8 +4751,30 @@ export namespace Prisma {
     email?: boolean
     phoneNumber?: boolean
     registrationCodeId?: boolean
+    currentAddress?: boolean
+    city?: boolean
+    state?: boolean
+    country?: boolean
+    postalCode?: boolean
+    bankName?: boolean
+    accountNumber?: boolean
+    accountName?: boolean
+    bankCode?: boolean
+    businessName?: boolean
+    businessType?: boolean
+    taxId?: boolean
+    dateOfBirth?: boolean
+    nationality?: boolean
+    occupation?: boolean
+    emergencyContactName?: boolean
+    emergencyContactPhone?: boolean
+    isOnboardingComplete?: boolean
+    onboardedAt?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
     managedProperties?: boolean | Landlord$managedPropertiesArgs<ExtArgs>
     registrationCode?: boolean | Landlord$registrationCodeArgs<ExtArgs>
+    withdrawals?: boolean | Landlord$withdrawalsArgs<ExtArgs>
     _count?: boolean | LandlordCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["landlord"]>
 
@@ -4204,6 +4785,27 @@ export namespace Prisma {
     email?: boolean
     phoneNumber?: boolean
     registrationCodeId?: boolean
+    currentAddress?: boolean
+    city?: boolean
+    state?: boolean
+    country?: boolean
+    postalCode?: boolean
+    bankName?: boolean
+    accountNumber?: boolean
+    accountName?: boolean
+    bankCode?: boolean
+    businessName?: boolean
+    businessType?: boolean
+    taxId?: boolean
+    dateOfBirth?: boolean
+    nationality?: boolean
+    occupation?: boolean
+    emergencyContactName?: boolean
+    emergencyContactPhone?: boolean
+    isOnboardingComplete?: boolean
+    onboardedAt?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
     registrationCode?: boolean | Landlord$registrationCodeArgs<ExtArgs>
   }, ExtArgs["result"]["landlord"]>
 
@@ -4214,6 +4816,27 @@ export namespace Prisma {
     email?: boolean
     phoneNumber?: boolean
     registrationCodeId?: boolean
+    currentAddress?: boolean
+    city?: boolean
+    state?: boolean
+    country?: boolean
+    postalCode?: boolean
+    bankName?: boolean
+    accountNumber?: boolean
+    accountName?: boolean
+    bankCode?: boolean
+    businessName?: boolean
+    businessType?: boolean
+    taxId?: boolean
+    dateOfBirth?: boolean
+    nationality?: boolean
+    occupation?: boolean
+    emergencyContactName?: boolean
+    emergencyContactPhone?: boolean
+    isOnboardingComplete?: boolean
+    onboardedAt?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
     registrationCode?: boolean | Landlord$registrationCodeArgs<ExtArgs>
   }, ExtArgs["result"]["landlord"]>
 
@@ -4224,12 +4847,34 @@ export namespace Prisma {
     email?: boolean
     phoneNumber?: boolean
     registrationCodeId?: boolean
+    currentAddress?: boolean
+    city?: boolean
+    state?: boolean
+    country?: boolean
+    postalCode?: boolean
+    bankName?: boolean
+    accountNumber?: boolean
+    accountName?: boolean
+    bankCode?: boolean
+    businessName?: boolean
+    businessType?: boolean
+    taxId?: boolean
+    dateOfBirth?: boolean
+    nationality?: boolean
+    occupation?: boolean
+    emergencyContactName?: boolean
+    emergencyContactPhone?: boolean
+    isOnboardingComplete?: boolean
+    onboardedAt?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
   }
 
-  export type LandlordOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "cognitoId" | "name" | "email" | "phoneNumber" | "registrationCodeId", ExtArgs["result"]["landlord"]>
+  export type LandlordOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "cognitoId" | "name" | "email" | "phoneNumber" | "registrationCodeId" | "currentAddress" | "city" | "state" | "country" | "postalCode" | "bankName" | "accountNumber" | "accountName" | "bankCode" | "businessName" | "businessType" | "taxId" | "dateOfBirth" | "nationality" | "occupation" | "emergencyContactName" | "emergencyContactPhone" | "isOnboardingComplete" | "onboardedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["landlord"]>
   export type LandlordInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     managedProperties?: boolean | Landlord$managedPropertiesArgs<ExtArgs>
     registrationCode?: boolean | Landlord$registrationCodeArgs<ExtArgs>
+    withdrawals?: boolean | Landlord$withdrawalsArgs<ExtArgs>
     _count?: boolean | LandlordCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type LandlordIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -4244,6 +4889,7 @@ export namespace Prisma {
     objects: {
       managedProperties: Prisma.$PropertyPayload<ExtArgs>[]
       registrationCode: Prisma.$LandlordRegistrationCodePayload<ExtArgs> | null
+      withdrawals: Prisma.$WithdrawalPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -4252,6 +4898,27 @@ export namespace Prisma {
       email: string
       phoneNumber: string
       registrationCodeId: number | null
+      currentAddress: string | null
+      city: string | null
+      state: string | null
+      country: string | null
+      postalCode: string | null
+      bankName: string | null
+      accountNumber: string | null
+      accountName: string | null
+      bankCode: string | null
+      businessName: string | null
+      businessType: string | null
+      taxId: string | null
+      dateOfBirth: Date | null
+      nationality: string | null
+      occupation: string | null
+      emergencyContactName: string | null
+      emergencyContactPhone: string | null
+      isOnboardingComplete: boolean
+      onboardedAt: Date | null
+      createdAt: Date
+      updatedAt: Date
     }, ExtArgs["result"]["landlord"]>
     composites: {}
   }
@@ -4648,6 +5315,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     managedProperties<T extends Landlord$managedPropertiesArgs<ExtArgs> = {}>(args?: Subset<T, Landlord$managedPropertiesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PropertyPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
     registrationCode<T extends Landlord$registrationCodeArgs<ExtArgs> = {}>(args?: Subset<T, Landlord$registrationCodeArgs<ExtArgs>>): Prisma__LandlordRegistrationCodeClient<$Result.GetResult<Prisma.$LandlordRegistrationCodePayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | null, null, ExtArgs, ClientOptions>
+    withdrawals<T extends Landlord$withdrawalsArgs<ExtArgs> = {}>(args?: Subset<T, Landlord$withdrawalsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WithdrawalPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -4683,6 +5351,27 @@ export namespace Prisma {
     readonly email: FieldRef<"Landlord", 'String'>
     readonly phoneNumber: FieldRef<"Landlord", 'String'>
     readonly registrationCodeId: FieldRef<"Landlord", 'Int'>
+    readonly currentAddress: FieldRef<"Landlord", 'String'>
+    readonly city: FieldRef<"Landlord", 'String'>
+    readonly state: FieldRef<"Landlord", 'String'>
+    readonly country: FieldRef<"Landlord", 'String'>
+    readonly postalCode: FieldRef<"Landlord", 'String'>
+    readonly bankName: FieldRef<"Landlord", 'String'>
+    readonly accountNumber: FieldRef<"Landlord", 'String'>
+    readonly accountName: FieldRef<"Landlord", 'String'>
+    readonly bankCode: FieldRef<"Landlord", 'String'>
+    readonly businessName: FieldRef<"Landlord", 'String'>
+    readonly businessType: FieldRef<"Landlord", 'String'>
+    readonly taxId: FieldRef<"Landlord", 'String'>
+    readonly dateOfBirth: FieldRef<"Landlord", 'DateTime'>
+    readonly nationality: FieldRef<"Landlord", 'String'>
+    readonly occupation: FieldRef<"Landlord", 'String'>
+    readonly emergencyContactName: FieldRef<"Landlord", 'String'>
+    readonly emergencyContactPhone: FieldRef<"Landlord", 'String'>
+    readonly isOnboardingComplete: FieldRef<"Landlord", 'Boolean'>
+    readonly onboardedAt: FieldRef<"Landlord", 'DateTime'>
+    readonly createdAt: FieldRef<"Landlord", 'DateTime'>
+    readonly updatedAt: FieldRef<"Landlord", 'DateTime'>
   }
     
 
@@ -5122,6 +5811,30 @@ export namespace Prisma {
   }
 
   /**
+   * Landlord.withdrawals
+   */
+  export type Landlord$withdrawalsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Withdrawal
+     */
+    select?: WithdrawalSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Withdrawal
+     */
+    omit?: WithdrawalOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WithdrawalInclude<ExtArgs> | null
+    where?: WithdrawalWhereInput
+    orderBy?: WithdrawalOrderByWithRelationInput | WithdrawalOrderByWithRelationInput[]
+    cursor?: WithdrawalWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: WithdrawalScalarFieldEnum | WithdrawalScalarFieldEnum[]
+  }
+
+  /**
    * Landlord without action
    */
   export type LandlordDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -5342,6 +6055,8 @@ export namespace Prisma {
     favorites?: boolean | Tenant$favoritesArgs<ExtArgs>
     applications?: boolean | Tenant$applicationsArgs<ExtArgs>
     leases?: boolean | Tenant$leasesArgs<ExtArgs>
+    inspections?: boolean | Tenant$inspectionsArgs<ExtArgs>
+    inspectionLimit?: boolean | Tenant$inspectionLimitArgs<ExtArgs>
     _count?: boolean | TenantCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["tenant"]>
 
@@ -5375,6 +6090,8 @@ export namespace Prisma {
     favorites?: boolean | Tenant$favoritesArgs<ExtArgs>
     applications?: boolean | Tenant$applicationsArgs<ExtArgs>
     leases?: boolean | Tenant$leasesArgs<ExtArgs>
+    inspections?: boolean | Tenant$inspectionsArgs<ExtArgs>
+    inspectionLimit?: boolean | Tenant$inspectionLimitArgs<ExtArgs>
     _count?: boolean | TenantCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type TenantIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -5387,6 +6104,8 @@ export namespace Prisma {
       favorites: Prisma.$PropertyPayload<ExtArgs>[]
       applications: Prisma.$ApplicationPayload<ExtArgs>[]
       leases: Prisma.$LeasePayload<ExtArgs>[]
+      inspections: Prisma.$InspectionPayload<ExtArgs>[]
+      inspectionLimit: Prisma.$InspectionLimitPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -5792,6 +6511,8 @@ export namespace Prisma {
     favorites<T extends Tenant$favoritesArgs<ExtArgs> = {}>(args?: Subset<T, Tenant$favoritesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PropertyPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
     applications<T extends Tenant$applicationsArgs<ExtArgs> = {}>(args?: Subset<T, Tenant$applicationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ApplicationPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
     leases<T extends Tenant$leasesArgs<ExtArgs> = {}>(args?: Subset<T, Tenant$leasesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LeasePayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
+    inspections<T extends Tenant$inspectionsArgs<ExtArgs> = {}>(args?: Subset<T, Tenant$inspectionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InspectionPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
+    inspectionLimit<T extends Tenant$inspectionLimitArgs<ExtArgs> = {}>(args?: Subset<T, Tenant$inspectionLimitArgs<ExtArgs>>): Prisma__InspectionLimitClient<$Result.GetResult<Prisma.$InspectionLimitPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | null, null, ExtArgs, ClientOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -6310,6 +7031,49 @@ export namespace Prisma {
   }
 
   /**
+   * Tenant.inspections
+   */
+  export type Tenant$inspectionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Inspection
+     */
+    select?: InspectionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Inspection
+     */
+    omit?: InspectionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InspectionInclude<ExtArgs> | null
+    where?: InspectionWhereInput
+    orderBy?: InspectionOrderByWithRelationInput | InspectionOrderByWithRelationInput[]
+    cursor?: InspectionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: InspectionScalarFieldEnum | InspectionScalarFieldEnum[]
+  }
+
+  /**
+   * Tenant.inspectionLimit
+   */
+  export type Tenant$inspectionLimitArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InspectionLimit
+     */
+    select?: InspectionLimitSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InspectionLimit
+     */
+    omit?: InspectionLimitOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InspectionLimitInclude<ExtArgs> | null
+    where?: InspectionLimitWhereInput
+  }
+
+  /**
    * Tenant without action
    */
   export type TenantDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -6356,6 +7120,7 @@ export namespace Prisma {
     name: string | null
     email: string | null
     phoneNumber: string | null
+    address: string | null
     registrationCodeId: number | null
   }
 
@@ -6365,6 +7130,7 @@ export namespace Prisma {
     name: string | null
     email: string | null
     phoneNumber: string | null
+    address: string | null
     registrationCodeId: number | null
   }
 
@@ -6374,6 +7140,7 @@ export namespace Prisma {
     name: number
     email: number
     phoneNumber: number
+    address: number
     registrationCodeId: number
     _all: number
   }
@@ -6395,6 +7162,7 @@ export namespace Prisma {
     name?: true
     email?: true
     phoneNumber?: true
+    address?: true
     registrationCodeId?: true
   }
 
@@ -6404,6 +7172,7 @@ export namespace Prisma {
     name?: true
     email?: true
     phoneNumber?: true
+    address?: true
     registrationCodeId?: true
   }
 
@@ -6413,6 +7182,7 @@ export namespace Prisma {
     name?: true
     email?: true
     phoneNumber?: true
+    address?: true
     registrationCodeId?: true
     _all?: true
   }
@@ -6509,6 +7279,7 @@ export namespace Prisma {
     name: string
     email: string
     phoneNumber: string | null
+    address: string | null
     registrationCodeId: number | null
     _count: AgentCountAggregateOutputType | null
     _avg: AgentAvgAggregateOutputType | null
@@ -6537,9 +7308,11 @@ export namespace Prisma {
     name?: boolean
     email?: boolean
     phoneNumber?: boolean
+    address?: boolean
     registrationCodeId?: boolean
     registrationCode?: boolean | Agent$registrationCodeArgs<ExtArgs>
     assignedTasks?: boolean | Agent$assignedTasksArgs<ExtArgs>
+    inspections?: boolean | Agent$inspectionsArgs<ExtArgs>
     _count?: boolean | AgentCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["agent"]>
 
@@ -6549,6 +7322,7 @@ export namespace Prisma {
     name?: boolean
     email?: boolean
     phoneNumber?: boolean
+    address?: boolean
     registrationCodeId?: boolean
     registrationCode?: boolean | Agent$registrationCodeArgs<ExtArgs>
   }, ExtArgs["result"]["agent"]>
@@ -6559,6 +7333,7 @@ export namespace Prisma {
     name?: boolean
     email?: boolean
     phoneNumber?: boolean
+    address?: boolean
     registrationCodeId?: boolean
     registrationCode?: boolean | Agent$registrationCodeArgs<ExtArgs>
   }, ExtArgs["result"]["agent"]>
@@ -6569,13 +7344,15 @@ export namespace Prisma {
     name?: boolean
     email?: boolean
     phoneNumber?: boolean
+    address?: boolean
     registrationCodeId?: boolean
   }
 
-  export type AgentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "cognitoId" | "name" | "email" | "phoneNumber" | "registrationCodeId", ExtArgs["result"]["agent"]>
+  export type AgentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "cognitoId" | "name" | "email" | "phoneNumber" | "address" | "registrationCodeId", ExtArgs["result"]["agent"]>
   export type AgentInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     registrationCode?: boolean | Agent$registrationCodeArgs<ExtArgs>
     assignedTasks?: boolean | Agent$assignedTasksArgs<ExtArgs>
+    inspections?: boolean | Agent$inspectionsArgs<ExtArgs>
     _count?: boolean | AgentCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type AgentIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -6590,6 +7367,7 @@ export namespace Prisma {
     objects: {
       registrationCode: Prisma.$AgentRegistrationCodePayload<ExtArgs> | null
       assignedTasks: Prisma.$TaskPayload<ExtArgs>[]
+      inspections: Prisma.$InspectionPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -6597,6 +7375,7 @@ export namespace Prisma {
       name: string
       email: string
       phoneNumber: string | null
+      address: string | null
       registrationCodeId: number | null
     }, ExtArgs["result"]["agent"]>
     composites: {}
@@ -6994,6 +7773,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     registrationCode<T extends Agent$registrationCodeArgs<ExtArgs> = {}>(args?: Subset<T, Agent$registrationCodeArgs<ExtArgs>>): Prisma__AgentRegistrationCodeClient<$Result.GetResult<Prisma.$AgentRegistrationCodePayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | null, null, ExtArgs, ClientOptions>
     assignedTasks<T extends Agent$assignedTasksArgs<ExtArgs> = {}>(args?: Subset<T, Agent$assignedTasksArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
+    inspections<T extends Agent$inspectionsArgs<ExtArgs> = {}>(args?: Subset<T, Agent$inspectionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InspectionPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -7028,6 +7808,7 @@ export namespace Prisma {
     readonly name: FieldRef<"Agent", 'String'>
     readonly email: FieldRef<"Agent", 'String'>
     readonly phoneNumber: FieldRef<"Agent", 'String'>
+    readonly address: FieldRef<"Agent", 'String'>
     readonly registrationCodeId: FieldRef<"Agent", 'Int'>
   }
     
@@ -7465,6 +8246,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: TaskScalarFieldEnum | TaskScalarFieldEnum[]
+  }
+
+  /**
+   * Agent.inspections
+   */
+  export type Agent$inspectionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Inspection
+     */
+    select?: InspectionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Inspection
+     */
+    omit?: InspectionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InspectionInclude<ExtArgs> | null
+    where?: InspectionWhereInput
+    orderBy?: InspectionOrderByWithRelationInput | InspectionOrderByWithRelationInput[]
+    cursor?: InspectionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: InspectionScalarFieldEnum | InspectionScalarFieldEnum[]
   }
 
   /**
@@ -15824,7 +16629,7 @@ export namespace Prisma {
     dueDate: Date
     paymentDate: Date
     paymentStatus: $Enums.PaymentStatus
-    leaseId: number
+    leaseId: number | null
     _count: PaymentCountAggregateOutputType | null
     _avg: PaymentAvgAggregateOutputType | null
     _sum: PaymentSumAggregateOutputType | null
@@ -15854,7 +16659,7 @@ export namespace Prisma {
     paymentDate?: boolean
     paymentStatus?: boolean
     leaseId?: boolean
-    lease?: boolean | LeaseDefaultArgs<ExtArgs>
+    lease?: boolean | Payment$leaseArgs<ExtArgs>
   }, ExtArgs["result"]["payment"]>
 
   export type PaymentSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -15865,7 +16670,7 @@ export namespace Prisma {
     paymentDate?: boolean
     paymentStatus?: boolean
     leaseId?: boolean
-    lease?: boolean | LeaseDefaultArgs<ExtArgs>
+    lease?: boolean | Payment$leaseArgs<ExtArgs>
   }, ExtArgs["result"]["payment"]>
 
   export type PaymentSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -15876,7 +16681,7 @@ export namespace Prisma {
     paymentDate?: boolean
     paymentStatus?: boolean
     leaseId?: boolean
-    lease?: boolean | LeaseDefaultArgs<ExtArgs>
+    lease?: boolean | Payment$leaseArgs<ExtArgs>
   }, ExtArgs["result"]["payment"]>
 
   export type PaymentSelectScalar = {
@@ -15891,19 +16696,19 @@ export namespace Prisma {
 
   export type PaymentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "amountDue" | "amountPaid" | "dueDate" | "paymentDate" | "paymentStatus" | "leaseId", ExtArgs["result"]["payment"]>
   export type PaymentInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    lease?: boolean | LeaseDefaultArgs<ExtArgs>
+    lease?: boolean | Payment$leaseArgs<ExtArgs>
   }
   export type PaymentIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    lease?: boolean | LeaseDefaultArgs<ExtArgs>
+    lease?: boolean | Payment$leaseArgs<ExtArgs>
   }
   export type PaymentIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    lease?: boolean | LeaseDefaultArgs<ExtArgs>
+    lease?: boolean | Payment$leaseArgs<ExtArgs>
   }
 
   export type $PaymentPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Payment"
     objects: {
-      lease: Prisma.$LeasePayload<ExtArgs>
+      lease: Prisma.$LeasePayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -15912,7 +16717,7 @@ export namespace Prisma {
       dueDate: Date
       paymentDate: Date
       paymentStatus: $Enums.PaymentStatus
-      leaseId: number
+      leaseId: number | null
     }, ExtArgs["result"]["payment"]>
     composites: {}
   }
@@ -16307,7 +17112,7 @@ export namespace Prisma {
    */
   export interface Prisma__PaymentClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    lease<T extends LeaseDefaultArgs<ExtArgs> = {}>(args?: Subset<T, LeaseDefaultArgs<ExtArgs>>): Prisma__LeaseClient<$Result.GetResult<Prisma.$LeasePayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | Null, Null, ExtArgs, ClientOptions>
+    lease<T extends Payment$leaseArgs<ExtArgs> = {}>(args?: Subset<T, Payment$leaseArgs<ExtArgs>>): Prisma__LeaseClient<$Result.GetResult<Prisma.$LeasePayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | null, null, ExtArgs, ClientOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -16740,6 +17545,25 @@ export namespace Prisma {
   }
 
   /**
+   * Payment.lease
+   */
+  export type Payment$leaseArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Lease
+     */
+    select?: LeaseSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Lease
+     */
+    omit?: LeaseOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LeaseInclude<ExtArgs> | null
+    where?: LeaseWhereInput
+  }
+
+  /**
    * Payment without action
    */
   export type PaymentDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -16786,7 +17610,6 @@ export namespace Prisma {
     id: number | null
     siteName: string | null
     siteDescription: string | null
-    maintenanceMode: boolean | null
     allowRegistration: boolean | null
     maxPropertiesPerLandlord: number | null
     commissionRate: number | null
@@ -16800,7 +17623,6 @@ export namespace Prisma {
     id: number | null
     siteName: string | null
     siteDescription: string | null
-    maintenanceMode: boolean | null
     allowRegistration: boolean | null
     maxPropertiesPerLandlord: number | null
     commissionRate: number | null
@@ -16814,7 +17636,6 @@ export namespace Prisma {
     id: number
     siteName: number
     siteDescription: number
-    maintenanceMode: number
     allowRegistration: number
     maxPropertiesPerLandlord: number
     commissionRate: number
@@ -16842,7 +17663,6 @@ export namespace Prisma {
     id?: true
     siteName?: true
     siteDescription?: true
-    maintenanceMode?: true
     allowRegistration?: true
     maxPropertiesPerLandlord?: true
     commissionRate?: true
@@ -16856,7 +17676,6 @@ export namespace Prisma {
     id?: true
     siteName?: true
     siteDescription?: true
-    maintenanceMode?: true
     allowRegistration?: true
     maxPropertiesPerLandlord?: true
     commissionRate?: true
@@ -16870,7 +17689,6 @@ export namespace Prisma {
     id?: true
     siteName?: true
     siteDescription?: true
-    maintenanceMode?: true
     allowRegistration?: true
     maxPropertiesPerLandlord?: true
     commissionRate?: true
@@ -16971,7 +17789,6 @@ export namespace Prisma {
     id: number
     siteName: string
     siteDescription: string
-    maintenanceMode: boolean
     allowRegistration: boolean
     maxPropertiesPerLandlord: number
     commissionRate: number
@@ -17004,7 +17821,6 @@ export namespace Prisma {
     id?: boolean
     siteName?: boolean
     siteDescription?: boolean
-    maintenanceMode?: boolean
     allowRegistration?: boolean
     maxPropertiesPerLandlord?: boolean
     commissionRate?: boolean
@@ -17018,7 +17834,6 @@ export namespace Prisma {
     id?: boolean
     siteName?: boolean
     siteDescription?: boolean
-    maintenanceMode?: boolean
     allowRegistration?: boolean
     maxPropertiesPerLandlord?: boolean
     commissionRate?: boolean
@@ -17032,7 +17847,6 @@ export namespace Prisma {
     id?: boolean
     siteName?: boolean
     siteDescription?: boolean
-    maintenanceMode?: boolean
     allowRegistration?: boolean
     maxPropertiesPerLandlord?: boolean
     commissionRate?: boolean
@@ -17046,7 +17860,6 @@ export namespace Prisma {
     id?: boolean
     siteName?: boolean
     siteDescription?: boolean
-    maintenanceMode?: boolean
     allowRegistration?: boolean
     maxPropertiesPerLandlord?: boolean
     commissionRate?: boolean
@@ -17056,7 +17869,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type AdminSettingsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "siteName" | "siteDescription" | "maintenanceMode" | "allowRegistration" | "maxPropertiesPerLandlord" | "commissionRate" | "emailNotifications" | "smsNotifications" | "createdAt" | "updatedAt", ExtArgs["result"]["adminSettings"]>
+  export type AdminSettingsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "siteName" | "siteDescription" | "allowRegistration" | "maxPropertiesPerLandlord" | "commissionRate" | "emailNotifications" | "smsNotifications" | "createdAt" | "updatedAt", ExtArgs["result"]["adminSettings"]>
 
   export type $AdminSettingsPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "AdminSettings"
@@ -17065,7 +17878,6 @@ export namespace Prisma {
       id: number
       siteName: string
       siteDescription: string
-      maintenanceMode: boolean
       allowRegistration: boolean
       maxPropertiesPerLandlord: number
       commissionRate: number
@@ -17499,7 +18311,6 @@ export namespace Prisma {
     readonly id: FieldRef<"AdminSettings", 'Int'>
     readonly siteName: FieldRef<"AdminSettings", 'String'>
     readonly siteDescription: FieldRef<"AdminSettings", 'String'>
-    readonly maintenanceMode: FieldRef<"AdminSettings", 'Boolean'>
     readonly allowRegistration: FieldRef<"AdminSettings", 'Boolean'>
     readonly maxPropertiesPerLandlord: FieldRef<"AdminSettings", 'Int'>
     readonly commissionRate: FieldRef<"AdminSettings", 'Float'>
@@ -20289,6 +21100,4721 @@ export namespace Prisma {
 
 
   /**
+   * Model EmailSubscription
+   */
+
+  export type AggregateEmailSubscription = {
+    _count: EmailSubscriptionCountAggregateOutputType | null
+    _avg: EmailSubscriptionAvgAggregateOutputType | null
+    _sum: EmailSubscriptionSumAggregateOutputType | null
+    _min: EmailSubscriptionMinAggregateOutputType | null
+    _max: EmailSubscriptionMaxAggregateOutputType | null
+  }
+
+  export type EmailSubscriptionAvgAggregateOutputType = {
+    id: number | null
+  }
+
+  export type EmailSubscriptionSumAggregateOutputType = {
+    id: number | null
+  }
+
+  export type EmailSubscriptionMinAggregateOutputType = {
+    id: number | null
+    email: string | null
+    fullName: string | null
+    subscriptionType: string | null
+    isActive: boolean | null
+    subscribedAt: Date | null
+    unsubscribedAt: Date | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type EmailSubscriptionMaxAggregateOutputType = {
+    id: number | null
+    email: string | null
+    fullName: string | null
+    subscriptionType: string | null
+    isActive: boolean | null
+    subscribedAt: Date | null
+    unsubscribedAt: Date | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type EmailSubscriptionCountAggregateOutputType = {
+    id: number
+    email: number
+    fullName: number
+    subscriptionType: number
+    isActive: number
+    subscribedAt: number
+    unsubscribedAt: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type EmailSubscriptionAvgAggregateInputType = {
+    id?: true
+  }
+
+  export type EmailSubscriptionSumAggregateInputType = {
+    id?: true
+  }
+
+  export type EmailSubscriptionMinAggregateInputType = {
+    id?: true
+    email?: true
+    fullName?: true
+    subscriptionType?: true
+    isActive?: true
+    subscribedAt?: true
+    unsubscribedAt?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type EmailSubscriptionMaxAggregateInputType = {
+    id?: true
+    email?: true
+    fullName?: true
+    subscriptionType?: true
+    isActive?: true
+    subscribedAt?: true
+    unsubscribedAt?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type EmailSubscriptionCountAggregateInputType = {
+    id?: true
+    email?: true
+    fullName?: true
+    subscriptionType?: true
+    isActive?: true
+    subscribedAt?: true
+    unsubscribedAt?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type EmailSubscriptionAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which EmailSubscription to aggregate.
+     */
+    where?: EmailSubscriptionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of EmailSubscriptions to fetch.
+     */
+    orderBy?: EmailSubscriptionOrderByWithRelationInput | EmailSubscriptionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: EmailSubscriptionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` EmailSubscriptions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` EmailSubscriptions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned EmailSubscriptions
+    **/
+    _count?: true | EmailSubscriptionCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: EmailSubscriptionAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: EmailSubscriptionSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: EmailSubscriptionMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: EmailSubscriptionMaxAggregateInputType
+  }
+
+  export type GetEmailSubscriptionAggregateType<T extends EmailSubscriptionAggregateArgs> = {
+        [P in keyof T & keyof AggregateEmailSubscription]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateEmailSubscription[P]>
+      : GetScalarType<T[P], AggregateEmailSubscription[P]>
+  }
+
+
+
+
+  export type EmailSubscriptionGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: EmailSubscriptionWhereInput
+    orderBy?: EmailSubscriptionOrderByWithAggregationInput | EmailSubscriptionOrderByWithAggregationInput[]
+    by: EmailSubscriptionScalarFieldEnum[] | EmailSubscriptionScalarFieldEnum
+    having?: EmailSubscriptionScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: EmailSubscriptionCountAggregateInputType | true
+    _avg?: EmailSubscriptionAvgAggregateInputType
+    _sum?: EmailSubscriptionSumAggregateInputType
+    _min?: EmailSubscriptionMinAggregateInputType
+    _max?: EmailSubscriptionMaxAggregateInputType
+  }
+
+  export type EmailSubscriptionGroupByOutputType = {
+    id: number
+    email: string
+    fullName: string
+    subscriptionType: string
+    isActive: boolean
+    subscribedAt: Date
+    unsubscribedAt: Date | null
+    createdAt: Date
+    updatedAt: Date
+    _count: EmailSubscriptionCountAggregateOutputType | null
+    _avg: EmailSubscriptionAvgAggregateOutputType | null
+    _sum: EmailSubscriptionSumAggregateOutputType | null
+    _min: EmailSubscriptionMinAggregateOutputType | null
+    _max: EmailSubscriptionMaxAggregateOutputType | null
+  }
+
+  type GetEmailSubscriptionGroupByPayload<T extends EmailSubscriptionGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<EmailSubscriptionGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof EmailSubscriptionGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], EmailSubscriptionGroupByOutputType[P]>
+            : GetScalarType<T[P], EmailSubscriptionGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type EmailSubscriptionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    email?: boolean
+    fullName?: boolean
+    subscriptionType?: boolean
+    isActive?: boolean
+    subscribedAt?: boolean
+    unsubscribedAt?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["emailSubscription"]>
+
+  export type EmailSubscriptionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    email?: boolean
+    fullName?: boolean
+    subscriptionType?: boolean
+    isActive?: boolean
+    subscribedAt?: boolean
+    unsubscribedAt?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["emailSubscription"]>
+
+  export type EmailSubscriptionSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    email?: boolean
+    fullName?: boolean
+    subscriptionType?: boolean
+    isActive?: boolean
+    subscribedAt?: boolean
+    unsubscribedAt?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["emailSubscription"]>
+
+  export type EmailSubscriptionSelectScalar = {
+    id?: boolean
+    email?: boolean
+    fullName?: boolean
+    subscriptionType?: boolean
+    isActive?: boolean
+    subscribedAt?: boolean
+    unsubscribedAt?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type EmailSubscriptionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "fullName" | "subscriptionType" | "isActive" | "subscribedAt" | "unsubscribedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["emailSubscription"]>
+
+  export type $EmailSubscriptionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "EmailSubscription"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      email: string
+      fullName: string
+      subscriptionType: string
+      isActive: boolean
+      subscribedAt: Date
+      unsubscribedAt: Date | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["emailSubscription"]>
+    composites: {}
+  }
+
+  type EmailSubscriptionGetPayload<S extends boolean | null | undefined | EmailSubscriptionDefaultArgs> = $Result.GetResult<Prisma.$EmailSubscriptionPayload, S>
+
+  type EmailSubscriptionCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<EmailSubscriptionFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: EmailSubscriptionCountAggregateInputType | true
+    }
+
+  export interface EmailSubscriptionDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['EmailSubscription'], meta: { name: 'EmailSubscription' } }
+    /**
+     * Find zero or one EmailSubscription that matches the filter.
+     * @param {EmailSubscriptionFindUniqueArgs} args - Arguments to find a EmailSubscription
+     * @example
+     * // Get one EmailSubscription
+     * const emailSubscription = await prisma.emailSubscription.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends EmailSubscriptionFindUniqueArgs>(args: SelectSubset<T, EmailSubscriptionFindUniqueArgs<ExtArgs>>): Prisma__EmailSubscriptionClient<$Result.GetResult<Prisma.$EmailSubscriptionPayload<ExtArgs>, T, "findUnique", ClientOptions> | null, null, ExtArgs, ClientOptions>
+
+    /**
+     * Find one EmailSubscription that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {EmailSubscriptionFindUniqueOrThrowArgs} args - Arguments to find a EmailSubscription
+     * @example
+     * // Get one EmailSubscription
+     * const emailSubscription = await prisma.emailSubscription.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends EmailSubscriptionFindUniqueOrThrowArgs>(args: SelectSubset<T, EmailSubscriptionFindUniqueOrThrowArgs<ExtArgs>>): Prisma__EmailSubscriptionClient<$Result.GetResult<Prisma.$EmailSubscriptionPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Find the first EmailSubscription that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EmailSubscriptionFindFirstArgs} args - Arguments to find a EmailSubscription
+     * @example
+     * // Get one EmailSubscription
+     * const emailSubscription = await prisma.emailSubscription.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends EmailSubscriptionFindFirstArgs>(args?: SelectSubset<T, EmailSubscriptionFindFirstArgs<ExtArgs>>): Prisma__EmailSubscriptionClient<$Result.GetResult<Prisma.$EmailSubscriptionPayload<ExtArgs>, T, "findFirst", ClientOptions> | null, null, ExtArgs, ClientOptions>
+
+    /**
+     * Find the first EmailSubscription that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EmailSubscriptionFindFirstOrThrowArgs} args - Arguments to find a EmailSubscription
+     * @example
+     * // Get one EmailSubscription
+     * const emailSubscription = await prisma.emailSubscription.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends EmailSubscriptionFindFirstOrThrowArgs>(args?: SelectSubset<T, EmailSubscriptionFindFirstOrThrowArgs<ExtArgs>>): Prisma__EmailSubscriptionClient<$Result.GetResult<Prisma.$EmailSubscriptionPayload<ExtArgs>, T, "findFirstOrThrow", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Find zero or more EmailSubscriptions that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EmailSubscriptionFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all EmailSubscriptions
+     * const emailSubscriptions = await prisma.emailSubscription.findMany()
+     * 
+     * // Get first 10 EmailSubscriptions
+     * const emailSubscriptions = await prisma.emailSubscription.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const emailSubscriptionWithIdOnly = await prisma.emailSubscription.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends EmailSubscriptionFindManyArgs>(args?: SelectSubset<T, EmailSubscriptionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EmailSubscriptionPayload<ExtArgs>, T, "findMany", ClientOptions>>
+
+    /**
+     * Create a EmailSubscription.
+     * @param {EmailSubscriptionCreateArgs} args - Arguments to create a EmailSubscription.
+     * @example
+     * // Create one EmailSubscription
+     * const EmailSubscription = await prisma.emailSubscription.create({
+     *   data: {
+     *     // ... data to create a EmailSubscription
+     *   }
+     * })
+     * 
+     */
+    create<T extends EmailSubscriptionCreateArgs>(args: SelectSubset<T, EmailSubscriptionCreateArgs<ExtArgs>>): Prisma__EmailSubscriptionClient<$Result.GetResult<Prisma.$EmailSubscriptionPayload<ExtArgs>, T, "create", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Create many EmailSubscriptions.
+     * @param {EmailSubscriptionCreateManyArgs} args - Arguments to create many EmailSubscriptions.
+     * @example
+     * // Create many EmailSubscriptions
+     * const emailSubscription = await prisma.emailSubscription.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends EmailSubscriptionCreateManyArgs>(args?: SelectSubset<T, EmailSubscriptionCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many EmailSubscriptions and returns the data saved in the database.
+     * @param {EmailSubscriptionCreateManyAndReturnArgs} args - Arguments to create many EmailSubscriptions.
+     * @example
+     * // Create many EmailSubscriptions
+     * const emailSubscription = await prisma.emailSubscription.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many EmailSubscriptions and only return the `id`
+     * const emailSubscriptionWithIdOnly = await prisma.emailSubscription.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends EmailSubscriptionCreateManyAndReturnArgs>(args?: SelectSubset<T, EmailSubscriptionCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EmailSubscriptionPayload<ExtArgs>, T, "createManyAndReturn", ClientOptions>>
+
+    /**
+     * Delete a EmailSubscription.
+     * @param {EmailSubscriptionDeleteArgs} args - Arguments to delete one EmailSubscription.
+     * @example
+     * // Delete one EmailSubscription
+     * const EmailSubscription = await prisma.emailSubscription.delete({
+     *   where: {
+     *     // ... filter to delete one EmailSubscription
+     *   }
+     * })
+     * 
+     */
+    delete<T extends EmailSubscriptionDeleteArgs>(args: SelectSubset<T, EmailSubscriptionDeleteArgs<ExtArgs>>): Prisma__EmailSubscriptionClient<$Result.GetResult<Prisma.$EmailSubscriptionPayload<ExtArgs>, T, "delete", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Update one EmailSubscription.
+     * @param {EmailSubscriptionUpdateArgs} args - Arguments to update one EmailSubscription.
+     * @example
+     * // Update one EmailSubscription
+     * const emailSubscription = await prisma.emailSubscription.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends EmailSubscriptionUpdateArgs>(args: SelectSubset<T, EmailSubscriptionUpdateArgs<ExtArgs>>): Prisma__EmailSubscriptionClient<$Result.GetResult<Prisma.$EmailSubscriptionPayload<ExtArgs>, T, "update", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Delete zero or more EmailSubscriptions.
+     * @param {EmailSubscriptionDeleteManyArgs} args - Arguments to filter EmailSubscriptions to delete.
+     * @example
+     * // Delete a few EmailSubscriptions
+     * const { count } = await prisma.emailSubscription.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends EmailSubscriptionDeleteManyArgs>(args?: SelectSubset<T, EmailSubscriptionDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more EmailSubscriptions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EmailSubscriptionUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many EmailSubscriptions
+     * const emailSubscription = await prisma.emailSubscription.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends EmailSubscriptionUpdateManyArgs>(args: SelectSubset<T, EmailSubscriptionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more EmailSubscriptions and returns the data updated in the database.
+     * @param {EmailSubscriptionUpdateManyAndReturnArgs} args - Arguments to update many EmailSubscriptions.
+     * @example
+     * // Update many EmailSubscriptions
+     * const emailSubscription = await prisma.emailSubscription.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more EmailSubscriptions and only return the `id`
+     * const emailSubscriptionWithIdOnly = await prisma.emailSubscription.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends EmailSubscriptionUpdateManyAndReturnArgs>(args: SelectSubset<T, EmailSubscriptionUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EmailSubscriptionPayload<ExtArgs>, T, "updateManyAndReturn", ClientOptions>>
+
+    /**
+     * Create or update one EmailSubscription.
+     * @param {EmailSubscriptionUpsertArgs} args - Arguments to update or create a EmailSubscription.
+     * @example
+     * // Update or create a EmailSubscription
+     * const emailSubscription = await prisma.emailSubscription.upsert({
+     *   create: {
+     *     // ... data to create a EmailSubscription
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the EmailSubscription we want to update
+     *   }
+     * })
+     */
+    upsert<T extends EmailSubscriptionUpsertArgs>(args: SelectSubset<T, EmailSubscriptionUpsertArgs<ExtArgs>>): Prisma__EmailSubscriptionClient<$Result.GetResult<Prisma.$EmailSubscriptionPayload<ExtArgs>, T, "upsert", ClientOptions>, never, ExtArgs, ClientOptions>
+
+
+    /**
+     * Count the number of EmailSubscriptions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EmailSubscriptionCountArgs} args - Arguments to filter EmailSubscriptions to count.
+     * @example
+     * // Count the number of EmailSubscriptions
+     * const count = await prisma.emailSubscription.count({
+     *   where: {
+     *     // ... the filter for the EmailSubscriptions we want to count
+     *   }
+     * })
+    **/
+    count<T extends EmailSubscriptionCountArgs>(
+      args?: Subset<T, EmailSubscriptionCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], EmailSubscriptionCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a EmailSubscription.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EmailSubscriptionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends EmailSubscriptionAggregateArgs>(args: Subset<T, EmailSubscriptionAggregateArgs>): Prisma.PrismaPromise<GetEmailSubscriptionAggregateType<T>>
+
+    /**
+     * Group by EmailSubscription.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EmailSubscriptionGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends EmailSubscriptionGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: EmailSubscriptionGroupByArgs['orderBy'] }
+        : { orderBy?: EmailSubscriptionGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, EmailSubscriptionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetEmailSubscriptionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the EmailSubscription model
+   */
+  readonly fields: EmailSubscriptionFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for EmailSubscription.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__EmailSubscriptionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the EmailSubscription model
+   */ 
+  interface EmailSubscriptionFieldRefs {
+    readonly id: FieldRef<"EmailSubscription", 'Int'>
+    readonly email: FieldRef<"EmailSubscription", 'String'>
+    readonly fullName: FieldRef<"EmailSubscription", 'String'>
+    readonly subscriptionType: FieldRef<"EmailSubscription", 'String'>
+    readonly isActive: FieldRef<"EmailSubscription", 'Boolean'>
+    readonly subscribedAt: FieldRef<"EmailSubscription", 'DateTime'>
+    readonly unsubscribedAt: FieldRef<"EmailSubscription", 'DateTime'>
+    readonly createdAt: FieldRef<"EmailSubscription", 'DateTime'>
+    readonly updatedAt: FieldRef<"EmailSubscription", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * EmailSubscription findUnique
+   */
+  export type EmailSubscriptionFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EmailSubscription
+     */
+    select?: EmailSubscriptionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the EmailSubscription
+     */
+    omit?: EmailSubscriptionOmit<ExtArgs> | null
+    /**
+     * Filter, which EmailSubscription to fetch.
+     */
+    where: EmailSubscriptionWhereUniqueInput
+  }
+
+  /**
+   * EmailSubscription findUniqueOrThrow
+   */
+  export type EmailSubscriptionFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EmailSubscription
+     */
+    select?: EmailSubscriptionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the EmailSubscription
+     */
+    omit?: EmailSubscriptionOmit<ExtArgs> | null
+    /**
+     * Filter, which EmailSubscription to fetch.
+     */
+    where: EmailSubscriptionWhereUniqueInput
+  }
+
+  /**
+   * EmailSubscription findFirst
+   */
+  export type EmailSubscriptionFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EmailSubscription
+     */
+    select?: EmailSubscriptionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the EmailSubscription
+     */
+    omit?: EmailSubscriptionOmit<ExtArgs> | null
+    /**
+     * Filter, which EmailSubscription to fetch.
+     */
+    where?: EmailSubscriptionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of EmailSubscriptions to fetch.
+     */
+    orderBy?: EmailSubscriptionOrderByWithRelationInput | EmailSubscriptionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for EmailSubscriptions.
+     */
+    cursor?: EmailSubscriptionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` EmailSubscriptions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` EmailSubscriptions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of EmailSubscriptions.
+     */
+    distinct?: EmailSubscriptionScalarFieldEnum | EmailSubscriptionScalarFieldEnum[]
+  }
+
+  /**
+   * EmailSubscription findFirstOrThrow
+   */
+  export type EmailSubscriptionFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EmailSubscription
+     */
+    select?: EmailSubscriptionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the EmailSubscription
+     */
+    omit?: EmailSubscriptionOmit<ExtArgs> | null
+    /**
+     * Filter, which EmailSubscription to fetch.
+     */
+    where?: EmailSubscriptionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of EmailSubscriptions to fetch.
+     */
+    orderBy?: EmailSubscriptionOrderByWithRelationInput | EmailSubscriptionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for EmailSubscriptions.
+     */
+    cursor?: EmailSubscriptionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` EmailSubscriptions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` EmailSubscriptions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of EmailSubscriptions.
+     */
+    distinct?: EmailSubscriptionScalarFieldEnum | EmailSubscriptionScalarFieldEnum[]
+  }
+
+  /**
+   * EmailSubscription findMany
+   */
+  export type EmailSubscriptionFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EmailSubscription
+     */
+    select?: EmailSubscriptionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the EmailSubscription
+     */
+    omit?: EmailSubscriptionOmit<ExtArgs> | null
+    /**
+     * Filter, which EmailSubscriptions to fetch.
+     */
+    where?: EmailSubscriptionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of EmailSubscriptions to fetch.
+     */
+    orderBy?: EmailSubscriptionOrderByWithRelationInput | EmailSubscriptionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing EmailSubscriptions.
+     */
+    cursor?: EmailSubscriptionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` EmailSubscriptions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` EmailSubscriptions.
+     */
+    skip?: number
+    distinct?: EmailSubscriptionScalarFieldEnum | EmailSubscriptionScalarFieldEnum[]
+  }
+
+  /**
+   * EmailSubscription create
+   */
+  export type EmailSubscriptionCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EmailSubscription
+     */
+    select?: EmailSubscriptionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the EmailSubscription
+     */
+    omit?: EmailSubscriptionOmit<ExtArgs> | null
+    /**
+     * The data needed to create a EmailSubscription.
+     */
+    data: XOR<EmailSubscriptionCreateInput, EmailSubscriptionUncheckedCreateInput>
+  }
+
+  /**
+   * EmailSubscription createMany
+   */
+  export type EmailSubscriptionCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many EmailSubscriptions.
+     */
+    data: EmailSubscriptionCreateManyInput | EmailSubscriptionCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * EmailSubscription createManyAndReturn
+   */
+  export type EmailSubscriptionCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EmailSubscription
+     */
+    select?: EmailSubscriptionSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the EmailSubscription
+     */
+    omit?: EmailSubscriptionOmit<ExtArgs> | null
+    /**
+     * The data used to create many EmailSubscriptions.
+     */
+    data: EmailSubscriptionCreateManyInput | EmailSubscriptionCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * EmailSubscription update
+   */
+  export type EmailSubscriptionUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EmailSubscription
+     */
+    select?: EmailSubscriptionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the EmailSubscription
+     */
+    omit?: EmailSubscriptionOmit<ExtArgs> | null
+    /**
+     * The data needed to update a EmailSubscription.
+     */
+    data: XOR<EmailSubscriptionUpdateInput, EmailSubscriptionUncheckedUpdateInput>
+    /**
+     * Choose, which EmailSubscription to update.
+     */
+    where: EmailSubscriptionWhereUniqueInput
+  }
+
+  /**
+   * EmailSubscription updateMany
+   */
+  export type EmailSubscriptionUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update EmailSubscriptions.
+     */
+    data: XOR<EmailSubscriptionUpdateManyMutationInput, EmailSubscriptionUncheckedUpdateManyInput>
+    /**
+     * Filter which EmailSubscriptions to update
+     */
+    where?: EmailSubscriptionWhereInput
+    /**
+     * Limit how many EmailSubscriptions to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * EmailSubscription updateManyAndReturn
+   */
+  export type EmailSubscriptionUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EmailSubscription
+     */
+    select?: EmailSubscriptionSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the EmailSubscription
+     */
+    omit?: EmailSubscriptionOmit<ExtArgs> | null
+    /**
+     * The data used to update EmailSubscriptions.
+     */
+    data: XOR<EmailSubscriptionUpdateManyMutationInput, EmailSubscriptionUncheckedUpdateManyInput>
+    /**
+     * Filter which EmailSubscriptions to update
+     */
+    where?: EmailSubscriptionWhereInput
+    /**
+     * Limit how many EmailSubscriptions to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * EmailSubscription upsert
+   */
+  export type EmailSubscriptionUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EmailSubscription
+     */
+    select?: EmailSubscriptionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the EmailSubscription
+     */
+    omit?: EmailSubscriptionOmit<ExtArgs> | null
+    /**
+     * The filter to search for the EmailSubscription to update in case it exists.
+     */
+    where: EmailSubscriptionWhereUniqueInput
+    /**
+     * In case the EmailSubscription found by the `where` argument doesn't exist, create a new EmailSubscription with this data.
+     */
+    create: XOR<EmailSubscriptionCreateInput, EmailSubscriptionUncheckedCreateInput>
+    /**
+     * In case the EmailSubscription was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<EmailSubscriptionUpdateInput, EmailSubscriptionUncheckedUpdateInput>
+  }
+
+  /**
+   * EmailSubscription delete
+   */
+  export type EmailSubscriptionDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EmailSubscription
+     */
+    select?: EmailSubscriptionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the EmailSubscription
+     */
+    omit?: EmailSubscriptionOmit<ExtArgs> | null
+    /**
+     * Filter which EmailSubscription to delete.
+     */
+    where: EmailSubscriptionWhereUniqueInput
+  }
+
+  /**
+   * EmailSubscription deleteMany
+   */
+  export type EmailSubscriptionDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which EmailSubscriptions to delete
+     */
+    where?: EmailSubscriptionWhereInput
+    /**
+     * Limit how many EmailSubscriptions to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * EmailSubscription without action
+   */
+  export type EmailSubscriptionDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EmailSubscription
+     */
+    select?: EmailSubscriptionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the EmailSubscription
+     */
+    omit?: EmailSubscriptionOmit<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Inspection
+   */
+
+  export type AggregateInspection = {
+    _count: InspectionCountAggregateOutputType | null
+    _avg: InspectionAvgAggregateOutputType | null
+    _sum: InspectionSumAggregateOutputType | null
+    _min: InspectionMinAggregateOutputType | null
+    _max: InspectionMaxAggregateOutputType | null
+  }
+
+  export type InspectionAvgAggregateOutputType = {
+    id: number | null
+    propertyId: number | null
+    agentId: number | null
+    depositAmount: number | null
+  }
+
+  export type InspectionSumAggregateOutputType = {
+    id: number | null
+    propertyId: number | null
+    agentId: number | null
+    depositAmount: number | null
+  }
+
+  export type InspectionMinAggregateOutputType = {
+    id: number | null
+    propertyId: number | null
+    tenantCognitoId: string | null
+    scheduledDate: Date | null
+    status: $Enums.InspectionStatus | null
+    tenantName: string | null
+    tenantEmail: string | null
+    tenantPhone: string | null
+    preferredTime: string | null
+    message: string | null
+    adminNotes: string | null
+    agentId: number | null
+    depositPaid: boolean | null
+    depositAmount: number | null
+    paymentReference: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type InspectionMaxAggregateOutputType = {
+    id: number | null
+    propertyId: number | null
+    tenantCognitoId: string | null
+    scheduledDate: Date | null
+    status: $Enums.InspectionStatus | null
+    tenantName: string | null
+    tenantEmail: string | null
+    tenantPhone: string | null
+    preferredTime: string | null
+    message: string | null
+    adminNotes: string | null
+    agentId: number | null
+    depositPaid: boolean | null
+    depositAmount: number | null
+    paymentReference: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type InspectionCountAggregateOutputType = {
+    id: number
+    propertyId: number
+    tenantCognitoId: number
+    scheduledDate: number
+    status: number
+    tenantName: number
+    tenantEmail: number
+    tenantPhone: number
+    preferredTime: number
+    message: number
+    adminNotes: number
+    agentId: number
+    depositPaid: number
+    depositAmount: number
+    paymentReference: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type InspectionAvgAggregateInputType = {
+    id?: true
+    propertyId?: true
+    agentId?: true
+    depositAmount?: true
+  }
+
+  export type InspectionSumAggregateInputType = {
+    id?: true
+    propertyId?: true
+    agentId?: true
+    depositAmount?: true
+  }
+
+  export type InspectionMinAggregateInputType = {
+    id?: true
+    propertyId?: true
+    tenantCognitoId?: true
+    scheduledDate?: true
+    status?: true
+    tenantName?: true
+    tenantEmail?: true
+    tenantPhone?: true
+    preferredTime?: true
+    message?: true
+    adminNotes?: true
+    agentId?: true
+    depositPaid?: true
+    depositAmount?: true
+    paymentReference?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type InspectionMaxAggregateInputType = {
+    id?: true
+    propertyId?: true
+    tenantCognitoId?: true
+    scheduledDate?: true
+    status?: true
+    tenantName?: true
+    tenantEmail?: true
+    tenantPhone?: true
+    preferredTime?: true
+    message?: true
+    adminNotes?: true
+    agentId?: true
+    depositPaid?: true
+    depositAmount?: true
+    paymentReference?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type InspectionCountAggregateInputType = {
+    id?: true
+    propertyId?: true
+    tenantCognitoId?: true
+    scheduledDate?: true
+    status?: true
+    tenantName?: true
+    tenantEmail?: true
+    tenantPhone?: true
+    preferredTime?: true
+    message?: true
+    adminNotes?: true
+    agentId?: true
+    depositPaid?: true
+    depositAmount?: true
+    paymentReference?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type InspectionAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Inspection to aggregate.
+     */
+    where?: InspectionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Inspections to fetch.
+     */
+    orderBy?: InspectionOrderByWithRelationInput | InspectionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: InspectionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Inspections from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Inspections.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Inspections
+    **/
+    _count?: true | InspectionCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: InspectionAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: InspectionSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: InspectionMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: InspectionMaxAggregateInputType
+  }
+
+  export type GetInspectionAggregateType<T extends InspectionAggregateArgs> = {
+        [P in keyof T & keyof AggregateInspection]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateInspection[P]>
+      : GetScalarType<T[P], AggregateInspection[P]>
+  }
+
+
+
+
+  export type InspectionGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: InspectionWhereInput
+    orderBy?: InspectionOrderByWithAggregationInput | InspectionOrderByWithAggregationInput[]
+    by: InspectionScalarFieldEnum[] | InspectionScalarFieldEnum
+    having?: InspectionScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: InspectionCountAggregateInputType | true
+    _avg?: InspectionAvgAggregateInputType
+    _sum?: InspectionSumAggregateInputType
+    _min?: InspectionMinAggregateInputType
+    _max?: InspectionMaxAggregateInputType
+  }
+
+  export type InspectionGroupByOutputType = {
+    id: number
+    propertyId: number
+    tenantCognitoId: string
+    scheduledDate: Date
+    status: $Enums.InspectionStatus
+    tenantName: string
+    tenantEmail: string
+    tenantPhone: string
+    preferredTime: string
+    message: string | null
+    adminNotes: string | null
+    agentId: number | null
+    depositPaid: boolean
+    depositAmount: number | null
+    paymentReference: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: InspectionCountAggregateOutputType | null
+    _avg: InspectionAvgAggregateOutputType | null
+    _sum: InspectionSumAggregateOutputType | null
+    _min: InspectionMinAggregateOutputType | null
+    _max: InspectionMaxAggregateOutputType | null
+  }
+
+  type GetInspectionGroupByPayload<T extends InspectionGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<InspectionGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof InspectionGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], InspectionGroupByOutputType[P]>
+            : GetScalarType<T[P], InspectionGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type InspectionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    propertyId?: boolean
+    tenantCognitoId?: boolean
+    scheduledDate?: boolean
+    status?: boolean
+    tenantName?: boolean
+    tenantEmail?: boolean
+    tenantPhone?: boolean
+    preferredTime?: boolean
+    message?: boolean
+    adminNotes?: boolean
+    agentId?: boolean
+    depositPaid?: boolean
+    depositAmount?: boolean
+    paymentReference?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    property?: boolean | PropertyDefaultArgs<ExtArgs>
+    tenant?: boolean | TenantDefaultArgs<ExtArgs>
+    agent?: boolean | Inspection$agentArgs<ExtArgs>
+  }, ExtArgs["result"]["inspection"]>
+
+  export type InspectionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    propertyId?: boolean
+    tenantCognitoId?: boolean
+    scheduledDate?: boolean
+    status?: boolean
+    tenantName?: boolean
+    tenantEmail?: boolean
+    tenantPhone?: boolean
+    preferredTime?: boolean
+    message?: boolean
+    adminNotes?: boolean
+    agentId?: boolean
+    depositPaid?: boolean
+    depositAmount?: boolean
+    paymentReference?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    property?: boolean | PropertyDefaultArgs<ExtArgs>
+    tenant?: boolean | TenantDefaultArgs<ExtArgs>
+    agent?: boolean | Inspection$agentArgs<ExtArgs>
+  }, ExtArgs["result"]["inspection"]>
+
+  export type InspectionSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    propertyId?: boolean
+    tenantCognitoId?: boolean
+    scheduledDate?: boolean
+    status?: boolean
+    tenantName?: boolean
+    tenantEmail?: boolean
+    tenantPhone?: boolean
+    preferredTime?: boolean
+    message?: boolean
+    adminNotes?: boolean
+    agentId?: boolean
+    depositPaid?: boolean
+    depositAmount?: boolean
+    paymentReference?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    property?: boolean | PropertyDefaultArgs<ExtArgs>
+    tenant?: boolean | TenantDefaultArgs<ExtArgs>
+    agent?: boolean | Inspection$agentArgs<ExtArgs>
+  }, ExtArgs["result"]["inspection"]>
+
+  export type InspectionSelectScalar = {
+    id?: boolean
+    propertyId?: boolean
+    tenantCognitoId?: boolean
+    scheduledDate?: boolean
+    status?: boolean
+    tenantName?: boolean
+    tenantEmail?: boolean
+    tenantPhone?: boolean
+    preferredTime?: boolean
+    message?: boolean
+    adminNotes?: boolean
+    agentId?: boolean
+    depositPaid?: boolean
+    depositAmount?: boolean
+    paymentReference?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type InspectionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "propertyId" | "tenantCognitoId" | "scheduledDate" | "status" | "tenantName" | "tenantEmail" | "tenantPhone" | "preferredTime" | "message" | "adminNotes" | "agentId" | "depositPaid" | "depositAmount" | "paymentReference" | "createdAt" | "updatedAt", ExtArgs["result"]["inspection"]>
+  export type InspectionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    property?: boolean | PropertyDefaultArgs<ExtArgs>
+    tenant?: boolean | TenantDefaultArgs<ExtArgs>
+    agent?: boolean | Inspection$agentArgs<ExtArgs>
+  }
+  export type InspectionIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    property?: boolean | PropertyDefaultArgs<ExtArgs>
+    tenant?: boolean | TenantDefaultArgs<ExtArgs>
+    agent?: boolean | Inspection$agentArgs<ExtArgs>
+  }
+  export type InspectionIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    property?: boolean | PropertyDefaultArgs<ExtArgs>
+    tenant?: boolean | TenantDefaultArgs<ExtArgs>
+    agent?: boolean | Inspection$agentArgs<ExtArgs>
+  }
+
+  export type $InspectionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Inspection"
+    objects: {
+      property: Prisma.$PropertyPayload<ExtArgs>
+      tenant: Prisma.$TenantPayload<ExtArgs>
+      agent: Prisma.$AgentPayload<ExtArgs> | null
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      propertyId: number
+      tenantCognitoId: string
+      scheduledDate: Date
+      status: $Enums.InspectionStatus
+      tenantName: string
+      tenantEmail: string
+      tenantPhone: string
+      preferredTime: string
+      message: string | null
+      adminNotes: string | null
+      agentId: number | null
+      depositPaid: boolean
+      depositAmount: number | null
+      paymentReference: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["inspection"]>
+    composites: {}
+  }
+
+  type InspectionGetPayload<S extends boolean | null | undefined | InspectionDefaultArgs> = $Result.GetResult<Prisma.$InspectionPayload, S>
+
+  type InspectionCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<InspectionFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: InspectionCountAggregateInputType | true
+    }
+
+  export interface InspectionDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Inspection'], meta: { name: 'Inspection' } }
+    /**
+     * Find zero or one Inspection that matches the filter.
+     * @param {InspectionFindUniqueArgs} args - Arguments to find a Inspection
+     * @example
+     * // Get one Inspection
+     * const inspection = await prisma.inspection.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends InspectionFindUniqueArgs>(args: SelectSubset<T, InspectionFindUniqueArgs<ExtArgs>>): Prisma__InspectionClient<$Result.GetResult<Prisma.$InspectionPayload<ExtArgs>, T, "findUnique", ClientOptions> | null, null, ExtArgs, ClientOptions>
+
+    /**
+     * Find one Inspection that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {InspectionFindUniqueOrThrowArgs} args - Arguments to find a Inspection
+     * @example
+     * // Get one Inspection
+     * const inspection = await prisma.inspection.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends InspectionFindUniqueOrThrowArgs>(args: SelectSubset<T, InspectionFindUniqueOrThrowArgs<ExtArgs>>): Prisma__InspectionClient<$Result.GetResult<Prisma.$InspectionPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Find the first Inspection that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InspectionFindFirstArgs} args - Arguments to find a Inspection
+     * @example
+     * // Get one Inspection
+     * const inspection = await prisma.inspection.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends InspectionFindFirstArgs>(args?: SelectSubset<T, InspectionFindFirstArgs<ExtArgs>>): Prisma__InspectionClient<$Result.GetResult<Prisma.$InspectionPayload<ExtArgs>, T, "findFirst", ClientOptions> | null, null, ExtArgs, ClientOptions>
+
+    /**
+     * Find the first Inspection that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InspectionFindFirstOrThrowArgs} args - Arguments to find a Inspection
+     * @example
+     * // Get one Inspection
+     * const inspection = await prisma.inspection.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends InspectionFindFirstOrThrowArgs>(args?: SelectSubset<T, InspectionFindFirstOrThrowArgs<ExtArgs>>): Prisma__InspectionClient<$Result.GetResult<Prisma.$InspectionPayload<ExtArgs>, T, "findFirstOrThrow", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Find zero or more Inspections that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InspectionFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Inspections
+     * const inspections = await prisma.inspection.findMany()
+     * 
+     * // Get first 10 Inspections
+     * const inspections = await prisma.inspection.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const inspectionWithIdOnly = await prisma.inspection.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends InspectionFindManyArgs>(args?: SelectSubset<T, InspectionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InspectionPayload<ExtArgs>, T, "findMany", ClientOptions>>
+
+    /**
+     * Create a Inspection.
+     * @param {InspectionCreateArgs} args - Arguments to create a Inspection.
+     * @example
+     * // Create one Inspection
+     * const Inspection = await prisma.inspection.create({
+     *   data: {
+     *     // ... data to create a Inspection
+     *   }
+     * })
+     * 
+     */
+    create<T extends InspectionCreateArgs>(args: SelectSubset<T, InspectionCreateArgs<ExtArgs>>): Prisma__InspectionClient<$Result.GetResult<Prisma.$InspectionPayload<ExtArgs>, T, "create", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Create many Inspections.
+     * @param {InspectionCreateManyArgs} args - Arguments to create many Inspections.
+     * @example
+     * // Create many Inspections
+     * const inspection = await prisma.inspection.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends InspectionCreateManyArgs>(args?: SelectSubset<T, InspectionCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Inspections and returns the data saved in the database.
+     * @param {InspectionCreateManyAndReturnArgs} args - Arguments to create many Inspections.
+     * @example
+     * // Create many Inspections
+     * const inspection = await prisma.inspection.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Inspections and only return the `id`
+     * const inspectionWithIdOnly = await prisma.inspection.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends InspectionCreateManyAndReturnArgs>(args?: SelectSubset<T, InspectionCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InspectionPayload<ExtArgs>, T, "createManyAndReturn", ClientOptions>>
+
+    /**
+     * Delete a Inspection.
+     * @param {InspectionDeleteArgs} args - Arguments to delete one Inspection.
+     * @example
+     * // Delete one Inspection
+     * const Inspection = await prisma.inspection.delete({
+     *   where: {
+     *     // ... filter to delete one Inspection
+     *   }
+     * })
+     * 
+     */
+    delete<T extends InspectionDeleteArgs>(args: SelectSubset<T, InspectionDeleteArgs<ExtArgs>>): Prisma__InspectionClient<$Result.GetResult<Prisma.$InspectionPayload<ExtArgs>, T, "delete", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Update one Inspection.
+     * @param {InspectionUpdateArgs} args - Arguments to update one Inspection.
+     * @example
+     * // Update one Inspection
+     * const inspection = await prisma.inspection.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends InspectionUpdateArgs>(args: SelectSubset<T, InspectionUpdateArgs<ExtArgs>>): Prisma__InspectionClient<$Result.GetResult<Prisma.$InspectionPayload<ExtArgs>, T, "update", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Delete zero or more Inspections.
+     * @param {InspectionDeleteManyArgs} args - Arguments to filter Inspections to delete.
+     * @example
+     * // Delete a few Inspections
+     * const { count } = await prisma.inspection.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends InspectionDeleteManyArgs>(args?: SelectSubset<T, InspectionDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Inspections.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InspectionUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Inspections
+     * const inspection = await prisma.inspection.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends InspectionUpdateManyArgs>(args: SelectSubset<T, InspectionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Inspections and returns the data updated in the database.
+     * @param {InspectionUpdateManyAndReturnArgs} args - Arguments to update many Inspections.
+     * @example
+     * // Update many Inspections
+     * const inspection = await prisma.inspection.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Inspections and only return the `id`
+     * const inspectionWithIdOnly = await prisma.inspection.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends InspectionUpdateManyAndReturnArgs>(args: SelectSubset<T, InspectionUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InspectionPayload<ExtArgs>, T, "updateManyAndReturn", ClientOptions>>
+
+    /**
+     * Create or update one Inspection.
+     * @param {InspectionUpsertArgs} args - Arguments to update or create a Inspection.
+     * @example
+     * // Update or create a Inspection
+     * const inspection = await prisma.inspection.upsert({
+     *   create: {
+     *     // ... data to create a Inspection
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Inspection we want to update
+     *   }
+     * })
+     */
+    upsert<T extends InspectionUpsertArgs>(args: SelectSubset<T, InspectionUpsertArgs<ExtArgs>>): Prisma__InspectionClient<$Result.GetResult<Prisma.$InspectionPayload<ExtArgs>, T, "upsert", ClientOptions>, never, ExtArgs, ClientOptions>
+
+
+    /**
+     * Count the number of Inspections.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InspectionCountArgs} args - Arguments to filter Inspections to count.
+     * @example
+     * // Count the number of Inspections
+     * const count = await prisma.inspection.count({
+     *   where: {
+     *     // ... the filter for the Inspections we want to count
+     *   }
+     * })
+    **/
+    count<T extends InspectionCountArgs>(
+      args?: Subset<T, InspectionCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], InspectionCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Inspection.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InspectionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends InspectionAggregateArgs>(args: Subset<T, InspectionAggregateArgs>): Prisma.PrismaPromise<GetInspectionAggregateType<T>>
+
+    /**
+     * Group by Inspection.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InspectionGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends InspectionGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: InspectionGroupByArgs['orderBy'] }
+        : { orderBy?: InspectionGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, InspectionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetInspectionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Inspection model
+   */
+  readonly fields: InspectionFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Inspection.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__InspectionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    property<T extends PropertyDefaultArgs<ExtArgs> = {}>(args?: Subset<T, PropertyDefaultArgs<ExtArgs>>): Prisma__PropertyClient<$Result.GetResult<Prisma.$PropertyPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | Null, Null, ExtArgs, ClientOptions>
+    tenant<T extends TenantDefaultArgs<ExtArgs> = {}>(args?: Subset<T, TenantDefaultArgs<ExtArgs>>): Prisma__TenantClient<$Result.GetResult<Prisma.$TenantPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | Null, Null, ExtArgs, ClientOptions>
+    agent<T extends Inspection$agentArgs<ExtArgs> = {}>(args?: Subset<T, Inspection$agentArgs<ExtArgs>>): Prisma__AgentClient<$Result.GetResult<Prisma.$AgentPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | null, null, ExtArgs, ClientOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Inspection model
+   */ 
+  interface InspectionFieldRefs {
+    readonly id: FieldRef<"Inspection", 'Int'>
+    readonly propertyId: FieldRef<"Inspection", 'Int'>
+    readonly tenantCognitoId: FieldRef<"Inspection", 'String'>
+    readonly scheduledDate: FieldRef<"Inspection", 'DateTime'>
+    readonly status: FieldRef<"Inspection", 'InspectionStatus'>
+    readonly tenantName: FieldRef<"Inspection", 'String'>
+    readonly tenantEmail: FieldRef<"Inspection", 'String'>
+    readonly tenantPhone: FieldRef<"Inspection", 'String'>
+    readonly preferredTime: FieldRef<"Inspection", 'String'>
+    readonly message: FieldRef<"Inspection", 'String'>
+    readonly adminNotes: FieldRef<"Inspection", 'String'>
+    readonly agentId: FieldRef<"Inspection", 'Int'>
+    readonly depositPaid: FieldRef<"Inspection", 'Boolean'>
+    readonly depositAmount: FieldRef<"Inspection", 'Float'>
+    readonly paymentReference: FieldRef<"Inspection", 'String'>
+    readonly createdAt: FieldRef<"Inspection", 'DateTime'>
+    readonly updatedAt: FieldRef<"Inspection", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Inspection findUnique
+   */
+  export type InspectionFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Inspection
+     */
+    select?: InspectionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Inspection
+     */
+    omit?: InspectionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InspectionInclude<ExtArgs> | null
+    /**
+     * Filter, which Inspection to fetch.
+     */
+    where: InspectionWhereUniqueInput
+  }
+
+  /**
+   * Inspection findUniqueOrThrow
+   */
+  export type InspectionFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Inspection
+     */
+    select?: InspectionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Inspection
+     */
+    omit?: InspectionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InspectionInclude<ExtArgs> | null
+    /**
+     * Filter, which Inspection to fetch.
+     */
+    where: InspectionWhereUniqueInput
+  }
+
+  /**
+   * Inspection findFirst
+   */
+  export type InspectionFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Inspection
+     */
+    select?: InspectionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Inspection
+     */
+    omit?: InspectionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InspectionInclude<ExtArgs> | null
+    /**
+     * Filter, which Inspection to fetch.
+     */
+    where?: InspectionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Inspections to fetch.
+     */
+    orderBy?: InspectionOrderByWithRelationInput | InspectionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Inspections.
+     */
+    cursor?: InspectionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Inspections from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Inspections.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Inspections.
+     */
+    distinct?: InspectionScalarFieldEnum | InspectionScalarFieldEnum[]
+  }
+
+  /**
+   * Inspection findFirstOrThrow
+   */
+  export type InspectionFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Inspection
+     */
+    select?: InspectionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Inspection
+     */
+    omit?: InspectionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InspectionInclude<ExtArgs> | null
+    /**
+     * Filter, which Inspection to fetch.
+     */
+    where?: InspectionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Inspections to fetch.
+     */
+    orderBy?: InspectionOrderByWithRelationInput | InspectionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Inspections.
+     */
+    cursor?: InspectionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Inspections from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Inspections.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Inspections.
+     */
+    distinct?: InspectionScalarFieldEnum | InspectionScalarFieldEnum[]
+  }
+
+  /**
+   * Inspection findMany
+   */
+  export type InspectionFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Inspection
+     */
+    select?: InspectionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Inspection
+     */
+    omit?: InspectionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InspectionInclude<ExtArgs> | null
+    /**
+     * Filter, which Inspections to fetch.
+     */
+    where?: InspectionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Inspections to fetch.
+     */
+    orderBy?: InspectionOrderByWithRelationInput | InspectionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Inspections.
+     */
+    cursor?: InspectionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Inspections from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Inspections.
+     */
+    skip?: number
+    distinct?: InspectionScalarFieldEnum | InspectionScalarFieldEnum[]
+  }
+
+  /**
+   * Inspection create
+   */
+  export type InspectionCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Inspection
+     */
+    select?: InspectionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Inspection
+     */
+    omit?: InspectionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InspectionInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Inspection.
+     */
+    data: XOR<InspectionCreateInput, InspectionUncheckedCreateInput>
+  }
+
+  /**
+   * Inspection createMany
+   */
+  export type InspectionCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Inspections.
+     */
+    data: InspectionCreateManyInput | InspectionCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Inspection createManyAndReturn
+   */
+  export type InspectionCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Inspection
+     */
+    select?: InspectionSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Inspection
+     */
+    omit?: InspectionOmit<ExtArgs> | null
+    /**
+     * The data used to create many Inspections.
+     */
+    data: InspectionCreateManyInput | InspectionCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InspectionIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Inspection update
+   */
+  export type InspectionUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Inspection
+     */
+    select?: InspectionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Inspection
+     */
+    omit?: InspectionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InspectionInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Inspection.
+     */
+    data: XOR<InspectionUpdateInput, InspectionUncheckedUpdateInput>
+    /**
+     * Choose, which Inspection to update.
+     */
+    where: InspectionWhereUniqueInput
+  }
+
+  /**
+   * Inspection updateMany
+   */
+  export type InspectionUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Inspections.
+     */
+    data: XOR<InspectionUpdateManyMutationInput, InspectionUncheckedUpdateManyInput>
+    /**
+     * Filter which Inspections to update
+     */
+    where?: InspectionWhereInput
+    /**
+     * Limit how many Inspections to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Inspection updateManyAndReturn
+   */
+  export type InspectionUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Inspection
+     */
+    select?: InspectionSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Inspection
+     */
+    omit?: InspectionOmit<ExtArgs> | null
+    /**
+     * The data used to update Inspections.
+     */
+    data: XOR<InspectionUpdateManyMutationInput, InspectionUncheckedUpdateManyInput>
+    /**
+     * Filter which Inspections to update
+     */
+    where?: InspectionWhereInput
+    /**
+     * Limit how many Inspections to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InspectionIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Inspection upsert
+   */
+  export type InspectionUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Inspection
+     */
+    select?: InspectionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Inspection
+     */
+    omit?: InspectionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InspectionInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Inspection to update in case it exists.
+     */
+    where: InspectionWhereUniqueInput
+    /**
+     * In case the Inspection found by the `where` argument doesn't exist, create a new Inspection with this data.
+     */
+    create: XOR<InspectionCreateInput, InspectionUncheckedCreateInput>
+    /**
+     * In case the Inspection was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<InspectionUpdateInput, InspectionUncheckedUpdateInput>
+  }
+
+  /**
+   * Inspection delete
+   */
+  export type InspectionDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Inspection
+     */
+    select?: InspectionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Inspection
+     */
+    omit?: InspectionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InspectionInclude<ExtArgs> | null
+    /**
+     * Filter which Inspection to delete.
+     */
+    where: InspectionWhereUniqueInput
+  }
+
+  /**
+   * Inspection deleteMany
+   */
+  export type InspectionDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Inspections to delete
+     */
+    where?: InspectionWhereInput
+    /**
+     * Limit how many Inspections to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Inspection.agent
+   */
+  export type Inspection$agentArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Agent
+     */
+    select?: AgentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Agent
+     */
+    omit?: AgentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AgentInclude<ExtArgs> | null
+    where?: AgentWhereInput
+  }
+
+  /**
+   * Inspection without action
+   */
+  export type InspectionDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Inspection
+     */
+    select?: InspectionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Inspection
+     */
+    omit?: InspectionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InspectionInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model InspectionLimit
+   */
+
+  export type AggregateInspectionLimit = {
+    _count: InspectionLimitCountAggregateOutputType | null
+    _avg: InspectionLimitAvgAggregateOutputType | null
+    _sum: InspectionLimitSumAggregateOutputType | null
+    _min: InspectionLimitMinAggregateOutputType | null
+    _max: InspectionLimitMaxAggregateOutputType | null
+  }
+
+  export type InspectionLimitAvgAggregateOutputType = {
+    id: number | null
+    freeInspections: number | null
+    usedInspections: number | null
+  }
+
+  export type InspectionLimitSumAggregateOutputType = {
+    id: number | null
+    freeInspections: number | null
+    usedInspections: number | null
+  }
+
+  export type InspectionLimitMinAggregateOutputType = {
+    id: number | null
+    tenantCognitoId: string | null
+    freeInspections: number | null
+    usedInspections: number | null
+    hasUnlimited: boolean | null
+    unlimitedUntil: Date | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type InspectionLimitMaxAggregateOutputType = {
+    id: number | null
+    tenantCognitoId: string | null
+    freeInspections: number | null
+    usedInspections: number | null
+    hasUnlimited: boolean | null
+    unlimitedUntil: Date | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type InspectionLimitCountAggregateOutputType = {
+    id: number
+    tenantCognitoId: number
+    freeInspections: number
+    usedInspections: number
+    hasUnlimited: number
+    unlimitedUntil: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type InspectionLimitAvgAggregateInputType = {
+    id?: true
+    freeInspections?: true
+    usedInspections?: true
+  }
+
+  export type InspectionLimitSumAggregateInputType = {
+    id?: true
+    freeInspections?: true
+    usedInspections?: true
+  }
+
+  export type InspectionLimitMinAggregateInputType = {
+    id?: true
+    tenantCognitoId?: true
+    freeInspections?: true
+    usedInspections?: true
+    hasUnlimited?: true
+    unlimitedUntil?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type InspectionLimitMaxAggregateInputType = {
+    id?: true
+    tenantCognitoId?: true
+    freeInspections?: true
+    usedInspections?: true
+    hasUnlimited?: true
+    unlimitedUntil?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type InspectionLimitCountAggregateInputType = {
+    id?: true
+    tenantCognitoId?: true
+    freeInspections?: true
+    usedInspections?: true
+    hasUnlimited?: true
+    unlimitedUntil?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type InspectionLimitAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which InspectionLimit to aggregate.
+     */
+    where?: InspectionLimitWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of InspectionLimits to fetch.
+     */
+    orderBy?: InspectionLimitOrderByWithRelationInput | InspectionLimitOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: InspectionLimitWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` InspectionLimits from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` InspectionLimits.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned InspectionLimits
+    **/
+    _count?: true | InspectionLimitCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: InspectionLimitAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: InspectionLimitSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: InspectionLimitMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: InspectionLimitMaxAggregateInputType
+  }
+
+  export type GetInspectionLimitAggregateType<T extends InspectionLimitAggregateArgs> = {
+        [P in keyof T & keyof AggregateInspectionLimit]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateInspectionLimit[P]>
+      : GetScalarType<T[P], AggregateInspectionLimit[P]>
+  }
+
+
+
+
+  export type InspectionLimitGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: InspectionLimitWhereInput
+    orderBy?: InspectionLimitOrderByWithAggregationInput | InspectionLimitOrderByWithAggregationInput[]
+    by: InspectionLimitScalarFieldEnum[] | InspectionLimitScalarFieldEnum
+    having?: InspectionLimitScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: InspectionLimitCountAggregateInputType | true
+    _avg?: InspectionLimitAvgAggregateInputType
+    _sum?: InspectionLimitSumAggregateInputType
+    _min?: InspectionLimitMinAggregateInputType
+    _max?: InspectionLimitMaxAggregateInputType
+  }
+
+  export type InspectionLimitGroupByOutputType = {
+    id: number
+    tenantCognitoId: string
+    freeInspections: number
+    usedInspections: number
+    hasUnlimited: boolean
+    unlimitedUntil: Date | null
+    createdAt: Date
+    updatedAt: Date
+    _count: InspectionLimitCountAggregateOutputType | null
+    _avg: InspectionLimitAvgAggregateOutputType | null
+    _sum: InspectionLimitSumAggregateOutputType | null
+    _min: InspectionLimitMinAggregateOutputType | null
+    _max: InspectionLimitMaxAggregateOutputType | null
+  }
+
+  type GetInspectionLimitGroupByPayload<T extends InspectionLimitGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<InspectionLimitGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof InspectionLimitGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], InspectionLimitGroupByOutputType[P]>
+            : GetScalarType<T[P], InspectionLimitGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type InspectionLimitSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    tenantCognitoId?: boolean
+    freeInspections?: boolean
+    usedInspections?: boolean
+    hasUnlimited?: boolean
+    unlimitedUntil?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    tenant?: boolean | TenantDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["inspectionLimit"]>
+
+  export type InspectionLimitSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    tenantCognitoId?: boolean
+    freeInspections?: boolean
+    usedInspections?: boolean
+    hasUnlimited?: boolean
+    unlimitedUntil?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    tenant?: boolean | TenantDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["inspectionLimit"]>
+
+  export type InspectionLimitSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    tenantCognitoId?: boolean
+    freeInspections?: boolean
+    usedInspections?: boolean
+    hasUnlimited?: boolean
+    unlimitedUntil?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    tenant?: boolean | TenantDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["inspectionLimit"]>
+
+  export type InspectionLimitSelectScalar = {
+    id?: boolean
+    tenantCognitoId?: boolean
+    freeInspections?: boolean
+    usedInspections?: boolean
+    hasUnlimited?: boolean
+    unlimitedUntil?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type InspectionLimitOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "tenantCognitoId" | "freeInspections" | "usedInspections" | "hasUnlimited" | "unlimitedUntil" | "createdAt" | "updatedAt", ExtArgs["result"]["inspectionLimit"]>
+  export type InspectionLimitInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    tenant?: boolean | TenantDefaultArgs<ExtArgs>
+  }
+  export type InspectionLimitIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    tenant?: boolean | TenantDefaultArgs<ExtArgs>
+  }
+  export type InspectionLimitIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    tenant?: boolean | TenantDefaultArgs<ExtArgs>
+  }
+
+  export type $InspectionLimitPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "InspectionLimit"
+    objects: {
+      tenant: Prisma.$TenantPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      tenantCognitoId: string
+      freeInspections: number
+      usedInspections: number
+      hasUnlimited: boolean
+      unlimitedUntil: Date | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["inspectionLimit"]>
+    composites: {}
+  }
+
+  type InspectionLimitGetPayload<S extends boolean | null | undefined | InspectionLimitDefaultArgs> = $Result.GetResult<Prisma.$InspectionLimitPayload, S>
+
+  type InspectionLimitCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<InspectionLimitFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: InspectionLimitCountAggregateInputType | true
+    }
+
+  export interface InspectionLimitDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['InspectionLimit'], meta: { name: 'InspectionLimit' } }
+    /**
+     * Find zero or one InspectionLimit that matches the filter.
+     * @param {InspectionLimitFindUniqueArgs} args - Arguments to find a InspectionLimit
+     * @example
+     * // Get one InspectionLimit
+     * const inspectionLimit = await prisma.inspectionLimit.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends InspectionLimitFindUniqueArgs>(args: SelectSubset<T, InspectionLimitFindUniqueArgs<ExtArgs>>): Prisma__InspectionLimitClient<$Result.GetResult<Prisma.$InspectionLimitPayload<ExtArgs>, T, "findUnique", ClientOptions> | null, null, ExtArgs, ClientOptions>
+
+    /**
+     * Find one InspectionLimit that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {InspectionLimitFindUniqueOrThrowArgs} args - Arguments to find a InspectionLimit
+     * @example
+     * // Get one InspectionLimit
+     * const inspectionLimit = await prisma.inspectionLimit.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends InspectionLimitFindUniqueOrThrowArgs>(args: SelectSubset<T, InspectionLimitFindUniqueOrThrowArgs<ExtArgs>>): Prisma__InspectionLimitClient<$Result.GetResult<Prisma.$InspectionLimitPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Find the first InspectionLimit that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InspectionLimitFindFirstArgs} args - Arguments to find a InspectionLimit
+     * @example
+     * // Get one InspectionLimit
+     * const inspectionLimit = await prisma.inspectionLimit.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends InspectionLimitFindFirstArgs>(args?: SelectSubset<T, InspectionLimitFindFirstArgs<ExtArgs>>): Prisma__InspectionLimitClient<$Result.GetResult<Prisma.$InspectionLimitPayload<ExtArgs>, T, "findFirst", ClientOptions> | null, null, ExtArgs, ClientOptions>
+
+    /**
+     * Find the first InspectionLimit that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InspectionLimitFindFirstOrThrowArgs} args - Arguments to find a InspectionLimit
+     * @example
+     * // Get one InspectionLimit
+     * const inspectionLimit = await prisma.inspectionLimit.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends InspectionLimitFindFirstOrThrowArgs>(args?: SelectSubset<T, InspectionLimitFindFirstOrThrowArgs<ExtArgs>>): Prisma__InspectionLimitClient<$Result.GetResult<Prisma.$InspectionLimitPayload<ExtArgs>, T, "findFirstOrThrow", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Find zero or more InspectionLimits that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InspectionLimitFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all InspectionLimits
+     * const inspectionLimits = await prisma.inspectionLimit.findMany()
+     * 
+     * // Get first 10 InspectionLimits
+     * const inspectionLimits = await prisma.inspectionLimit.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const inspectionLimitWithIdOnly = await prisma.inspectionLimit.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends InspectionLimitFindManyArgs>(args?: SelectSubset<T, InspectionLimitFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InspectionLimitPayload<ExtArgs>, T, "findMany", ClientOptions>>
+
+    /**
+     * Create a InspectionLimit.
+     * @param {InspectionLimitCreateArgs} args - Arguments to create a InspectionLimit.
+     * @example
+     * // Create one InspectionLimit
+     * const InspectionLimit = await prisma.inspectionLimit.create({
+     *   data: {
+     *     // ... data to create a InspectionLimit
+     *   }
+     * })
+     * 
+     */
+    create<T extends InspectionLimitCreateArgs>(args: SelectSubset<T, InspectionLimitCreateArgs<ExtArgs>>): Prisma__InspectionLimitClient<$Result.GetResult<Prisma.$InspectionLimitPayload<ExtArgs>, T, "create", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Create many InspectionLimits.
+     * @param {InspectionLimitCreateManyArgs} args - Arguments to create many InspectionLimits.
+     * @example
+     * // Create many InspectionLimits
+     * const inspectionLimit = await prisma.inspectionLimit.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends InspectionLimitCreateManyArgs>(args?: SelectSubset<T, InspectionLimitCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many InspectionLimits and returns the data saved in the database.
+     * @param {InspectionLimitCreateManyAndReturnArgs} args - Arguments to create many InspectionLimits.
+     * @example
+     * // Create many InspectionLimits
+     * const inspectionLimit = await prisma.inspectionLimit.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many InspectionLimits and only return the `id`
+     * const inspectionLimitWithIdOnly = await prisma.inspectionLimit.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends InspectionLimitCreateManyAndReturnArgs>(args?: SelectSubset<T, InspectionLimitCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InspectionLimitPayload<ExtArgs>, T, "createManyAndReturn", ClientOptions>>
+
+    /**
+     * Delete a InspectionLimit.
+     * @param {InspectionLimitDeleteArgs} args - Arguments to delete one InspectionLimit.
+     * @example
+     * // Delete one InspectionLimit
+     * const InspectionLimit = await prisma.inspectionLimit.delete({
+     *   where: {
+     *     // ... filter to delete one InspectionLimit
+     *   }
+     * })
+     * 
+     */
+    delete<T extends InspectionLimitDeleteArgs>(args: SelectSubset<T, InspectionLimitDeleteArgs<ExtArgs>>): Prisma__InspectionLimitClient<$Result.GetResult<Prisma.$InspectionLimitPayload<ExtArgs>, T, "delete", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Update one InspectionLimit.
+     * @param {InspectionLimitUpdateArgs} args - Arguments to update one InspectionLimit.
+     * @example
+     * // Update one InspectionLimit
+     * const inspectionLimit = await prisma.inspectionLimit.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends InspectionLimitUpdateArgs>(args: SelectSubset<T, InspectionLimitUpdateArgs<ExtArgs>>): Prisma__InspectionLimitClient<$Result.GetResult<Prisma.$InspectionLimitPayload<ExtArgs>, T, "update", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Delete zero or more InspectionLimits.
+     * @param {InspectionLimitDeleteManyArgs} args - Arguments to filter InspectionLimits to delete.
+     * @example
+     * // Delete a few InspectionLimits
+     * const { count } = await prisma.inspectionLimit.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends InspectionLimitDeleteManyArgs>(args?: SelectSubset<T, InspectionLimitDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more InspectionLimits.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InspectionLimitUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many InspectionLimits
+     * const inspectionLimit = await prisma.inspectionLimit.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends InspectionLimitUpdateManyArgs>(args: SelectSubset<T, InspectionLimitUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more InspectionLimits and returns the data updated in the database.
+     * @param {InspectionLimitUpdateManyAndReturnArgs} args - Arguments to update many InspectionLimits.
+     * @example
+     * // Update many InspectionLimits
+     * const inspectionLimit = await prisma.inspectionLimit.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more InspectionLimits and only return the `id`
+     * const inspectionLimitWithIdOnly = await prisma.inspectionLimit.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends InspectionLimitUpdateManyAndReturnArgs>(args: SelectSubset<T, InspectionLimitUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InspectionLimitPayload<ExtArgs>, T, "updateManyAndReturn", ClientOptions>>
+
+    /**
+     * Create or update one InspectionLimit.
+     * @param {InspectionLimitUpsertArgs} args - Arguments to update or create a InspectionLimit.
+     * @example
+     * // Update or create a InspectionLimit
+     * const inspectionLimit = await prisma.inspectionLimit.upsert({
+     *   create: {
+     *     // ... data to create a InspectionLimit
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the InspectionLimit we want to update
+     *   }
+     * })
+     */
+    upsert<T extends InspectionLimitUpsertArgs>(args: SelectSubset<T, InspectionLimitUpsertArgs<ExtArgs>>): Prisma__InspectionLimitClient<$Result.GetResult<Prisma.$InspectionLimitPayload<ExtArgs>, T, "upsert", ClientOptions>, never, ExtArgs, ClientOptions>
+
+
+    /**
+     * Count the number of InspectionLimits.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InspectionLimitCountArgs} args - Arguments to filter InspectionLimits to count.
+     * @example
+     * // Count the number of InspectionLimits
+     * const count = await prisma.inspectionLimit.count({
+     *   where: {
+     *     // ... the filter for the InspectionLimits we want to count
+     *   }
+     * })
+    **/
+    count<T extends InspectionLimitCountArgs>(
+      args?: Subset<T, InspectionLimitCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], InspectionLimitCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a InspectionLimit.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InspectionLimitAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends InspectionLimitAggregateArgs>(args: Subset<T, InspectionLimitAggregateArgs>): Prisma.PrismaPromise<GetInspectionLimitAggregateType<T>>
+
+    /**
+     * Group by InspectionLimit.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InspectionLimitGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends InspectionLimitGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: InspectionLimitGroupByArgs['orderBy'] }
+        : { orderBy?: InspectionLimitGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, InspectionLimitGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetInspectionLimitGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the InspectionLimit model
+   */
+  readonly fields: InspectionLimitFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for InspectionLimit.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__InspectionLimitClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    tenant<T extends TenantDefaultArgs<ExtArgs> = {}>(args?: Subset<T, TenantDefaultArgs<ExtArgs>>): Prisma__TenantClient<$Result.GetResult<Prisma.$TenantPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | Null, Null, ExtArgs, ClientOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the InspectionLimit model
+   */ 
+  interface InspectionLimitFieldRefs {
+    readonly id: FieldRef<"InspectionLimit", 'Int'>
+    readonly tenantCognitoId: FieldRef<"InspectionLimit", 'String'>
+    readonly freeInspections: FieldRef<"InspectionLimit", 'Int'>
+    readonly usedInspections: FieldRef<"InspectionLimit", 'Int'>
+    readonly hasUnlimited: FieldRef<"InspectionLimit", 'Boolean'>
+    readonly unlimitedUntil: FieldRef<"InspectionLimit", 'DateTime'>
+    readonly createdAt: FieldRef<"InspectionLimit", 'DateTime'>
+    readonly updatedAt: FieldRef<"InspectionLimit", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * InspectionLimit findUnique
+   */
+  export type InspectionLimitFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InspectionLimit
+     */
+    select?: InspectionLimitSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InspectionLimit
+     */
+    omit?: InspectionLimitOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InspectionLimitInclude<ExtArgs> | null
+    /**
+     * Filter, which InspectionLimit to fetch.
+     */
+    where: InspectionLimitWhereUniqueInput
+  }
+
+  /**
+   * InspectionLimit findUniqueOrThrow
+   */
+  export type InspectionLimitFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InspectionLimit
+     */
+    select?: InspectionLimitSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InspectionLimit
+     */
+    omit?: InspectionLimitOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InspectionLimitInclude<ExtArgs> | null
+    /**
+     * Filter, which InspectionLimit to fetch.
+     */
+    where: InspectionLimitWhereUniqueInput
+  }
+
+  /**
+   * InspectionLimit findFirst
+   */
+  export type InspectionLimitFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InspectionLimit
+     */
+    select?: InspectionLimitSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InspectionLimit
+     */
+    omit?: InspectionLimitOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InspectionLimitInclude<ExtArgs> | null
+    /**
+     * Filter, which InspectionLimit to fetch.
+     */
+    where?: InspectionLimitWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of InspectionLimits to fetch.
+     */
+    orderBy?: InspectionLimitOrderByWithRelationInput | InspectionLimitOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for InspectionLimits.
+     */
+    cursor?: InspectionLimitWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` InspectionLimits from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` InspectionLimits.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of InspectionLimits.
+     */
+    distinct?: InspectionLimitScalarFieldEnum | InspectionLimitScalarFieldEnum[]
+  }
+
+  /**
+   * InspectionLimit findFirstOrThrow
+   */
+  export type InspectionLimitFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InspectionLimit
+     */
+    select?: InspectionLimitSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InspectionLimit
+     */
+    omit?: InspectionLimitOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InspectionLimitInclude<ExtArgs> | null
+    /**
+     * Filter, which InspectionLimit to fetch.
+     */
+    where?: InspectionLimitWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of InspectionLimits to fetch.
+     */
+    orderBy?: InspectionLimitOrderByWithRelationInput | InspectionLimitOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for InspectionLimits.
+     */
+    cursor?: InspectionLimitWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` InspectionLimits from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` InspectionLimits.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of InspectionLimits.
+     */
+    distinct?: InspectionLimitScalarFieldEnum | InspectionLimitScalarFieldEnum[]
+  }
+
+  /**
+   * InspectionLimit findMany
+   */
+  export type InspectionLimitFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InspectionLimit
+     */
+    select?: InspectionLimitSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InspectionLimit
+     */
+    omit?: InspectionLimitOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InspectionLimitInclude<ExtArgs> | null
+    /**
+     * Filter, which InspectionLimits to fetch.
+     */
+    where?: InspectionLimitWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of InspectionLimits to fetch.
+     */
+    orderBy?: InspectionLimitOrderByWithRelationInput | InspectionLimitOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing InspectionLimits.
+     */
+    cursor?: InspectionLimitWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` InspectionLimits from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` InspectionLimits.
+     */
+    skip?: number
+    distinct?: InspectionLimitScalarFieldEnum | InspectionLimitScalarFieldEnum[]
+  }
+
+  /**
+   * InspectionLimit create
+   */
+  export type InspectionLimitCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InspectionLimit
+     */
+    select?: InspectionLimitSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InspectionLimit
+     */
+    omit?: InspectionLimitOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InspectionLimitInclude<ExtArgs> | null
+    /**
+     * The data needed to create a InspectionLimit.
+     */
+    data: XOR<InspectionLimitCreateInput, InspectionLimitUncheckedCreateInput>
+  }
+
+  /**
+   * InspectionLimit createMany
+   */
+  export type InspectionLimitCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many InspectionLimits.
+     */
+    data: InspectionLimitCreateManyInput | InspectionLimitCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * InspectionLimit createManyAndReturn
+   */
+  export type InspectionLimitCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InspectionLimit
+     */
+    select?: InspectionLimitSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the InspectionLimit
+     */
+    omit?: InspectionLimitOmit<ExtArgs> | null
+    /**
+     * The data used to create many InspectionLimits.
+     */
+    data: InspectionLimitCreateManyInput | InspectionLimitCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InspectionLimitIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * InspectionLimit update
+   */
+  export type InspectionLimitUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InspectionLimit
+     */
+    select?: InspectionLimitSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InspectionLimit
+     */
+    omit?: InspectionLimitOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InspectionLimitInclude<ExtArgs> | null
+    /**
+     * The data needed to update a InspectionLimit.
+     */
+    data: XOR<InspectionLimitUpdateInput, InspectionLimitUncheckedUpdateInput>
+    /**
+     * Choose, which InspectionLimit to update.
+     */
+    where: InspectionLimitWhereUniqueInput
+  }
+
+  /**
+   * InspectionLimit updateMany
+   */
+  export type InspectionLimitUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update InspectionLimits.
+     */
+    data: XOR<InspectionLimitUpdateManyMutationInput, InspectionLimitUncheckedUpdateManyInput>
+    /**
+     * Filter which InspectionLimits to update
+     */
+    where?: InspectionLimitWhereInput
+    /**
+     * Limit how many InspectionLimits to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * InspectionLimit updateManyAndReturn
+   */
+  export type InspectionLimitUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InspectionLimit
+     */
+    select?: InspectionLimitSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the InspectionLimit
+     */
+    omit?: InspectionLimitOmit<ExtArgs> | null
+    /**
+     * The data used to update InspectionLimits.
+     */
+    data: XOR<InspectionLimitUpdateManyMutationInput, InspectionLimitUncheckedUpdateManyInput>
+    /**
+     * Filter which InspectionLimits to update
+     */
+    where?: InspectionLimitWhereInput
+    /**
+     * Limit how many InspectionLimits to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InspectionLimitIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * InspectionLimit upsert
+   */
+  export type InspectionLimitUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InspectionLimit
+     */
+    select?: InspectionLimitSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InspectionLimit
+     */
+    omit?: InspectionLimitOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InspectionLimitInclude<ExtArgs> | null
+    /**
+     * The filter to search for the InspectionLimit to update in case it exists.
+     */
+    where: InspectionLimitWhereUniqueInput
+    /**
+     * In case the InspectionLimit found by the `where` argument doesn't exist, create a new InspectionLimit with this data.
+     */
+    create: XOR<InspectionLimitCreateInput, InspectionLimitUncheckedCreateInput>
+    /**
+     * In case the InspectionLimit was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<InspectionLimitUpdateInput, InspectionLimitUncheckedUpdateInput>
+  }
+
+  /**
+   * InspectionLimit delete
+   */
+  export type InspectionLimitDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InspectionLimit
+     */
+    select?: InspectionLimitSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InspectionLimit
+     */
+    omit?: InspectionLimitOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InspectionLimitInclude<ExtArgs> | null
+    /**
+     * Filter which InspectionLimit to delete.
+     */
+    where: InspectionLimitWhereUniqueInput
+  }
+
+  /**
+   * InspectionLimit deleteMany
+   */
+  export type InspectionLimitDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which InspectionLimits to delete
+     */
+    where?: InspectionLimitWhereInput
+    /**
+     * Limit how many InspectionLimits to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * InspectionLimit without action
+   */
+  export type InspectionLimitDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InspectionLimit
+     */
+    select?: InspectionLimitSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InspectionLimit
+     */
+    omit?: InspectionLimitOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InspectionLimitInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Withdrawal
+   */
+
+  export type AggregateWithdrawal = {
+    _count: WithdrawalCountAggregateOutputType | null
+    _avg: WithdrawalAvgAggregateOutputType | null
+    _sum: WithdrawalSumAggregateOutputType | null
+    _min: WithdrawalMinAggregateOutputType | null
+    _max: WithdrawalMaxAggregateOutputType | null
+  }
+
+  export type WithdrawalAvgAggregateOutputType = {
+    id: number | null
+    amount: number | null
+  }
+
+  export type WithdrawalSumAggregateOutputType = {
+    id: number | null
+    amount: number | null
+  }
+
+  export type WithdrawalMinAggregateOutputType = {
+    id: number | null
+    amount: number | null
+    status: $Enums.WithdrawalStatus | null
+    requestDate: Date | null
+    processedDate: Date | null
+    landlordCognitoId: string | null
+    bankName: string | null
+    accountNumber: string | null
+    accountName: string | null
+    reference: string | null
+    notes: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type WithdrawalMaxAggregateOutputType = {
+    id: number | null
+    amount: number | null
+    status: $Enums.WithdrawalStatus | null
+    requestDate: Date | null
+    processedDate: Date | null
+    landlordCognitoId: string | null
+    bankName: string | null
+    accountNumber: string | null
+    accountName: string | null
+    reference: string | null
+    notes: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type WithdrawalCountAggregateOutputType = {
+    id: number
+    amount: number
+    status: number
+    requestDate: number
+    processedDate: number
+    landlordCognitoId: number
+    bankName: number
+    accountNumber: number
+    accountName: number
+    reference: number
+    notes: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type WithdrawalAvgAggregateInputType = {
+    id?: true
+    amount?: true
+  }
+
+  export type WithdrawalSumAggregateInputType = {
+    id?: true
+    amount?: true
+  }
+
+  export type WithdrawalMinAggregateInputType = {
+    id?: true
+    amount?: true
+    status?: true
+    requestDate?: true
+    processedDate?: true
+    landlordCognitoId?: true
+    bankName?: true
+    accountNumber?: true
+    accountName?: true
+    reference?: true
+    notes?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type WithdrawalMaxAggregateInputType = {
+    id?: true
+    amount?: true
+    status?: true
+    requestDate?: true
+    processedDate?: true
+    landlordCognitoId?: true
+    bankName?: true
+    accountNumber?: true
+    accountName?: true
+    reference?: true
+    notes?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type WithdrawalCountAggregateInputType = {
+    id?: true
+    amount?: true
+    status?: true
+    requestDate?: true
+    processedDate?: true
+    landlordCognitoId?: true
+    bankName?: true
+    accountNumber?: true
+    accountName?: true
+    reference?: true
+    notes?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type WithdrawalAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Withdrawal to aggregate.
+     */
+    where?: WithdrawalWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Withdrawals to fetch.
+     */
+    orderBy?: WithdrawalOrderByWithRelationInput | WithdrawalOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: WithdrawalWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Withdrawals from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Withdrawals.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Withdrawals
+    **/
+    _count?: true | WithdrawalCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: WithdrawalAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: WithdrawalSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: WithdrawalMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: WithdrawalMaxAggregateInputType
+  }
+
+  export type GetWithdrawalAggregateType<T extends WithdrawalAggregateArgs> = {
+        [P in keyof T & keyof AggregateWithdrawal]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateWithdrawal[P]>
+      : GetScalarType<T[P], AggregateWithdrawal[P]>
+  }
+
+
+
+
+  export type WithdrawalGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: WithdrawalWhereInput
+    orderBy?: WithdrawalOrderByWithAggregationInput | WithdrawalOrderByWithAggregationInput[]
+    by: WithdrawalScalarFieldEnum[] | WithdrawalScalarFieldEnum
+    having?: WithdrawalScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: WithdrawalCountAggregateInputType | true
+    _avg?: WithdrawalAvgAggregateInputType
+    _sum?: WithdrawalSumAggregateInputType
+    _min?: WithdrawalMinAggregateInputType
+    _max?: WithdrawalMaxAggregateInputType
+  }
+
+  export type WithdrawalGroupByOutputType = {
+    id: number
+    amount: number
+    status: $Enums.WithdrawalStatus
+    requestDate: Date
+    processedDate: Date | null
+    landlordCognitoId: string
+    bankName: string | null
+    accountNumber: string | null
+    accountName: string | null
+    reference: string | null
+    notes: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: WithdrawalCountAggregateOutputType | null
+    _avg: WithdrawalAvgAggregateOutputType | null
+    _sum: WithdrawalSumAggregateOutputType | null
+    _min: WithdrawalMinAggregateOutputType | null
+    _max: WithdrawalMaxAggregateOutputType | null
+  }
+
+  type GetWithdrawalGroupByPayload<T extends WithdrawalGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<WithdrawalGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof WithdrawalGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], WithdrawalGroupByOutputType[P]>
+            : GetScalarType<T[P], WithdrawalGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type WithdrawalSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    amount?: boolean
+    status?: boolean
+    requestDate?: boolean
+    processedDate?: boolean
+    landlordCognitoId?: boolean
+    bankName?: boolean
+    accountNumber?: boolean
+    accountName?: boolean
+    reference?: boolean
+    notes?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    landlord?: boolean | LandlordDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["withdrawal"]>
+
+  export type WithdrawalSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    amount?: boolean
+    status?: boolean
+    requestDate?: boolean
+    processedDate?: boolean
+    landlordCognitoId?: boolean
+    bankName?: boolean
+    accountNumber?: boolean
+    accountName?: boolean
+    reference?: boolean
+    notes?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    landlord?: boolean | LandlordDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["withdrawal"]>
+
+  export type WithdrawalSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    amount?: boolean
+    status?: boolean
+    requestDate?: boolean
+    processedDate?: boolean
+    landlordCognitoId?: boolean
+    bankName?: boolean
+    accountNumber?: boolean
+    accountName?: boolean
+    reference?: boolean
+    notes?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    landlord?: boolean | LandlordDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["withdrawal"]>
+
+  export type WithdrawalSelectScalar = {
+    id?: boolean
+    amount?: boolean
+    status?: boolean
+    requestDate?: boolean
+    processedDate?: boolean
+    landlordCognitoId?: boolean
+    bankName?: boolean
+    accountNumber?: boolean
+    accountName?: boolean
+    reference?: boolean
+    notes?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type WithdrawalOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "amount" | "status" | "requestDate" | "processedDate" | "landlordCognitoId" | "bankName" | "accountNumber" | "accountName" | "reference" | "notes" | "createdAt" | "updatedAt", ExtArgs["result"]["withdrawal"]>
+  export type WithdrawalInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    landlord?: boolean | LandlordDefaultArgs<ExtArgs>
+  }
+  export type WithdrawalIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    landlord?: boolean | LandlordDefaultArgs<ExtArgs>
+  }
+  export type WithdrawalIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    landlord?: boolean | LandlordDefaultArgs<ExtArgs>
+  }
+
+  export type $WithdrawalPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Withdrawal"
+    objects: {
+      landlord: Prisma.$LandlordPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      amount: number
+      status: $Enums.WithdrawalStatus
+      requestDate: Date
+      processedDate: Date | null
+      landlordCognitoId: string
+      bankName: string | null
+      accountNumber: string | null
+      accountName: string | null
+      reference: string | null
+      notes: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["withdrawal"]>
+    composites: {}
+  }
+
+  type WithdrawalGetPayload<S extends boolean | null | undefined | WithdrawalDefaultArgs> = $Result.GetResult<Prisma.$WithdrawalPayload, S>
+
+  type WithdrawalCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<WithdrawalFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: WithdrawalCountAggregateInputType | true
+    }
+
+  export interface WithdrawalDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Withdrawal'], meta: { name: 'Withdrawal' } }
+    /**
+     * Find zero or one Withdrawal that matches the filter.
+     * @param {WithdrawalFindUniqueArgs} args - Arguments to find a Withdrawal
+     * @example
+     * // Get one Withdrawal
+     * const withdrawal = await prisma.withdrawal.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends WithdrawalFindUniqueArgs>(args: SelectSubset<T, WithdrawalFindUniqueArgs<ExtArgs>>): Prisma__WithdrawalClient<$Result.GetResult<Prisma.$WithdrawalPayload<ExtArgs>, T, "findUnique", ClientOptions> | null, null, ExtArgs, ClientOptions>
+
+    /**
+     * Find one Withdrawal that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {WithdrawalFindUniqueOrThrowArgs} args - Arguments to find a Withdrawal
+     * @example
+     * // Get one Withdrawal
+     * const withdrawal = await prisma.withdrawal.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends WithdrawalFindUniqueOrThrowArgs>(args: SelectSubset<T, WithdrawalFindUniqueOrThrowArgs<ExtArgs>>): Prisma__WithdrawalClient<$Result.GetResult<Prisma.$WithdrawalPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Find the first Withdrawal that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WithdrawalFindFirstArgs} args - Arguments to find a Withdrawal
+     * @example
+     * // Get one Withdrawal
+     * const withdrawal = await prisma.withdrawal.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends WithdrawalFindFirstArgs>(args?: SelectSubset<T, WithdrawalFindFirstArgs<ExtArgs>>): Prisma__WithdrawalClient<$Result.GetResult<Prisma.$WithdrawalPayload<ExtArgs>, T, "findFirst", ClientOptions> | null, null, ExtArgs, ClientOptions>
+
+    /**
+     * Find the first Withdrawal that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WithdrawalFindFirstOrThrowArgs} args - Arguments to find a Withdrawal
+     * @example
+     * // Get one Withdrawal
+     * const withdrawal = await prisma.withdrawal.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends WithdrawalFindFirstOrThrowArgs>(args?: SelectSubset<T, WithdrawalFindFirstOrThrowArgs<ExtArgs>>): Prisma__WithdrawalClient<$Result.GetResult<Prisma.$WithdrawalPayload<ExtArgs>, T, "findFirstOrThrow", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Find zero or more Withdrawals that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WithdrawalFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Withdrawals
+     * const withdrawals = await prisma.withdrawal.findMany()
+     * 
+     * // Get first 10 Withdrawals
+     * const withdrawals = await prisma.withdrawal.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const withdrawalWithIdOnly = await prisma.withdrawal.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends WithdrawalFindManyArgs>(args?: SelectSubset<T, WithdrawalFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WithdrawalPayload<ExtArgs>, T, "findMany", ClientOptions>>
+
+    /**
+     * Create a Withdrawal.
+     * @param {WithdrawalCreateArgs} args - Arguments to create a Withdrawal.
+     * @example
+     * // Create one Withdrawal
+     * const Withdrawal = await prisma.withdrawal.create({
+     *   data: {
+     *     // ... data to create a Withdrawal
+     *   }
+     * })
+     * 
+     */
+    create<T extends WithdrawalCreateArgs>(args: SelectSubset<T, WithdrawalCreateArgs<ExtArgs>>): Prisma__WithdrawalClient<$Result.GetResult<Prisma.$WithdrawalPayload<ExtArgs>, T, "create", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Create many Withdrawals.
+     * @param {WithdrawalCreateManyArgs} args - Arguments to create many Withdrawals.
+     * @example
+     * // Create many Withdrawals
+     * const withdrawal = await prisma.withdrawal.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends WithdrawalCreateManyArgs>(args?: SelectSubset<T, WithdrawalCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Withdrawals and returns the data saved in the database.
+     * @param {WithdrawalCreateManyAndReturnArgs} args - Arguments to create many Withdrawals.
+     * @example
+     * // Create many Withdrawals
+     * const withdrawal = await prisma.withdrawal.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Withdrawals and only return the `id`
+     * const withdrawalWithIdOnly = await prisma.withdrawal.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends WithdrawalCreateManyAndReturnArgs>(args?: SelectSubset<T, WithdrawalCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WithdrawalPayload<ExtArgs>, T, "createManyAndReturn", ClientOptions>>
+
+    /**
+     * Delete a Withdrawal.
+     * @param {WithdrawalDeleteArgs} args - Arguments to delete one Withdrawal.
+     * @example
+     * // Delete one Withdrawal
+     * const Withdrawal = await prisma.withdrawal.delete({
+     *   where: {
+     *     // ... filter to delete one Withdrawal
+     *   }
+     * })
+     * 
+     */
+    delete<T extends WithdrawalDeleteArgs>(args: SelectSubset<T, WithdrawalDeleteArgs<ExtArgs>>): Prisma__WithdrawalClient<$Result.GetResult<Prisma.$WithdrawalPayload<ExtArgs>, T, "delete", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Update one Withdrawal.
+     * @param {WithdrawalUpdateArgs} args - Arguments to update one Withdrawal.
+     * @example
+     * // Update one Withdrawal
+     * const withdrawal = await prisma.withdrawal.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends WithdrawalUpdateArgs>(args: SelectSubset<T, WithdrawalUpdateArgs<ExtArgs>>): Prisma__WithdrawalClient<$Result.GetResult<Prisma.$WithdrawalPayload<ExtArgs>, T, "update", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Delete zero or more Withdrawals.
+     * @param {WithdrawalDeleteManyArgs} args - Arguments to filter Withdrawals to delete.
+     * @example
+     * // Delete a few Withdrawals
+     * const { count } = await prisma.withdrawal.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends WithdrawalDeleteManyArgs>(args?: SelectSubset<T, WithdrawalDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Withdrawals.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WithdrawalUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Withdrawals
+     * const withdrawal = await prisma.withdrawal.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends WithdrawalUpdateManyArgs>(args: SelectSubset<T, WithdrawalUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Withdrawals and returns the data updated in the database.
+     * @param {WithdrawalUpdateManyAndReturnArgs} args - Arguments to update many Withdrawals.
+     * @example
+     * // Update many Withdrawals
+     * const withdrawal = await prisma.withdrawal.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Withdrawals and only return the `id`
+     * const withdrawalWithIdOnly = await prisma.withdrawal.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends WithdrawalUpdateManyAndReturnArgs>(args: SelectSubset<T, WithdrawalUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WithdrawalPayload<ExtArgs>, T, "updateManyAndReturn", ClientOptions>>
+
+    /**
+     * Create or update one Withdrawal.
+     * @param {WithdrawalUpsertArgs} args - Arguments to update or create a Withdrawal.
+     * @example
+     * // Update or create a Withdrawal
+     * const withdrawal = await prisma.withdrawal.upsert({
+     *   create: {
+     *     // ... data to create a Withdrawal
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Withdrawal we want to update
+     *   }
+     * })
+     */
+    upsert<T extends WithdrawalUpsertArgs>(args: SelectSubset<T, WithdrawalUpsertArgs<ExtArgs>>): Prisma__WithdrawalClient<$Result.GetResult<Prisma.$WithdrawalPayload<ExtArgs>, T, "upsert", ClientOptions>, never, ExtArgs, ClientOptions>
+
+
+    /**
+     * Count the number of Withdrawals.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WithdrawalCountArgs} args - Arguments to filter Withdrawals to count.
+     * @example
+     * // Count the number of Withdrawals
+     * const count = await prisma.withdrawal.count({
+     *   where: {
+     *     // ... the filter for the Withdrawals we want to count
+     *   }
+     * })
+    **/
+    count<T extends WithdrawalCountArgs>(
+      args?: Subset<T, WithdrawalCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], WithdrawalCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Withdrawal.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WithdrawalAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends WithdrawalAggregateArgs>(args: Subset<T, WithdrawalAggregateArgs>): Prisma.PrismaPromise<GetWithdrawalAggregateType<T>>
+
+    /**
+     * Group by Withdrawal.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WithdrawalGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends WithdrawalGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: WithdrawalGroupByArgs['orderBy'] }
+        : { orderBy?: WithdrawalGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, WithdrawalGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetWithdrawalGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Withdrawal model
+   */
+  readonly fields: WithdrawalFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Withdrawal.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__WithdrawalClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    landlord<T extends LandlordDefaultArgs<ExtArgs> = {}>(args?: Subset<T, LandlordDefaultArgs<ExtArgs>>): Prisma__LandlordClient<$Result.GetResult<Prisma.$LandlordPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | Null, Null, ExtArgs, ClientOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Withdrawal model
+   */ 
+  interface WithdrawalFieldRefs {
+    readonly id: FieldRef<"Withdrawal", 'Int'>
+    readonly amount: FieldRef<"Withdrawal", 'Float'>
+    readonly status: FieldRef<"Withdrawal", 'WithdrawalStatus'>
+    readonly requestDate: FieldRef<"Withdrawal", 'DateTime'>
+    readonly processedDate: FieldRef<"Withdrawal", 'DateTime'>
+    readonly landlordCognitoId: FieldRef<"Withdrawal", 'String'>
+    readonly bankName: FieldRef<"Withdrawal", 'String'>
+    readonly accountNumber: FieldRef<"Withdrawal", 'String'>
+    readonly accountName: FieldRef<"Withdrawal", 'String'>
+    readonly reference: FieldRef<"Withdrawal", 'String'>
+    readonly notes: FieldRef<"Withdrawal", 'String'>
+    readonly createdAt: FieldRef<"Withdrawal", 'DateTime'>
+    readonly updatedAt: FieldRef<"Withdrawal", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Withdrawal findUnique
+   */
+  export type WithdrawalFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Withdrawal
+     */
+    select?: WithdrawalSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Withdrawal
+     */
+    omit?: WithdrawalOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WithdrawalInclude<ExtArgs> | null
+    /**
+     * Filter, which Withdrawal to fetch.
+     */
+    where: WithdrawalWhereUniqueInput
+  }
+
+  /**
+   * Withdrawal findUniqueOrThrow
+   */
+  export type WithdrawalFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Withdrawal
+     */
+    select?: WithdrawalSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Withdrawal
+     */
+    omit?: WithdrawalOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WithdrawalInclude<ExtArgs> | null
+    /**
+     * Filter, which Withdrawal to fetch.
+     */
+    where: WithdrawalWhereUniqueInput
+  }
+
+  /**
+   * Withdrawal findFirst
+   */
+  export type WithdrawalFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Withdrawal
+     */
+    select?: WithdrawalSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Withdrawal
+     */
+    omit?: WithdrawalOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WithdrawalInclude<ExtArgs> | null
+    /**
+     * Filter, which Withdrawal to fetch.
+     */
+    where?: WithdrawalWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Withdrawals to fetch.
+     */
+    orderBy?: WithdrawalOrderByWithRelationInput | WithdrawalOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Withdrawals.
+     */
+    cursor?: WithdrawalWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Withdrawals from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Withdrawals.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Withdrawals.
+     */
+    distinct?: WithdrawalScalarFieldEnum | WithdrawalScalarFieldEnum[]
+  }
+
+  /**
+   * Withdrawal findFirstOrThrow
+   */
+  export type WithdrawalFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Withdrawal
+     */
+    select?: WithdrawalSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Withdrawal
+     */
+    omit?: WithdrawalOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WithdrawalInclude<ExtArgs> | null
+    /**
+     * Filter, which Withdrawal to fetch.
+     */
+    where?: WithdrawalWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Withdrawals to fetch.
+     */
+    orderBy?: WithdrawalOrderByWithRelationInput | WithdrawalOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Withdrawals.
+     */
+    cursor?: WithdrawalWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Withdrawals from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Withdrawals.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Withdrawals.
+     */
+    distinct?: WithdrawalScalarFieldEnum | WithdrawalScalarFieldEnum[]
+  }
+
+  /**
+   * Withdrawal findMany
+   */
+  export type WithdrawalFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Withdrawal
+     */
+    select?: WithdrawalSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Withdrawal
+     */
+    omit?: WithdrawalOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WithdrawalInclude<ExtArgs> | null
+    /**
+     * Filter, which Withdrawals to fetch.
+     */
+    where?: WithdrawalWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Withdrawals to fetch.
+     */
+    orderBy?: WithdrawalOrderByWithRelationInput | WithdrawalOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Withdrawals.
+     */
+    cursor?: WithdrawalWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Withdrawals from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Withdrawals.
+     */
+    skip?: number
+    distinct?: WithdrawalScalarFieldEnum | WithdrawalScalarFieldEnum[]
+  }
+
+  /**
+   * Withdrawal create
+   */
+  export type WithdrawalCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Withdrawal
+     */
+    select?: WithdrawalSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Withdrawal
+     */
+    omit?: WithdrawalOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WithdrawalInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Withdrawal.
+     */
+    data: XOR<WithdrawalCreateInput, WithdrawalUncheckedCreateInput>
+  }
+
+  /**
+   * Withdrawal createMany
+   */
+  export type WithdrawalCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Withdrawals.
+     */
+    data: WithdrawalCreateManyInput | WithdrawalCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Withdrawal createManyAndReturn
+   */
+  export type WithdrawalCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Withdrawal
+     */
+    select?: WithdrawalSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Withdrawal
+     */
+    omit?: WithdrawalOmit<ExtArgs> | null
+    /**
+     * The data used to create many Withdrawals.
+     */
+    data: WithdrawalCreateManyInput | WithdrawalCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WithdrawalIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Withdrawal update
+   */
+  export type WithdrawalUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Withdrawal
+     */
+    select?: WithdrawalSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Withdrawal
+     */
+    omit?: WithdrawalOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WithdrawalInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Withdrawal.
+     */
+    data: XOR<WithdrawalUpdateInput, WithdrawalUncheckedUpdateInput>
+    /**
+     * Choose, which Withdrawal to update.
+     */
+    where: WithdrawalWhereUniqueInput
+  }
+
+  /**
+   * Withdrawal updateMany
+   */
+  export type WithdrawalUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Withdrawals.
+     */
+    data: XOR<WithdrawalUpdateManyMutationInput, WithdrawalUncheckedUpdateManyInput>
+    /**
+     * Filter which Withdrawals to update
+     */
+    where?: WithdrawalWhereInput
+    /**
+     * Limit how many Withdrawals to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Withdrawal updateManyAndReturn
+   */
+  export type WithdrawalUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Withdrawal
+     */
+    select?: WithdrawalSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Withdrawal
+     */
+    omit?: WithdrawalOmit<ExtArgs> | null
+    /**
+     * The data used to update Withdrawals.
+     */
+    data: XOR<WithdrawalUpdateManyMutationInput, WithdrawalUncheckedUpdateManyInput>
+    /**
+     * Filter which Withdrawals to update
+     */
+    where?: WithdrawalWhereInput
+    /**
+     * Limit how many Withdrawals to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WithdrawalIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Withdrawal upsert
+   */
+  export type WithdrawalUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Withdrawal
+     */
+    select?: WithdrawalSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Withdrawal
+     */
+    omit?: WithdrawalOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WithdrawalInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Withdrawal to update in case it exists.
+     */
+    where: WithdrawalWhereUniqueInput
+    /**
+     * In case the Withdrawal found by the `where` argument doesn't exist, create a new Withdrawal with this data.
+     */
+    create: XOR<WithdrawalCreateInput, WithdrawalUncheckedCreateInput>
+    /**
+     * In case the Withdrawal was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<WithdrawalUpdateInput, WithdrawalUncheckedUpdateInput>
+  }
+
+  /**
+   * Withdrawal delete
+   */
+  export type WithdrawalDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Withdrawal
+     */
+    select?: WithdrawalSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Withdrawal
+     */
+    omit?: WithdrawalOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WithdrawalInclude<ExtArgs> | null
+    /**
+     * Filter which Withdrawal to delete.
+     */
+    where: WithdrawalWhereUniqueInput
+  }
+
+  /**
+   * Withdrawal deleteMany
+   */
+  export type WithdrawalDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Withdrawals to delete
+     */
+    where?: WithdrawalWhereInput
+    /**
+     * Limit how many Withdrawals to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Withdrawal without action
+   */
+  export type WithdrawalDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Withdrawal
+     */
+    select?: WithdrawalSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Withdrawal
+     */
+    omit?: WithdrawalOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WithdrawalInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -20308,16 +25834,15 @@ export namespace Prisma {
     description: 'description',
     pricePerYear: 'pricePerYear',
     securityDeposit: 'securityDeposit',
-    applicationFee: 'applicationFee',
     photoUrls: 'photoUrls',
     amenities: 'amenities',
     highlights: 'highlights',
-    isPetsAllowed: 'isPetsAllowed',
     isParkingIncluded: 'isParkingIncluded',
     beds: 'beds',
     baths: 'baths',
     squareFeet: 'squareFeet',
     propertyType: 'propertyType',
+    status: 'status',
     postedDate: 'postedDate',
     averageRating: 'averageRating',
     numberOfReviews: 'numberOfReviews',
@@ -20334,7 +25859,28 @@ export namespace Prisma {
     name: 'name',
     email: 'email',
     phoneNumber: 'phoneNumber',
-    registrationCodeId: 'registrationCodeId'
+    registrationCodeId: 'registrationCodeId',
+    currentAddress: 'currentAddress',
+    city: 'city',
+    state: 'state',
+    country: 'country',
+    postalCode: 'postalCode',
+    bankName: 'bankName',
+    accountNumber: 'accountNumber',
+    accountName: 'accountName',
+    bankCode: 'bankCode',
+    businessName: 'businessName',
+    businessType: 'businessType',
+    taxId: 'taxId',
+    dateOfBirth: 'dateOfBirth',
+    nationality: 'nationality',
+    occupation: 'occupation',
+    emergencyContactName: 'emergencyContactName',
+    emergencyContactPhone: 'emergencyContactPhone',
+    isOnboardingComplete: 'isOnboardingComplete',
+    onboardedAt: 'onboardedAt',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
   };
 
   export type LandlordScalarFieldEnum = (typeof LandlordScalarFieldEnum)[keyof typeof LandlordScalarFieldEnum]
@@ -20357,6 +25903,7 @@ export namespace Prisma {
     name: 'name',
     email: 'email',
     phoneNumber: 'phoneNumber',
+    address: 'address',
     registrationCodeId: 'registrationCodeId'
   };
 
@@ -20500,7 +26047,6 @@ export namespace Prisma {
     id: 'id',
     siteName: 'siteName',
     siteDescription: 'siteDescription',
-    maintenanceMode: 'maintenanceMode',
     allowRegistration: 'allowRegistration',
     maxPropertiesPerLandlord: 'maxPropertiesPerLandlord',
     commissionRate: 'commissionRate',
@@ -20562,6 +26108,77 @@ export namespace Prisma {
   };
 
   export type LandlordSurveyScalarFieldEnum = (typeof LandlordSurveyScalarFieldEnum)[keyof typeof LandlordSurveyScalarFieldEnum]
+
+
+  export const EmailSubscriptionScalarFieldEnum: {
+    id: 'id',
+    email: 'email',
+    fullName: 'fullName',
+    subscriptionType: 'subscriptionType',
+    isActive: 'isActive',
+    subscribedAt: 'subscribedAt',
+    unsubscribedAt: 'unsubscribedAt',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type EmailSubscriptionScalarFieldEnum = (typeof EmailSubscriptionScalarFieldEnum)[keyof typeof EmailSubscriptionScalarFieldEnum]
+
+
+  export const InspectionScalarFieldEnum: {
+    id: 'id',
+    propertyId: 'propertyId',
+    tenantCognitoId: 'tenantCognitoId',
+    scheduledDate: 'scheduledDate',
+    status: 'status',
+    tenantName: 'tenantName',
+    tenantEmail: 'tenantEmail',
+    tenantPhone: 'tenantPhone',
+    preferredTime: 'preferredTime',
+    message: 'message',
+    adminNotes: 'adminNotes',
+    agentId: 'agentId',
+    depositPaid: 'depositPaid',
+    depositAmount: 'depositAmount',
+    paymentReference: 'paymentReference',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type InspectionScalarFieldEnum = (typeof InspectionScalarFieldEnum)[keyof typeof InspectionScalarFieldEnum]
+
+
+  export const InspectionLimitScalarFieldEnum: {
+    id: 'id',
+    tenantCognitoId: 'tenantCognitoId',
+    freeInspections: 'freeInspections',
+    usedInspections: 'usedInspections',
+    hasUnlimited: 'hasUnlimited',
+    unlimitedUntil: 'unlimitedUntil',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type InspectionLimitScalarFieldEnum = (typeof InspectionLimitScalarFieldEnum)[keyof typeof InspectionLimitScalarFieldEnum]
+
+
+  export const WithdrawalScalarFieldEnum: {
+    id: 'id',
+    amount: 'amount',
+    status: 'status',
+    requestDate: 'requestDate',
+    processedDate: 'processedDate',
+    landlordCognitoId: 'landlordCognitoId',
+    bankName: 'bankName',
+    accountNumber: 'accountNumber',
+    accountName: 'accountName',
+    reference: 'reference',
+    notes: 'notes',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type WithdrawalScalarFieldEnum = (typeof WithdrawalScalarFieldEnum)[keyof typeof WithdrawalScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -20636,34 +26253,6 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'Amenity[]'
-   */
-  export type ListEnumAmenityFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Amenity[]'>
-    
-
-
-  /**
-   * Reference to a field of type 'Amenity'
-   */
-  export type EnumAmenityFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Amenity'>
-    
-
-
-  /**
-   * Reference to a field of type 'Highlight[]'
-   */
-  export type ListEnumHighlightFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Highlight[]'>
-    
-
-
-  /**
-   * Reference to a field of type 'Highlight'
-   */
-  export type EnumHighlightFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Highlight'>
-    
-
-
-  /**
    * Reference to a field of type 'Boolean'
    */
   export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
@@ -20681,6 +26270,20 @@ export namespace Prisma {
    * Reference to a field of type 'PropertyType[]'
    */
   export type ListEnumPropertyTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PropertyType[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'PropertyStatus'
+   */
+  export type EnumPropertyStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PropertyStatus'>
+    
+
+
+  /**
+   * Reference to a field of type 'PropertyStatus[]'
+   */
+  export type ListEnumPropertyStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PropertyStatus[]'>
     
 
 
@@ -20752,6 +26355,34 @@ export namespace Prisma {
    */
   export type ListEnumPaymentStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PaymentStatus[]'>
     
+
+
+  /**
+   * Reference to a field of type 'InspectionStatus'
+   */
+  export type EnumInspectionStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'InspectionStatus'>
+    
+
+
+  /**
+   * Reference to a field of type 'InspectionStatus[]'
+   */
+  export type ListEnumInspectionStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'InspectionStatus[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'WithdrawalStatus'
+   */
+  export type EnumWithdrawalStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'WithdrawalStatus'>
+    
+
+
+  /**
+   * Reference to a field of type 'WithdrawalStatus[]'
+   */
+  export type ListEnumWithdrawalStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'WithdrawalStatus[]'>
+    
   /**
    * Deep Input Types
    */
@@ -20766,16 +26397,15 @@ export namespace Prisma {
     description?: StringFilter<"Property"> | string
     pricePerYear?: FloatFilter<"Property"> | number
     securityDeposit?: FloatFilter<"Property"> | number
-    applicationFee?: FloatFilter<"Property"> | number
     photoUrls?: StringNullableListFilter<"Property">
-    amenities?: EnumAmenityNullableListFilter<"Property">
-    highlights?: EnumHighlightNullableListFilter<"Property">
-    isPetsAllowed?: BoolFilter<"Property"> | boolean
+    amenities?: StringNullableFilter<"Property"> | string | null
+    highlights?: StringNullableFilter<"Property"> | string | null
     isParkingIncluded?: BoolFilter<"Property"> | boolean
     beds?: IntFilter<"Property"> | number
     baths?: FloatFilter<"Property"> | number
     squareFeet?: IntFilter<"Property"> | number
     propertyType?: EnumPropertyTypeFilter<"Property"> | $Enums.PropertyType
+    status?: EnumPropertyStatusFilter<"Property"> | $Enums.PropertyStatus
     postedDate?: DateTimeFilter<"Property"> | Date | string
     averageRating?: FloatNullableFilter<"Property"> | number | null
     numberOfReviews?: IntNullableFilter<"Property"> | number | null
@@ -20787,6 +26417,7 @@ export namespace Prisma {
     applications?: ApplicationListRelationFilter
     favoritedBy?: TenantListRelationFilter
     tenants?: TenantListRelationFilter
+    inspections?: InspectionListRelationFilter
   }
 
   export type PropertyOrderByWithRelationInput = {
@@ -20795,16 +26426,15 @@ export namespace Prisma {
     description?: SortOrder
     pricePerYear?: SortOrder
     securityDeposit?: SortOrder
-    applicationFee?: SortOrder
     photoUrls?: SortOrder
-    amenities?: SortOrder
-    highlights?: SortOrder
-    isPetsAllowed?: SortOrder
+    amenities?: SortOrderInput | SortOrder
+    highlights?: SortOrderInput | SortOrder
     isParkingIncluded?: SortOrder
     beds?: SortOrder
     baths?: SortOrder
     squareFeet?: SortOrder
     propertyType?: SortOrder
+    status?: SortOrder
     postedDate?: SortOrder
     averageRating?: SortOrderInput | SortOrder
     numberOfReviews?: SortOrderInput | SortOrder
@@ -20816,6 +26446,7 @@ export namespace Prisma {
     applications?: ApplicationOrderByRelationAggregateInput
     favoritedBy?: TenantOrderByRelationAggregateInput
     tenants?: TenantOrderByRelationAggregateInput
+    inspections?: InspectionOrderByRelationAggregateInput
   }
 
   export type PropertyWhereUniqueInput = Prisma.AtLeast<{
@@ -20827,16 +26458,15 @@ export namespace Prisma {
     description?: StringFilter<"Property"> | string
     pricePerYear?: FloatFilter<"Property"> | number
     securityDeposit?: FloatFilter<"Property"> | number
-    applicationFee?: FloatFilter<"Property"> | number
     photoUrls?: StringNullableListFilter<"Property">
-    amenities?: EnumAmenityNullableListFilter<"Property">
-    highlights?: EnumHighlightNullableListFilter<"Property">
-    isPetsAllowed?: BoolFilter<"Property"> | boolean
+    amenities?: StringNullableFilter<"Property"> | string | null
+    highlights?: StringNullableFilter<"Property"> | string | null
     isParkingIncluded?: BoolFilter<"Property"> | boolean
     beds?: IntFilter<"Property"> | number
     baths?: FloatFilter<"Property"> | number
     squareFeet?: IntFilter<"Property"> | number
     propertyType?: EnumPropertyTypeFilter<"Property"> | $Enums.PropertyType
+    status?: EnumPropertyStatusFilter<"Property"> | $Enums.PropertyStatus
     postedDate?: DateTimeFilter<"Property"> | Date | string
     averageRating?: FloatNullableFilter<"Property"> | number | null
     numberOfReviews?: IntNullableFilter<"Property"> | number | null
@@ -20848,6 +26478,7 @@ export namespace Prisma {
     applications?: ApplicationListRelationFilter
     favoritedBy?: TenantListRelationFilter
     tenants?: TenantListRelationFilter
+    inspections?: InspectionListRelationFilter
   }, "id">
 
   export type PropertyOrderByWithAggregationInput = {
@@ -20856,16 +26487,15 @@ export namespace Prisma {
     description?: SortOrder
     pricePerYear?: SortOrder
     securityDeposit?: SortOrder
-    applicationFee?: SortOrder
     photoUrls?: SortOrder
-    amenities?: SortOrder
-    highlights?: SortOrder
-    isPetsAllowed?: SortOrder
+    amenities?: SortOrderInput | SortOrder
+    highlights?: SortOrderInput | SortOrder
     isParkingIncluded?: SortOrder
     beds?: SortOrder
     baths?: SortOrder
     squareFeet?: SortOrder
     propertyType?: SortOrder
+    status?: SortOrder
     postedDate?: SortOrder
     averageRating?: SortOrderInput | SortOrder
     numberOfReviews?: SortOrderInput | SortOrder
@@ -20887,16 +26517,15 @@ export namespace Prisma {
     description?: StringWithAggregatesFilter<"Property"> | string
     pricePerYear?: FloatWithAggregatesFilter<"Property"> | number
     securityDeposit?: FloatWithAggregatesFilter<"Property"> | number
-    applicationFee?: FloatWithAggregatesFilter<"Property"> | number
     photoUrls?: StringNullableListFilter<"Property">
-    amenities?: EnumAmenityNullableListFilter<"Property">
-    highlights?: EnumHighlightNullableListFilter<"Property">
-    isPetsAllowed?: BoolWithAggregatesFilter<"Property"> | boolean
+    amenities?: StringNullableWithAggregatesFilter<"Property"> | string | null
+    highlights?: StringNullableWithAggregatesFilter<"Property"> | string | null
     isParkingIncluded?: BoolWithAggregatesFilter<"Property"> | boolean
     beds?: IntWithAggregatesFilter<"Property"> | number
     baths?: FloatWithAggregatesFilter<"Property"> | number
     squareFeet?: IntWithAggregatesFilter<"Property"> | number
     propertyType?: EnumPropertyTypeWithAggregatesFilter<"Property"> | $Enums.PropertyType
+    status?: EnumPropertyStatusWithAggregatesFilter<"Property"> | $Enums.PropertyStatus
     postedDate?: DateTimeWithAggregatesFilter<"Property"> | Date | string
     averageRating?: FloatNullableWithAggregatesFilter<"Property"> | number | null
     numberOfReviews?: IntNullableWithAggregatesFilter<"Property"> | number | null
@@ -20914,8 +26543,30 @@ export namespace Prisma {
     email?: StringFilter<"Landlord"> | string
     phoneNumber?: StringFilter<"Landlord"> | string
     registrationCodeId?: IntNullableFilter<"Landlord"> | number | null
+    currentAddress?: StringNullableFilter<"Landlord"> | string | null
+    city?: StringNullableFilter<"Landlord"> | string | null
+    state?: StringNullableFilter<"Landlord"> | string | null
+    country?: StringNullableFilter<"Landlord"> | string | null
+    postalCode?: StringNullableFilter<"Landlord"> | string | null
+    bankName?: StringNullableFilter<"Landlord"> | string | null
+    accountNumber?: StringNullableFilter<"Landlord"> | string | null
+    accountName?: StringNullableFilter<"Landlord"> | string | null
+    bankCode?: StringNullableFilter<"Landlord"> | string | null
+    businessName?: StringNullableFilter<"Landlord"> | string | null
+    businessType?: StringNullableFilter<"Landlord"> | string | null
+    taxId?: StringNullableFilter<"Landlord"> | string | null
+    dateOfBirth?: DateTimeNullableFilter<"Landlord"> | Date | string | null
+    nationality?: StringNullableFilter<"Landlord"> | string | null
+    occupation?: StringNullableFilter<"Landlord"> | string | null
+    emergencyContactName?: StringNullableFilter<"Landlord"> | string | null
+    emergencyContactPhone?: StringNullableFilter<"Landlord"> | string | null
+    isOnboardingComplete?: BoolFilter<"Landlord"> | boolean
+    onboardedAt?: DateTimeNullableFilter<"Landlord"> | Date | string | null
+    createdAt?: DateTimeFilter<"Landlord"> | Date | string
+    updatedAt?: DateTimeFilter<"Landlord"> | Date | string
     managedProperties?: PropertyListRelationFilter
     registrationCode?: XOR<LandlordRegistrationCodeNullableScalarRelationFilter, LandlordRegistrationCodeWhereInput> | null
+    withdrawals?: WithdrawalListRelationFilter
   }
 
   export type LandlordOrderByWithRelationInput = {
@@ -20925,8 +26576,30 @@ export namespace Prisma {
     email?: SortOrder
     phoneNumber?: SortOrder
     registrationCodeId?: SortOrderInput | SortOrder
+    currentAddress?: SortOrderInput | SortOrder
+    city?: SortOrderInput | SortOrder
+    state?: SortOrderInput | SortOrder
+    country?: SortOrderInput | SortOrder
+    postalCode?: SortOrderInput | SortOrder
+    bankName?: SortOrderInput | SortOrder
+    accountNumber?: SortOrderInput | SortOrder
+    accountName?: SortOrderInput | SortOrder
+    bankCode?: SortOrderInput | SortOrder
+    businessName?: SortOrderInput | SortOrder
+    businessType?: SortOrderInput | SortOrder
+    taxId?: SortOrderInput | SortOrder
+    dateOfBirth?: SortOrderInput | SortOrder
+    nationality?: SortOrderInput | SortOrder
+    occupation?: SortOrderInput | SortOrder
+    emergencyContactName?: SortOrderInput | SortOrder
+    emergencyContactPhone?: SortOrderInput | SortOrder
+    isOnboardingComplete?: SortOrder
+    onboardedAt?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
     managedProperties?: PropertyOrderByRelationAggregateInput
     registrationCode?: LandlordRegistrationCodeOrderByWithRelationInput
+    withdrawals?: WithdrawalOrderByRelationAggregateInput
   }
 
   export type LandlordWhereUniqueInput = Prisma.AtLeast<{
@@ -20939,8 +26612,30 @@ export namespace Prisma {
     email?: StringFilter<"Landlord"> | string
     phoneNumber?: StringFilter<"Landlord"> | string
     registrationCodeId?: IntNullableFilter<"Landlord"> | number | null
+    currentAddress?: StringNullableFilter<"Landlord"> | string | null
+    city?: StringNullableFilter<"Landlord"> | string | null
+    state?: StringNullableFilter<"Landlord"> | string | null
+    country?: StringNullableFilter<"Landlord"> | string | null
+    postalCode?: StringNullableFilter<"Landlord"> | string | null
+    bankName?: StringNullableFilter<"Landlord"> | string | null
+    accountNumber?: StringNullableFilter<"Landlord"> | string | null
+    accountName?: StringNullableFilter<"Landlord"> | string | null
+    bankCode?: StringNullableFilter<"Landlord"> | string | null
+    businessName?: StringNullableFilter<"Landlord"> | string | null
+    businessType?: StringNullableFilter<"Landlord"> | string | null
+    taxId?: StringNullableFilter<"Landlord"> | string | null
+    dateOfBirth?: DateTimeNullableFilter<"Landlord"> | Date | string | null
+    nationality?: StringNullableFilter<"Landlord"> | string | null
+    occupation?: StringNullableFilter<"Landlord"> | string | null
+    emergencyContactName?: StringNullableFilter<"Landlord"> | string | null
+    emergencyContactPhone?: StringNullableFilter<"Landlord"> | string | null
+    isOnboardingComplete?: BoolFilter<"Landlord"> | boolean
+    onboardedAt?: DateTimeNullableFilter<"Landlord"> | Date | string | null
+    createdAt?: DateTimeFilter<"Landlord"> | Date | string
+    updatedAt?: DateTimeFilter<"Landlord"> | Date | string
     managedProperties?: PropertyListRelationFilter
     registrationCode?: XOR<LandlordRegistrationCodeNullableScalarRelationFilter, LandlordRegistrationCodeWhereInput> | null
+    withdrawals?: WithdrawalListRelationFilter
   }, "id" | "cognitoId">
 
   export type LandlordOrderByWithAggregationInput = {
@@ -20950,6 +26645,27 @@ export namespace Prisma {
     email?: SortOrder
     phoneNumber?: SortOrder
     registrationCodeId?: SortOrderInput | SortOrder
+    currentAddress?: SortOrderInput | SortOrder
+    city?: SortOrderInput | SortOrder
+    state?: SortOrderInput | SortOrder
+    country?: SortOrderInput | SortOrder
+    postalCode?: SortOrderInput | SortOrder
+    bankName?: SortOrderInput | SortOrder
+    accountNumber?: SortOrderInput | SortOrder
+    accountName?: SortOrderInput | SortOrder
+    bankCode?: SortOrderInput | SortOrder
+    businessName?: SortOrderInput | SortOrder
+    businessType?: SortOrderInput | SortOrder
+    taxId?: SortOrderInput | SortOrder
+    dateOfBirth?: SortOrderInput | SortOrder
+    nationality?: SortOrderInput | SortOrder
+    occupation?: SortOrderInput | SortOrder
+    emergencyContactName?: SortOrderInput | SortOrder
+    emergencyContactPhone?: SortOrderInput | SortOrder
+    isOnboardingComplete?: SortOrder
+    onboardedAt?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
     _count?: LandlordCountOrderByAggregateInput
     _avg?: LandlordAvgOrderByAggregateInput
     _max?: LandlordMaxOrderByAggregateInput
@@ -20967,6 +26683,27 @@ export namespace Prisma {
     email?: StringWithAggregatesFilter<"Landlord"> | string
     phoneNumber?: StringWithAggregatesFilter<"Landlord"> | string
     registrationCodeId?: IntNullableWithAggregatesFilter<"Landlord"> | number | null
+    currentAddress?: StringNullableWithAggregatesFilter<"Landlord"> | string | null
+    city?: StringNullableWithAggregatesFilter<"Landlord"> | string | null
+    state?: StringNullableWithAggregatesFilter<"Landlord"> | string | null
+    country?: StringNullableWithAggregatesFilter<"Landlord"> | string | null
+    postalCode?: StringNullableWithAggregatesFilter<"Landlord"> | string | null
+    bankName?: StringNullableWithAggregatesFilter<"Landlord"> | string | null
+    accountNumber?: StringNullableWithAggregatesFilter<"Landlord"> | string | null
+    accountName?: StringNullableWithAggregatesFilter<"Landlord"> | string | null
+    bankCode?: StringNullableWithAggregatesFilter<"Landlord"> | string | null
+    businessName?: StringNullableWithAggregatesFilter<"Landlord"> | string | null
+    businessType?: StringNullableWithAggregatesFilter<"Landlord"> | string | null
+    taxId?: StringNullableWithAggregatesFilter<"Landlord"> | string | null
+    dateOfBirth?: DateTimeNullableWithAggregatesFilter<"Landlord"> | Date | string | null
+    nationality?: StringNullableWithAggregatesFilter<"Landlord"> | string | null
+    occupation?: StringNullableWithAggregatesFilter<"Landlord"> | string | null
+    emergencyContactName?: StringNullableWithAggregatesFilter<"Landlord"> | string | null
+    emergencyContactPhone?: StringNullableWithAggregatesFilter<"Landlord"> | string | null
+    isOnboardingComplete?: BoolWithAggregatesFilter<"Landlord"> | boolean
+    onboardedAt?: DateTimeNullableWithAggregatesFilter<"Landlord"> | Date | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"Landlord"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Landlord"> | Date | string
   }
 
   export type TenantWhereInput = {
@@ -20982,6 +26719,8 @@ export namespace Prisma {
     favorites?: PropertyListRelationFilter
     applications?: ApplicationListRelationFilter
     leases?: LeaseListRelationFilter
+    inspections?: InspectionListRelationFilter
+    inspectionLimit?: XOR<InspectionLimitNullableScalarRelationFilter, InspectionLimitWhereInput> | null
   }
 
   export type TenantOrderByWithRelationInput = {
@@ -20994,6 +26733,8 @@ export namespace Prisma {
     favorites?: PropertyOrderByRelationAggregateInput
     applications?: ApplicationOrderByRelationAggregateInput
     leases?: LeaseOrderByRelationAggregateInput
+    inspections?: InspectionOrderByRelationAggregateInput
+    inspectionLimit?: InspectionLimitOrderByWithRelationInput
   }
 
   export type TenantWhereUniqueInput = Prisma.AtLeast<{
@@ -21009,6 +26750,8 @@ export namespace Prisma {
     favorites?: PropertyListRelationFilter
     applications?: ApplicationListRelationFilter
     leases?: LeaseListRelationFilter
+    inspections?: InspectionListRelationFilter
+    inspectionLimit?: XOR<InspectionLimitNullableScalarRelationFilter, InspectionLimitWhereInput> | null
   }, "id" | "cognitoId">
 
   export type TenantOrderByWithAggregationInput = {
@@ -21044,9 +26787,11 @@ export namespace Prisma {
     name?: StringFilter<"Agent"> | string
     email?: StringFilter<"Agent"> | string
     phoneNumber?: StringNullableFilter<"Agent"> | string | null
+    address?: StringNullableFilter<"Agent"> | string | null
     registrationCodeId?: IntNullableFilter<"Agent"> | number | null
     registrationCode?: XOR<AgentRegistrationCodeNullableScalarRelationFilter, AgentRegistrationCodeWhereInput> | null
     assignedTasks?: TaskListRelationFilter
+    inspections?: InspectionListRelationFilter
   }
 
   export type AgentOrderByWithRelationInput = {
@@ -21055,9 +26800,11 @@ export namespace Prisma {
     name?: SortOrder
     email?: SortOrder
     phoneNumber?: SortOrderInput | SortOrder
+    address?: SortOrderInput | SortOrder
     registrationCodeId?: SortOrderInput | SortOrder
     registrationCode?: AgentRegistrationCodeOrderByWithRelationInput
     assignedTasks?: TaskOrderByRelationAggregateInput
+    inspections?: InspectionOrderByRelationAggregateInput
   }
 
   export type AgentWhereUniqueInput = Prisma.AtLeast<{
@@ -21069,9 +26816,11 @@ export namespace Prisma {
     name?: StringFilter<"Agent"> | string
     email?: StringFilter<"Agent"> | string
     phoneNumber?: StringNullableFilter<"Agent"> | string | null
+    address?: StringNullableFilter<"Agent"> | string | null
     registrationCodeId?: IntNullableFilter<"Agent"> | number | null
     registrationCode?: XOR<AgentRegistrationCodeNullableScalarRelationFilter, AgentRegistrationCodeWhereInput> | null
     assignedTasks?: TaskListRelationFilter
+    inspections?: InspectionListRelationFilter
   }, "id" | "cognitoId">
 
   export type AgentOrderByWithAggregationInput = {
@@ -21080,6 +26829,7 @@ export namespace Prisma {
     name?: SortOrder
     email?: SortOrder
     phoneNumber?: SortOrderInput | SortOrder
+    address?: SortOrderInput | SortOrder
     registrationCodeId?: SortOrderInput | SortOrder
     _count?: AgentCountOrderByAggregateInput
     _avg?: AgentAvgOrderByAggregateInput
@@ -21097,6 +26847,7 @@ export namespace Prisma {
     name?: StringWithAggregatesFilter<"Agent"> | string
     email?: StringWithAggregatesFilter<"Agent"> | string
     phoneNumber?: StringNullableWithAggregatesFilter<"Agent"> | string | null
+    address?: StringNullableWithAggregatesFilter<"Agent"> | string | null
     registrationCodeId?: IntNullableWithAggregatesFilter<"Agent"> | number | null
   }
 
@@ -21736,8 +27487,8 @@ export namespace Prisma {
     dueDate?: DateTimeFilter<"Payment"> | Date | string
     paymentDate?: DateTimeFilter<"Payment"> | Date | string
     paymentStatus?: EnumPaymentStatusFilter<"Payment"> | $Enums.PaymentStatus
-    leaseId?: IntFilter<"Payment"> | number
-    lease?: XOR<LeaseScalarRelationFilter, LeaseWhereInput>
+    leaseId?: IntNullableFilter<"Payment"> | number | null
+    lease?: XOR<LeaseNullableScalarRelationFilter, LeaseWhereInput> | null
   }
 
   export type PaymentOrderByWithRelationInput = {
@@ -21747,7 +27498,7 @@ export namespace Prisma {
     dueDate?: SortOrder
     paymentDate?: SortOrder
     paymentStatus?: SortOrder
-    leaseId?: SortOrder
+    leaseId?: SortOrderInput | SortOrder
     lease?: LeaseOrderByWithRelationInput
   }
 
@@ -21761,8 +27512,8 @@ export namespace Prisma {
     dueDate?: DateTimeFilter<"Payment"> | Date | string
     paymentDate?: DateTimeFilter<"Payment"> | Date | string
     paymentStatus?: EnumPaymentStatusFilter<"Payment"> | $Enums.PaymentStatus
-    leaseId?: IntFilter<"Payment"> | number
-    lease?: XOR<LeaseScalarRelationFilter, LeaseWhereInput>
+    leaseId?: IntNullableFilter<"Payment"> | number | null
+    lease?: XOR<LeaseNullableScalarRelationFilter, LeaseWhereInput> | null
   }, "id">
 
   export type PaymentOrderByWithAggregationInput = {
@@ -21772,7 +27523,7 @@ export namespace Prisma {
     dueDate?: SortOrder
     paymentDate?: SortOrder
     paymentStatus?: SortOrder
-    leaseId?: SortOrder
+    leaseId?: SortOrderInput | SortOrder
     _count?: PaymentCountOrderByAggregateInput
     _avg?: PaymentAvgOrderByAggregateInput
     _max?: PaymentMaxOrderByAggregateInput
@@ -21790,7 +27541,7 @@ export namespace Prisma {
     dueDate?: DateTimeWithAggregatesFilter<"Payment"> | Date | string
     paymentDate?: DateTimeWithAggregatesFilter<"Payment"> | Date | string
     paymentStatus?: EnumPaymentStatusWithAggregatesFilter<"Payment"> | $Enums.PaymentStatus
-    leaseId?: IntWithAggregatesFilter<"Payment"> | number
+    leaseId?: IntNullableWithAggregatesFilter<"Payment"> | number | null
   }
 
   export type AdminSettingsWhereInput = {
@@ -21800,7 +27551,6 @@ export namespace Prisma {
     id?: IntFilter<"AdminSettings"> | number
     siteName?: StringFilter<"AdminSettings"> | string
     siteDescription?: StringFilter<"AdminSettings"> | string
-    maintenanceMode?: BoolFilter<"AdminSettings"> | boolean
     allowRegistration?: BoolFilter<"AdminSettings"> | boolean
     maxPropertiesPerLandlord?: IntFilter<"AdminSettings"> | number
     commissionRate?: FloatFilter<"AdminSettings"> | number
@@ -21814,7 +27564,6 @@ export namespace Prisma {
     id?: SortOrder
     siteName?: SortOrder
     siteDescription?: SortOrder
-    maintenanceMode?: SortOrder
     allowRegistration?: SortOrder
     maxPropertiesPerLandlord?: SortOrder
     commissionRate?: SortOrder
@@ -21831,7 +27580,6 @@ export namespace Prisma {
     NOT?: AdminSettingsWhereInput | AdminSettingsWhereInput[]
     siteName?: StringFilter<"AdminSettings"> | string
     siteDescription?: StringFilter<"AdminSettings"> | string
-    maintenanceMode?: BoolFilter<"AdminSettings"> | boolean
     allowRegistration?: BoolFilter<"AdminSettings"> | boolean
     maxPropertiesPerLandlord?: IntFilter<"AdminSettings"> | number
     commissionRate?: FloatFilter<"AdminSettings"> | number
@@ -21845,7 +27593,6 @@ export namespace Prisma {
     id?: SortOrder
     siteName?: SortOrder
     siteDescription?: SortOrder
-    maintenanceMode?: SortOrder
     allowRegistration?: SortOrder
     maxPropertiesPerLandlord?: SortOrder
     commissionRate?: SortOrder
@@ -21867,7 +27614,6 @@ export namespace Prisma {
     id?: IntWithAggregatesFilter<"AdminSettings"> | number
     siteName?: StringWithAggregatesFilter<"AdminSettings"> | string
     siteDescription?: StringWithAggregatesFilter<"AdminSettings"> | string
-    maintenanceMode?: BoolWithAggregatesFilter<"AdminSettings"> | boolean
     allowRegistration?: BoolWithAggregatesFilter<"AdminSettings"> | boolean
     maxPropertiesPerLandlord?: IntWithAggregatesFilter<"AdminSettings"> | number
     commissionRate?: FloatWithAggregatesFilter<"AdminSettings"> | number
@@ -22130,21 +27876,386 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"LandlordSurvey"> | Date | string
   }
 
+  export type EmailSubscriptionWhereInput = {
+    AND?: EmailSubscriptionWhereInput | EmailSubscriptionWhereInput[]
+    OR?: EmailSubscriptionWhereInput[]
+    NOT?: EmailSubscriptionWhereInput | EmailSubscriptionWhereInput[]
+    id?: IntFilter<"EmailSubscription"> | number
+    email?: StringFilter<"EmailSubscription"> | string
+    fullName?: StringFilter<"EmailSubscription"> | string
+    subscriptionType?: StringFilter<"EmailSubscription"> | string
+    isActive?: BoolFilter<"EmailSubscription"> | boolean
+    subscribedAt?: DateTimeFilter<"EmailSubscription"> | Date | string
+    unsubscribedAt?: DateTimeNullableFilter<"EmailSubscription"> | Date | string | null
+    createdAt?: DateTimeFilter<"EmailSubscription"> | Date | string
+    updatedAt?: DateTimeFilter<"EmailSubscription"> | Date | string
+  }
+
+  export type EmailSubscriptionOrderByWithRelationInput = {
+    id?: SortOrder
+    email?: SortOrder
+    fullName?: SortOrder
+    subscriptionType?: SortOrder
+    isActive?: SortOrder
+    subscribedAt?: SortOrder
+    unsubscribedAt?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type EmailSubscriptionWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    email?: string
+    AND?: EmailSubscriptionWhereInput | EmailSubscriptionWhereInput[]
+    OR?: EmailSubscriptionWhereInput[]
+    NOT?: EmailSubscriptionWhereInput | EmailSubscriptionWhereInput[]
+    fullName?: StringFilter<"EmailSubscription"> | string
+    subscriptionType?: StringFilter<"EmailSubscription"> | string
+    isActive?: BoolFilter<"EmailSubscription"> | boolean
+    subscribedAt?: DateTimeFilter<"EmailSubscription"> | Date | string
+    unsubscribedAt?: DateTimeNullableFilter<"EmailSubscription"> | Date | string | null
+    createdAt?: DateTimeFilter<"EmailSubscription"> | Date | string
+    updatedAt?: DateTimeFilter<"EmailSubscription"> | Date | string
+  }, "id" | "email">
+
+  export type EmailSubscriptionOrderByWithAggregationInput = {
+    id?: SortOrder
+    email?: SortOrder
+    fullName?: SortOrder
+    subscriptionType?: SortOrder
+    isActive?: SortOrder
+    subscribedAt?: SortOrder
+    unsubscribedAt?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: EmailSubscriptionCountOrderByAggregateInput
+    _avg?: EmailSubscriptionAvgOrderByAggregateInput
+    _max?: EmailSubscriptionMaxOrderByAggregateInput
+    _min?: EmailSubscriptionMinOrderByAggregateInput
+    _sum?: EmailSubscriptionSumOrderByAggregateInput
+  }
+
+  export type EmailSubscriptionScalarWhereWithAggregatesInput = {
+    AND?: EmailSubscriptionScalarWhereWithAggregatesInput | EmailSubscriptionScalarWhereWithAggregatesInput[]
+    OR?: EmailSubscriptionScalarWhereWithAggregatesInput[]
+    NOT?: EmailSubscriptionScalarWhereWithAggregatesInput | EmailSubscriptionScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"EmailSubscription"> | number
+    email?: StringWithAggregatesFilter<"EmailSubscription"> | string
+    fullName?: StringWithAggregatesFilter<"EmailSubscription"> | string
+    subscriptionType?: StringWithAggregatesFilter<"EmailSubscription"> | string
+    isActive?: BoolWithAggregatesFilter<"EmailSubscription"> | boolean
+    subscribedAt?: DateTimeWithAggregatesFilter<"EmailSubscription"> | Date | string
+    unsubscribedAt?: DateTimeNullableWithAggregatesFilter<"EmailSubscription"> | Date | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"EmailSubscription"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"EmailSubscription"> | Date | string
+  }
+
+  export type InspectionWhereInput = {
+    AND?: InspectionWhereInput | InspectionWhereInput[]
+    OR?: InspectionWhereInput[]
+    NOT?: InspectionWhereInput | InspectionWhereInput[]
+    id?: IntFilter<"Inspection"> | number
+    propertyId?: IntFilter<"Inspection"> | number
+    tenantCognitoId?: StringFilter<"Inspection"> | string
+    scheduledDate?: DateTimeFilter<"Inspection"> | Date | string
+    status?: EnumInspectionStatusFilter<"Inspection"> | $Enums.InspectionStatus
+    tenantName?: StringFilter<"Inspection"> | string
+    tenantEmail?: StringFilter<"Inspection"> | string
+    tenantPhone?: StringFilter<"Inspection"> | string
+    preferredTime?: StringFilter<"Inspection"> | string
+    message?: StringNullableFilter<"Inspection"> | string | null
+    adminNotes?: StringNullableFilter<"Inspection"> | string | null
+    agentId?: IntNullableFilter<"Inspection"> | number | null
+    depositPaid?: BoolFilter<"Inspection"> | boolean
+    depositAmount?: FloatNullableFilter<"Inspection"> | number | null
+    paymentReference?: StringNullableFilter<"Inspection"> | string | null
+    createdAt?: DateTimeFilter<"Inspection"> | Date | string
+    updatedAt?: DateTimeFilter<"Inspection"> | Date | string
+    property?: XOR<PropertyScalarRelationFilter, PropertyWhereInput>
+    tenant?: XOR<TenantScalarRelationFilter, TenantWhereInput>
+    agent?: XOR<AgentNullableScalarRelationFilter, AgentWhereInput> | null
+  }
+
+  export type InspectionOrderByWithRelationInput = {
+    id?: SortOrder
+    propertyId?: SortOrder
+    tenantCognitoId?: SortOrder
+    scheduledDate?: SortOrder
+    status?: SortOrder
+    tenantName?: SortOrder
+    tenantEmail?: SortOrder
+    tenantPhone?: SortOrder
+    preferredTime?: SortOrder
+    message?: SortOrderInput | SortOrder
+    adminNotes?: SortOrderInput | SortOrder
+    agentId?: SortOrderInput | SortOrder
+    depositPaid?: SortOrder
+    depositAmount?: SortOrderInput | SortOrder
+    paymentReference?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    property?: PropertyOrderByWithRelationInput
+    tenant?: TenantOrderByWithRelationInput
+    agent?: AgentOrderByWithRelationInput
+  }
+
+  export type InspectionWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: InspectionWhereInput | InspectionWhereInput[]
+    OR?: InspectionWhereInput[]
+    NOT?: InspectionWhereInput | InspectionWhereInput[]
+    propertyId?: IntFilter<"Inspection"> | number
+    tenantCognitoId?: StringFilter<"Inspection"> | string
+    scheduledDate?: DateTimeFilter<"Inspection"> | Date | string
+    status?: EnumInspectionStatusFilter<"Inspection"> | $Enums.InspectionStatus
+    tenantName?: StringFilter<"Inspection"> | string
+    tenantEmail?: StringFilter<"Inspection"> | string
+    tenantPhone?: StringFilter<"Inspection"> | string
+    preferredTime?: StringFilter<"Inspection"> | string
+    message?: StringNullableFilter<"Inspection"> | string | null
+    adminNotes?: StringNullableFilter<"Inspection"> | string | null
+    agentId?: IntNullableFilter<"Inspection"> | number | null
+    depositPaid?: BoolFilter<"Inspection"> | boolean
+    depositAmount?: FloatNullableFilter<"Inspection"> | number | null
+    paymentReference?: StringNullableFilter<"Inspection"> | string | null
+    createdAt?: DateTimeFilter<"Inspection"> | Date | string
+    updatedAt?: DateTimeFilter<"Inspection"> | Date | string
+    property?: XOR<PropertyScalarRelationFilter, PropertyWhereInput>
+    tenant?: XOR<TenantScalarRelationFilter, TenantWhereInput>
+    agent?: XOR<AgentNullableScalarRelationFilter, AgentWhereInput> | null
+  }, "id">
+
+  export type InspectionOrderByWithAggregationInput = {
+    id?: SortOrder
+    propertyId?: SortOrder
+    tenantCognitoId?: SortOrder
+    scheduledDate?: SortOrder
+    status?: SortOrder
+    tenantName?: SortOrder
+    tenantEmail?: SortOrder
+    tenantPhone?: SortOrder
+    preferredTime?: SortOrder
+    message?: SortOrderInput | SortOrder
+    adminNotes?: SortOrderInput | SortOrder
+    agentId?: SortOrderInput | SortOrder
+    depositPaid?: SortOrder
+    depositAmount?: SortOrderInput | SortOrder
+    paymentReference?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: InspectionCountOrderByAggregateInput
+    _avg?: InspectionAvgOrderByAggregateInput
+    _max?: InspectionMaxOrderByAggregateInput
+    _min?: InspectionMinOrderByAggregateInput
+    _sum?: InspectionSumOrderByAggregateInput
+  }
+
+  export type InspectionScalarWhereWithAggregatesInput = {
+    AND?: InspectionScalarWhereWithAggregatesInput | InspectionScalarWhereWithAggregatesInput[]
+    OR?: InspectionScalarWhereWithAggregatesInput[]
+    NOT?: InspectionScalarWhereWithAggregatesInput | InspectionScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"Inspection"> | number
+    propertyId?: IntWithAggregatesFilter<"Inspection"> | number
+    tenantCognitoId?: StringWithAggregatesFilter<"Inspection"> | string
+    scheduledDate?: DateTimeWithAggregatesFilter<"Inspection"> | Date | string
+    status?: EnumInspectionStatusWithAggregatesFilter<"Inspection"> | $Enums.InspectionStatus
+    tenantName?: StringWithAggregatesFilter<"Inspection"> | string
+    tenantEmail?: StringWithAggregatesFilter<"Inspection"> | string
+    tenantPhone?: StringWithAggregatesFilter<"Inspection"> | string
+    preferredTime?: StringWithAggregatesFilter<"Inspection"> | string
+    message?: StringNullableWithAggregatesFilter<"Inspection"> | string | null
+    adminNotes?: StringNullableWithAggregatesFilter<"Inspection"> | string | null
+    agentId?: IntNullableWithAggregatesFilter<"Inspection"> | number | null
+    depositPaid?: BoolWithAggregatesFilter<"Inspection"> | boolean
+    depositAmount?: FloatNullableWithAggregatesFilter<"Inspection"> | number | null
+    paymentReference?: StringNullableWithAggregatesFilter<"Inspection"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"Inspection"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Inspection"> | Date | string
+  }
+
+  export type InspectionLimitWhereInput = {
+    AND?: InspectionLimitWhereInput | InspectionLimitWhereInput[]
+    OR?: InspectionLimitWhereInput[]
+    NOT?: InspectionLimitWhereInput | InspectionLimitWhereInput[]
+    id?: IntFilter<"InspectionLimit"> | number
+    tenantCognitoId?: StringFilter<"InspectionLimit"> | string
+    freeInspections?: IntFilter<"InspectionLimit"> | number
+    usedInspections?: IntFilter<"InspectionLimit"> | number
+    hasUnlimited?: BoolFilter<"InspectionLimit"> | boolean
+    unlimitedUntil?: DateTimeNullableFilter<"InspectionLimit"> | Date | string | null
+    createdAt?: DateTimeFilter<"InspectionLimit"> | Date | string
+    updatedAt?: DateTimeFilter<"InspectionLimit"> | Date | string
+    tenant?: XOR<TenantScalarRelationFilter, TenantWhereInput>
+  }
+
+  export type InspectionLimitOrderByWithRelationInput = {
+    id?: SortOrder
+    tenantCognitoId?: SortOrder
+    freeInspections?: SortOrder
+    usedInspections?: SortOrder
+    hasUnlimited?: SortOrder
+    unlimitedUntil?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    tenant?: TenantOrderByWithRelationInput
+  }
+
+  export type InspectionLimitWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    tenantCognitoId?: string
+    AND?: InspectionLimitWhereInput | InspectionLimitWhereInput[]
+    OR?: InspectionLimitWhereInput[]
+    NOT?: InspectionLimitWhereInput | InspectionLimitWhereInput[]
+    freeInspections?: IntFilter<"InspectionLimit"> | number
+    usedInspections?: IntFilter<"InspectionLimit"> | number
+    hasUnlimited?: BoolFilter<"InspectionLimit"> | boolean
+    unlimitedUntil?: DateTimeNullableFilter<"InspectionLimit"> | Date | string | null
+    createdAt?: DateTimeFilter<"InspectionLimit"> | Date | string
+    updatedAt?: DateTimeFilter<"InspectionLimit"> | Date | string
+    tenant?: XOR<TenantScalarRelationFilter, TenantWhereInput>
+  }, "id" | "tenantCognitoId">
+
+  export type InspectionLimitOrderByWithAggregationInput = {
+    id?: SortOrder
+    tenantCognitoId?: SortOrder
+    freeInspections?: SortOrder
+    usedInspections?: SortOrder
+    hasUnlimited?: SortOrder
+    unlimitedUntil?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: InspectionLimitCountOrderByAggregateInput
+    _avg?: InspectionLimitAvgOrderByAggregateInput
+    _max?: InspectionLimitMaxOrderByAggregateInput
+    _min?: InspectionLimitMinOrderByAggregateInput
+    _sum?: InspectionLimitSumOrderByAggregateInput
+  }
+
+  export type InspectionLimitScalarWhereWithAggregatesInput = {
+    AND?: InspectionLimitScalarWhereWithAggregatesInput | InspectionLimitScalarWhereWithAggregatesInput[]
+    OR?: InspectionLimitScalarWhereWithAggregatesInput[]
+    NOT?: InspectionLimitScalarWhereWithAggregatesInput | InspectionLimitScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"InspectionLimit"> | number
+    tenantCognitoId?: StringWithAggregatesFilter<"InspectionLimit"> | string
+    freeInspections?: IntWithAggregatesFilter<"InspectionLimit"> | number
+    usedInspections?: IntWithAggregatesFilter<"InspectionLimit"> | number
+    hasUnlimited?: BoolWithAggregatesFilter<"InspectionLimit"> | boolean
+    unlimitedUntil?: DateTimeNullableWithAggregatesFilter<"InspectionLimit"> | Date | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"InspectionLimit"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"InspectionLimit"> | Date | string
+  }
+
+  export type WithdrawalWhereInput = {
+    AND?: WithdrawalWhereInput | WithdrawalWhereInput[]
+    OR?: WithdrawalWhereInput[]
+    NOT?: WithdrawalWhereInput | WithdrawalWhereInput[]
+    id?: IntFilter<"Withdrawal"> | number
+    amount?: FloatFilter<"Withdrawal"> | number
+    status?: EnumWithdrawalStatusFilter<"Withdrawal"> | $Enums.WithdrawalStatus
+    requestDate?: DateTimeFilter<"Withdrawal"> | Date | string
+    processedDate?: DateTimeNullableFilter<"Withdrawal"> | Date | string | null
+    landlordCognitoId?: StringFilter<"Withdrawal"> | string
+    bankName?: StringNullableFilter<"Withdrawal"> | string | null
+    accountNumber?: StringNullableFilter<"Withdrawal"> | string | null
+    accountName?: StringNullableFilter<"Withdrawal"> | string | null
+    reference?: StringNullableFilter<"Withdrawal"> | string | null
+    notes?: StringNullableFilter<"Withdrawal"> | string | null
+    createdAt?: DateTimeFilter<"Withdrawal"> | Date | string
+    updatedAt?: DateTimeFilter<"Withdrawal"> | Date | string
+    landlord?: XOR<LandlordScalarRelationFilter, LandlordWhereInput>
+  }
+
+  export type WithdrawalOrderByWithRelationInput = {
+    id?: SortOrder
+    amount?: SortOrder
+    status?: SortOrder
+    requestDate?: SortOrder
+    processedDate?: SortOrderInput | SortOrder
+    landlordCognitoId?: SortOrder
+    bankName?: SortOrderInput | SortOrder
+    accountNumber?: SortOrderInput | SortOrder
+    accountName?: SortOrderInput | SortOrder
+    reference?: SortOrderInput | SortOrder
+    notes?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    landlord?: LandlordOrderByWithRelationInput
+  }
+
+  export type WithdrawalWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    reference?: string
+    AND?: WithdrawalWhereInput | WithdrawalWhereInput[]
+    OR?: WithdrawalWhereInput[]
+    NOT?: WithdrawalWhereInput | WithdrawalWhereInput[]
+    amount?: FloatFilter<"Withdrawal"> | number
+    status?: EnumWithdrawalStatusFilter<"Withdrawal"> | $Enums.WithdrawalStatus
+    requestDate?: DateTimeFilter<"Withdrawal"> | Date | string
+    processedDate?: DateTimeNullableFilter<"Withdrawal"> | Date | string | null
+    landlordCognitoId?: StringFilter<"Withdrawal"> | string
+    bankName?: StringNullableFilter<"Withdrawal"> | string | null
+    accountNumber?: StringNullableFilter<"Withdrawal"> | string | null
+    accountName?: StringNullableFilter<"Withdrawal"> | string | null
+    notes?: StringNullableFilter<"Withdrawal"> | string | null
+    createdAt?: DateTimeFilter<"Withdrawal"> | Date | string
+    updatedAt?: DateTimeFilter<"Withdrawal"> | Date | string
+    landlord?: XOR<LandlordScalarRelationFilter, LandlordWhereInput>
+  }, "id" | "reference">
+
+  export type WithdrawalOrderByWithAggregationInput = {
+    id?: SortOrder
+    amount?: SortOrder
+    status?: SortOrder
+    requestDate?: SortOrder
+    processedDate?: SortOrderInput | SortOrder
+    landlordCognitoId?: SortOrder
+    bankName?: SortOrderInput | SortOrder
+    accountNumber?: SortOrderInput | SortOrder
+    accountName?: SortOrderInput | SortOrder
+    reference?: SortOrderInput | SortOrder
+    notes?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: WithdrawalCountOrderByAggregateInput
+    _avg?: WithdrawalAvgOrderByAggregateInput
+    _max?: WithdrawalMaxOrderByAggregateInput
+    _min?: WithdrawalMinOrderByAggregateInput
+    _sum?: WithdrawalSumOrderByAggregateInput
+  }
+
+  export type WithdrawalScalarWhereWithAggregatesInput = {
+    AND?: WithdrawalScalarWhereWithAggregatesInput | WithdrawalScalarWhereWithAggregatesInput[]
+    OR?: WithdrawalScalarWhereWithAggregatesInput[]
+    NOT?: WithdrawalScalarWhereWithAggregatesInput | WithdrawalScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"Withdrawal"> | number
+    amount?: FloatWithAggregatesFilter<"Withdrawal"> | number
+    status?: EnumWithdrawalStatusWithAggregatesFilter<"Withdrawal"> | $Enums.WithdrawalStatus
+    requestDate?: DateTimeWithAggregatesFilter<"Withdrawal"> | Date | string
+    processedDate?: DateTimeNullableWithAggregatesFilter<"Withdrawal"> | Date | string | null
+    landlordCognitoId?: StringWithAggregatesFilter<"Withdrawal"> | string
+    bankName?: StringNullableWithAggregatesFilter<"Withdrawal"> | string | null
+    accountNumber?: StringNullableWithAggregatesFilter<"Withdrawal"> | string | null
+    accountName?: StringNullableWithAggregatesFilter<"Withdrawal"> | string | null
+    reference?: StringNullableWithAggregatesFilter<"Withdrawal"> | string | null
+    notes?: StringNullableWithAggregatesFilter<"Withdrawal"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"Withdrawal"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Withdrawal"> | Date | string
+  }
+
   export type PropertyCreateInput = {
     name: string
     description: string
     pricePerYear: number
     securityDeposit: number
-    applicationFee: number
     photoUrls?: PropertyCreatephotoUrlsInput | string[]
-    amenities?: PropertyCreateamenitiesInput | $Enums.Amenity[]
-    highlights?: PropertyCreatehighlightsInput | $Enums.Highlight[]
-    isPetsAllowed?: boolean
+    amenities?: string | null
+    highlights?: string | null
     isParkingIncluded?: boolean
     beds: number
     baths: number
     squareFeet: number
     propertyType: $Enums.PropertyType
+    status?: $Enums.PropertyStatus
     postedDate?: Date | string
     averageRating?: number | null
     numberOfReviews?: number | null
@@ -22154,6 +28265,7 @@ export namespace Prisma {
     applications?: ApplicationCreateNestedManyWithoutPropertyInput
     favoritedBy?: TenantCreateNestedManyWithoutFavoritesInput
     tenants?: TenantCreateNestedManyWithoutPropertiesInput
+    inspections?: InspectionCreateNestedManyWithoutPropertyInput
   }
 
   export type PropertyUncheckedCreateInput = {
@@ -22162,16 +28274,15 @@ export namespace Prisma {
     description: string
     pricePerYear: number
     securityDeposit: number
-    applicationFee: number
     photoUrls?: PropertyCreatephotoUrlsInput | string[]
-    amenities?: PropertyCreateamenitiesInput | $Enums.Amenity[]
-    highlights?: PropertyCreatehighlightsInput | $Enums.Highlight[]
-    isPetsAllowed?: boolean
+    amenities?: string | null
+    highlights?: string | null
     isParkingIncluded?: boolean
     beds: number
     baths: number
     squareFeet: number
     propertyType: $Enums.PropertyType
+    status?: $Enums.PropertyStatus
     postedDate?: Date | string
     averageRating?: number | null
     numberOfReviews?: number | null
@@ -22181,6 +28292,7 @@ export namespace Prisma {
     applications?: ApplicationUncheckedCreateNestedManyWithoutPropertyInput
     favoritedBy?: TenantUncheckedCreateNestedManyWithoutFavoritesInput
     tenants?: TenantUncheckedCreateNestedManyWithoutPropertiesInput
+    inspections?: InspectionUncheckedCreateNestedManyWithoutPropertyInput
   }
 
   export type PropertyUpdateInput = {
@@ -22188,16 +28300,15 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     pricePerYear?: FloatFieldUpdateOperationsInput | number
     securityDeposit?: FloatFieldUpdateOperationsInput | number
-    applicationFee?: FloatFieldUpdateOperationsInput | number
     photoUrls?: PropertyUpdatephotoUrlsInput | string[]
-    amenities?: PropertyUpdateamenitiesInput | $Enums.Amenity[]
-    highlights?: PropertyUpdatehighlightsInput | $Enums.Highlight[]
-    isPetsAllowed?: BoolFieldUpdateOperationsInput | boolean
+    amenities?: NullableStringFieldUpdateOperationsInput | string | null
+    highlights?: NullableStringFieldUpdateOperationsInput | string | null
     isParkingIncluded?: BoolFieldUpdateOperationsInput | boolean
     beds?: IntFieldUpdateOperationsInput | number
     baths?: FloatFieldUpdateOperationsInput | number
     squareFeet?: IntFieldUpdateOperationsInput | number
     propertyType?: EnumPropertyTypeFieldUpdateOperationsInput | $Enums.PropertyType
+    status?: EnumPropertyStatusFieldUpdateOperationsInput | $Enums.PropertyStatus
     postedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     averageRating?: NullableFloatFieldUpdateOperationsInput | number | null
     numberOfReviews?: NullableIntFieldUpdateOperationsInput | number | null
@@ -22207,6 +28318,7 @@ export namespace Prisma {
     applications?: ApplicationUpdateManyWithoutPropertyNestedInput
     favoritedBy?: TenantUpdateManyWithoutFavoritesNestedInput
     tenants?: TenantUpdateManyWithoutPropertiesNestedInput
+    inspections?: InspectionUpdateManyWithoutPropertyNestedInput
   }
 
   export type PropertyUncheckedUpdateInput = {
@@ -22215,16 +28327,15 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     pricePerYear?: FloatFieldUpdateOperationsInput | number
     securityDeposit?: FloatFieldUpdateOperationsInput | number
-    applicationFee?: FloatFieldUpdateOperationsInput | number
     photoUrls?: PropertyUpdatephotoUrlsInput | string[]
-    amenities?: PropertyUpdateamenitiesInput | $Enums.Amenity[]
-    highlights?: PropertyUpdatehighlightsInput | $Enums.Highlight[]
-    isPetsAllowed?: BoolFieldUpdateOperationsInput | boolean
+    amenities?: NullableStringFieldUpdateOperationsInput | string | null
+    highlights?: NullableStringFieldUpdateOperationsInput | string | null
     isParkingIncluded?: BoolFieldUpdateOperationsInput | boolean
     beds?: IntFieldUpdateOperationsInput | number
     baths?: FloatFieldUpdateOperationsInput | number
     squareFeet?: IntFieldUpdateOperationsInput | number
     propertyType?: EnumPropertyTypeFieldUpdateOperationsInput | $Enums.PropertyType
+    status?: EnumPropertyStatusFieldUpdateOperationsInput | $Enums.PropertyStatus
     postedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     averageRating?: NullableFloatFieldUpdateOperationsInput | number | null
     numberOfReviews?: NullableIntFieldUpdateOperationsInput | number | null
@@ -22234,6 +28345,7 @@ export namespace Prisma {
     applications?: ApplicationUncheckedUpdateManyWithoutPropertyNestedInput
     favoritedBy?: TenantUncheckedUpdateManyWithoutFavoritesNestedInput
     tenants?: TenantUncheckedUpdateManyWithoutPropertiesNestedInput
+    inspections?: InspectionUncheckedUpdateManyWithoutPropertyNestedInput
   }
 
   export type PropertyCreateManyInput = {
@@ -22242,16 +28354,15 @@ export namespace Prisma {
     description: string
     pricePerYear: number
     securityDeposit: number
-    applicationFee: number
     photoUrls?: PropertyCreatephotoUrlsInput | string[]
-    amenities?: PropertyCreateamenitiesInput | $Enums.Amenity[]
-    highlights?: PropertyCreatehighlightsInput | $Enums.Highlight[]
-    isPetsAllowed?: boolean
+    amenities?: string | null
+    highlights?: string | null
     isParkingIncluded?: boolean
     beds: number
     baths: number
     squareFeet: number
     propertyType: $Enums.PropertyType
+    status?: $Enums.PropertyStatus
     postedDate?: Date | string
     averageRating?: number | null
     numberOfReviews?: number | null
@@ -22264,16 +28375,15 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     pricePerYear?: FloatFieldUpdateOperationsInput | number
     securityDeposit?: FloatFieldUpdateOperationsInput | number
-    applicationFee?: FloatFieldUpdateOperationsInput | number
     photoUrls?: PropertyUpdatephotoUrlsInput | string[]
-    amenities?: PropertyUpdateamenitiesInput | $Enums.Amenity[]
-    highlights?: PropertyUpdatehighlightsInput | $Enums.Highlight[]
-    isPetsAllowed?: BoolFieldUpdateOperationsInput | boolean
+    amenities?: NullableStringFieldUpdateOperationsInput | string | null
+    highlights?: NullableStringFieldUpdateOperationsInput | string | null
     isParkingIncluded?: BoolFieldUpdateOperationsInput | boolean
     beds?: IntFieldUpdateOperationsInput | number
     baths?: FloatFieldUpdateOperationsInput | number
     squareFeet?: IntFieldUpdateOperationsInput | number
     propertyType?: EnumPropertyTypeFieldUpdateOperationsInput | $Enums.PropertyType
+    status?: EnumPropertyStatusFieldUpdateOperationsInput | $Enums.PropertyStatus
     postedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     averageRating?: NullableFloatFieldUpdateOperationsInput | number | null
     numberOfReviews?: NullableIntFieldUpdateOperationsInput | number | null
@@ -22285,16 +28395,15 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     pricePerYear?: FloatFieldUpdateOperationsInput | number
     securityDeposit?: FloatFieldUpdateOperationsInput | number
-    applicationFee?: FloatFieldUpdateOperationsInput | number
     photoUrls?: PropertyUpdatephotoUrlsInput | string[]
-    amenities?: PropertyUpdateamenitiesInput | $Enums.Amenity[]
-    highlights?: PropertyUpdatehighlightsInput | $Enums.Highlight[]
-    isPetsAllowed?: BoolFieldUpdateOperationsInput | boolean
+    amenities?: NullableStringFieldUpdateOperationsInput | string | null
+    highlights?: NullableStringFieldUpdateOperationsInput | string | null
     isParkingIncluded?: BoolFieldUpdateOperationsInput | boolean
     beds?: IntFieldUpdateOperationsInput | number
     baths?: FloatFieldUpdateOperationsInput | number
     squareFeet?: IntFieldUpdateOperationsInput | number
     propertyType?: EnumPropertyTypeFieldUpdateOperationsInput | $Enums.PropertyType
+    status?: EnumPropertyStatusFieldUpdateOperationsInput | $Enums.PropertyStatus
     postedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     averageRating?: NullableFloatFieldUpdateOperationsInput | number | null
     numberOfReviews?: NullableIntFieldUpdateOperationsInput | number | null
@@ -22307,8 +28416,30 @@ export namespace Prisma {
     name: string
     email: string
     phoneNumber: string
+    currentAddress?: string | null
+    city?: string | null
+    state?: string | null
+    country?: string | null
+    postalCode?: string | null
+    bankName?: string | null
+    accountNumber?: string | null
+    accountName?: string | null
+    bankCode?: string | null
+    businessName?: string | null
+    businessType?: string | null
+    taxId?: string | null
+    dateOfBirth?: Date | string | null
+    nationality?: string | null
+    occupation?: string | null
+    emergencyContactName?: string | null
+    emergencyContactPhone?: string | null
+    isOnboardingComplete?: boolean
+    onboardedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
     managedProperties?: PropertyCreateNestedManyWithoutLandlordInput
     registrationCode?: LandlordRegistrationCodeCreateNestedOneWithoutLandlordsInput
+    withdrawals?: WithdrawalCreateNestedManyWithoutLandlordInput
   }
 
   export type LandlordUncheckedCreateInput = {
@@ -22318,7 +28449,29 @@ export namespace Prisma {
     email: string
     phoneNumber: string
     registrationCodeId?: number | null
+    currentAddress?: string | null
+    city?: string | null
+    state?: string | null
+    country?: string | null
+    postalCode?: string | null
+    bankName?: string | null
+    accountNumber?: string | null
+    accountName?: string | null
+    bankCode?: string | null
+    businessName?: string | null
+    businessType?: string | null
+    taxId?: string | null
+    dateOfBirth?: Date | string | null
+    nationality?: string | null
+    occupation?: string | null
+    emergencyContactName?: string | null
+    emergencyContactPhone?: string | null
+    isOnboardingComplete?: boolean
+    onboardedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
     managedProperties?: PropertyUncheckedCreateNestedManyWithoutLandlordInput
+    withdrawals?: WithdrawalUncheckedCreateNestedManyWithoutLandlordInput
   }
 
   export type LandlordUpdateInput = {
@@ -22326,8 +28479,30 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     phoneNumber?: StringFieldUpdateOperationsInput | string
+    currentAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    postalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    bankName?: NullableStringFieldUpdateOperationsInput | string | null
+    accountNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    accountName?: NullableStringFieldUpdateOperationsInput | string | null
+    bankCode?: NullableStringFieldUpdateOperationsInput | string | null
+    businessName?: NullableStringFieldUpdateOperationsInput | string | null
+    businessType?: NullableStringFieldUpdateOperationsInput | string | null
+    taxId?: NullableStringFieldUpdateOperationsInput | string | null
+    dateOfBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    nationality?: NullableStringFieldUpdateOperationsInput | string | null
+    occupation?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContactName?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContactPhone?: NullableStringFieldUpdateOperationsInput | string | null
+    isOnboardingComplete?: BoolFieldUpdateOperationsInput | boolean
+    onboardedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     managedProperties?: PropertyUpdateManyWithoutLandlordNestedInput
     registrationCode?: LandlordRegistrationCodeUpdateOneWithoutLandlordsNestedInput
+    withdrawals?: WithdrawalUpdateManyWithoutLandlordNestedInput
   }
 
   export type LandlordUncheckedUpdateInput = {
@@ -22337,7 +28512,29 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     phoneNumber?: StringFieldUpdateOperationsInput | string
     registrationCodeId?: NullableIntFieldUpdateOperationsInput | number | null
+    currentAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    postalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    bankName?: NullableStringFieldUpdateOperationsInput | string | null
+    accountNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    accountName?: NullableStringFieldUpdateOperationsInput | string | null
+    bankCode?: NullableStringFieldUpdateOperationsInput | string | null
+    businessName?: NullableStringFieldUpdateOperationsInput | string | null
+    businessType?: NullableStringFieldUpdateOperationsInput | string | null
+    taxId?: NullableStringFieldUpdateOperationsInput | string | null
+    dateOfBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    nationality?: NullableStringFieldUpdateOperationsInput | string | null
+    occupation?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContactName?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContactPhone?: NullableStringFieldUpdateOperationsInput | string | null
+    isOnboardingComplete?: BoolFieldUpdateOperationsInput | boolean
+    onboardedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     managedProperties?: PropertyUncheckedUpdateManyWithoutLandlordNestedInput
+    withdrawals?: WithdrawalUncheckedUpdateManyWithoutLandlordNestedInput
   }
 
   export type LandlordCreateManyInput = {
@@ -22347,6 +28544,27 @@ export namespace Prisma {
     email: string
     phoneNumber: string
     registrationCodeId?: number | null
+    currentAddress?: string | null
+    city?: string | null
+    state?: string | null
+    country?: string | null
+    postalCode?: string | null
+    bankName?: string | null
+    accountNumber?: string | null
+    accountName?: string | null
+    bankCode?: string | null
+    businessName?: string | null
+    businessType?: string | null
+    taxId?: string | null
+    dateOfBirth?: Date | string | null
+    nationality?: string | null
+    occupation?: string | null
+    emergencyContactName?: string | null
+    emergencyContactPhone?: string | null
+    isOnboardingComplete?: boolean
+    onboardedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type LandlordUpdateManyMutationInput = {
@@ -22354,6 +28572,27 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     phoneNumber?: StringFieldUpdateOperationsInput | string
+    currentAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    postalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    bankName?: NullableStringFieldUpdateOperationsInput | string | null
+    accountNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    accountName?: NullableStringFieldUpdateOperationsInput | string | null
+    bankCode?: NullableStringFieldUpdateOperationsInput | string | null
+    businessName?: NullableStringFieldUpdateOperationsInput | string | null
+    businessType?: NullableStringFieldUpdateOperationsInput | string | null
+    taxId?: NullableStringFieldUpdateOperationsInput | string | null
+    dateOfBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    nationality?: NullableStringFieldUpdateOperationsInput | string | null
+    occupation?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContactName?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContactPhone?: NullableStringFieldUpdateOperationsInput | string | null
+    isOnboardingComplete?: BoolFieldUpdateOperationsInput | boolean
+    onboardedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type LandlordUncheckedUpdateManyInput = {
@@ -22363,6 +28602,27 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     phoneNumber?: StringFieldUpdateOperationsInput | string
     registrationCodeId?: NullableIntFieldUpdateOperationsInput | number | null
+    currentAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    postalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    bankName?: NullableStringFieldUpdateOperationsInput | string | null
+    accountNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    accountName?: NullableStringFieldUpdateOperationsInput | string | null
+    bankCode?: NullableStringFieldUpdateOperationsInput | string | null
+    businessName?: NullableStringFieldUpdateOperationsInput | string | null
+    businessType?: NullableStringFieldUpdateOperationsInput | string | null
+    taxId?: NullableStringFieldUpdateOperationsInput | string | null
+    dateOfBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    nationality?: NullableStringFieldUpdateOperationsInput | string | null
+    occupation?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContactName?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContactPhone?: NullableStringFieldUpdateOperationsInput | string | null
+    isOnboardingComplete?: BoolFieldUpdateOperationsInput | boolean
+    onboardedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type TenantCreateInput = {
@@ -22374,6 +28634,8 @@ export namespace Prisma {
     favorites?: PropertyCreateNestedManyWithoutFavoritedByInput
     applications?: ApplicationCreateNestedManyWithoutTenantInput
     leases?: LeaseCreateNestedManyWithoutTenantInput
+    inspections?: InspectionCreateNestedManyWithoutTenantInput
+    inspectionLimit?: InspectionLimitCreateNestedOneWithoutTenantInput
   }
 
   export type TenantUncheckedCreateInput = {
@@ -22386,6 +28648,8 @@ export namespace Prisma {
     favorites?: PropertyUncheckedCreateNestedManyWithoutFavoritedByInput
     applications?: ApplicationUncheckedCreateNestedManyWithoutTenantInput
     leases?: LeaseUncheckedCreateNestedManyWithoutTenantInput
+    inspections?: InspectionUncheckedCreateNestedManyWithoutTenantInput
+    inspectionLimit?: InspectionLimitUncheckedCreateNestedOneWithoutTenantInput
   }
 
   export type TenantUpdateInput = {
@@ -22397,6 +28661,8 @@ export namespace Prisma {
     favorites?: PropertyUpdateManyWithoutFavoritedByNestedInput
     applications?: ApplicationUpdateManyWithoutTenantNestedInput
     leases?: LeaseUpdateManyWithoutTenantNestedInput
+    inspections?: InspectionUpdateManyWithoutTenantNestedInput
+    inspectionLimit?: InspectionLimitUpdateOneWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateInput = {
@@ -22409,6 +28675,8 @@ export namespace Prisma {
     favorites?: PropertyUncheckedUpdateManyWithoutFavoritedByNestedInput
     applications?: ApplicationUncheckedUpdateManyWithoutTenantNestedInput
     leases?: LeaseUncheckedUpdateManyWithoutTenantNestedInput
+    inspections?: InspectionUncheckedUpdateManyWithoutTenantNestedInput
+    inspectionLimit?: InspectionLimitUncheckedUpdateOneWithoutTenantNestedInput
   }
 
   export type TenantCreateManyInput = {
@@ -22439,8 +28707,10 @@ export namespace Prisma {
     name: string
     email: string
     phoneNumber?: string | null
+    address?: string | null
     registrationCode?: AgentRegistrationCodeCreateNestedOneWithoutAgentsInput
     assignedTasks?: TaskCreateNestedManyWithoutAgentInput
+    inspections?: InspectionCreateNestedManyWithoutAgentInput
   }
 
   export type AgentUncheckedCreateInput = {
@@ -22449,8 +28719,10 @@ export namespace Prisma {
     name: string
     email: string
     phoneNumber?: string | null
+    address?: string | null
     registrationCodeId?: number | null
     assignedTasks?: TaskUncheckedCreateNestedManyWithoutAgentInput
+    inspections?: InspectionUncheckedCreateNestedManyWithoutAgentInput
   }
 
   export type AgentUpdateInput = {
@@ -22458,8 +28730,10 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
     registrationCode?: AgentRegistrationCodeUpdateOneWithoutAgentsNestedInput
     assignedTasks?: TaskUpdateManyWithoutAgentNestedInput
+    inspections?: InspectionUpdateManyWithoutAgentNestedInput
   }
 
   export type AgentUncheckedUpdateInput = {
@@ -22468,8 +28742,10 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
     registrationCodeId?: NullableIntFieldUpdateOperationsInput | number | null
     assignedTasks?: TaskUncheckedUpdateManyWithoutAgentNestedInput
+    inspections?: InspectionUncheckedUpdateManyWithoutAgentNestedInput
   }
 
   export type AgentCreateManyInput = {
@@ -22478,6 +28754,7 @@ export namespace Prisma {
     name: string
     email: string
     phoneNumber?: string | null
+    address?: string | null
     registrationCodeId?: number | null
   }
 
@@ -22486,6 +28763,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type AgentUncheckedUpdateManyInput = {
@@ -22494,6 +28772,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
     registrationCodeId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
@@ -23161,7 +29440,7 @@ export namespace Prisma {
     dueDate: Date | string
     paymentDate: Date | string
     paymentStatus: $Enums.PaymentStatus
-    lease: LeaseCreateNestedOneWithoutPaymentsInput
+    lease?: LeaseCreateNestedOneWithoutPaymentsInput
   }
 
   export type PaymentUncheckedCreateInput = {
@@ -23171,7 +29450,7 @@ export namespace Prisma {
     dueDate: Date | string
     paymentDate: Date | string
     paymentStatus: $Enums.PaymentStatus
-    leaseId: number
+    leaseId?: number | null
   }
 
   export type PaymentUpdateInput = {
@@ -23180,7 +29459,7 @@ export namespace Prisma {
     dueDate?: DateTimeFieldUpdateOperationsInput | Date | string
     paymentDate?: DateTimeFieldUpdateOperationsInput | Date | string
     paymentStatus?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
-    lease?: LeaseUpdateOneRequiredWithoutPaymentsNestedInput
+    lease?: LeaseUpdateOneWithoutPaymentsNestedInput
   }
 
   export type PaymentUncheckedUpdateInput = {
@@ -23190,7 +29469,7 @@ export namespace Prisma {
     dueDate?: DateTimeFieldUpdateOperationsInput | Date | string
     paymentDate?: DateTimeFieldUpdateOperationsInput | Date | string
     paymentStatus?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
-    leaseId?: IntFieldUpdateOperationsInput | number
+    leaseId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type PaymentCreateManyInput = {
@@ -23200,7 +29479,7 @@ export namespace Prisma {
     dueDate: Date | string
     paymentDate: Date | string
     paymentStatus: $Enums.PaymentStatus
-    leaseId: number
+    leaseId?: number | null
   }
 
   export type PaymentUpdateManyMutationInput = {
@@ -23218,13 +29497,12 @@ export namespace Prisma {
     dueDate?: DateTimeFieldUpdateOperationsInput | Date | string
     paymentDate?: DateTimeFieldUpdateOperationsInput | Date | string
     paymentStatus?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
-    leaseId?: IntFieldUpdateOperationsInput | number
+    leaseId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type AdminSettingsCreateInput = {
     siteName?: string
     siteDescription?: string
-    maintenanceMode?: boolean
     allowRegistration?: boolean
     maxPropertiesPerLandlord?: number
     commissionRate?: number
@@ -23238,7 +29516,6 @@ export namespace Prisma {
     id?: number
     siteName?: string
     siteDescription?: string
-    maintenanceMode?: boolean
     allowRegistration?: boolean
     maxPropertiesPerLandlord?: number
     commissionRate?: number
@@ -23251,7 +29528,6 @@ export namespace Prisma {
   export type AdminSettingsUpdateInput = {
     siteName?: StringFieldUpdateOperationsInput | string
     siteDescription?: StringFieldUpdateOperationsInput | string
-    maintenanceMode?: BoolFieldUpdateOperationsInput | boolean
     allowRegistration?: BoolFieldUpdateOperationsInput | boolean
     maxPropertiesPerLandlord?: IntFieldUpdateOperationsInput | number
     commissionRate?: FloatFieldUpdateOperationsInput | number
@@ -23265,7 +29541,6 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     siteName?: StringFieldUpdateOperationsInput | string
     siteDescription?: StringFieldUpdateOperationsInput | string
-    maintenanceMode?: BoolFieldUpdateOperationsInput | boolean
     allowRegistration?: BoolFieldUpdateOperationsInput | boolean
     maxPropertiesPerLandlord?: IntFieldUpdateOperationsInput | number
     commissionRate?: FloatFieldUpdateOperationsInput | number
@@ -23279,7 +29554,6 @@ export namespace Prisma {
     id?: number
     siteName?: string
     siteDescription?: string
-    maintenanceMode?: boolean
     allowRegistration?: boolean
     maxPropertiesPerLandlord?: number
     commissionRate?: number
@@ -23292,7 +29566,6 @@ export namespace Prisma {
   export type AdminSettingsUpdateManyMutationInput = {
     siteName?: StringFieldUpdateOperationsInput | string
     siteDescription?: StringFieldUpdateOperationsInput | string
-    maintenanceMode?: BoolFieldUpdateOperationsInput | boolean
     allowRegistration?: BoolFieldUpdateOperationsInput | boolean
     maxPropertiesPerLandlord?: IntFieldUpdateOperationsInput | number
     commissionRate?: FloatFieldUpdateOperationsInput | number
@@ -23306,7 +29579,6 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     siteName?: StringFieldUpdateOperationsInput | string
     siteDescription?: StringFieldUpdateOperationsInput | string
-    maintenanceMode?: BoolFieldUpdateOperationsInput | boolean
     allowRegistration?: BoolFieldUpdateOperationsInput | boolean
     maxPropertiesPerLandlord?: IntFieldUpdateOperationsInput | number
     commissionRate?: FloatFieldUpdateOperationsInput | number
@@ -23625,6 +29897,402 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type EmailSubscriptionCreateInput = {
+    email: string
+    fullName: string
+    subscriptionType: string
+    isActive?: boolean
+    subscribedAt?: Date | string
+    unsubscribedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type EmailSubscriptionUncheckedCreateInput = {
+    id?: number
+    email: string
+    fullName: string
+    subscriptionType: string
+    isActive?: boolean
+    subscribedAt?: Date | string
+    unsubscribedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type EmailSubscriptionUpdateInput = {
+    email?: StringFieldUpdateOperationsInput | string
+    fullName?: StringFieldUpdateOperationsInput | string
+    subscriptionType?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    subscribedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    unsubscribedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type EmailSubscriptionUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    email?: StringFieldUpdateOperationsInput | string
+    fullName?: StringFieldUpdateOperationsInput | string
+    subscriptionType?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    subscribedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    unsubscribedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type EmailSubscriptionCreateManyInput = {
+    id?: number
+    email: string
+    fullName: string
+    subscriptionType: string
+    isActive?: boolean
+    subscribedAt?: Date | string
+    unsubscribedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type EmailSubscriptionUpdateManyMutationInput = {
+    email?: StringFieldUpdateOperationsInput | string
+    fullName?: StringFieldUpdateOperationsInput | string
+    subscriptionType?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    subscribedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    unsubscribedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type EmailSubscriptionUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    email?: StringFieldUpdateOperationsInput | string
+    fullName?: StringFieldUpdateOperationsInput | string
+    subscriptionType?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    subscribedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    unsubscribedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type InspectionCreateInput = {
+    scheduledDate: Date | string
+    status?: $Enums.InspectionStatus
+    tenantName: string
+    tenantEmail: string
+    tenantPhone: string
+    preferredTime: string
+    message?: string | null
+    adminNotes?: string | null
+    depositPaid?: boolean
+    depositAmount?: number | null
+    paymentReference?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    property: PropertyCreateNestedOneWithoutInspectionsInput
+    tenant: TenantCreateNestedOneWithoutInspectionsInput
+    agent?: AgentCreateNestedOneWithoutInspectionsInput
+  }
+
+  export type InspectionUncheckedCreateInput = {
+    id?: number
+    propertyId: number
+    tenantCognitoId: string
+    scheduledDate: Date | string
+    status?: $Enums.InspectionStatus
+    tenantName: string
+    tenantEmail: string
+    tenantPhone: string
+    preferredTime: string
+    message?: string | null
+    adminNotes?: string | null
+    agentId?: number | null
+    depositPaid?: boolean
+    depositAmount?: number | null
+    paymentReference?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type InspectionUpdateInput = {
+    scheduledDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumInspectionStatusFieldUpdateOperationsInput | $Enums.InspectionStatus
+    tenantName?: StringFieldUpdateOperationsInput | string
+    tenantEmail?: StringFieldUpdateOperationsInput | string
+    tenantPhone?: StringFieldUpdateOperationsInput | string
+    preferredTime?: StringFieldUpdateOperationsInput | string
+    message?: NullableStringFieldUpdateOperationsInput | string | null
+    adminNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    depositPaid?: BoolFieldUpdateOperationsInput | boolean
+    depositAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    paymentReference?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    property?: PropertyUpdateOneRequiredWithoutInspectionsNestedInput
+    tenant?: TenantUpdateOneRequiredWithoutInspectionsNestedInput
+    agent?: AgentUpdateOneWithoutInspectionsNestedInput
+  }
+
+  export type InspectionUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    propertyId?: IntFieldUpdateOperationsInput | number
+    tenantCognitoId?: StringFieldUpdateOperationsInput | string
+    scheduledDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumInspectionStatusFieldUpdateOperationsInput | $Enums.InspectionStatus
+    tenantName?: StringFieldUpdateOperationsInput | string
+    tenantEmail?: StringFieldUpdateOperationsInput | string
+    tenantPhone?: StringFieldUpdateOperationsInput | string
+    preferredTime?: StringFieldUpdateOperationsInput | string
+    message?: NullableStringFieldUpdateOperationsInput | string | null
+    adminNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    agentId?: NullableIntFieldUpdateOperationsInput | number | null
+    depositPaid?: BoolFieldUpdateOperationsInput | boolean
+    depositAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    paymentReference?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type InspectionCreateManyInput = {
+    id?: number
+    propertyId: number
+    tenantCognitoId: string
+    scheduledDate: Date | string
+    status?: $Enums.InspectionStatus
+    tenantName: string
+    tenantEmail: string
+    tenantPhone: string
+    preferredTime: string
+    message?: string | null
+    adminNotes?: string | null
+    agentId?: number | null
+    depositPaid?: boolean
+    depositAmount?: number | null
+    paymentReference?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type InspectionUpdateManyMutationInput = {
+    scheduledDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumInspectionStatusFieldUpdateOperationsInput | $Enums.InspectionStatus
+    tenantName?: StringFieldUpdateOperationsInput | string
+    tenantEmail?: StringFieldUpdateOperationsInput | string
+    tenantPhone?: StringFieldUpdateOperationsInput | string
+    preferredTime?: StringFieldUpdateOperationsInput | string
+    message?: NullableStringFieldUpdateOperationsInput | string | null
+    adminNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    depositPaid?: BoolFieldUpdateOperationsInput | boolean
+    depositAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    paymentReference?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type InspectionUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    propertyId?: IntFieldUpdateOperationsInput | number
+    tenantCognitoId?: StringFieldUpdateOperationsInput | string
+    scheduledDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumInspectionStatusFieldUpdateOperationsInput | $Enums.InspectionStatus
+    tenantName?: StringFieldUpdateOperationsInput | string
+    tenantEmail?: StringFieldUpdateOperationsInput | string
+    tenantPhone?: StringFieldUpdateOperationsInput | string
+    preferredTime?: StringFieldUpdateOperationsInput | string
+    message?: NullableStringFieldUpdateOperationsInput | string | null
+    adminNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    agentId?: NullableIntFieldUpdateOperationsInput | number | null
+    depositPaid?: BoolFieldUpdateOperationsInput | boolean
+    depositAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    paymentReference?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type InspectionLimitCreateInput = {
+    freeInspections?: number
+    usedInspections?: number
+    hasUnlimited?: boolean
+    unlimitedUntil?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    tenant: TenantCreateNestedOneWithoutInspectionLimitInput
+  }
+
+  export type InspectionLimitUncheckedCreateInput = {
+    id?: number
+    tenantCognitoId: string
+    freeInspections?: number
+    usedInspections?: number
+    hasUnlimited?: boolean
+    unlimitedUntil?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type InspectionLimitUpdateInput = {
+    freeInspections?: IntFieldUpdateOperationsInput | number
+    usedInspections?: IntFieldUpdateOperationsInput | number
+    hasUnlimited?: BoolFieldUpdateOperationsInput | boolean
+    unlimitedUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    tenant?: TenantUpdateOneRequiredWithoutInspectionLimitNestedInput
+  }
+
+  export type InspectionLimitUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    tenantCognitoId?: StringFieldUpdateOperationsInput | string
+    freeInspections?: IntFieldUpdateOperationsInput | number
+    usedInspections?: IntFieldUpdateOperationsInput | number
+    hasUnlimited?: BoolFieldUpdateOperationsInput | boolean
+    unlimitedUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type InspectionLimitCreateManyInput = {
+    id?: number
+    tenantCognitoId: string
+    freeInspections?: number
+    usedInspections?: number
+    hasUnlimited?: boolean
+    unlimitedUntil?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type InspectionLimitUpdateManyMutationInput = {
+    freeInspections?: IntFieldUpdateOperationsInput | number
+    usedInspections?: IntFieldUpdateOperationsInput | number
+    hasUnlimited?: BoolFieldUpdateOperationsInput | boolean
+    unlimitedUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type InspectionLimitUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    tenantCognitoId?: StringFieldUpdateOperationsInput | string
+    freeInspections?: IntFieldUpdateOperationsInput | number
+    usedInspections?: IntFieldUpdateOperationsInput | number
+    hasUnlimited?: BoolFieldUpdateOperationsInput | boolean
+    unlimitedUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WithdrawalCreateInput = {
+    amount: number
+    status?: $Enums.WithdrawalStatus
+    requestDate?: Date | string
+    processedDate?: Date | string | null
+    bankName?: string | null
+    accountNumber?: string | null
+    accountName?: string | null
+    reference?: string | null
+    notes?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    landlord: LandlordCreateNestedOneWithoutWithdrawalsInput
+  }
+
+  export type WithdrawalUncheckedCreateInput = {
+    id?: number
+    amount: number
+    status?: $Enums.WithdrawalStatus
+    requestDate?: Date | string
+    processedDate?: Date | string | null
+    landlordCognitoId: string
+    bankName?: string | null
+    accountNumber?: string | null
+    accountName?: string | null
+    reference?: string | null
+    notes?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WithdrawalUpdateInput = {
+    amount?: FloatFieldUpdateOperationsInput | number
+    status?: EnumWithdrawalStatusFieldUpdateOperationsInput | $Enums.WithdrawalStatus
+    requestDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    processedDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    bankName?: NullableStringFieldUpdateOperationsInput | string | null
+    accountNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    accountName?: NullableStringFieldUpdateOperationsInput | string | null
+    reference?: NullableStringFieldUpdateOperationsInput | string | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    landlord?: LandlordUpdateOneRequiredWithoutWithdrawalsNestedInput
+  }
+
+  export type WithdrawalUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    amount?: FloatFieldUpdateOperationsInput | number
+    status?: EnumWithdrawalStatusFieldUpdateOperationsInput | $Enums.WithdrawalStatus
+    requestDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    processedDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    landlordCognitoId?: StringFieldUpdateOperationsInput | string
+    bankName?: NullableStringFieldUpdateOperationsInput | string | null
+    accountNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    accountName?: NullableStringFieldUpdateOperationsInput | string | null
+    reference?: NullableStringFieldUpdateOperationsInput | string | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WithdrawalCreateManyInput = {
+    id?: number
+    amount: number
+    status?: $Enums.WithdrawalStatus
+    requestDate?: Date | string
+    processedDate?: Date | string | null
+    landlordCognitoId: string
+    bankName?: string | null
+    accountNumber?: string | null
+    accountName?: string | null
+    reference?: string | null
+    notes?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WithdrawalUpdateManyMutationInput = {
+    amount?: FloatFieldUpdateOperationsInput | number
+    status?: EnumWithdrawalStatusFieldUpdateOperationsInput | $Enums.WithdrawalStatus
+    requestDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    processedDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    bankName?: NullableStringFieldUpdateOperationsInput | string | null
+    accountNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    accountName?: NullableStringFieldUpdateOperationsInput | string | null
+    reference?: NullableStringFieldUpdateOperationsInput | string | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WithdrawalUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    amount?: FloatFieldUpdateOperationsInput | number
+    status?: EnumWithdrawalStatusFieldUpdateOperationsInput | $Enums.WithdrawalStatus
+    requestDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    processedDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    landlordCognitoId?: StringFieldUpdateOperationsInput | string
+    bankName?: NullableStringFieldUpdateOperationsInput | string | null
+    accountNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    accountName?: NullableStringFieldUpdateOperationsInput | string | null
+    reference?: NullableStringFieldUpdateOperationsInput | string | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type IntFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -23670,20 +30338,19 @@ export namespace Prisma {
     isEmpty?: boolean
   }
 
-  export type EnumAmenityNullableListFilter<$PrismaModel = never> = {
-    equals?: $Enums.Amenity[] | ListEnumAmenityFieldRefInput<$PrismaModel> | null
-    has?: $Enums.Amenity | EnumAmenityFieldRefInput<$PrismaModel> | null
-    hasEvery?: $Enums.Amenity[] | ListEnumAmenityFieldRefInput<$PrismaModel>
-    hasSome?: $Enums.Amenity[] | ListEnumAmenityFieldRefInput<$PrismaModel>
-    isEmpty?: boolean
-  }
-
-  export type EnumHighlightNullableListFilter<$PrismaModel = never> = {
-    equals?: $Enums.Highlight[] | ListEnumHighlightFieldRefInput<$PrismaModel> | null
-    has?: $Enums.Highlight | EnumHighlightFieldRefInput<$PrismaModel> | null
-    hasEvery?: $Enums.Highlight[] | ListEnumHighlightFieldRefInput<$PrismaModel>
-    hasSome?: $Enums.Highlight[] | ListEnumHighlightFieldRefInput<$PrismaModel>
-    isEmpty?: boolean
+  export type StringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
   export type BoolFilter<$PrismaModel = never> = {
@@ -23696,6 +30363,13 @@ export namespace Prisma {
     in?: $Enums.PropertyType[] | ListEnumPropertyTypeFieldRefInput<$PrismaModel>
     notIn?: $Enums.PropertyType[] | ListEnumPropertyTypeFieldRefInput<$PrismaModel>
     not?: NestedEnumPropertyTypeFilter<$PrismaModel> | $Enums.PropertyType
+  }
+
+  export type EnumPropertyStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.PropertyStatus | EnumPropertyStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.PropertyStatus[] | ListEnumPropertyStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.PropertyStatus[] | ListEnumPropertyStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumPropertyStatusFilter<$PrismaModel> | $Enums.PropertyStatus
   }
 
   export type DateTimeFilter<$PrismaModel = never> = {
@@ -23759,6 +30433,12 @@ export namespace Prisma {
     none?: TenantWhereInput
   }
 
+  export type InspectionListRelationFilter = {
+    every?: InspectionWhereInput
+    some?: InspectionWhereInput
+    none?: InspectionWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -23776,22 +30456,25 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
+  export type InspectionOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type PropertyCountOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
     description?: SortOrder
     pricePerYear?: SortOrder
     securityDeposit?: SortOrder
-    applicationFee?: SortOrder
     photoUrls?: SortOrder
     amenities?: SortOrder
     highlights?: SortOrder
-    isPetsAllowed?: SortOrder
     isParkingIncluded?: SortOrder
     beds?: SortOrder
     baths?: SortOrder
     squareFeet?: SortOrder
     propertyType?: SortOrder
+    status?: SortOrder
     postedDate?: SortOrder
     averageRating?: SortOrder
     numberOfReviews?: SortOrder
@@ -23803,7 +30486,6 @@ export namespace Prisma {
     id?: SortOrder
     pricePerYear?: SortOrder
     securityDeposit?: SortOrder
-    applicationFee?: SortOrder
     beds?: SortOrder
     baths?: SortOrder
     squareFeet?: SortOrder
@@ -23818,13 +30500,14 @@ export namespace Prisma {
     description?: SortOrder
     pricePerYear?: SortOrder
     securityDeposit?: SortOrder
-    applicationFee?: SortOrder
-    isPetsAllowed?: SortOrder
+    amenities?: SortOrder
+    highlights?: SortOrder
     isParkingIncluded?: SortOrder
     beds?: SortOrder
     baths?: SortOrder
     squareFeet?: SortOrder
     propertyType?: SortOrder
+    status?: SortOrder
     postedDate?: SortOrder
     averageRating?: SortOrder
     numberOfReviews?: SortOrder
@@ -23838,13 +30521,14 @@ export namespace Prisma {
     description?: SortOrder
     pricePerYear?: SortOrder
     securityDeposit?: SortOrder
-    applicationFee?: SortOrder
-    isPetsAllowed?: SortOrder
+    amenities?: SortOrder
+    highlights?: SortOrder
     isParkingIncluded?: SortOrder
     beds?: SortOrder
     baths?: SortOrder
     squareFeet?: SortOrder
     propertyType?: SortOrder
+    status?: SortOrder
     postedDate?: SortOrder
     averageRating?: SortOrder
     numberOfReviews?: SortOrder
@@ -23856,7 +30540,6 @@ export namespace Prisma {
     id?: SortOrder
     pricePerYear?: SortOrder
     securityDeposit?: SortOrder
-    applicationFee?: SortOrder
     beds?: SortOrder
     baths?: SortOrder
     squareFeet?: SortOrder
@@ -23915,6 +30598,24 @@ export namespace Prisma {
     _max?: NestedFloatFilter<$PrismaModel>
   }
 
+  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
   export type BoolWithAggregatesFilter<$PrismaModel = never> = {
     equals?: boolean | BooleanFieldRefInput<$PrismaModel>
     not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
@@ -23931,6 +30632,16 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumPropertyTypeFilter<$PrismaModel>
     _max?: NestedEnumPropertyTypeFilter<$PrismaModel>
+  }
+
+  export type EnumPropertyStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.PropertyStatus | EnumPropertyStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.PropertyStatus[] | ListEnumPropertyStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.PropertyStatus[] | ListEnumPropertyStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumPropertyStatusWithAggregatesFilter<$PrismaModel> | $Enums.PropertyStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumPropertyStatusFilter<$PrismaModel>
+    _max?: NestedEnumPropertyStatusFilter<$PrismaModel>
   }
 
   export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
@@ -23979,6 +30690,17 @@ export namespace Prisma {
     _max?: NestedIntNullableFilter<$PrismaModel>
   }
 
+  export type DateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
   export type PropertyListRelationFilter = {
     every?: PropertyWhereInput
     some?: PropertyWhereInput
@@ -23990,7 +30712,17 @@ export namespace Prisma {
     isNot?: LandlordRegistrationCodeWhereInput | null
   }
 
+  export type WithdrawalListRelationFilter = {
+    every?: WithdrawalWhereInput
+    some?: WithdrawalWhereInput
+    none?: WithdrawalWhereInput
+  }
+
   export type PropertyOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type WithdrawalOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -24001,6 +30733,27 @@ export namespace Prisma {
     email?: SortOrder
     phoneNumber?: SortOrder
     registrationCodeId?: SortOrder
+    currentAddress?: SortOrder
+    city?: SortOrder
+    state?: SortOrder
+    country?: SortOrder
+    postalCode?: SortOrder
+    bankName?: SortOrder
+    accountNumber?: SortOrder
+    accountName?: SortOrder
+    bankCode?: SortOrder
+    businessName?: SortOrder
+    businessType?: SortOrder
+    taxId?: SortOrder
+    dateOfBirth?: SortOrder
+    nationality?: SortOrder
+    occupation?: SortOrder
+    emergencyContactName?: SortOrder
+    emergencyContactPhone?: SortOrder
+    isOnboardingComplete?: SortOrder
+    onboardedAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
   }
 
   export type LandlordAvgOrderByAggregateInput = {
@@ -24015,6 +30768,27 @@ export namespace Prisma {
     email?: SortOrder
     phoneNumber?: SortOrder
     registrationCodeId?: SortOrder
+    currentAddress?: SortOrder
+    city?: SortOrder
+    state?: SortOrder
+    country?: SortOrder
+    postalCode?: SortOrder
+    bankName?: SortOrder
+    accountNumber?: SortOrder
+    accountName?: SortOrder
+    bankCode?: SortOrder
+    businessName?: SortOrder
+    businessType?: SortOrder
+    taxId?: SortOrder
+    dateOfBirth?: SortOrder
+    nationality?: SortOrder
+    occupation?: SortOrder
+    emergencyContactName?: SortOrder
+    emergencyContactPhone?: SortOrder
+    isOnboardingComplete?: SortOrder
+    onboardedAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
   }
 
   export type LandlordMinOrderByAggregateInput = {
@@ -24024,11 +30798,51 @@ export namespace Prisma {
     email?: SortOrder
     phoneNumber?: SortOrder
     registrationCodeId?: SortOrder
+    currentAddress?: SortOrder
+    city?: SortOrder
+    state?: SortOrder
+    country?: SortOrder
+    postalCode?: SortOrder
+    bankName?: SortOrder
+    accountNumber?: SortOrder
+    accountName?: SortOrder
+    bankCode?: SortOrder
+    businessName?: SortOrder
+    businessType?: SortOrder
+    taxId?: SortOrder
+    dateOfBirth?: SortOrder
+    nationality?: SortOrder
+    occupation?: SortOrder
+    emergencyContactName?: SortOrder
+    emergencyContactPhone?: SortOrder
+    isOnboardingComplete?: SortOrder
+    onboardedAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
   }
 
   export type LandlordSumOrderByAggregateInput = {
     id?: SortOrder
     registrationCodeId?: SortOrder
+  }
+
+  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  }
+
+  export type InspectionLimitNullableScalarRelationFilter = {
+    is?: InspectionLimitWhereInput | null
+    isNot?: InspectionLimitWhereInput | null
   }
 
   export type TenantCountOrderByAggregateInput = {
@@ -24063,21 +30877,6 @@ export namespace Prisma {
     id?: SortOrder
   }
 
-  export type StringNullableFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    mode?: QueryMode
-    not?: NestedStringNullableFilter<$PrismaModel> | string | null
-  }
-
   export type AgentRegistrationCodeNullableScalarRelationFilter = {
     is?: AgentRegistrationCodeWhereInput | null
     isNot?: AgentRegistrationCodeWhereInput | null
@@ -24099,6 +30898,7 @@ export namespace Prisma {
     name?: SortOrder
     email?: SortOrder
     phoneNumber?: SortOrder
+    address?: SortOrder
     registrationCodeId?: SortOrder
   }
 
@@ -24113,6 +30913,7 @@ export namespace Prisma {
     name?: SortOrder
     email?: SortOrder
     phoneNumber?: SortOrder
+    address?: SortOrder
     registrationCodeId?: SortOrder
   }
 
@@ -24122,30 +30923,13 @@ export namespace Prisma {
     name?: SortOrder
     email?: SortOrder
     phoneNumber?: SortOrder
+    address?: SortOrder
     registrationCodeId?: SortOrder
   }
 
   export type AgentSumOrderByAggregateInput = {
     id?: SortOrder
     registrationCodeId?: SortOrder
-  }
-
-  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    mode?: QueryMode
-    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedStringNullableFilter<$PrismaModel>
-    _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
   export type AdminCountOrderByAggregateInput = {
@@ -24178,17 +30962,6 @@ export namespace Prisma {
 
   export type AdminSumOrderByAggregateInput = {
     id?: SortOrder
-  }
-
-  export type DateTimeNullableFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
   }
 
   export type LandlordListRelationFilter = {
@@ -24231,20 +31004,6 @@ export namespace Prisma {
 
   export type LandlordRegistrationCodeSumOrderByAggregateInput = {
     id?: SortOrder
-  }
-
-  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedDateTimeNullableFilter<$PrismaModel>
-    _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
   export type AgentListRelationFilter = {
@@ -24668,11 +31427,6 @@ export namespace Prisma {
     not?: NestedEnumPaymentStatusFilter<$PrismaModel> | $Enums.PaymentStatus
   }
 
-  export type LeaseScalarRelationFilter = {
-    is?: LeaseWhereInput
-    isNot?: LeaseWhereInput
-  }
-
   export type PaymentCountOrderByAggregateInput = {
     id?: SortOrder
     amountDue?: SortOrder
@@ -24731,7 +31485,6 @@ export namespace Prisma {
     id?: SortOrder
     siteName?: SortOrder
     siteDescription?: SortOrder
-    maintenanceMode?: SortOrder
     allowRegistration?: SortOrder
     maxPropertiesPerLandlord?: SortOrder
     commissionRate?: SortOrder
@@ -24751,7 +31504,6 @@ export namespace Prisma {
     id?: SortOrder
     siteName?: SortOrder
     siteDescription?: SortOrder
-    maintenanceMode?: SortOrder
     allowRegistration?: SortOrder
     maxPropertiesPerLandlord?: SortOrder
     commissionRate?: SortOrder
@@ -24765,7 +31517,6 @@ export namespace Prisma {
     id?: SortOrder
     siteName?: SortOrder
     siteDescription?: SortOrder
-    maintenanceMode?: SortOrder
     allowRegistration?: SortOrder
     maxPropertiesPerLandlord?: SortOrder
     commissionRate?: SortOrder
@@ -24922,16 +31673,268 @@ export namespace Prisma {
     id?: SortOrder
   }
 
+  export type EmailSubscriptionCountOrderByAggregateInput = {
+    id?: SortOrder
+    email?: SortOrder
+    fullName?: SortOrder
+    subscriptionType?: SortOrder
+    isActive?: SortOrder
+    subscribedAt?: SortOrder
+    unsubscribedAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type EmailSubscriptionAvgOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type EmailSubscriptionMaxOrderByAggregateInput = {
+    id?: SortOrder
+    email?: SortOrder
+    fullName?: SortOrder
+    subscriptionType?: SortOrder
+    isActive?: SortOrder
+    subscribedAt?: SortOrder
+    unsubscribedAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type EmailSubscriptionMinOrderByAggregateInput = {
+    id?: SortOrder
+    email?: SortOrder
+    fullName?: SortOrder
+    subscriptionType?: SortOrder
+    isActive?: SortOrder
+    subscribedAt?: SortOrder
+    unsubscribedAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type EmailSubscriptionSumOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type EnumInspectionStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.InspectionStatus | EnumInspectionStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.InspectionStatus[] | ListEnumInspectionStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.InspectionStatus[] | ListEnumInspectionStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumInspectionStatusFilter<$PrismaModel> | $Enums.InspectionStatus
+  }
+
+  export type AgentNullableScalarRelationFilter = {
+    is?: AgentWhereInput | null
+    isNot?: AgentWhereInput | null
+  }
+
+  export type InspectionCountOrderByAggregateInput = {
+    id?: SortOrder
+    propertyId?: SortOrder
+    tenantCognitoId?: SortOrder
+    scheduledDate?: SortOrder
+    status?: SortOrder
+    tenantName?: SortOrder
+    tenantEmail?: SortOrder
+    tenantPhone?: SortOrder
+    preferredTime?: SortOrder
+    message?: SortOrder
+    adminNotes?: SortOrder
+    agentId?: SortOrder
+    depositPaid?: SortOrder
+    depositAmount?: SortOrder
+    paymentReference?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type InspectionAvgOrderByAggregateInput = {
+    id?: SortOrder
+    propertyId?: SortOrder
+    agentId?: SortOrder
+    depositAmount?: SortOrder
+  }
+
+  export type InspectionMaxOrderByAggregateInput = {
+    id?: SortOrder
+    propertyId?: SortOrder
+    tenantCognitoId?: SortOrder
+    scheduledDate?: SortOrder
+    status?: SortOrder
+    tenantName?: SortOrder
+    tenantEmail?: SortOrder
+    tenantPhone?: SortOrder
+    preferredTime?: SortOrder
+    message?: SortOrder
+    adminNotes?: SortOrder
+    agentId?: SortOrder
+    depositPaid?: SortOrder
+    depositAmount?: SortOrder
+    paymentReference?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type InspectionMinOrderByAggregateInput = {
+    id?: SortOrder
+    propertyId?: SortOrder
+    tenantCognitoId?: SortOrder
+    scheduledDate?: SortOrder
+    status?: SortOrder
+    tenantName?: SortOrder
+    tenantEmail?: SortOrder
+    tenantPhone?: SortOrder
+    preferredTime?: SortOrder
+    message?: SortOrder
+    adminNotes?: SortOrder
+    agentId?: SortOrder
+    depositPaid?: SortOrder
+    depositAmount?: SortOrder
+    paymentReference?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type InspectionSumOrderByAggregateInput = {
+    id?: SortOrder
+    propertyId?: SortOrder
+    agentId?: SortOrder
+    depositAmount?: SortOrder
+  }
+
+  export type EnumInspectionStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.InspectionStatus | EnumInspectionStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.InspectionStatus[] | ListEnumInspectionStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.InspectionStatus[] | ListEnumInspectionStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumInspectionStatusWithAggregatesFilter<$PrismaModel> | $Enums.InspectionStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumInspectionStatusFilter<$PrismaModel>
+    _max?: NestedEnumInspectionStatusFilter<$PrismaModel>
+  }
+
+  export type InspectionLimitCountOrderByAggregateInput = {
+    id?: SortOrder
+    tenantCognitoId?: SortOrder
+    freeInspections?: SortOrder
+    usedInspections?: SortOrder
+    hasUnlimited?: SortOrder
+    unlimitedUntil?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type InspectionLimitAvgOrderByAggregateInput = {
+    id?: SortOrder
+    freeInspections?: SortOrder
+    usedInspections?: SortOrder
+  }
+
+  export type InspectionLimitMaxOrderByAggregateInput = {
+    id?: SortOrder
+    tenantCognitoId?: SortOrder
+    freeInspections?: SortOrder
+    usedInspections?: SortOrder
+    hasUnlimited?: SortOrder
+    unlimitedUntil?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type InspectionLimitMinOrderByAggregateInput = {
+    id?: SortOrder
+    tenantCognitoId?: SortOrder
+    freeInspections?: SortOrder
+    usedInspections?: SortOrder
+    hasUnlimited?: SortOrder
+    unlimitedUntil?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type InspectionLimitSumOrderByAggregateInput = {
+    id?: SortOrder
+    freeInspections?: SortOrder
+    usedInspections?: SortOrder
+  }
+
+  export type EnumWithdrawalStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.WithdrawalStatus | EnumWithdrawalStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.WithdrawalStatus[] | ListEnumWithdrawalStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.WithdrawalStatus[] | ListEnumWithdrawalStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumWithdrawalStatusFilter<$PrismaModel> | $Enums.WithdrawalStatus
+  }
+
+  export type WithdrawalCountOrderByAggregateInput = {
+    id?: SortOrder
+    amount?: SortOrder
+    status?: SortOrder
+    requestDate?: SortOrder
+    processedDate?: SortOrder
+    landlordCognitoId?: SortOrder
+    bankName?: SortOrder
+    accountNumber?: SortOrder
+    accountName?: SortOrder
+    reference?: SortOrder
+    notes?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type WithdrawalAvgOrderByAggregateInput = {
+    id?: SortOrder
+    amount?: SortOrder
+  }
+
+  export type WithdrawalMaxOrderByAggregateInput = {
+    id?: SortOrder
+    amount?: SortOrder
+    status?: SortOrder
+    requestDate?: SortOrder
+    processedDate?: SortOrder
+    landlordCognitoId?: SortOrder
+    bankName?: SortOrder
+    accountNumber?: SortOrder
+    accountName?: SortOrder
+    reference?: SortOrder
+    notes?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type WithdrawalMinOrderByAggregateInput = {
+    id?: SortOrder
+    amount?: SortOrder
+    status?: SortOrder
+    requestDate?: SortOrder
+    processedDate?: SortOrder
+    landlordCognitoId?: SortOrder
+    bankName?: SortOrder
+    accountNumber?: SortOrder
+    accountName?: SortOrder
+    reference?: SortOrder
+    notes?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type WithdrawalSumOrderByAggregateInput = {
+    id?: SortOrder
+    amount?: SortOrder
+  }
+
+  export type EnumWithdrawalStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.WithdrawalStatus | EnumWithdrawalStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.WithdrawalStatus[] | ListEnumWithdrawalStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.WithdrawalStatus[] | ListEnumWithdrawalStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumWithdrawalStatusWithAggregatesFilter<$PrismaModel> | $Enums.WithdrawalStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumWithdrawalStatusFilter<$PrismaModel>
+    _max?: NestedEnumWithdrawalStatusFilter<$PrismaModel>
+  }
+
   export type PropertyCreatephotoUrlsInput = {
     set: string[]
-  }
-
-  export type PropertyCreateamenitiesInput = {
-    set: $Enums.Amenity[]
-  }
-
-  export type PropertyCreatehighlightsInput = {
-    set: $Enums.Highlight[]
   }
 
   export type LocationCreateNestedOneWithoutPropertiesInput = {
@@ -24970,6 +31973,13 @@ export namespace Prisma {
     connect?: TenantWhereUniqueInput | TenantWhereUniqueInput[]
   }
 
+  export type InspectionCreateNestedManyWithoutPropertyInput = {
+    create?: XOR<InspectionCreateWithoutPropertyInput, InspectionUncheckedCreateWithoutPropertyInput> | InspectionCreateWithoutPropertyInput[] | InspectionUncheckedCreateWithoutPropertyInput[]
+    connectOrCreate?: InspectionCreateOrConnectWithoutPropertyInput | InspectionCreateOrConnectWithoutPropertyInput[]
+    createMany?: InspectionCreateManyPropertyInputEnvelope
+    connect?: InspectionWhereUniqueInput | InspectionWhereUniqueInput[]
+  }
+
   export type LeaseUncheckedCreateNestedManyWithoutPropertyInput = {
     create?: XOR<LeaseCreateWithoutPropertyInput, LeaseUncheckedCreateWithoutPropertyInput> | LeaseCreateWithoutPropertyInput[] | LeaseUncheckedCreateWithoutPropertyInput[]
     connectOrCreate?: LeaseCreateOrConnectWithoutPropertyInput | LeaseCreateOrConnectWithoutPropertyInput[]
@@ -24996,6 +32006,13 @@ export namespace Prisma {
     connect?: TenantWhereUniqueInput | TenantWhereUniqueInput[]
   }
 
+  export type InspectionUncheckedCreateNestedManyWithoutPropertyInput = {
+    create?: XOR<InspectionCreateWithoutPropertyInput, InspectionUncheckedCreateWithoutPropertyInput> | InspectionCreateWithoutPropertyInput[] | InspectionUncheckedCreateWithoutPropertyInput[]
+    connectOrCreate?: InspectionCreateOrConnectWithoutPropertyInput | InspectionCreateOrConnectWithoutPropertyInput[]
+    createMany?: InspectionCreateManyPropertyInputEnvelope
+    connect?: InspectionWhereUniqueInput | InspectionWhereUniqueInput[]
+  }
+
   export type StringFieldUpdateOperationsInput = {
     set?: string
   }
@@ -25013,14 +32030,8 @@ export namespace Prisma {
     push?: string | string[]
   }
 
-  export type PropertyUpdateamenitiesInput = {
-    set?: $Enums.Amenity[]
-    push?: $Enums.Amenity | $Enums.Amenity[]
-  }
-
-  export type PropertyUpdatehighlightsInput = {
-    set?: $Enums.Highlight[]
-    push?: $Enums.Highlight | $Enums.Highlight[]
+  export type NullableStringFieldUpdateOperationsInput = {
+    set?: string | null
   }
 
   export type BoolFieldUpdateOperationsInput = {
@@ -25037,6 +32048,10 @@ export namespace Prisma {
 
   export type EnumPropertyTypeFieldUpdateOperationsInput = {
     set?: $Enums.PropertyType
+  }
+
+  export type EnumPropertyStatusFieldUpdateOperationsInput = {
+    set?: $Enums.PropertyStatus
   }
 
   export type DateTimeFieldUpdateOperationsInput = {
@@ -25126,6 +32141,20 @@ export namespace Prisma {
     deleteMany?: TenantScalarWhereInput | TenantScalarWhereInput[]
   }
 
+  export type InspectionUpdateManyWithoutPropertyNestedInput = {
+    create?: XOR<InspectionCreateWithoutPropertyInput, InspectionUncheckedCreateWithoutPropertyInput> | InspectionCreateWithoutPropertyInput[] | InspectionUncheckedCreateWithoutPropertyInput[]
+    connectOrCreate?: InspectionCreateOrConnectWithoutPropertyInput | InspectionCreateOrConnectWithoutPropertyInput[]
+    upsert?: InspectionUpsertWithWhereUniqueWithoutPropertyInput | InspectionUpsertWithWhereUniqueWithoutPropertyInput[]
+    createMany?: InspectionCreateManyPropertyInputEnvelope
+    set?: InspectionWhereUniqueInput | InspectionWhereUniqueInput[]
+    disconnect?: InspectionWhereUniqueInput | InspectionWhereUniqueInput[]
+    delete?: InspectionWhereUniqueInput | InspectionWhereUniqueInput[]
+    connect?: InspectionWhereUniqueInput | InspectionWhereUniqueInput[]
+    update?: InspectionUpdateWithWhereUniqueWithoutPropertyInput | InspectionUpdateWithWhereUniqueWithoutPropertyInput[]
+    updateMany?: InspectionUpdateManyWithWhereWithoutPropertyInput | InspectionUpdateManyWithWhereWithoutPropertyInput[]
+    deleteMany?: InspectionScalarWhereInput | InspectionScalarWhereInput[]
+  }
+
   export type LeaseUncheckedUpdateManyWithoutPropertyNestedInput = {
     create?: XOR<LeaseCreateWithoutPropertyInput, LeaseUncheckedCreateWithoutPropertyInput> | LeaseCreateWithoutPropertyInput[] | LeaseUncheckedCreateWithoutPropertyInput[]
     connectOrCreate?: LeaseCreateOrConnectWithoutPropertyInput | LeaseCreateOrConnectWithoutPropertyInput[]
@@ -25180,6 +32209,20 @@ export namespace Prisma {
     deleteMany?: TenantScalarWhereInput | TenantScalarWhereInput[]
   }
 
+  export type InspectionUncheckedUpdateManyWithoutPropertyNestedInput = {
+    create?: XOR<InspectionCreateWithoutPropertyInput, InspectionUncheckedCreateWithoutPropertyInput> | InspectionCreateWithoutPropertyInput[] | InspectionUncheckedCreateWithoutPropertyInput[]
+    connectOrCreate?: InspectionCreateOrConnectWithoutPropertyInput | InspectionCreateOrConnectWithoutPropertyInput[]
+    upsert?: InspectionUpsertWithWhereUniqueWithoutPropertyInput | InspectionUpsertWithWhereUniqueWithoutPropertyInput[]
+    createMany?: InspectionCreateManyPropertyInputEnvelope
+    set?: InspectionWhereUniqueInput | InspectionWhereUniqueInput[]
+    disconnect?: InspectionWhereUniqueInput | InspectionWhereUniqueInput[]
+    delete?: InspectionWhereUniqueInput | InspectionWhereUniqueInput[]
+    connect?: InspectionWhereUniqueInput | InspectionWhereUniqueInput[]
+    update?: InspectionUpdateWithWhereUniqueWithoutPropertyInput | InspectionUpdateWithWhereUniqueWithoutPropertyInput[]
+    updateMany?: InspectionUpdateManyWithWhereWithoutPropertyInput | InspectionUpdateManyWithWhereWithoutPropertyInput[]
+    deleteMany?: InspectionScalarWhereInput | InspectionScalarWhereInput[]
+  }
+
   export type PropertyCreateNestedManyWithoutLandlordInput = {
     create?: XOR<PropertyCreateWithoutLandlordInput, PropertyUncheckedCreateWithoutLandlordInput> | PropertyCreateWithoutLandlordInput[] | PropertyUncheckedCreateWithoutLandlordInput[]
     connectOrCreate?: PropertyCreateOrConnectWithoutLandlordInput | PropertyCreateOrConnectWithoutLandlordInput[]
@@ -25193,11 +32236,29 @@ export namespace Prisma {
     connect?: LandlordRegistrationCodeWhereUniqueInput
   }
 
+  export type WithdrawalCreateNestedManyWithoutLandlordInput = {
+    create?: XOR<WithdrawalCreateWithoutLandlordInput, WithdrawalUncheckedCreateWithoutLandlordInput> | WithdrawalCreateWithoutLandlordInput[] | WithdrawalUncheckedCreateWithoutLandlordInput[]
+    connectOrCreate?: WithdrawalCreateOrConnectWithoutLandlordInput | WithdrawalCreateOrConnectWithoutLandlordInput[]
+    createMany?: WithdrawalCreateManyLandlordInputEnvelope
+    connect?: WithdrawalWhereUniqueInput | WithdrawalWhereUniqueInput[]
+  }
+
   export type PropertyUncheckedCreateNestedManyWithoutLandlordInput = {
     create?: XOR<PropertyCreateWithoutLandlordInput, PropertyUncheckedCreateWithoutLandlordInput> | PropertyCreateWithoutLandlordInput[] | PropertyUncheckedCreateWithoutLandlordInput[]
     connectOrCreate?: PropertyCreateOrConnectWithoutLandlordInput | PropertyCreateOrConnectWithoutLandlordInput[]
     createMany?: PropertyCreateManyLandlordInputEnvelope
     connect?: PropertyWhereUniqueInput | PropertyWhereUniqueInput[]
+  }
+
+  export type WithdrawalUncheckedCreateNestedManyWithoutLandlordInput = {
+    create?: XOR<WithdrawalCreateWithoutLandlordInput, WithdrawalUncheckedCreateWithoutLandlordInput> | WithdrawalCreateWithoutLandlordInput[] | WithdrawalUncheckedCreateWithoutLandlordInput[]
+    connectOrCreate?: WithdrawalCreateOrConnectWithoutLandlordInput | WithdrawalCreateOrConnectWithoutLandlordInput[]
+    createMany?: WithdrawalCreateManyLandlordInputEnvelope
+    connect?: WithdrawalWhereUniqueInput | WithdrawalWhereUniqueInput[]
+  }
+
+  export type NullableDateTimeFieldUpdateOperationsInput = {
+    set?: Date | string | null
   }
 
   export type PropertyUpdateManyWithoutLandlordNestedInput = {
@@ -25224,6 +32285,20 @@ export namespace Prisma {
     update?: XOR<XOR<LandlordRegistrationCodeUpdateToOneWithWhereWithoutLandlordsInput, LandlordRegistrationCodeUpdateWithoutLandlordsInput>, LandlordRegistrationCodeUncheckedUpdateWithoutLandlordsInput>
   }
 
+  export type WithdrawalUpdateManyWithoutLandlordNestedInput = {
+    create?: XOR<WithdrawalCreateWithoutLandlordInput, WithdrawalUncheckedCreateWithoutLandlordInput> | WithdrawalCreateWithoutLandlordInput[] | WithdrawalUncheckedCreateWithoutLandlordInput[]
+    connectOrCreate?: WithdrawalCreateOrConnectWithoutLandlordInput | WithdrawalCreateOrConnectWithoutLandlordInput[]
+    upsert?: WithdrawalUpsertWithWhereUniqueWithoutLandlordInput | WithdrawalUpsertWithWhereUniqueWithoutLandlordInput[]
+    createMany?: WithdrawalCreateManyLandlordInputEnvelope
+    set?: WithdrawalWhereUniqueInput | WithdrawalWhereUniqueInput[]
+    disconnect?: WithdrawalWhereUniqueInput | WithdrawalWhereUniqueInput[]
+    delete?: WithdrawalWhereUniqueInput | WithdrawalWhereUniqueInput[]
+    connect?: WithdrawalWhereUniqueInput | WithdrawalWhereUniqueInput[]
+    update?: WithdrawalUpdateWithWhereUniqueWithoutLandlordInput | WithdrawalUpdateWithWhereUniqueWithoutLandlordInput[]
+    updateMany?: WithdrawalUpdateManyWithWhereWithoutLandlordInput | WithdrawalUpdateManyWithWhereWithoutLandlordInput[]
+    deleteMany?: WithdrawalScalarWhereInput | WithdrawalScalarWhereInput[]
+  }
+
   export type PropertyUncheckedUpdateManyWithoutLandlordNestedInput = {
     create?: XOR<PropertyCreateWithoutLandlordInput, PropertyUncheckedCreateWithoutLandlordInput> | PropertyCreateWithoutLandlordInput[] | PropertyUncheckedCreateWithoutLandlordInput[]
     connectOrCreate?: PropertyCreateOrConnectWithoutLandlordInput | PropertyCreateOrConnectWithoutLandlordInput[]
@@ -25236,6 +32311,20 @@ export namespace Prisma {
     update?: PropertyUpdateWithWhereUniqueWithoutLandlordInput | PropertyUpdateWithWhereUniqueWithoutLandlordInput[]
     updateMany?: PropertyUpdateManyWithWhereWithoutLandlordInput | PropertyUpdateManyWithWhereWithoutLandlordInput[]
     deleteMany?: PropertyScalarWhereInput | PropertyScalarWhereInput[]
+  }
+
+  export type WithdrawalUncheckedUpdateManyWithoutLandlordNestedInput = {
+    create?: XOR<WithdrawalCreateWithoutLandlordInput, WithdrawalUncheckedCreateWithoutLandlordInput> | WithdrawalCreateWithoutLandlordInput[] | WithdrawalUncheckedCreateWithoutLandlordInput[]
+    connectOrCreate?: WithdrawalCreateOrConnectWithoutLandlordInput | WithdrawalCreateOrConnectWithoutLandlordInput[]
+    upsert?: WithdrawalUpsertWithWhereUniqueWithoutLandlordInput | WithdrawalUpsertWithWhereUniqueWithoutLandlordInput[]
+    createMany?: WithdrawalCreateManyLandlordInputEnvelope
+    set?: WithdrawalWhereUniqueInput | WithdrawalWhereUniqueInput[]
+    disconnect?: WithdrawalWhereUniqueInput | WithdrawalWhereUniqueInput[]
+    delete?: WithdrawalWhereUniqueInput | WithdrawalWhereUniqueInput[]
+    connect?: WithdrawalWhereUniqueInput | WithdrawalWhereUniqueInput[]
+    update?: WithdrawalUpdateWithWhereUniqueWithoutLandlordInput | WithdrawalUpdateWithWhereUniqueWithoutLandlordInput[]
+    updateMany?: WithdrawalUpdateManyWithWhereWithoutLandlordInput | WithdrawalUpdateManyWithWhereWithoutLandlordInput[]
+    deleteMany?: WithdrawalScalarWhereInput | WithdrawalScalarWhereInput[]
   }
 
   export type PropertyCreateNestedManyWithoutTenantsInput = {
@@ -25264,6 +32353,19 @@ export namespace Prisma {
     connect?: LeaseWhereUniqueInput | LeaseWhereUniqueInput[]
   }
 
+  export type InspectionCreateNestedManyWithoutTenantInput = {
+    create?: XOR<InspectionCreateWithoutTenantInput, InspectionUncheckedCreateWithoutTenantInput> | InspectionCreateWithoutTenantInput[] | InspectionUncheckedCreateWithoutTenantInput[]
+    connectOrCreate?: InspectionCreateOrConnectWithoutTenantInput | InspectionCreateOrConnectWithoutTenantInput[]
+    createMany?: InspectionCreateManyTenantInputEnvelope
+    connect?: InspectionWhereUniqueInput | InspectionWhereUniqueInput[]
+  }
+
+  export type InspectionLimitCreateNestedOneWithoutTenantInput = {
+    create?: XOR<InspectionLimitCreateWithoutTenantInput, InspectionLimitUncheckedCreateWithoutTenantInput>
+    connectOrCreate?: InspectionLimitCreateOrConnectWithoutTenantInput
+    connect?: InspectionLimitWhereUniqueInput
+  }
+
   export type PropertyUncheckedCreateNestedManyWithoutTenantsInput = {
     create?: XOR<PropertyCreateWithoutTenantsInput, PropertyUncheckedCreateWithoutTenantsInput> | PropertyCreateWithoutTenantsInput[] | PropertyUncheckedCreateWithoutTenantsInput[]
     connectOrCreate?: PropertyCreateOrConnectWithoutTenantsInput | PropertyCreateOrConnectWithoutTenantsInput[]
@@ -25288,6 +32390,19 @@ export namespace Prisma {
     connectOrCreate?: LeaseCreateOrConnectWithoutTenantInput | LeaseCreateOrConnectWithoutTenantInput[]
     createMany?: LeaseCreateManyTenantInputEnvelope
     connect?: LeaseWhereUniqueInput | LeaseWhereUniqueInput[]
+  }
+
+  export type InspectionUncheckedCreateNestedManyWithoutTenantInput = {
+    create?: XOR<InspectionCreateWithoutTenantInput, InspectionUncheckedCreateWithoutTenantInput> | InspectionCreateWithoutTenantInput[] | InspectionUncheckedCreateWithoutTenantInput[]
+    connectOrCreate?: InspectionCreateOrConnectWithoutTenantInput | InspectionCreateOrConnectWithoutTenantInput[]
+    createMany?: InspectionCreateManyTenantInputEnvelope
+    connect?: InspectionWhereUniqueInput | InspectionWhereUniqueInput[]
+  }
+
+  export type InspectionLimitUncheckedCreateNestedOneWithoutTenantInput = {
+    create?: XOR<InspectionLimitCreateWithoutTenantInput, InspectionLimitUncheckedCreateWithoutTenantInput>
+    connectOrCreate?: InspectionLimitCreateOrConnectWithoutTenantInput
+    connect?: InspectionLimitWhereUniqueInput
   }
 
   export type PropertyUpdateManyWithoutTenantsNestedInput = {
@@ -25344,6 +32459,30 @@ export namespace Prisma {
     deleteMany?: LeaseScalarWhereInput | LeaseScalarWhereInput[]
   }
 
+  export type InspectionUpdateManyWithoutTenantNestedInput = {
+    create?: XOR<InspectionCreateWithoutTenantInput, InspectionUncheckedCreateWithoutTenantInput> | InspectionCreateWithoutTenantInput[] | InspectionUncheckedCreateWithoutTenantInput[]
+    connectOrCreate?: InspectionCreateOrConnectWithoutTenantInput | InspectionCreateOrConnectWithoutTenantInput[]
+    upsert?: InspectionUpsertWithWhereUniqueWithoutTenantInput | InspectionUpsertWithWhereUniqueWithoutTenantInput[]
+    createMany?: InspectionCreateManyTenantInputEnvelope
+    set?: InspectionWhereUniqueInput | InspectionWhereUniqueInput[]
+    disconnect?: InspectionWhereUniqueInput | InspectionWhereUniqueInput[]
+    delete?: InspectionWhereUniqueInput | InspectionWhereUniqueInput[]
+    connect?: InspectionWhereUniqueInput | InspectionWhereUniqueInput[]
+    update?: InspectionUpdateWithWhereUniqueWithoutTenantInput | InspectionUpdateWithWhereUniqueWithoutTenantInput[]
+    updateMany?: InspectionUpdateManyWithWhereWithoutTenantInput | InspectionUpdateManyWithWhereWithoutTenantInput[]
+    deleteMany?: InspectionScalarWhereInput | InspectionScalarWhereInput[]
+  }
+
+  export type InspectionLimitUpdateOneWithoutTenantNestedInput = {
+    create?: XOR<InspectionLimitCreateWithoutTenantInput, InspectionLimitUncheckedCreateWithoutTenantInput>
+    connectOrCreate?: InspectionLimitCreateOrConnectWithoutTenantInput
+    upsert?: InspectionLimitUpsertWithoutTenantInput
+    disconnect?: InspectionLimitWhereInput | boolean
+    delete?: InspectionLimitWhereInput | boolean
+    connect?: InspectionLimitWhereUniqueInput
+    update?: XOR<XOR<InspectionLimitUpdateToOneWithWhereWithoutTenantInput, InspectionLimitUpdateWithoutTenantInput>, InspectionLimitUncheckedUpdateWithoutTenantInput>
+  }
+
   export type PropertyUncheckedUpdateManyWithoutTenantsNestedInput = {
     create?: XOR<PropertyCreateWithoutTenantsInput, PropertyUncheckedCreateWithoutTenantsInput> | PropertyCreateWithoutTenantsInput[] | PropertyUncheckedCreateWithoutTenantsInput[]
     connectOrCreate?: PropertyCreateOrConnectWithoutTenantsInput | PropertyCreateOrConnectWithoutTenantsInput[]
@@ -25398,6 +32537,30 @@ export namespace Prisma {
     deleteMany?: LeaseScalarWhereInput | LeaseScalarWhereInput[]
   }
 
+  export type InspectionUncheckedUpdateManyWithoutTenantNestedInput = {
+    create?: XOR<InspectionCreateWithoutTenantInput, InspectionUncheckedCreateWithoutTenantInput> | InspectionCreateWithoutTenantInput[] | InspectionUncheckedCreateWithoutTenantInput[]
+    connectOrCreate?: InspectionCreateOrConnectWithoutTenantInput | InspectionCreateOrConnectWithoutTenantInput[]
+    upsert?: InspectionUpsertWithWhereUniqueWithoutTenantInput | InspectionUpsertWithWhereUniqueWithoutTenantInput[]
+    createMany?: InspectionCreateManyTenantInputEnvelope
+    set?: InspectionWhereUniqueInput | InspectionWhereUniqueInput[]
+    disconnect?: InspectionWhereUniqueInput | InspectionWhereUniqueInput[]
+    delete?: InspectionWhereUniqueInput | InspectionWhereUniqueInput[]
+    connect?: InspectionWhereUniqueInput | InspectionWhereUniqueInput[]
+    update?: InspectionUpdateWithWhereUniqueWithoutTenantInput | InspectionUpdateWithWhereUniqueWithoutTenantInput[]
+    updateMany?: InspectionUpdateManyWithWhereWithoutTenantInput | InspectionUpdateManyWithWhereWithoutTenantInput[]
+    deleteMany?: InspectionScalarWhereInput | InspectionScalarWhereInput[]
+  }
+
+  export type InspectionLimitUncheckedUpdateOneWithoutTenantNestedInput = {
+    create?: XOR<InspectionLimitCreateWithoutTenantInput, InspectionLimitUncheckedCreateWithoutTenantInput>
+    connectOrCreate?: InspectionLimitCreateOrConnectWithoutTenantInput
+    upsert?: InspectionLimitUpsertWithoutTenantInput
+    disconnect?: InspectionLimitWhereInput | boolean
+    delete?: InspectionLimitWhereInput | boolean
+    connect?: InspectionLimitWhereUniqueInput
+    update?: XOR<XOR<InspectionLimitUpdateToOneWithWhereWithoutTenantInput, InspectionLimitUpdateWithoutTenantInput>, InspectionLimitUncheckedUpdateWithoutTenantInput>
+  }
+
   export type AgentRegistrationCodeCreateNestedOneWithoutAgentsInput = {
     create?: XOR<AgentRegistrationCodeCreateWithoutAgentsInput, AgentRegistrationCodeUncheckedCreateWithoutAgentsInput>
     connectOrCreate?: AgentRegistrationCodeCreateOrConnectWithoutAgentsInput
@@ -25411,6 +32574,13 @@ export namespace Prisma {
     connect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
   }
 
+  export type InspectionCreateNestedManyWithoutAgentInput = {
+    create?: XOR<InspectionCreateWithoutAgentInput, InspectionUncheckedCreateWithoutAgentInput> | InspectionCreateWithoutAgentInput[] | InspectionUncheckedCreateWithoutAgentInput[]
+    connectOrCreate?: InspectionCreateOrConnectWithoutAgentInput | InspectionCreateOrConnectWithoutAgentInput[]
+    createMany?: InspectionCreateManyAgentInputEnvelope
+    connect?: InspectionWhereUniqueInput | InspectionWhereUniqueInput[]
+  }
+
   export type TaskUncheckedCreateNestedManyWithoutAgentInput = {
     create?: XOR<TaskCreateWithoutAgentInput, TaskUncheckedCreateWithoutAgentInput> | TaskCreateWithoutAgentInput[] | TaskUncheckedCreateWithoutAgentInput[]
     connectOrCreate?: TaskCreateOrConnectWithoutAgentInput | TaskCreateOrConnectWithoutAgentInput[]
@@ -25418,8 +32588,11 @@ export namespace Prisma {
     connect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
   }
 
-  export type NullableStringFieldUpdateOperationsInput = {
-    set?: string | null
+  export type InspectionUncheckedCreateNestedManyWithoutAgentInput = {
+    create?: XOR<InspectionCreateWithoutAgentInput, InspectionUncheckedCreateWithoutAgentInput> | InspectionCreateWithoutAgentInput[] | InspectionUncheckedCreateWithoutAgentInput[]
+    connectOrCreate?: InspectionCreateOrConnectWithoutAgentInput | InspectionCreateOrConnectWithoutAgentInput[]
+    createMany?: InspectionCreateManyAgentInputEnvelope
+    connect?: InspectionWhereUniqueInput | InspectionWhereUniqueInput[]
   }
 
   export type AgentRegistrationCodeUpdateOneWithoutAgentsNestedInput = {
@@ -25446,6 +32619,20 @@ export namespace Prisma {
     deleteMany?: TaskScalarWhereInput | TaskScalarWhereInput[]
   }
 
+  export type InspectionUpdateManyWithoutAgentNestedInput = {
+    create?: XOR<InspectionCreateWithoutAgentInput, InspectionUncheckedCreateWithoutAgentInput> | InspectionCreateWithoutAgentInput[] | InspectionUncheckedCreateWithoutAgentInput[]
+    connectOrCreate?: InspectionCreateOrConnectWithoutAgentInput | InspectionCreateOrConnectWithoutAgentInput[]
+    upsert?: InspectionUpsertWithWhereUniqueWithoutAgentInput | InspectionUpsertWithWhereUniqueWithoutAgentInput[]
+    createMany?: InspectionCreateManyAgentInputEnvelope
+    set?: InspectionWhereUniqueInput | InspectionWhereUniqueInput[]
+    disconnect?: InspectionWhereUniqueInput | InspectionWhereUniqueInput[]
+    delete?: InspectionWhereUniqueInput | InspectionWhereUniqueInput[]
+    connect?: InspectionWhereUniqueInput | InspectionWhereUniqueInput[]
+    update?: InspectionUpdateWithWhereUniqueWithoutAgentInput | InspectionUpdateWithWhereUniqueWithoutAgentInput[]
+    updateMany?: InspectionUpdateManyWithWhereWithoutAgentInput | InspectionUpdateManyWithWhereWithoutAgentInput[]
+    deleteMany?: InspectionScalarWhereInput | InspectionScalarWhereInput[]
+  }
+
   export type TaskUncheckedUpdateManyWithoutAgentNestedInput = {
     create?: XOR<TaskCreateWithoutAgentInput, TaskUncheckedCreateWithoutAgentInput> | TaskCreateWithoutAgentInput[] | TaskUncheckedCreateWithoutAgentInput[]
     connectOrCreate?: TaskCreateOrConnectWithoutAgentInput | TaskCreateOrConnectWithoutAgentInput[]
@@ -25460,6 +32647,20 @@ export namespace Prisma {
     deleteMany?: TaskScalarWhereInput | TaskScalarWhereInput[]
   }
 
+  export type InspectionUncheckedUpdateManyWithoutAgentNestedInput = {
+    create?: XOR<InspectionCreateWithoutAgentInput, InspectionUncheckedCreateWithoutAgentInput> | InspectionCreateWithoutAgentInput[] | InspectionUncheckedCreateWithoutAgentInput[]
+    connectOrCreate?: InspectionCreateOrConnectWithoutAgentInput | InspectionCreateOrConnectWithoutAgentInput[]
+    upsert?: InspectionUpsertWithWhereUniqueWithoutAgentInput | InspectionUpsertWithWhereUniqueWithoutAgentInput[]
+    createMany?: InspectionCreateManyAgentInputEnvelope
+    set?: InspectionWhereUniqueInput | InspectionWhereUniqueInput[]
+    disconnect?: InspectionWhereUniqueInput | InspectionWhereUniqueInput[]
+    delete?: InspectionWhereUniqueInput | InspectionWhereUniqueInput[]
+    connect?: InspectionWhereUniqueInput | InspectionWhereUniqueInput[]
+    update?: InspectionUpdateWithWhereUniqueWithoutAgentInput | InspectionUpdateWithWhereUniqueWithoutAgentInput[]
+    updateMany?: InspectionUpdateManyWithWhereWithoutAgentInput | InspectionUpdateManyWithWhereWithoutAgentInput[]
+    deleteMany?: InspectionScalarWhereInput | InspectionScalarWhereInput[]
+  }
+
   export type LandlordCreateNestedManyWithoutRegistrationCodeInput = {
     create?: XOR<LandlordCreateWithoutRegistrationCodeInput, LandlordUncheckedCreateWithoutRegistrationCodeInput> | LandlordCreateWithoutRegistrationCodeInput[] | LandlordUncheckedCreateWithoutRegistrationCodeInput[]
     connectOrCreate?: LandlordCreateOrConnectWithoutRegistrationCodeInput | LandlordCreateOrConnectWithoutRegistrationCodeInput[]
@@ -25472,10 +32673,6 @@ export namespace Prisma {
     connectOrCreate?: LandlordCreateOrConnectWithoutRegistrationCodeInput | LandlordCreateOrConnectWithoutRegistrationCodeInput[]
     createMany?: LandlordCreateManyRegistrationCodeInputEnvelope
     connect?: LandlordWhereUniqueInput | LandlordWhereUniqueInput[]
-  }
-
-  export type NullableDateTimeFieldUpdateOperationsInput = {
-    set?: Date | string | null
   }
 
   export type LandlordUpdateManyWithoutRegistrationCodeNestedInput = {
@@ -25762,10 +32959,12 @@ export namespace Prisma {
     set?: $Enums.PaymentStatus
   }
 
-  export type LeaseUpdateOneRequiredWithoutPaymentsNestedInput = {
+  export type LeaseUpdateOneWithoutPaymentsNestedInput = {
     create?: XOR<LeaseCreateWithoutPaymentsInput, LeaseUncheckedCreateWithoutPaymentsInput>
     connectOrCreate?: LeaseCreateOrConnectWithoutPaymentsInput
     upsert?: LeaseUpsertWithoutPaymentsInput
+    disconnect?: LeaseWhereInput | boolean
+    delete?: LeaseWhereInput | boolean
     connect?: LeaseWhereUniqueInput
     update?: XOR<XOR<LeaseUpdateToOneWithWhereWithoutPaymentsInput, LeaseUpdateWithoutPaymentsInput>, LeaseUncheckedUpdateWithoutPaymentsInput>
   }
@@ -25815,6 +33014,86 @@ export namespace Prisma {
     push?: string | string[]
   }
 
+  export type PropertyCreateNestedOneWithoutInspectionsInput = {
+    create?: XOR<PropertyCreateWithoutInspectionsInput, PropertyUncheckedCreateWithoutInspectionsInput>
+    connectOrCreate?: PropertyCreateOrConnectWithoutInspectionsInput
+    connect?: PropertyWhereUniqueInput
+  }
+
+  export type TenantCreateNestedOneWithoutInspectionsInput = {
+    create?: XOR<TenantCreateWithoutInspectionsInput, TenantUncheckedCreateWithoutInspectionsInput>
+    connectOrCreate?: TenantCreateOrConnectWithoutInspectionsInput
+    connect?: TenantWhereUniqueInput
+  }
+
+  export type AgentCreateNestedOneWithoutInspectionsInput = {
+    create?: XOR<AgentCreateWithoutInspectionsInput, AgentUncheckedCreateWithoutInspectionsInput>
+    connectOrCreate?: AgentCreateOrConnectWithoutInspectionsInput
+    connect?: AgentWhereUniqueInput
+  }
+
+  export type EnumInspectionStatusFieldUpdateOperationsInput = {
+    set?: $Enums.InspectionStatus
+  }
+
+  export type PropertyUpdateOneRequiredWithoutInspectionsNestedInput = {
+    create?: XOR<PropertyCreateWithoutInspectionsInput, PropertyUncheckedCreateWithoutInspectionsInput>
+    connectOrCreate?: PropertyCreateOrConnectWithoutInspectionsInput
+    upsert?: PropertyUpsertWithoutInspectionsInput
+    connect?: PropertyWhereUniqueInput
+    update?: XOR<XOR<PropertyUpdateToOneWithWhereWithoutInspectionsInput, PropertyUpdateWithoutInspectionsInput>, PropertyUncheckedUpdateWithoutInspectionsInput>
+  }
+
+  export type TenantUpdateOneRequiredWithoutInspectionsNestedInput = {
+    create?: XOR<TenantCreateWithoutInspectionsInput, TenantUncheckedCreateWithoutInspectionsInput>
+    connectOrCreate?: TenantCreateOrConnectWithoutInspectionsInput
+    upsert?: TenantUpsertWithoutInspectionsInput
+    connect?: TenantWhereUniqueInput
+    update?: XOR<XOR<TenantUpdateToOneWithWhereWithoutInspectionsInput, TenantUpdateWithoutInspectionsInput>, TenantUncheckedUpdateWithoutInspectionsInput>
+  }
+
+  export type AgentUpdateOneWithoutInspectionsNestedInput = {
+    create?: XOR<AgentCreateWithoutInspectionsInput, AgentUncheckedCreateWithoutInspectionsInput>
+    connectOrCreate?: AgentCreateOrConnectWithoutInspectionsInput
+    upsert?: AgentUpsertWithoutInspectionsInput
+    disconnect?: AgentWhereInput | boolean
+    delete?: AgentWhereInput | boolean
+    connect?: AgentWhereUniqueInput
+    update?: XOR<XOR<AgentUpdateToOneWithWhereWithoutInspectionsInput, AgentUpdateWithoutInspectionsInput>, AgentUncheckedUpdateWithoutInspectionsInput>
+  }
+
+  export type TenantCreateNestedOneWithoutInspectionLimitInput = {
+    create?: XOR<TenantCreateWithoutInspectionLimitInput, TenantUncheckedCreateWithoutInspectionLimitInput>
+    connectOrCreate?: TenantCreateOrConnectWithoutInspectionLimitInput
+    connect?: TenantWhereUniqueInput
+  }
+
+  export type TenantUpdateOneRequiredWithoutInspectionLimitNestedInput = {
+    create?: XOR<TenantCreateWithoutInspectionLimitInput, TenantUncheckedCreateWithoutInspectionLimitInput>
+    connectOrCreate?: TenantCreateOrConnectWithoutInspectionLimitInput
+    upsert?: TenantUpsertWithoutInspectionLimitInput
+    connect?: TenantWhereUniqueInput
+    update?: XOR<XOR<TenantUpdateToOneWithWhereWithoutInspectionLimitInput, TenantUpdateWithoutInspectionLimitInput>, TenantUncheckedUpdateWithoutInspectionLimitInput>
+  }
+
+  export type LandlordCreateNestedOneWithoutWithdrawalsInput = {
+    create?: XOR<LandlordCreateWithoutWithdrawalsInput, LandlordUncheckedCreateWithoutWithdrawalsInput>
+    connectOrCreate?: LandlordCreateOrConnectWithoutWithdrawalsInput
+    connect?: LandlordWhereUniqueInput
+  }
+
+  export type EnumWithdrawalStatusFieldUpdateOperationsInput = {
+    set?: $Enums.WithdrawalStatus
+  }
+
+  export type LandlordUpdateOneRequiredWithoutWithdrawalsNestedInput = {
+    create?: XOR<LandlordCreateWithoutWithdrawalsInput, LandlordUncheckedCreateWithoutWithdrawalsInput>
+    connectOrCreate?: LandlordCreateOrConnectWithoutWithdrawalsInput
+    upsert?: LandlordUpsertWithoutWithdrawalsInput
+    connect?: LandlordWhereUniqueInput
+    update?: XOR<XOR<LandlordUpdateToOneWithWhereWithoutWithdrawalsInput, LandlordUpdateWithoutWithdrawalsInput>, LandlordUncheckedUpdateWithoutWithdrawalsInput>
+  }
+
   export type NestedIntFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -25851,6 +33130,20 @@ export namespace Prisma {
     not?: NestedFloatFilter<$PrismaModel> | number
   }
 
+  export type NestedStringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
   export type NestedBoolFilter<$PrismaModel = never> = {
     equals?: boolean | BooleanFieldRefInput<$PrismaModel>
     not?: NestedBoolFilter<$PrismaModel> | boolean
@@ -25861,6 +33154,13 @@ export namespace Prisma {
     in?: $Enums.PropertyType[] | ListEnumPropertyTypeFieldRefInput<$PrismaModel>
     notIn?: $Enums.PropertyType[] | ListEnumPropertyTypeFieldRefInput<$PrismaModel>
     not?: NestedEnumPropertyTypeFilter<$PrismaModel> | $Enums.PropertyType
+  }
+
+  export type NestedEnumPropertyStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.PropertyStatus | EnumPropertyStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.PropertyStatus[] | ListEnumPropertyStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.PropertyStatus[] | ListEnumPropertyStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumPropertyStatusFilter<$PrismaModel> | $Enums.PropertyStatus
   }
 
   export type NestedDateTimeFilter<$PrismaModel = never> = {
@@ -25945,6 +33245,23 @@ export namespace Prisma {
     _max?: NestedFloatFilter<$PrismaModel>
   }
 
+  export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
   export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
     equals?: boolean | BooleanFieldRefInput<$PrismaModel>
     not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
@@ -25961,6 +33278,16 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumPropertyTypeFilter<$PrismaModel>
     _max?: NestedEnumPropertyTypeFilter<$PrismaModel>
+  }
+
+  export type NestedEnumPropertyStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.PropertyStatus | EnumPropertyStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.PropertyStatus[] | ListEnumPropertyStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.PropertyStatus[] | ListEnumPropertyStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumPropertyStatusWithAggregatesFilter<$PrismaModel> | $Enums.PropertyStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumPropertyStatusFilter<$PrismaModel>
+    _max?: NestedEnumPropertyStatusFilter<$PrismaModel>
   }
 
   export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
@@ -26007,37 +33334,6 @@ export namespace Prisma {
     _sum?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedIntNullableFilter<$PrismaModel>
     _max?: NestedIntNullableFilter<$PrismaModel>
-  }
-
-  export type NestedStringNullableFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    not?: NestedStringNullableFilter<$PrismaModel> | string | null
-  }
-
-  export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedStringNullableFilter<$PrismaModel>
-    _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
   export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
@@ -26146,12 +33442,68 @@ export namespace Prisma {
     _max?: NestedEnumPaymentStatusFilter<$PrismaModel>
   }
 
+  export type NestedEnumInspectionStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.InspectionStatus | EnumInspectionStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.InspectionStatus[] | ListEnumInspectionStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.InspectionStatus[] | ListEnumInspectionStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumInspectionStatusFilter<$PrismaModel> | $Enums.InspectionStatus
+  }
+
+  export type NestedEnumInspectionStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.InspectionStatus | EnumInspectionStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.InspectionStatus[] | ListEnumInspectionStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.InspectionStatus[] | ListEnumInspectionStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumInspectionStatusWithAggregatesFilter<$PrismaModel> | $Enums.InspectionStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumInspectionStatusFilter<$PrismaModel>
+    _max?: NestedEnumInspectionStatusFilter<$PrismaModel>
+  }
+
+  export type NestedEnumWithdrawalStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.WithdrawalStatus | EnumWithdrawalStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.WithdrawalStatus[] | ListEnumWithdrawalStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.WithdrawalStatus[] | ListEnumWithdrawalStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumWithdrawalStatusFilter<$PrismaModel> | $Enums.WithdrawalStatus
+  }
+
+  export type NestedEnumWithdrawalStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.WithdrawalStatus | EnumWithdrawalStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.WithdrawalStatus[] | ListEnumWithdrawalStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.WithdrawalStatus[] | ListEnumWithdrawalStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumWithdrawalStatusWithAggregatesFilter<$PrismaModel> | $Enums.WithdrawalStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumWithdrawalStatusFilter<$PrismaModel>
+    _max?: NestedEnumWithdrawalStatusFilter<$PrismaModel>
+  }
+
   export type LandlordCreateWithoutManagedPropertiesInput = {
     cognitoId: string
     name: string
     email: string
     phoneNumber: string
+    currentAddress?: string | null
+    city?: string | null
+    state?: string | null
+    country?: string | null
+    postalCode?: string | null
+    bankName?: string | null
+    accountNumber?: string | null
+    accountName?: string | null
+    bankCode?: string | null
+    businessName?: string | null
+    businessType?: string | null
+    taxId?: string | null
+    dateOfBirth?: Date | string | null
+    nationality?: string | null
+    occupation?: string | null
+    emergencyContactName?: string | null
+    emergencyContactPhone?: string | null
+    isOnboardingComplete?: boolean
+    onboardedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
     registrationCode?: LandlordRegistrationCodeCreateNestedOneWithoutLandlordsInput
+    withdrawals?: WithdrawalCreateNestedManyWithoutLandlordInput
   }
 
   export type LandlordUncheckedCreateWithoutManagedPropertiesInput = {
@@ -26161,6 +33513,28 @@ export namespace Prisma {
     email: string
     phoneNumber: string
     registrationCodeId?: number | null
+    currentAddress?: string | null
+    city?: string | null
+    state?: string | null
+    country?: string | null
+    postalCode?: string | null
+    bankName?: string | null
+    accountNumber?: string | null
+    accountName?: string | null
+    bankCode?: string | null
+    businessName?: string | null
+    businessType?: string | null
+    taxId?: string | null
+    dateOfBirth?: Date | string | null
+    nationality?: string | null
+    occupation?: string | null
+    emergencyContactName?: string | null
+    emergencyContactPhone?: string | null
+    isOnboardingComplete?: boolean
+    onboardedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    withdrawals?: WithdrawalUncheckedCreateNestedManyWithoutLandlordInput
   }
 
   export type LandlordCreateOrConnectWithoutManagedPropertiesInput = {
@@ -26298,6 +33672,8 @@ export namespace Prisma {
     properties?: PropertyCreateNestedManyWithoutTenantsInput
     applications?: ApplicationCreateNestedManyWithoutTenantInput
     leases?: LeaseCreateNestedManyWithoutTenantInput
+    inspections?: InspectionCreateNestedManyWithoutTenantInput
+    inspectionLimit?: InspectionLimitCreateNestedOneWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutFavoritesInput = {
@@ -26309,6 +33685,8 @@ export namespace Prisma {
     properties?: PropertyUncheckedCreateNestedManyWithoutTenantsInput
     applications?: ApplicationUncheckedCreateNestedManyWithoutTenantInput
     leases?: LeaseUncheckedCreateNestedManyWithoutTenantInput
+    inspections?: InspectionUncheckedCreateNestedManyWithoutTenantInput
+    inspectionLimit?: InspectionLimitUncheckedCreateNestedOneWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutFavoritesInput = {
@@ -26324,6 +33702,8 @@ export namespace Prisma {
     favorites?: PropertyCreateNestedManyWithoutFavoritedByInput
     applications?: ApplicationCreateNestedManyWithoutTenantInput
     leases?: LeaseCreateNestedManyWithoutTenantInput
+    inspections?: InspectionCreateNestedManyWithoutTenantInput
+    inspectionLimit?: InspectionLimitCreateNestedOneWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutPropertiesInput = {
@@ -26335,11 +33715,60 @@ export namespace Prisma {
     favorites?: PropertyUncheckedCreateNestedManyWithoutFavoritedByInput
     applications?: ApplicationUncheckedCreateNestedManyWithoutTenantInput
     leases?: LeaseUncheckedCreateNestedManyWithoutTenantInput
+    inspections?: InspectionUncheckedCreateNestedManyWithoutTenantInput
+    inspectionLimit?: InspectionLimitUncheckedCreateNestedOneWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutPropertiesInput = {
     where: TenantWhereUniqueInput
     create: XOR<TenantCreateWithoutPropertiesInput, TenantUncheckedCreateWithoutPropertiesInput>
+  }
+
+  export type InspectionCreateWithoutPropertyInput = {
+    scheduledDate: Date | string
+    status?: $Enums.InspectionStatus
+    tenantName: string
+    tenantEmail: string
+    tenantPhone: string
+    preferredTime: string
+    message?: string | null
+    adminNotes?: string | null
+    depositPaid?: boolean
+    depositAmount?: number | null
+    paymentReference?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    tenant: TenantCreateNestedOneWithoutInspectionsInput
+    agent?: AgentCreateNestedOneWithoutInspectionsInput
+  }
+
+  export type InspectionUncheckedCreateWithoutPropertyInput = {
+    id?: number
+    tenantCognitoId: string
+    scheduledDate: Date | string
+    status?: $Enums.InspectionStatus
+    tenantName: string
+    tenantEmail: string
+    tenantPhone: string
+    preferredTime: string
+    message?: string | null
+    adminNotes?: string | null
+    agentId?: number | null
+    depositPaid?: boolean
+    depositAmount?: number | null
+    paymentReference?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type InspectionCreateOrConnectWithoutPropertyInput = {
+    where: InspectionWhereUniqueInput
+    create: XOR<InspectionCreateWithoutPropertyInput, InspectionUncheckedCreateWithoutPropertyInput>
+  }
+
+  export type InspectionCreateManyPropertyInputEnvelope = {
+    data: InspectionCreateManyPropertyInput | InspectionCreateManyPropertyInput[]
+    skipDuplicates?: boolean
   }
 
   export type LocationUpdateToOneWithWhereWithoutPropertiesInput = {
@@ -26380,7 +33809,29 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     phoneNumber?: StringFieldUpdateOperationsInput | string
+    currentAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    postalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    bankName?: NullableStringFieldUpdateOperationsInput | string | null
+    accountNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    accountName?: NullableStringFieldUpdateOperationsInput | string | null
+    bankCode?: NullableStringFieldUpdateOperationsInput | string | null
+    businessName?: NullableStringFieldUpdateOperationsInput | string | null
+    businessType?: NullableStringFieldUpdateOperationsInput | string | null
+    taxId?: NullableStringFieldUpdateOperationsInput | string | null
+    dateOfBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    nationality?: NullableStringFieldUpdateOperationsInput | string | null
+    occupation?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContactName?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContactPhone?: NullableStringFieldUpdateOperationsInput | string | null
+    isOnboardingComplete?: BoolFieldUpdateOperationsInput | boolean
+    onboardedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     registrationCode?: LandlordRegistrationCodeUpdateOneWithoutLandlordsNestedInput
+    withdrawals?: WithdrawalUpdateManyWithoutLandlordNestedInput
   }
 
   export type LandlordUncheckedUpdateWithoutManagedPropertiesInput = {
@@ -26390,6 +33841,28 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     phoneNumber?: StringFieldUpdateOperationsInput | string
     registrationCodeId?: NullableIntFieldUpdateOperationsInput | number | null
+    currentAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    postalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    bankName?: NullableStringFieldUpdateOperationsInput | string | null
+    accountNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    accountName?: NullableStringFieldUpdateOperationsInput | string | null
+    bankCode?: NullableStringFieldUpdateOperationsInput | string | null
+    businessName?: NullableStringFieldUpdateOperationsInput | string | null
+    businessType?: NullableStringFieldUpdateOperationsInput | string | null
+    taxId?: NullableStringFieldUpdateOperationsInput | string | null
+    dateOfBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    nationality?: NullableStringFieldUpdateOperationsInput | string | null
+    occupation?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContactName?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContactPhone?: NullableStringFieldUpdateOperationsInput | string | null
+    isOnboardingComplete?: BoolFieldUpdateOperationsInput | boolean
+    onboardedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    withdrawals?: WithdrawalUncheckedUpdateManyWithoutLandlordNestedInput
   }
 
   export type LeaseUpsertWithWhereUniqueWithoutPropertyInput = {
@@ -26525,21 +33998,59 @@ export namespace Prisma {
     data: XOR<TenantUpdateManyMutationInput, TenantUncheckedUpdateManyWithoutPropertiesInput>
   }
 
+  export type InspectionUpsertWithWhereUniqueWithoutPropertyInput = {
+    where: InspectionWhereUniqueInput
+    update: XOR<InspectionUpdateWithoutPropertyInput, InspectionUncheckedUpdateWithoutPropertyInput>
+    create: XOR<InspectionCreateWithoutPropertyInput, InspectionUncheckedCreateWithoutPropertyInput>
+  }
+
+  export type InspectionUpdateWithWhereUniqueWithoutPropertyInput = {
+    where: InspectionWhereUniqueInput
+    data: XOR<InspectionUpdateWithoutPropertyInput, InspectionUncheckedUpdateWithoutPropertyInput>
+  }
+
+  export type InspectionUpdateManyWithWhereWithoutPropertyInput = {
+    where: InspectionScalarWhereInput
+    data: XOR<InspectionUpdateManyMutationInput, InspectionUncheckedUpdateManyWithoutPropertyInput>
+  }
+
+  export type InspectionScalarWhereInput = {
+    AND?: InspectionScalarWhereInput | InspectionScalarWhereInput[]
+    OR?: InspectionScalarWhereInput[]
+    NOT?: InspectionScalarWhereInput | InspectionScalarWhereInput[]
+    id?: IntFilter<"Inspection"> | number
+    propertyId?: IntFilter<"Inspection"> | number
+    tenantCognitoId?: StringFilter<"Inspection"> | string
+    scheduledDate?: DateTimeFilter<"Inspection"> | Date | string
+    status?: EnumInspectionStatusFilter<"Inspection"> | $Enums.InspectionStatus
+    tenantName?: StringFilter<"Inspection"> | string
+    tenantEmail?: StringFilter<"Inspection"> | string
+    tenantPhone?: StringFilter<"Inspection"> | string
+    preferredTime?: StringFilter<"Inspection"> | string
+    message?: StringNullableFilter<"Inspection"> | string | null
+    adminNotes?: StringNullableFilter<"Inspection"> | string | null
+    agentId?: IntNullableFilter<"Inspection"> | number | null
+    depositPaid?: BoolFilter<"Inspection"> | boolean
+    depositAmount?: FloatNullableFilter<"Inspection"> | number | null
+    paymentReference?: StringNullableFilter<"Inspection"> | string | null
+    createdAt?: DateTimeFilter<"Inspection"> | Date | string
+    updatedAt?: DateTimeFilter<"Inspection"> | Date | string
+  }
+
   export type PropertyCreateWithoutLandlordInput = {
     name: string
     description: string
     pricePerYear: number
     securityDeposit: number
-    applicationFee: number
     photoUrls?: PropertyCreatephotoUrlsInput | string[]
-    amenities?: PropertyCreateamenitiesInput | $Enums.Amenity[]
-    highlights?: PropertyCreatehighlightsInput | $Enums.Highlight[]
-    isPetsAllowed?: boolean
+    amenities?: string | null
+    highlights?: string | null
     isParkingIncluded?: boolean
     beds: number
     baths: number
     squareFeet: number
     propertyType: $Enums.PropertyType
+    status?: $Enums.PropertyStatus
     postedDate?: Date | string
     averageRating?: number | null
     numberOfReviews?: number | null
@@ -26548,6 +34059,7 @@ export namespace Prisma {
     applications?: ApplicationCreateNestedManyWithoutPropertyInput
     favoritedBy?: TenantCreateNestedManyWithoutFavoritesInput
     tenants?: TenantCreateNestedManyWithoutPropertiesInput
+    inspections?: InspectionCreateNestedManyWithoutPropertyInput
   }
 
   export type PropertyUncheckedCreateWithoutLandlordInput = {
@@ -26556,16 +34068,15 @@ export namespace Prisma {
     description: string
     pricePerYear: number
     securityDeposit: number
-    applicationFee: number
     photoUrls?: PropertyCreatephotoUrlsInput | string[]
-    amenities?: PropertyCreateamenitiesInput | $Enums.Amenity[]
-    highlights?: PropertyCreatehighlightsInput | $Enums.Highlight[]
-    isPetsAllowed?: boolean
+    amenities?: string | null
+    highlights?: string | null
     isParkingIncluded?: boolean
     beds: number
     baths: number
     squareFeet: number
     propertyType: $Enums.PropertyType
+    status?: $Enums.PropertyStatus
     postedDate?: Date | string
     averageRating?: number | null
     numberOfReviews?: number | null
@@ -26574,6 +34085,7 @@ export namespace Prisma {
     applications?: ApplicationUncheckedCreateNestedManyWithoutPropertyInput
     favoritedBy?: TenantUncheckedCreateNestedManyWithoutFavoritesInput
     tenants?: TenantUncheckedCreateNestedManyWithoutPropertiesInput
+    inspections?: InspectionUncheckedCreateNestedManyWithoutPropertyInput
   }
 
   export type PropertyCreateOrConnectWithoutLandlordInput = {
@@ -26606,6 +34118,45 @@ export namespace Prisma {
     create: XOR<LandlordRegistrationCodeCreateWithoutLandlordsInput, LandlordRegistrationCodeUncheckedCreateWithoutLandlordsInput>
   }
 
+  export type WithdrawalCreateWithoutLandlordInput = {
+    amount: number
+    status?: $Enums.WithdrawalStatus
+    requestDate?: Date | string
+    processedDate?: Date | string | null
+    bankName?: string | null
+    accountNumber?: string | null
+    accountName?: string | null
+    reference?: string | null
+    notes?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WithdrawalUncheckedCreateWithoutLandlordInput = {
+    id?: number
+    amount: number
+    status?: $Enums.WithdrawalStatus
+    requestDate?: Date | string
+    processedDate?: Date | string | null
+    bankName?: string | null
+    accountNumber?: string | null
+    accountName?: string | null
+    reference?: string | null
+    notes?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WithdrawalCreateOrConnectWithoutLandlordInput = {
+    where: WithdrawalWhereUniqueInput
+    create: XOR<WithdrawalCreateWithoutLandlordInput, WithdrawalUncheckedCreateWithoutLandlordInput>
+  }
+
+  export type WithdrawalCreateManyLandlordInputEnvelope = {
+    data: WithdrawalCreateManyLandlordInput | WithdrawalCreateManyLandlordInput[]
+    skipDuplicates?: boolean
+  }
+
   export type PropertyUpsertWithWhereUniqueWithoutLandlordInput = {
     where: PropertyWhereUniqueInput
     update: XOR<PropertyUpdateWithoutLandlordInput, PropertyUncheckedUpdateWithoutLandlordInput>
@@ -26631,16 +34182,15 @@ export namespace Prisma {
     description?: StringFilter<"Property"> | string
     pricePerYear?: FloatFilter<"Property"> | number
     securityDeposit?: FloatFilter<"Property"> | number
-    applicationFee?: FloatFilter<"Property"> | number
     photoUrls?: StringNullableListFilter<"Property">
-    amenities?: EnumAmenityNullableListFilter<"Property">
-    highlights?: EnumHighlightNullableListFilter<"Property">
-    isPetsAllowed?: BoolFilter<"Property"> | boolean
+    amenities?: StringNullableFilter<"Property"> | string | null
+    highlights?: StringNullableFilter<"Property"> | string | null
     isParkingIncluded?: BoolFilter<"Property"> | boolean
     beds?: IntFilter<"Property"> | number
     baths?: FloatFilter<"Property"> | number
     squareFeet?: IntFilter<"Property"> | number
     propertyType?: EnumPropertyTypeFilter<"Property"> | $Enums.PropertyType
+    status?: EnumPropertyStatusFilter<"Property"> | $Enums.PropertyStatus
     postedDate?: DateTimeFilter<"Property"> | Date | string
     averageRating?: FloatNullableFilter<"Property"> | number | null
     numberOfReviews?: IntNullableFilter<"Property"> | number | null
@@ -26674,21 +34224,55 @@ export namespace Prisma {
     usedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
+  export type WithdrawalUpsertWithWhereUniqueWithoutLandlordInput = {
+    where: WithdrawalWhereUniqueInput
+    update: XOR<WithdrawalUpdateWithoutLandlordInput, WithdrawalUncheckedUpdateWithoutLandlordInput>
+    create: XOR<WithdrawalCreateWithoutLandlordInput, WithdrawalUncheckedCreateWithoutLandlordInput>
+  }
+
+  export type WithdrawalUpdateWithWhereUniqueWithoutLandlordInput = {
+    where: WithdrawalWhereUniqueInput
+    data: XOR<WithdrawalUpdateWithoutLandlordInput, WithdrawalUncheckedUpdateWithoutLandlordInput>
+  }
+
+  export type WithdrawalUpdateManyWithWhereWithoutLandlordInput = {
+    where: WithdrawalScalarWhereInput
+    data: XOR<WithdrawalUpdateManyMutationInput, WithdrawalUncheckedUpdateManyWithoutLandlordInput>
+  }
+
+  export type WithdrawalScalarWhereInput = {
+    AND?: WithdrawalScalarWhereInput | WithdrawalScalarWhereInput[]
+    OR?: WithdrawalScalarWhereInput[]
+    NOT?: WithdrawalScalarWhereInput | WithdrawalScalarWhereInput[]
+    id?: IntFilter<"Withdrawal"> | number
+    amount?: FloatFilter<"Withdrawal"> | number
+    status?: EnumWithdrawalStatusFilter<"Withdrawal"> | $Enums.WithdrawalStatus
+    requestDate?: DateTimeFilter<"Withdrawal"> | Date | string
+    processedDate?: DateTimeNullableFilter<"Withdrawal"> | Date | string | null
+    landlordCognitoId?: StringFilter<"Withdrawal"> | string
+    bankName?: StringNullableFilter<"Withdrawal"> | string | null
+    accountNumber?: StringNullableFilter<"Withdrawal"> | string | null
+    accountName?: StringNullableFilter<"Withdrawal"> | string | null
+    reference?: StringNullableFilter<"Withdrawal"> | string | null
+    notes?: StringNullableFilter<"Withdrawal"> | string | null
+    createdAt?: DateTimeFilter<"Withdrawal"> | Date | string
+    updatedAt?: DateTimeFilter<"Withdrawal"> | Date | string
+  }
+
   export type PropertyCreateWithoutTenantsInput = {
     name: string
     description: string
     pricePerYear: number
     securityDeposit: number
-    applicationFee: number
     photoUrls?: PropertyCreatephotoUrlsInput | string[]
-    amenities?: PropertyCreateamenitiesInput | $Enums.Amenity[]
-    highlights?: PropertyCreatehighlightsInput | $Enums.Highlight[]
-    isPetsAllowed?: boolean
+    amenities?: string | null
+    highlights?: string | null
     isParkingIncluded?: boolean
     beds: number
     baths: number
     squareFeet: number
     propertyType: $Enums.PropertyType
+    status?: $Enums.PropertyStatus
     postedDate?: Date | string
     averageRating?: number | null
     numberOfReviews?: number | null
@@ -26697,6 +34281,7 @@ export namespace Prisma {
     leases?: LeaseCreateNestedManyWithoutPropertyInput
     applications?: ApplicationCreateNestedManyWithoutPropertyInput
     favoritedBy?: TenantCreateNestedManyWithoutFavoritesInput
+    inspections?: InspectionCreateNestedManyWithoutPropertyInput
   }
 
   export type PropertyUncheckedCreateWithoutTenantsInput = {
@@ -26705,16 +34290,15 @@ export namespace Prisma {
     description: string
     pricePerYear: number
     securityDeposit: number
-    applicationFee: number
     photoUrls?: PropertyCreatephotoUrlsInput | string[]
-    amenities?: PropertyCreateamenitiesInput | $Enums.Amenity[]
-    highlights?: PropertyCreatehighlightsInput | $Enums.Highlight[]
-    isPetsAllowed?: boolean
+    amenities?: string | null
+    highlights?: string | null
     isParkingIncluded?: boolean
     beds: number
     baths: number
     squareFeet: number
     propertyType: $Enums.PropertyType
+    status?: $Enums.PropertyStatus
     postedDate?: Date | string
     averageRating?: number | null
     numberOfReviews?: number | null
@@ -26723,6 +34307,7 @@ export namespace Prisma {
     leases?: LeaseUncheckedCreateNestedManyWithoutPropertyInput
     applications?: ApplicationUncheckedCreateNestedManyWithoutPropertyInput
     favoritedBy?: TenantUncheckedCreateNestedManyWithoutFavoritesInput
+    inspections?: InspectionUncheckedCreateNestedManyWithoutPropertyInput
   }
 
   export type PropertyCreateOrConnectWithoutTenantsInput = {
@@ -26735,16 +34320,15 @@ export namespace Prisma {
     description: string
     pricePerYear: number
     securityDeposit: number
-    applicationFee: number
     photoUrls?: PropertyCreatephotoUrlsInput | string[]
-    amenities?: PropertyCreateamenitiesInput | $Enums.Amenity[]
-    highlights?: PropertyCreatehighlightsInput | $Enums.Highlight[]
-    isPetsAllowed?: boolean
+    amenities?: string | null
+    highlights?: string | null
     isParkingIncluded?: boolean
     beds: number
     baths: number
     squareFeet: number
     propertyType: $Enums.PropertyType
+    status?: $Enums.PropertyStatus
     postedDate?: Date | string
     averageRating?: number | null
     numberOfReviews?: number | null
@@ -26753,6 +34337,7 @@ export namespace Prisma {
     leases?: LeaseCreateNestedManyWithoutPropertyInput
     applications?: ApplicationCreateNestedManyWithoutPropertyInput
     tenants?: TenantCreateNestedManyWithoutPropertiesInput
+    inspections?: InspectionCreateNestedManyWithoutPropertyInput
   }
 
   export type PropertyUncheckedCreateWithoutFavoritedByInput = {
@@ -26761,16 +34346,15 @@ export namespace Prisma {
     description: string
     pricePerYear: number
     securityDeposit: number
-    applicationFee: number
     photoUrls?: PropertyCreatephotoUrlsInput | string[]
-    amenities?: PropertyCreateamenitiesInput | $Enums.Amenity[]
-    highlights?: PropertyCreatehighlightsInput | $Enums.Highlight[]
-    isPetsAllowed?: boolean
+    amenities?: string | null
+    highlights?: string | null
     isParkingIncluded?: boolean
     beds: number
     baths: number
     squareFeet: number
     propertyType: $Enums.PropertyType
+    status?: $Enums.PropertyStatus
     postedDate?: Date | string
     averageRating?: number | null
     numberOfReviews?: number | null
@@ -26779,6 +34363,7 @@ export namespace Prisma {
     leases?: LeaseUncheckedCreateNestedManyWithoutPropertyInput
     applications?: ApplicationUncheckedCreateNestedManyWithoutPropertyInput
     tenants?: TenantUncheckedCreateNestedManyWithoutPropertiesInput
+    inspections?: InspectionUncheckedCreateNestedManyWithoutPropertyInput
   }
 
   export type PropertyCreateOrConnectWithoutFavoritedByInput = {
@@ -26908,6 +34493,77 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type InspectionCreateWithoutTenantInput = {
+    scheduledDate: Date | string
+    status?: $Enums.InspectionStatus
+    tenantName: string
+    tenantEmail: string
+    tenantPhone: string
+    preferredTime: string
+    message?: string | null
+    adminNotes?: string | null
+    depositPaid?: boolean
+    depositAmount?: number | null
+    paymentReference?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    property: PropertyCreateNestedOneWithoutInspectionsInput
+    agent?: AgentCreateNestedOneWithoutInspectionsInput
+  }
+
+  export type InspectionUncheckedCreateWithoutTenantInput = {
+    id?: number
+    propertyId: number
+    scheduledDate: Date | string
+    status?: $Enums.InspectionStatus
+    tenantName: string
+    tenantEmail: string
+    tenantPhone: string
+    preferredTime: string
+    message?: string | null
+    adminNotes?: string | null
+    agentId?: number | null
+    depositPaid?: boolean
+    depositAmount?: number | null
+    paymentReference?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type InspectionCreateOrConnectWithoutTenantInput = {
+    where: InspectionWhereUniqueInput
+    create: XOR<InspectionCreateWithoutTenantInput, InspectionUncheckedCreateWithoutTenantInput>
+  }
+
+  export type InspectionCreateManyTenantInputEnvelope = {
+    data: InspectionCreateManyTenantInput | InspectionCreateManyTenantInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type InspectionLimitCreateWithoutTenantInput = {
+    freeInspections?: number
+    usedInspections?: number
+    hasUnlimited?: boolean
+    unlimitedUntil?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type InspectionLimitUncheckedCreateWithoutTenantInput = {
+    id?: number
+    freeInspections?: number
+    usedInspections?: number
+    hasUnlimited?: boolean
+    unlimitedUntil?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type InspectionLimitCreateOrConnectWithoutTenantInput = {
+    where: InspectionLimitWhereUniqueInput
+    create: XOR<InspectionLimitCreateWithoutTenantInput, InspectionLimitUncheckedCreateWithoutTenantInput>
+  }
+
   export type PropertyUpsertWithWhereUniqueWithoutTenantsInput = {
     where: PropertyWhereUniqueInput
     update: XOR<PropertyUpdateWithoutTenantsInput, PropertyUncheckedUpdateWithoutTenantsInput>
@@ -26972,6 +34628,52 @@ export namespace Prisma {
     data: XOR<LeaseUpdateManyMutationInput, LeaseUncheckedUpdateManyWithoutTenantInput>
   }
 
+  export type InspectionUpsertWithWhereUniqueWithoutTenantInput = {
+    where: InspectionWhereUniqueInput
+    update: XOR<InspectionUpdateWithoutTenantInput, InspectionUncheckedUpdateWithoutTenantInput>
+    create: XOR<InspectionCreateWithoutTenantInput, InspectionUncheckedCreateWithoutTenantInput>
+  }
+
+  export type InspectionUpdateWithWhereUniqueWithoutTenantInput = {
+    where: InspectionWhereUniqueInput
+    data: XOR<InspectionUpdateWithoutTenantInput, InspectionUncheckedUpdateWithoutTenantInput>
+  }
+
+  export type InspectionUpdateManyWithWhereWithoutTenantInput = {
+    where: InspectionScalarWhereInput
+    data: XOR<InspectionUpdateManyMutationInput, InspectionUncheckedUpdateManyWithoutTenantInput>
+  }
+
+  export type InspectionLimitUpsertWithoutTenantInput = {
+    update: XOR<InspectionLimitUpdateWithoutTenantInput, InspectionLimitUncheckedUpdateWithoutTenantInput>
+    create: XOR<InspectionLimitCreateWithoutTenantInput, InspectionLimitUncheckedCreateWithoutTenantInput>
+    where?: InspectionLimitWhereInput
+  }
+
+  export type InspectionLimitUpdateToOneWithWhereWithoutTenantInput = {
+    where?: InspectionLimitWhereInput
+    data: XOR<InspectionLimitUpdateWithoutTenantInput, InspectionLimitUncheckedUpdateWithoutTenantInput>
+  }
+
+  export type InspectionLimitUpdateWithoutTenantInput = {
+    freeInspections?: IntFieldUpdateOperationsInput | number
+    usedInspections?: IntFieldUpdateOperationsInput | number
+    hasUnlimited?: BoolFieldUpdateOperationsInput | boolean
+    unlimitedUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type InspectionLimitUncheckedUpdateWithoutTenantInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    freeInspections?: IntFieldUpdateOperationsInput | number
+    usedInspections?: IntFieldUpdateOperationsInput | number
+    hasUnlimited?: BoolFieldUpdateOperationsInput | boolean
+    unlimitedUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type AgentRegistrationCodeCreateWithoutAgentsInput = {
     code: string
     isUsed?: boolean
@@ -27024,6 +34726,53 @@ export namespace Prisma {
 
   export type TaskCreateManyAgentInputEnvelope = {
     data: TaskCreateManyAgentInput | TaskCreateManyAgentInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type InspectionCreateWithoutAgentInput = {
+    scheduledDate: Date | string
+    status?: $Enums.InspectionStatus
+    tenantName: string
+    tenantEmail: string
+    tenantPhone: string
+    preferredTime: string
+    message?: string | null
+    adminNotes?: string | null
+    depositPaid?: boolean
+    depositAmount?: number | null
+    paymentReference?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    property: PropertyCreateNestedOneWithoutInspectionsInput
+    tenant: TenantCreateNestedOneWithoutInspectionsInput
+  }
+
+  export type InspectionUncheckedCreateWithoutAgentInput = {
+    id?: number
+    propertyId: number
+    tenantCognitoId: string
+    scheduledDate: Date | string
+    status?: $Enums.InspectionStatus
+    tenantName: string
+    tenantEmail: string
+    tenantPhone: string
+    preferredTime: string
+    message?: string | null
+    adminNotes?: string | null
+    depositPaid?: boolean
+    depositAmount?: number | null
+    paymentReference?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type InspectionCreateOrConnectWithoutAgentInput = {
+    where: InspectionWhereUniqueInput
+    create: XOR<InspectionCreateWithoutAgentInput, InspectionUncheckedCreateWithoutAgentInput>
+  }
+
+  export type InspectionCreateManyAgentInputEnvelope = {
+    data: InspectionCreateManyAgentInput | InspectionCreateManyAgentInput[]
     skipDuplicates?: boolean
   }
 
@@ -27087,12 +34836,50 @@ export namespace Prisma {
     agentId?: IntFilter<"Task"> | number
   }
 
+  export type InspectionUpsertWithWhereUniqueWithoutAgentInput = {
+    where: InspectionWhereUniqueInput
+    update: XOR<InspectionUpdateWithoutAgentInput, InspectionUncheckedUpdateWithoutAgentInput>
+    create: XOR<InspectionCreateWithoutAgentInput, InspectionUncheckedCreateWithoutAgentInput>
+  }
+
+  export type InspectionUpdateWithWhereUniqueWithoutAgentInput = {
+    where: InspectionWhereUniqueInput
+    data: XOR<InspectionUpdateWithoutAgentInput, InspectionUncheckedUpdateWithoutAgentInput>
+  }
+
+  export type InspectionUpdateManyWithWhereWithoutAgentInput = {
+    where: InspectionScalarWhereInput
+    data: XOR<InspectionUpdateManyMutationInput, InspectionUncheckedUpdateManyWithoutAgentInput>
+  }
+
   export type LandlordCreateWithoutRegistrationCodeInput = {
     cognitoId: string
     name: string
     email: string
     phoneNumber: string
+    currentAddress?: string | null
+    city?: string | null
+    state?: string | null
+    country?: string | null
+    postalCode?: string | null
+    bankName?: string | null
+    accountNumber?: string | null
+    accountName?: string | null
+    bankCode?: string | null
+    businessName?: string | null
+    businessType?: string | null
+    taxId?: string | null
+    dateOfBirth?: Date | string | null
+    nationality?: string | null
+    occupation?: string | null
+    emergencyContactName?: string | null
+    emergencyContactPhone?: string | null
+    isOnboardingComplete?: boolean
+    onboardedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
     managedProperties?: PropertyCreateNestedManyWithoutLandlordInput
+    withdrawals?: WithdrawalCreateNestedManyWithoutLandlordInput
   }
 
   export type LandlordUncheckedCreateWithoutRegistrationCodeInput = {
@@ -27101,7 +34888,29 @@ export namespace Prisma {
     name: string
     email: string
     phoneNumber: string
+    currentAddress?: string | null
+    city?: string | null
+    state?: string | null
+    country?: string | null
+    postalCode?: string | null
+    bankName?: string | null
+    accountNumber?: string | null
+    accountName?: string | null
+    bankCode?: string | null
+    businessName?: string | null
+    businessType?: string | null
+    taxId?: string | null
+    dateOfBirth?: Date | string | null
+    nationality?: string | null
+    occupation?: string | null
+    emergencyContactName?: string | null
+    emergencyContactPhone?: string | null
+    isOnboardingComplete?: boolean
+    onboardedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
     managedProperties?: PropertyUncheckedCreateNestedManyWithoutLandlordInput
+    withdrawals?: WithdrawalUncheckedCreateNestedManyWithoutLandlordInput
   }
 
   export type LandlordCreateOrConnectWithoutRegistrationCodeInput = {
@@ -27140,6 +34949,27 @@ export namespace Prisma {
     email?: StringFilter<"Landlord"> | string
     phoneNumber?: StringFilter<"Landlord"> | string
     registrationCodeId?: IntNullableFilter<"Landlord"> | number | null
+    currentAddress?: StringNullableFilter<"Landlord"> | string | null
+    city?: StringNullableFilter<"Landlord"> | string | null
+    state?: StringNullableFilter<"Landlord"> | string | null
+    country?: StringNullableFilter<"Landlord"> | string | null
+    postalCode?: StringNullableFilter<"Landlord"> | string | null
+    bankName?: StringNullableFilter<"Landlord"> | string | null
+    accountNumber?: StringNullableFilter<"Landlord"> | string | null
+    accountName?: StringNullableFilter<"Landlord"> | string | null
+    bankCode?: StringNullableFilter<"Landlord"> | string | null
+    businessName?: StringNullableFilter<"Landlord"> | string | null
+    businessType?: StringNullableFilter<"Landlord"> | string | null
+    taxId?: StringNullableFilter<"Landlord"> | string | null
+    dateOfBirth?: DateTimeNullableFilter<"Landlord"> | Date | string | null
+    nationality?: StringNullableFilter<"Landlord"> | string | null
+    occupation?: StringNullableFilter<"Landlord"> | string | null
+    emergencyContactName?: StringNullableFilter<"Landlord"> | string | null
+    emergencyContactPhone?: StringNullableFilter<"Landlord"> | string | null
+    isOnboardingComplete?: BoolFilter<"Landlord"> | boolean
+    onboardedAt?: DateTimeNullableFilter<"Landlord"> | Date | string | null
+    createdAt?: DateTimeFilter<"Landlord"> | Date | string
+    updatedAt?: DateTimeFilter<"Landlord"> | Date | string
   }
 
   export type AgentCreateWithoutRegistrationCodeInput = {
@@ -27147,7 +34977,9 @@ export namespace Prisma {
     name: string
     email: string
     phoneNumber?: string | null
+    address?: string | null
     assignedTasks?: TaskCreateNestedManyWithoutAgentInput
+    inspections?: InspectionCreateNestedManyWithoutAgentInput
   }
 
   export type AgentUncheckedCreateWithoutRegistrationCodeInput = {
@@ -27156,7 +34988,9 @@ export namespace Prisma {
     name: string
     email: string
     phoneNumber?: string | null
+    address?: string | null
     assignedTasks?: TaskUncheckedCreateNestedManyWithoutAgentInput
+    inspections?: InspectionUncheckedCreateNestedManyWithoutAgentInput
   }
 
   export type AgentCreateOrConnectWithoutRegistrationCodeInput = {
@@ -27194,6 +35028,7 @@ export namespace Prisma {
     name?: StringFilter<"Agent"> | string
     email?: StringFilter<"Agent"> | string
     phoneNumber?: StringNullableFilter<"Agent"> | string | null
+    address?: StringNullableFilter<"Agent"> | string | null
     registrationCodeId?: IntNullableFilter<"Agent"> | number | null
   }
 
@@ -27202,7 +35037,9 @@ export namespace Prisma {
     name: string
     email: string
     phoneNumber?: string | null
+    address?: string | null
     registrationCode?: AgentRegistrationCodeCreateNestedOneWithoutAgentsInput
+    inspections?: InspectionCreateNestedManyWithoutAgentInput
   }
 
   export type AgentUncheckedCreateWithoutAssignedTasksInput = {
@@ -27211,7 +35048,9 @@ export namespace Prisma {
     name: string
     email: string
     phoneNumber?: string | null
+    address?: string | null
     registrationCodeId?: number | null
+    inspections?: InspectionUncheckedCreateNestedManyWithoutAgentInput
   }
 
   export type AgentCreateOrConnectWithoutAssignedTasksInput = {
@@ -27235,7 +35074,9 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
     registrationCode?: AgentRegistrationCodeUpdateOneWithoutAgentsNestedInput
+    inspections?: InspectionUpdateManyWithoutAgentNestedInput
   }
 
   export type AgentUncheckedUpdateWithoutAssignedTasksInput = {
@@ -27244,7 +35085,9 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
     registrationCodeId?: NullableIntFieldUpdateOperationsInput | number | null
+    inspections?: InspectionUncheckedUpdateManyWithoutAgentNestedInput
   }
 
   export type PropertyCreateWithoutLocationInput = {
@@ -27252,16 +35095,15 @@ export namespace Prisma {
     description: string
     pricePerYear: number
     securityDeposit: number
-    applicationFee: number
     photoUrls?: PropertyCreatephotoUrlsInput | string[]
-    amenities?: PropertyCreateamenitiesInput | $Enums.Amenity[]
-    highlights?: PropertyCreatehighlightsInput | $Enums.Highlight[]
-    isPetsAllowed?: boolean
+    amenities?: string | null
+    highlights?: string | null
     isParkingIncluded?: boolean
     beds: number
     baths: number
     squareFeet: number
     propertyType: $Enums.PropertyType
+    status?: $Enums.PropertyStatus
     postedDate?: Date | string
     averageRating?: number | null
     numberOfReviews?: number | null
@@ -27270,6 +35112,7 @@ export namespace Prisma {
     applications?: ApplicationCreateNestedManyWithoutPropertyInput
     favoritedBy?: TenantCreateNestedManyWithoutFavoritesInput
     tenants?: TenantCreateNestedManyWithoutPropertiesInput
+    inspections?: InspectionCreateNestedManyWithoutPropertyInput
   }
 
   export type PropertyUncheckedCreateWithoutLocationInput = {
@@ -27278,16 +35121,15 @@ export namespace Prisma {
     description: string
     pricePerYear: number
     securityDeposit: number
-    applicationFee: number
     photoUrls?: PropertyCreatephotoUrlsInput | string[]
-    amenities?: PropertyCreateamenitiesInput | $Enums.Amenity[]
-    highlights?: PropertyCreatehighlightsInput | $Enums.Highlight[]
-    isPetsAllowed?: boolean
+    amenities?: string | null
+    highlights?: string | null
     isParkingIncluded?: boolean
     beds: number
     baths: number
     squareFeet: number
     propertyType: $Enums.PropertyType
+    status?: $Enums.PropertyStatus
     postedDate?: Date | string
     averageRating?: number | null
     numberOfReviews?: number | null
@@ -27296,6 +35138,7 @@ export namespace Prisma {
     applications?: ApplicationUncheckedCreateNestedManyWithoutPropertyInput
     favoritedBy?: TenantUncheckedCreateNestedManyWithoutFavoritesInput
     tenants?: TenantUncheckedCreateNestedManyWithoutPropertiesInput
+    inspections?: InspectionUncheckedCreateNestedManyWithoutPropertyInput
   }
 
   export type PropertyCreateOrConnectWithoutLocationInput = {
@@ -27329,16 +35172,15 @@ export namespace Prisma {
     description: string
     pricePerYear: number
     securityDeposit: number
-    applicationFee: number
     photoUrls?: PropertyCreatephotoUrlsInput | string[]
-    amenities?: PropertyCreateamenitiesInput | $Enums.Amenity[]
-    highlights?: PropertyCreatehighlightsInput | $Enums.Highlight[]
-    isPetsAllowed?: boolean
+    amenities?: string | null
+    highlights?: string | null
     isParkingIncluded?: boolean
     beds: number
     baths: number
     squareFeet: number
     propertyType: $Enums.PropertyType
+    status?: $Enums.PropertyStatus
     postedDate?: Date | string
     averageRating?: number | null
     numberOfReviews?: number | null
@@ -27347,6 +35189,7 @@ export namespace Prisma {
     leases?: LeaseCreateNestedManyWithoutPropertyInput
     favoritedBy?: TenantCreateNestedManyWithoutFavoritesInput
     tenants?: TenantCreateNestedManyWithoutPropertiesInput
+    inspections?: InspectionCreateNestedManyWithoutPropertyInput
   }
 
   export type PropertyUncheckedCreateWithoutApplicationsInput = {
@@ -27355,16 +35198,15 @@ export namespace Prisma {
     description: string
     pricePerYear: number
     securityDeposit: number
-    applicationFee: number
     photoUrls?: PropertyCreatephotoUrlsInput | string[]
-    amenities?: PropertyCreateamenitiesInput | $Enums.Amenity[]
-    highlights?: PropertyCreatehighlightsInput | $Enums.Highlight[]
-    isPetsAllowed?: boolean
+    amenities?: string | null
+    highlights?: string | null
     isParkingIncluded?: boolean
     beds: number
     baths: number
     squareFeet: number
     propertyType: $Enums.PropertyType
+    status?: $Enums.PropertyStatus
     postedDate?: Date | string
     averageRating?: number | null
     numberOfReviews?: number | null
@@ -27373,6 +35215,7 @@ export namespace Prisma {
     leases?: LeaseUncheckedCreateNestedManyWithoutPropertyInput
     favoritedBy?: TenantUncheckedCreateNestedManyWithoutFavoritesInput
     tenants?: TenantUncheckedCreateNestedManyWithoutPropertiesInput
+    inspections?: InspectionUncheckedCreateNestedManyWithoutPropertyInput
   }
 
   export type PropertyCreateOrConnectWithoutApplicationsInput = {
@@ -27388,6 +35231,8 @@ export namespace Prisma {
     properties?: PropertyCreateNestedManyWithoutTenantsInput
     favorites?: PropertyCreateNestedManyWithoutFavoritedByInput
     leases?: LeaseCreateNestedManyWithoutTenantInput
+    inspections?: InspectionCreateNestedManyWithoutTenantInput
+    inspectionLimit?: InspectionLimitCreateNestedOneWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutApplicationsInput = {
@@ -27399,6 +35244,8 @@ export namespace Prisma {
     properties?: PropertyUncheckedCreateNestedManyWithoutTenantsInput
     favorites?: PropertyUncheckedCreateNestedManyWithoutFavoritedByInput
     leases?: LeaseUncheckedCreateNestedManyWithoutTenantInput
+    inspections?: InspectionUncheckedCreateNestedManyWithoutTenantInput
+    inspectionLimit?: InspectionLimitUncheckedCreateNestedOneWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutApplicationsInput = {
@@ -27448,16 +35295,15 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     pricePerYear?: FloatFieldUpdateOperationsInput | number
     securityDeposit?: FloatFieldUpdateOperationsInput | number
-    applicationFee?: FloatFieldUpdateOperationsInput | number
     photoUrls?: PropertyUpdatephotoUrlsInput | string[]
-    amenities?: PropertyUpdateamenitiesInput | $Enums.Amenity[]
-    highlights?: PropertyUpdatehighlightsInput | $Enums.Highlight[]
-    isPetsAllowed?: BoolFieldUpdateOperationsInput | boolean
+    amenities?: NullableStringFieldUpdateOperationsInput | string | null
+    highlights?: NullableStringFieldUpdateOperationsInput | string | null
     isParkingIncluded?: BoolFieldUpdateOperationsInput | boolean
     beds?: IntFieldUpdateOperationsInput | number
     baths?: FloatFieldUpdateOperationsInput | number
     squareFeet?: IntFieldUpdateOperationsInput | number
     propertyType?: EnumPropertyTypeFieldUpdateOperationsInput | $Enums.PropertyType
+    status?: EnumPropertyStatusFieldUpdateOperationsInput | $Enums.PropertyStatus
     postedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     averageRating?: NullableFloatFieldUpdateOperationsInput | number | null
     numberOfReviews?: NullableIntFieldUpdateOperationsInput | number | null
@@ -27466,6 +35312,7 @@ export namespace Prisma {
     leases?: LeaseUpdateManyWithoutPropertyNestedInput
     favoritedBy?: TenantUpdateManyWithoutFavoritesNestedInput
     tenants?: TenantUpdateManyWithoutPropertiesNestedInput
+    inspections?: InspectionUpdateManyWithoutPropertyNestedInput
   }
 
   export type PropertyUncheckedUpdateWithoutApplicationsInput = {
@@ -27474,16 +35321,15 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     pricePerYear?: FloatFieldUpdateOperationsInput | number
     securityDeposit?: FloatFieldUpdateOperationsInput | number
-    applicationFee?: FloatFieldUpdateOperationsInput | number
     photoUrls?: PropertyUpdatephotoUrlsInput | string[]
-    amenities?: PropertyUpdateamenitiesInput | $Enums.Amenity[]
-    highlights?: PropertyUpdatehighlightsInput | $Enums.Highlight[]
-    isPetsAllowed?: BoolFieldUpdateOperationsInput | boolean
+    amenities?: NullableStringFieldUpdateOperationsInput | string | null
+    highlights?: NullableStringFieldUpdateOperationsInput | string | null
     isParkingIncluded?: BoolFieldUpdateOperationsInput | boolean
     beds?: IntFieldUpdateOperationsInput | number
     baths?: FloatFieldUpdateOperationsInput | number
     squareFeet?: IntFieldUpdateOperationsInput | number
     propertyType?: EnumPropertyTypeFieldUpdateOperationsInput | $Enums.PropertyType
+    status?: EnumPropertyStatusFieldUpdateOperationsInput | $Enums.PropertyStatus
     postedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     averageRating?: NullableFloatFieldUpdateOperationsInput | number | null
     numberOfReviews?: NullableIntFieldUpdateOperationsInput | number | null
@@ -27492,6 +35338,7 @@ export namespace Prisma {
     leases?: LeaseUncheckedUpdateManyWithoutPropertyNestedInput
     favoritedBy?: TenantUncheckedUpdateManyWithoutFavoritesNestedInput
     tenants?: TenantUncheckedUpdateManyWithoutPropertiesNestedInput
+    inspections?: InspectionUncheckedUpdateManyWithoutPropertyNestedInput
   }
 
   export type TenantUpsertWithoutApplicationsInput = {
@@ -27513,6 +35360,8 @@ export namespace Prisma {
     properties?: PropertyUpdateManyWithoutTenantsNestedInput
     favorites?: PropertyUpdateManyWithoutFavoritedByNestedInput
     leases?: LeaseUpdateManyWithoutTenantNestedInput
+    inspections?: InspectionUpdateManyWithoutTenantNestedInput
+    inspectionLimit?: InspectionLimitUpdateOneWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutApplicationsInput = {
@@ -27524,6 +35373,8 @@ export namespace Prisma {
     properties?: PropertyUncheckedUpdateManyWithoutTenantsNestedInput
     favorites?: PropertyUncheckedUpdateManyWithoutFavoritedByNestedInput
     leases?: LeaseUncheckedUpdateManyWithoutTenantNestedInput
+    inspections?: InspectionUncheckedUpdateManyWithoutTenantNestedInput
+    inspectionLimit?: InspectionLimitUncheckedUpdateOneWithoutTenantNestedInput
   }
 
   export type LeaseUpsertWithoutApplicationInput = {
@@ -27563,16 +35414,15 @@ export namespace Prisma {
     description: string
     pricePerYear: number
     securityDeposit: number
-    applicationFee: number
     photoUrls?: PropertyCreatephotoUrlsInput | string[]
-    amenities?: PropertyCreateamenitiesInput | $Enums.Amenity[]
-    highlights?: PropertyCreatehighlightsInput | $Enums.Highlight[]
-    isPetsAllowed?: boolean
+    amenities?: string | null
+    highlights?: string | null
     isParkingIncluded?: boolean
     beds: number
     baths: number
     squareFeet: number
     propertyType: $Enums.PropertyType
+    status?: $Enums.PropertyStatus
     postedDate?: Date | string
     averageRating?: number | null
     numberOfReviews?: number | null
@@ -27581,6 +35431,7 @@ export namespace Prisma {
     applications?: ApplicationCreateNestedManyWithoutPropertyInput
     favoritedBy?: TenantCreateNestedManyWithoutFavoritesInput
     tenants?: TenantCreateNestedManyWithoutPropertiesInput
+    inspections?: InspectionCreateNestedManyWithoutPropertyInput
   }
 
   export type PropertyUncheckedCreateWithoutLeasesInput = {
@@ -27589,16 +35440,15 @@ export namespace Prisma {
     description: string
     pricePerYear: number
     securityDeposit: number
-    applicationFee: number
     photoUrls?: PropertyCreatephotoUrlsInput | string[]
-    amenities?: PropertyCreateamenitiesInput | $Enums.Amenity[]
-    highlights?: PropertyCreatehighlightsInput | $Enums.Highlight[]
-    isPetsAllowed?: boolean
+    amenities?: string | null
+    highlights?: string | null
     isParkingIncluded?: boolean
     beds: number
     baths: number
     squareFeet: number
     propertyType: $Enums.PropertyType
+    status?: $Enums.PropertyStatus
     postedDate?: Date | string
     averageRating?: number | null
     numberOfReviews?: number | null
@@ -27607,6 +35457,7 @@ export namespace Prisma {
     applications?: ApplicationUncheckedCreateNestedManyWithoutPropertyInput
     favoritedBy?: TenantUncheckedCreateNestedManyWithoutFavoritesInput
     tenants?: TenantUncheckedCreateNestedManyWithoutPropertiesInput
+    inspections?: InspectionUncheckedCreateNestedManyWithoutPropertyInput
   }
 
   export type PropertyCreateOrConnectWithoutLeasesInput = {
@@ -27622,6 +35473,8 @@ export namespace Prisma {
     properties?: PropertyCreateNestedManyWithoutTenantsInput
     favorites?: PropertyCreateNestedManyWithoutFavoritedByInput
     applications?: ApplicationCreateNestedManyWithoutTenantInput
+    inspections?: InspectionCreateNestedManyWithoutTenantInput
+    inspectionLimit?: InspectionLimitCreateNestedOneWithoutTenantInput
   }
 
   export type TenantUncheckedCreateWithoutLeasesInput = {
@@ -27633,6 +35486,8 @@ export namespace Prisma {
     properties?: PropertyUncheckedCreateNestedManyWithoutTenantsInput
     favorites?: PropertyUncheckedCreateNestedManyWithoutFavoritedByInput
     applications?: ApplicationUncheckedCreateNestedManyWithoutTenantInput
+    inspections?: InspectionUncheckedCreateNestedManyWithoutTenantInput
+    inspectionLimit?: InspectionLimitUncheckedCreateNestedOneWithoutTenantInput
   }
 
   export type TenantCreateOrConnectWithoutLeasesInput = {
@@ -27769,16 +35624,15 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     pricePerYear?: FloatFieldUpdateOperationsInput | number
     securityDeposit?: FloatFieldUpdateOperationsInput | number
-    applicationFee?: FloatFieldUpdateOperationsInput | number
     photoUrls?: PropertyUpdatephotoUrlsInput | string[]
-    amenities?: PropertyUpdateamenitiesInput | $Enums.Amenity[]
-    highlights?: PropertyUpdatehighlightsInput | $Enums.Highlight[]
-    isPetsAllowed?: BoolFieldUpdateOperationsInput | boolean
+    amenities?: NullableStringFieldUpdateOperationsInput | string | null
+    highlights?: NullableStringFieldUpdateOperationsInput | string | null
     isParkingIncluded?: BoolFieldUpdateOperationsInput | boolean
     beds?: IntFieldUpdateOperationsInput | number
     baths?: FloatFieldUpdateOperationsInput | number
     squareFeet?: IntFieldUpdateOperationsInput | number
     propertyType?: EnumPropertyTypeFieldUpdateOperationsInput | $Enums.PropertyType
+    status?: EnumPropertyStatusFieldUpdateOperationsInput | $Enums.PropertyStatus
     postedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     averageRating?: NullableFloatFieldUpdateOperationsInput | number | null
     numberOfReviews?: NullableIntFieldUpdateOperationsInput | number | null
@@ -27787,6 +35641,7 @@ export namespace Prisma {
     applications?: ApplicationUpdateManyWithoutPropertyNestedInput
     favoritedBy?: TenantUpdateManyWithoutFavoritesNestedInput
     tenants?: TenantUpdateManyWithoutPropertiesNestedInput
+    inspections?: InspectionUpdateManyWithoutPropertyNestedInput
   }
 
   export type PropertyUncheckedUpdateWithoutLeasesInput = {
@@ -27795,16 +35650,15 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     pricePerYear?: FloatFieldUpdateOperationsInput | number
     securityDeposit?: FloatFieldUpdateOperationsInput | number
-    applicationFee?: FloatFieldUpdateOperationsInput | number
     photoUrls?: PropertyUpdatephotoUrlsInput | string[]
-    amenities?: PropertyUpdateamenitiesInput | $Enums.Amenity[]
-    highlights?: PropertyUpdatehighlightsInput | $Enums.Highlight[]
-    isPetsAllowed?: BoolFieldUpdateOperationsInput | boolean
+    amenities?: NullableStringFieldUpdateOperationsInput | string | null
+    highlights?: NullableStringFieldUpdateOperationsInput | string | null
     isParkingIncluded?: BoolFieldUpdateOperationsInput | boolean
     beds?: IntFieldUpdateOperationsInput | number
     baths?: FloatFieldUpdateOperationsInput | number
     squareFeet?: IntFieldUpdateOperationsInput | number
     propertyType?: EnumPropertyTypeFieldUpdateOperationsInput | $Enums.PropertyType
+    status?: EnumPropertyStatusFieldUpdateOperationsInput | $Enums.PropertyStatus
     postedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     averageRating?: NullableFloatFieldUpdateOperationsInput | number | null
     numberOfReviews?: NullableIntFieldUpdateOperationsInput | number | null
@@ -27813,6 +35667,7 @@ export namespace Prisma {
     applications?: ApplicationUncheckedUpdateManyWithoutPropertyNestedInput
     favoritedBy?: TenantUncheckedUpdateManyWithoutFavoritesNestedInput
     tenants?: TenantUncheckedUpdateManyWithoutPropertiesNestedInput
+    inspections?: InspectionUncheckedUpdateManyWithoutPropertyNestedInput
   }
 
   export type TenantUpsertWithoutLeasesInput = {
@@ -27834,6 +35689,8 @@ export namespace Prisma {
     properties?: PropertyUpdateManyWithoutTenantsNestedInput
     favorites?: PropertyUpdateManyWithoutFavoritedByNestedInput
     applications?: ApplicationUpdateManyWithoutTenantNestedInput
+    inspections?: InspectionUpdateManyWithoutTenantNestedInput
+    inspectionLimit?: InspectionLimitUpdateOneWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutLeasesInput = {
@@ -27845,6 +35702,8 @@ export namespace Prisma {
     properties?: PropertyUncheckedUpdateManyWithoutTenantsNestedInput
     favorites?: PropertyUncheckedUpdateManyWithoutFavoritedByNestedInput
     applications?: ApplicationUncheckedUpdateManyWithoutTenantNestedInput
+    inspections?: InspectionUncheckedUpdateManyWithoutTenantNestedInput
+    inspectionLimit?: InspectionLimitUncheckedUpdateOneWithoutTenantNestedInput
   }
 
   export type ApplicationUpsertWithoutLeaseInput = {
@@ -27965,7 +35824,7 @@ export namespace Prisma {
     dueDate?: DateTimeFilter<"Payment"> | Date | string
     paymentDate?: DateTimeFilter<"Payment"> | Date | string
     paymentStatus?: EnumPaymentStatusFilter<"Payment"> | $Enums.PaymentStatus
-    leaseId?: IntFilter<"Payment"> | number
+    leaseId?: IntNullableFilter<"Payment"> | number | null
   }
 
   export type LeaseCreateWithoutPaymentsInput = {
@@ -28026,6 +35885,452 @@ export namespace Prisma {
     application?: ApplicationUncheckedUpdateOneWithoutLeaseNestedInput
   }
 
+  export type PropertyCreateWithoutInspectionsInput = {
+    name: string
+    description: string
+    pricePerYear: number
+    securityDeposit: number
+    photoUrls?: PropertyCreatephotoUrlsInput | string[]
+    amenities?: string | null
+    highlights?: string | null
+    isParkingIncluded?: boolean
+    beds: number
+    baths: number
+    squareFeet: number
+    propertyType: $Enums.PropertyType
+    status?: $Enums.PropertyStatus
+    postedDate?: Date | string
+    averageRating?: number | null
+    numberOfReviews?: number | null
+    location: LocationCreateNestedOneWithoutPropertiesInput
+    landlord: LandlordCreateNestedOneWithoutManagedPropertiesInput
+    leases?: LeaseCreateNestedManyWithoutPropertyInput
+    applications?: ApplicationCreateNestedManyWithoutPropertyInput
+    favoritedBy?: TenantCreateNestedManyWithoutFavoritesInput
+    tenants?: TenantCreateNestedManyWithoutPropertiesInput
+  }
+
+  export type PropertyUncheckedCreateWithoutInspectionsInput = {
+    id?: number
+    name: string
+    description: string
+    pricePerYear: number
+    securityDeposit: number
+    photoUrls?: PropertyCreatephotoUrlsInput | string[]
+    amenities?: string | null
+    highlights?: string | null
+    isParkingIncluded?: boolean
+    beds: number
+    baths: number
+    squareFeet: number
+    propertyType: $Enums.PropertyType
+    status?: $Enums.PropertyStatus
+    postedDate?: Date | string
+    averageRating?: number | null
+    numberOfReviews?: number | null
+    locationId: number
+    landlordCognitoId: string
+    leases?: LeaseUncheckedCreateNestedManyWithoutPropertyInput
+    applications?: ApplicationUncheckedCreateNestedManyWithoutPropertyInput
+    favoritedBy?: TenantUncheckedCreateNestedManyWithoutFavoritesInput
+    tenants?: TenantUncheckedCreateNestedManyWithoutPropertiesInput
+  }
+
+  export type PropertyCreateOrConnectWithoutInspectionsInput = {
+    where: PropertyWhereUniqueInput
+    create: XOR<PropertyCreateWithoutInspectionsInput, PropertyUncheckedCreateWithoutInspectionsInput>
+  }
+
+  export type TenantCreateWithoutInspectionsInput = {
+    cognitoId: string
+    name: string
+    email: string
+    phoneNumber: string
+    properties?: PropertyCreateNestedManyWithoutTenantsInput
+    favorites?: PropertyCreateNestedManyWithoutFavoritedByInput
+    applications?: ApplicationCreateNestedManyWithoutTenantInput
+    leases?: LeaseCreateNestedManyWithoutTenantInput
+    inspectionLimit?: InspectionLimitCreateNestedOneWithoutTenantInput
+  }
+
+  export type TenantUncheckedCreateWithoutInspectionsInput = {
+    id?: number
+    cognitoId: string
+    name: string
+    email: string
+    phoneNumber: string
+    properties?: PropertyUncheckedCreateNestedManyWithoutTenantsInput
+    favorites?: PropertyUncheckedCreateNestedManyWithoutFavoritedByInput
+    applications?: ApplicationUncheckedCreateNestedManyWithoutTenantInput
+    leases?: LeaseUncheckedCreateNestedManyWithoutTenantInput
+    inspectionLimit?: InspectionLimitUncheckedCreateNestedOneWithoutTenantInput
+  }
+
+  export type TenantCreateOrConnectWithoutInspectionsInput = {
+    where: TenantWhereUniqueInput
+    create: XOR<TenantCreateWithoutInspectionsInput, TenantUncheckedCreateWithoutInspectionsInput>
+  }
+
+  export type AgentCreateWithoutInspectionsInput = {
+    cognitoId: string
+    name: string
+    email: string
+    phoneNumber?: string | null
+    address?: string | null
+    registrationCode?: AgentRegistrationCodeCreateNestedOneWithoutAgentsInput
+    assignedTasks?: TaskCreateNestedManyWithoutAgentInput
+  }
+
+  export type AgentUncheckedCreateWithoutInspectionsInput = {
+    id?: number
+    cognitoId: string
+    name: string
+    email: string
+    phoneNumber?: string | null
+    address?: string | null
+    registrationCodeId?: number | null
+    assignedTasks?: TaskUncheckedCreateNestedManyWithoutAgentInput
+  }
+
+  export type AgentCreateOrConnectWithoutInspectionsInput = {
+    where: AgentWhereUniqueInput
+    create: XOR<AgentCreateWithoutInspectionsInput, AgentUncheckedCreateWithoutInspectionsInput>
+  }
+
+  export type PropertyUpsertWithoutInspectionsInput = {
+    update: XOR<PropertyUpdateWithoutInspectionsInput, PropertyUncheckedUpdateWithoutInspectionsInput>
+    create: XOR<PropertyCreateWithoutInspectionsInput, PropertyUncheckedCreateWithoutInspectionsInput>
+    where?: PropertyWhereInput
+  }
+
+  export type PropertyUpdateToOneWithWhereWithoutInspectionsInput = {
+    where?: PropertyWhereInput
+    data: XOR<PropertyUpdateWithoutInspectionsInput, PropertyUncheckedUpdateWithoutInspectionsInput>
+  }
+
+  export type PropertyUpdateWithoutInspectionsInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    pricePerYear?: FloatFieldUpdateOperationsInput | number
+    securityDeposit?: FloatFieldUpdateOperationsInput | number
+    photoUrls?: PropertyUpdatephotoUrlsInput | string[]
+    amenities?: NullableStringFieldUpdateOperationsInput | string | null
+    highlights?: NullableStringFieldUpdateOperationsInput | string | null
+    isParkingIncluded?: BoolFieldUpdateOperationsInput | boolean
+    beds?: IntFieldUpdateOperationsInput | number
+    baths?: FloatFieldUpdateOperationsInput | number
+    squareFeet?: IntFieldUpdateOperationsInput | number
+    propertyType?: EnumPropertyTypeFieldUpdateOperationsInput | $Enums.PropertyType
+    status?: EnumPropertyStatusFieldUpdateOperationsInput | $Enums.PropertyStatus
+    postedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    averageRating?: NullableFloatFieldUpdateOperationsInput | number | null
+    numberOfReviews?: NullableIntFieldUpdateOperationsInput | number | null
+    location?: LocationUpdateOneRequiredWithoutPropertiesNestedInput
+    landlord?: LandlordUpdateOneRequiredWithoutManagedPropertiesNestedInput
+    leases?: LeaseUpdateManyWithoutPropertyNestedInput
+    applications?: ApplicationUpdateManyWithoutPropertyNestedInput
+    favoritedBy?: TenantUpdateManyWithoutFavoritesNestedInput
+    tenants?: TenantUpdateManyWithoutPropertiesNestedInput
+  }
+
+  export type PropertyUncheckedUpdateWithoutInspectionsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    pricePerYear?: FloatFieldUpdateOperationsInput | number
+    securityDeposit?: FloatFieldUpdateOperationsInput | number
+    photoUrls?: PropertyUpdatephotoUrlsInput | string[]
+    amenities?: NullableStringFieldUpdateOperationsInput | string | null
+    highlights?: NullableStringFieldUpdateOperationsInput | string | null
+    isParkingIncluded?: BoolFieldUpdateOperationsInput | boolean
+    beds?: IntFieldUpdateOperationsInput | number
+    baths?: FloatFieldUpdateOperationsInput | number
+    squareFeet?: IntFieldUpdateOperationsInput | number
+    propertyType?: EnumPropertyTypeFieldUpdateOperationsInput | $Enums.PropertyType
+    status?: EnumPropertyStatusFieldUpdateOperationsInput | $Enums.PropertyStatus
+    postedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    averageRating?: NullableFloatFieldUpdateOperationsInput | number | null
+    numberOfReviews?: NullableIntFieldUpdateOperationsInput | number | null
+    locationId?: IntFieldUpdateOperationsInput | number
+    landlordCognitoId?: StringFieldUpdateOperationsInput | string
+    leases?: LeaseUncheckedUpdateManyWithoutPropertyNestedInput
+    applications?: ApplicationUncheckedUpdateManyWithoutPropertyNestedInput
+    favoritedBy?: TenantUncheckedUpdateManyWithoutFavoritesNestedInput
+    tenants?: TenantUncheckedUpdateManyWithoutPropertiesNestedInput
+  }
+
+  export type TenantUpsertWithoutInspectionsInput = {
+    update: XOR<TenantUpdateWithoutInspectionsInput, TenantUncheckedUpdateWithoutInspectionsInput>
+    create: XOR<TenantCreateWithoutInspectionsInput, TenantUncheckedCreateWithoutInspectionsInput>
+    where?: TenantWhereInput
+  }
+
+  export type TenantUpdateToOneWithWhereWithoutInspectionsInput = {
+    where?: TenantWhereInput
+    data: XOR<TenantUpdateWithoutInspectionsInput, TenantUncheckedUpdateWithoutInspectionsInput>
+  }
+
+  export type TenantUpdateWithoutInspectionsInput = {
+    cognitoId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    phoneNumber?: StringFieldUpdateOperationsInput | string
+    properties?: PropertyUpdateManyWithoutTenantsNestedInput
+    favorites?: PropertyUpdateManyWithoutFavoritedByNestedInput
+    applications?: ApplicationUpdateManyWithoutTenantNestedInput
+    leases?: LeaseUpdateManyWithoutTenantNestedInput
+    inspectionLimit?: InspectionLimitUpdateOneWithoutTenantNestedInput
+  }
+
+  export type TenantUncheckedUpdateWithoutInspectionsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    cognitoId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    phoneNumber?: StringFieldUpdateOperationsInput | string
+    properties?: PropertyUncheckedUpdateManyWithoutTenantsNestedInput
+    favorites?: PropertyUncheckedUpdateManyWithoutFavoritedByNestedInput
+    applications?: ApplicationUncheckedUpdateManyWithoutTenantNestedInput
+    leases?: LeaseUncheckedUpdateManyWithoutTenantNestedInput
+    inspectionLimit?: InspectionLimitUncheckedUpdateOneWithoutTenantNestedInput
+  }
+
+  export type AgentUpsertWithoutInspectionsInput = {
+    update: XOR<AgentUpdateWithoutInspectionsInput, AgentUncheckedUpdateWithoutInspectionsInput>
+    create: XOR<AgentCreateWithoutInspectionsInput, AgentUncheckedCreateWithoutInspectionsInput>
+    where?: AgentWhereInput
+  }
+
+  export type AgentUpdateToOneWithWhereWithoutInspectionsInput = {
+    where?: AgentWhereInput
+    data: XOR<AgentUpdateWithoutInspectionsInput, AgentUncheckedUpdateWithoutInspectionsInput>
+  }
+
+  export type AgentUpdateWithoutInspectionsInput = {
+    cognitoId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    registrationCode?: AgentRegistrationCodeUpdateOneWithoutAgentsNestedInput
+    assignedTasks?: TaskUpdateManyWithoutAgentNestedInput
+  }
+
+  export type AgentUncheckedUpdateWithoutInspectionsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    cognitoId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    registrationCodeId?: NullableIntFieldUpdateOperationsInput | number | null
+    assignedTasks?: TaskUncheckedUpdateManyWithoutAgentNestedInput
+  }
+
+  export type TenantCreateWithoutInspectionLimitInput = {
+    cognitoId: string
+    name: string
+    email: string
+    phoneNumber: string
+    properties?: PropertyCreateNestedManyWithoutTenantsInput
+    favorites?: PropertyCreateNestedManyWithoutFavoritedByInput
+    applications?: ApplicationCreateNestedManyWithoutTenantInput
+    leases?: LeaseCreateNestedManyWithoutTenantInput
+    inspections?: InspectionCreateNestedManyWithoutTenantInput
+  }
+
+  export type TenantUncheckedCreateWithoutInspectionLimitInput = {
+    id?: number
+    cognitoId: string
+    name: string
+    email: string
+    phoneNumber: string
+    properties?: PropertyUncheckedCreateNestedManyWithoutTenantsInput
+    favorites?: PropertyUncheckedCreateNestedManyWithoutFavoritedByInput
+    applications?: ApplicationUncheckedCreateNestedManyWithoutTenantInput
+    leases?: LeaseUncheckedCreateNestedManyWithoutTenantInput
+    inspections?: InspectionUncheckedCreateNestedManyWithoutTenantInput
+  }
+
+  export type TenantCreateOrConnectWithoutInspectionLimitInput = {
+    where: TenantWhereUniqueInput
+    create: XOR<TenantCreateWithoutInspectionLimitInput, TenantUncheckedCreateWithoutInspectionLimitInput>
+  }
+
+  export type TenantUpsertWithoutInspectionLimitInput = {
+    update: XOR<TenantUpdateWithoutInspectionLimitInput, TenantUncheckedUpdateWithoutInspectionLimitInput>
+    create: XOR<TenantCreateWithoutInspectionLimitInput, TenantUncheckedCreateWithoutInspectionLimitInput>
+    where?: TenantWhereInput
+  }
+
+  export type TenantUpdateToOneWithWhereWithoutInspectionLimitInput = {
+    where?: TenantWhereInput
+    data: XOR<TenantUpdateWithoutInspectionLimitInput, TenantUncheckedUpdateWithoutInspectionLimitInput>
+  }
+
+  export type TenantUpdateWithoutInspectionLimitInput = {
+    cognitoId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    phoneNumber?: StringFieldUpdateOperationsInput | string
+    properties?: PropertyUpdateManyWithoutTenantsNestedInput
+    favorites?: PropertyUpdateManyWithoutFavoritedByNestedInput
+    applications?: ApplicationUpdateManyWithoutTenantNestedInput
+    leases?: LeaseUpdateManyWithoutTenantNestedInput
+    inspections?: InspectionUpdateManyWithoutTenantNestedInput
+  }
+
+  export type TenantUncheckedUpdateWithoutInspectionLimitInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    cognitoId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    phoneNumber?: StringFieldUpdateOperationsInput | string
+    properties?: PropertyUncheckedUpdateManyWithoutTenantsNestedInput
+    favorites?: PropertyUncheckedUpdateManyWithoutFavoritedByNestedInput
+    applications?: ApplicationUncheckedUpdateManyWithoutTenantNestedInput
+    leases?: LeaseUncheckedUpdateManyWithoutTenantNestedInput
+    inspections?: InspectionUncheckedUpdateManyWithoutTenantNestedInput
+  }
+
+  export type LandlordCreateWithoutWithdrawalsInput = {
+    cognitoId: string
+    name: string
+    email: string
+    phoneNumber: string
+    currentAddress?: string | null
+    city?: string | null
+    state?: string | null
+    country?: string | null
+    postalCode?: string | null
+    bankName?: string | null
+    accountNumber?: string | null
+    accountName?: string | null
+    bankCode?: string | null
+    businessName?: string | null
+    businessType?: string | null
+    taxId?: string | null
+    dateOfBirth?: Date | string | null
+    nationality?: string | null
+    occupation?: string | null
+    emergencyContactName?: string | null
+    emergencyContactPhone?: string | null
+    isOnboardingComplete?: boolean
+    onboardedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    managedProperties?: PropertyCreateNestedManyWithoutLandlordInput
+    registrationCode?: LandlordRegistrationCodeCreateNestedOneWithoutLandlordsInput
+  }
+
+  export type LandlordUncheckedCreateWithoutWithdrawalsInput = {
+    id?: number
+    cognitoId: string
+    name: string
+    email: string
+    phoneNumber: string
+    registrationCodeId?: number | null
+    currentAddress?: string | null
+    city?: string | null
+    state?: string | null
+    country?: string | null
+    postalCode?: string | null
+    bankName?: string | null
+    accountNumber?: string | null
+    accountName?: string | null
+    bankCode?: string | null
+    businessName?: string | null
+    businessType?: string | null
+    taxId?: string | null
+    dateOfBirth?: Date | string | null
+    nationality?: string | null
+    occupation?: string | null
+    emergencyContactName?: string | null
+    emergencyContactPhone?: string | null
+    isOnboardingComplete?: boolean
+    onboardedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    managedProperties?: PropertyUncheckedCreateNestedManyWithoutLandlordInput
+  }
+
+  export type LandlordCreateOrConnectWithoutWithdrawalsInput = {
+    where: LandlordWhereUniqueInput
+    create: XOR<LandlordCreateWithoutWithdrawalsInput, LandlordUncheckedCreateWithoutWithdrawalsInput>
+  }
+
+  export type LandlordUpsertWithoutWithdrawalsInput = {
+    update: XOR<LandlordUpdateWithoutWithdrawalsInput, LandlordUncheckedUpdateWithoutWithdrawalsInput>
+    create: XOR<LandlordCreateWithoutWithdrawalsInput, LandlordUncheckedCreateWithoutWithdrawalsInput>
+    where?: LandlordWhereInput
+  }
+
+  export type LandlordUpdateToOneWithWhereWithoutWithdrawalsInput = {
+    where?: LandlordWhereInput
+    data: XOR<LandlordUpdateWithoutWithdrawalsInput, LandlordUncheckedUpdateWithoutWithdrawalsInput>
+  }
+
+  export type LandlordUpdateWithoutWithdrawalsInput = {
+    cognitoId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    phoneNumber?: StringFieldUpdateOperationsInput | string
+    currentAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    postalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    bankName?: NullableStringFieldUpdateOperationsInput | string | null
+    accountNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    accountName?: NullableStringFieldUpdateOperationsInput | string | null
+    bankCode?: NullableStringFieldUpdateOperationsInput | string | null
+    businessName?: NullableStringFieldUpdateOperationsInput | string | null
+    businessType?: NullableStringFieldUpdateOperationsInput | string | null
+    taxId?: NullableStringFieldUpdateOperationsInput | string | null
+    dateOfBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    nationality?: NullableStringFieldUpdateOperationsInput | string | null
+    occupation?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContactName?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContactPhone?: NullableStringFieldUpdateOperationsInput | string | null
+    isOnboardingComplete?: BoolFieldUpdateOperationsInput | boolean
+    onboardedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    managedProperties?: PropertyUpdateManyWithoutLandlordNestedInput
+    registrationCode?: LandlordRegistrationCodeUpdateOneWithoutLandlordsNestedInput
+  }
+
+  export type LandlordUncheckedUpdateWithoutWithdrawalsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    cognitoId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    phoneNumber?: StringFieldUpdateOperationsInput | string
+    registrationCodeId?: NullableIntFieldUpdateOperationsInput | number | null
+    currentAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    postalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    bankName?: NullableStringFieldUpdateOperationsInput | string | null
+    accountNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    accountName?: NullableStringFieldUpdateOperationsInput | string | null
+    bankCode?: NullableStringFieldUpdateOperationsInput | string | null
+    businessName?: NullableStringFieldUpdateOperationsInput | string | null
+    businessType?: NullableStringFieldUpdateOperationsInput | string | null
+    taxId?: NullableStringFieldUpdateOperationsInput | string | null
+    dateOfBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    nationality?: NullableStringFieldUpdateOperationsInput | string | null
+    occupation?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContactName?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContactPhone?: NullableStringFieldUpdateOperationsInput | string | null
+    isOnboardingComplete?: BoolFieldUpdateOperationsInput | boolean
+    onboardedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    managedProperties?: PropertyUncheckedUpdateManyWithoutLandlordNestedInput
+  }
+
   export type LeaseCreateManyPropertyInput = {
     id?: number
     startDate: Date | string
@@ -28074,6 +36379,25 @@ export namespace Prisma {
     consentToTenancyTerms?: boolean | null
     consentToPrivacyPolicy?: boolean | null
     leaseId?: number | null
+  }
+
+  export type InspectionCreateManyPropertyInput = {
+    id?: number
+    tenantCognitoId: string
+    scheduledDate: Date | string
+    status?: $Enums.InspectionStatus
+    tenantName: string
+    tenantEmail: string
+    tenantPhone: string
+    preferredTime: string
+    message?: string | null
+    adminNotes?: string | null
+    agentId?: number | null
+    depositPaid?: boolean
+    depositAmount?: number | null
+    paymentReference?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type LeaseUpdateWithoutPropertyInput = {
@@ -28236,6 +36560,8 @@ export namespace Prisma {
     properties?: PropertyUpdateManyWithoutTenantsNestedInput
     applications?: ApplicationUpdateManyWithoutTenantNestedInput
     leases?: LeaseUpdateManyWithoutTenantNestedInput
+    inspections?: InspectionUpdateManyWithoutTenantNestedInput
+    inspectionLimit?: InspectionLimitUpdateOneWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutFavoritesInput = {
@@ -28247,6 +36573,8 @@ export namespace Prisma {
     properties?: PropertyUncheckedUpdateManyWithoutTenantsNestedInput
     applications?: ApplicationUncheckedUpdateManyWithoutTenantNestedInput
     leases?: LeaseUncheckedUpdateManyWithoutTenantNestedInput
+    inspections?: InspectionUncheckedUpdateManyWithoutTenantNestedInput
+    inspectionLimit?: InspectionLimitUncheckedUpdateOneWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateManyWithoutFavoritesInput = {
@@ -28265,6 +36593,8 @@ export namespace Prisma {
     favorites?: PropertyUpdateManyWithoutFavoritedByNestedInput
     applications?: ApplicationUpdateManyWithoutTenantNestedInput
     leases?: LeaseUpdateManyWithoutTenantNestedInput
+    inspections?: InspectionUpdateManyWithoutTenantNestedInput
+    inspectionLimit?: InspectionLimitUpdateOneWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateWithoutPropertiesInput = {
@@ -28276,6 +36606,8 @@ export namespace Prisma {
     favorites?: PropertyUncheckedUpdateManyWithoutFavoritedByNestedInput
     applications?: ApplicationUncheckedUpdateManyWithoutTenantNestedInput
     leases?: LeaseUncheckedUpdateManyWithoutTenantNestedInput
+    inspections?: InspectionUncheckedUpdateManyWithoutTenantNestedInput
+    inspectionLimit?: InspectionLimitUncheckedUpdateOneWithoutTenantNestedInput
   }
 
   export type TenantUncheckedUpdateManyWithoutPropertiesInput = {
@@ -28286,26 +36618,96 @@ export namespace Prisma {
     phoneNumber?: StringFieldUpdateOperationsInput | string
   }
 
+  export type InspectionUpdateWithoutPropertyInput = {
+    scheduledDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumInspectionStatusFieldUpdateOperationsInput | $Enums.InspectionStatus
+    tenantName?: StringFieldUpdateOperationsInput | string
+    tenantEmail?: StringFieldUpdateOperationsInput | string
+    tenantPhone?: StringFieldUpdateOperationsInput | string
+    preferredTime?: StringFieldUpdateOperationsInput | string
+    message?: NullableStringFieldUpdateOperationsInput | string | null
+    adminNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    depositPaid?: BoolFieldUpdateOperationsInput | boolean
+    depositAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    paymentReference?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    tenant?: TenantUpdateOneRequiredWithoutInspectionsNestedInput
+    agent?: AgentUpdateOneWithoutInspectionsNestedInput
+  }
+
+  export type InspectionUncheckedUpdateWithoutPropertyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    tenantCognitoId?: StringFieldUpdateOperationsInput | string
+    scheduledDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumInspectionStatusFieldUpdateOperationsInput | $Enums.InspectionStatus
+    tenantName?: StringFieldUpdateOperationsInput | string
+    tenantEmail?: StringFieldUpdateOperationsInput | string
+    tenantPhone?: StringFieldUpdateOperationsInput | string
+    preferredTime?: StringFieldUpdateOperationsInput | string
+    message?: NullableStringFieldUpdateOperationsInput | string | null
+    adminNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    agentId?: NullableIntFieldUpdateOperationsInput | number | null
+    depositPaid?: BoolFieldUpdateOperationsInput | boolean
+    depositAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    paymentReference?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type InspectionUncheckedUpdateManyWithoutPropertyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    tenantCognitoId?: StringFieldUpdateOperationsInput | string
+    scheduledDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumInspectionStatusFieldUpdateOperationsInput | $Enums.InspectionStatus
+    tenantName?: StringFieldUpdateOperationsInput | string
+    tenantEmail?: StringFieldUpdateOperationsInput | string
+    tenantPhone?: StringFieldUpdateOperationsInput | string
+    preferredTime?: StringFieldUpdateOperationsInput | string
+    message?: NullableStringFieldUpdateOperationsInput | string | null
+    adminNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    agentId?: NullableIntFieldUpdateOperationsInput | number | null
+    depositPaid?: BoolFieldUpdateOperationsInput | boolean
+    depositAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    paymentReference?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type PropertyCreateManyLandlordInput = {
     id?: number
     name: string
     description: string
     pricePerYear: number
     securityDeposit: number
-    applicationFee: number
     photoUrls?: PropertyCreatephotoUrlsInput | string[]
-    amenities?: PropertyCreateamenitiesInput | $Enums.Amenity[]
-    highlights?: PropertyCreatehighlightsInput | $Enums.Highlight[]
-    isPetsAllowed?: boolean
+    amenities?: string | null
+    highlights?: string | null
     isParkingIncluded?: boolean
     beds: number
     baths: number
     squareFeet: number
     propertyType: $Enums.PropertyType
+    status?: $Enums.PropertyStatus
     postedDate?: Date | string
     averageRating?: number | null
     numberOfReviews?: number | null
     locationId: number
+  }
+
+  export type WithdrawalCreateManyLandlordInput = {
+    id?: number
+    amount: number
+    status?: $Enums.WithdrawalStatus
+    requestDate?: Date | string
+    processedDate?: Date | string | null
+    bankName?: string | null
+    accountNumber?: string | null
+    accountName?: string | null
+    reference?: string | null
+    notes?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type PropertyUpdateWithoutLandlordInput = {
@@ -28313,16 +36715,15 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     pricePerYear?: FloatFieldUpdateOperationsInput | number
     securityDeposit?: FloatFieldUpdateOperationsInput | number
-    applicationFee?: FloatFieldUpdateOperationsInput | number
     photoUrls?: PropertyUpdatephotoUrlsInput | string[]
-    amenities?: PropertyUpdateamenitiesInput | $Enums.Amenity[]
-    highlights?: PropertyUpdatehighlightsInput | $Enums.Highlight[]
-    isPetsAllowed?: BoolFieldUpdateOperationsInput | boolean
+    amenities?: NullableStringFieldUpdateOperationsInput | string | null
+    highlights?: NullableStringFieldUpdateOperationsInput | string | null
     isParkingIncluded?: BoolFieldUpdateOperationsInput | boolean
     beds?: IntFieldUpdateOperationsInput | number
     baths?: FloatFieldUpdateOperationsInput | number
     squareFeet?: IntFieldUpdateOperationsInput | number
     propertyType?: EnumPropertyTypeFieldUpdateOperationsInput | $Enums.PropertyType
+    status?: EnumPropertyStatusFieldUpdateOperationsInput | $Enums.PropertyStatus
     postedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     averageRating?: NullableFloatFieldUpdateOperationsInput | number | null
     numberOfReviews?: NullableIntFieldUpdateOperationsInput | number | null
@@ -28331,6 +36732,7 @@ export namespace Prisma {
     applications?: ApplicationUpdateManyWithoutPropertyNestedInput
     favoritedBy?: TenantUpdateManyWithoutFavoritesNestedInput
     tenants?: TenantUpdateManyWithoutPropertiesNestedInput
+    inspections?: InspectionUpdateManyWithoutPropertyNestedInput
   }
 
   export type PropertyUncheckedUpdateWithoutLandlordInput = {
@@ -28339,16 +36741,15 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     pricePerYear?: FloatFieldUpdateOperationsInput | number
     securityDeposit?: FloatFieldUpdateOperationsInput | number
-    applicationFee?: FloatFieldUpdateOperationsInput | number
     photoUrls?: PropertyUpdatephotoUrlsInput | string[]
-    amenities?: PropertyUpdateamenitiesInput | $Enums.Amenity[]
-    highlights?: PropertyUpdatehighlightsInput | $Enums.Highlight[]
-    isPetsAllowed?: BoolFieldUpdateOperationsInput | boolean
+    amenities?: NullableStringFieldUpdateOperationsInput | string | null
+    highlights?: NullableStringFieldUpdateOperationsInput | string | null
     isParkingIncluded?: BoolFieldUpdateOperationsInput | boolean
     beds?: IntFieldUpdateOperationsInput | number
     baths?: FloatFieldUpdateOperationsInput | number
     squareFeet?: IntFieldUpdateOperationsInput | number
     propertyType?: EnumPropertyTypeFieldUpdateOperationsInput | $Enums.PropertyType
+    status?: EnumPropertyStatusFieldUpdateOperationsInput | $Enums.PropertyStatus
     postedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     averageRating?: NullableFloatFieldUpdateOperationsInput | number | null
     numberOfReviews?: NullableIntFieldUpdateOperationsInput | number | null
@@ -28357,6 +36758,7 @@ export namespace Prisma {
     applications?: ApplicationUncheckedUpdateManyWithoutPropertyNestedInput
     favoritedBy?: TenantUncheckedUpdateManyWithoutFavoritesNestedInput
     tenants?: TenantUncheckedUpdateManyWithoutPropertiesNestedInput
+    inspections?: InspectionUncheckedUpdateManyWithoutPropertyNestedInput
   }
 
   export type PropertyUncheckedUpdateManyWithoutLandlordInput = {
@@ -28365,20 +36767,63 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     pricePerYear?: FloatFieldUpdateOperationsInput | number
     securityDeposit?: FloatFieldUpdateOperationsInput | number
-    applicationFee?: FloatFieldUpdateOperationsInput | number
     photoUrls?: PropertyUpdatephotoUrlsInput | string[]
-    amenities?: PropertyUpdateamenitiesInput | $Enums.Amenity[]
-    highlights?: PropertyUpdatehighlightsInput | $Enums.Highlight[]
-    isPetsAllowed?: BoolFieldUpdateOperationsInput | boolean
+    amenities?: NullableStringFieldUpdateOperationsInput | string | null
+    highlights?: NullableStringFieldUpdateOperationsInput | string | null
     isParkingIncluded?: BoolFieldUpdateOperationsInput | boolean
     beds?: IntFieldUpdateOperationsInput | number
     baths?: FloatFieldUpdateOperationsInput | number
     squareFeet?: IntFieldUpdateOperationsInput | number
     propertyType?: EnumPropertyTypeFieldUpdateOperationsInput | $Enums.PropertyType
+    status?: EnumPropertyStatusFieldUpdateOperationsInput | $Enums.PropertyStatus
     postedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     averageRating?: NullableFloatFieldUpdateOperationsInput | number | null
     numberOfReviews?: NullableIntFieldUpdateOperationsInput | number | null
     locationId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type WithdrawalUpdateWithoutLandlordInput = {
+    amount?: FloatFieldUpdateOperationsInput | number
+    status?: EnumWithdrawalStatusFieldUpdateOperationsInput | $Enums.WithdrawalStatus
+    requestDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    processedDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    bankName?: NullableStringFieldUpdateOperationsInput | string | null
+    accountNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    accountName?: NullableStringFieldUpdateOperationsInput | string | null
+    reference?: NullableStringFieldUpdateOperationsInput | string | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WithdrawalUncheckedUpdateWithoutLandlordInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    amount?: FloatFieldUpdateOperationsInput | number
+    status?: EnumWithdrawalStatusFieldUpdateOperationsInput | $Enums.WithdrawalStatus
+    requestDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    processedDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    bankName?: NullableStringFieldUpdateOperationsInput | string | null
+    accountNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    accountName?: NullableStringFieldUpdateOperationsInput | string | null
+    reference?: NullableStringFieldUpdateOperationsInput | string | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WithdrawalUncheckedUpdateManyWithoutLandlordInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    amount?: FloatFieldUpdateOperationsInput | number
+    status?: EnumWithdrawalStatusFieldUpdateOperationsInput | $Enums.WithdrawalStatus
+    requestDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    processedDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    bankName?: NullableStringFieldUpdateOperationsInput | string | null
+    accountNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    accountName?: NullableStringFieldUpdateOperationsInput | string | null
+    reference?: NullableStringFieldUpdateOperationsInput | string | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type ApplicationCreateManyTenantInput = {
@@ -28431,21 +36876,39 @@ export namespace Prisma {
     propertyId: number
   }
 
+  export type InspectionCreateManyTenantInput = {
+    id?: number
+    propertyId: number
+    scheduledDate: Date | string
+    status?: $Enums.InspectionStatus
+    tenantName: string
+    tenantEmail: string
+    tenantPhone: string
+    preferredTime: string
+    message?: string | null
+    adminNotes?: string | null
+    agentId?: number | null
+    depositPaid?: boolean
+    depositAmount?: number | null
+    paymentReference?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
   export type PropertyUpdateWithoutTenantsInput = {
     name?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     pricePerYear?: FloatFieldUpdateOperationsInput | number
     securityDeposit?: FloatFieldUpdateOperationsInput | number
-    applicationFee?: FloatFieldUpdateOperationsInput | number
     photoUrls?: PropertyUpdatephotoUrlsInput | string[]
-    amenities?: PropertyUpdateamenitiesInput | $Enums.Amenity[]
-    highlights?: PropertyUpdatehighlightsInput | $Enums.Highlight[]
-    isPetsAllowed?: BoolFieldUpdateOperationsInput | boolean
+    amenities?: NullableStringFieldUpdateOperationsInput | string | null
+    highlights?: NullableStringFieldUpdateOperationsInput | string | null
     isParkingIncluded?: BoolFieldUpdateOperationsInput | boolean
     beds?: IntFieldUpdateOperationsInput | number
     baths?: FloatFieldUpdateOperationsInput | number
     squareFeet?: IntFieldUpdateOperationsInput | number
     propertyType?: EnumPropertyTypeFieldUpdateOperationsInput | $Enums.PropertyType
+    status?: EnumPropertyStatusFieldUpdateOperationsInput | $Enums.PropertyStatus
     postedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     averageRating?: NullableFloatFieldUpdateOperationsInput | number | null
     numberOfReviews?: NullableIntFieldUpdateOperationsInput | number | null
@@ -28454,6 +36917,7 @@ export namespace Prisma {
     leases?: LeaseUpdateManyWithoutPropertyNestedInput
     applications?: ApplicationUpdateManyWithoutPropertyNestedInput
     favoritedBy?: TenantUpdateManyWithoutFavoritesNestedInput
+    inspections?: InspectionUpdateManyWithoutPropertyNestedInput
   }
 
   export type PropertyUncheckedUpdateWithoutTenantsInput = {
@@ -28462,16 +36926,15 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     pricePerYear?: FloatFieldUpdateOperationsInput | number
     securityDeposit?: FloatFieldUpdateOperationsInput | number
-    applicationFee?: FloatFieldUpdateOperationsInput | number
     photoUrls?: PropertyUpdatephotoUrlsInput | string[]
-    amenities?: PropertyUpdateamenitiesInput | $Enums.Amenity[]
-    highlights?: PropertyUpdatehighlightsInput | $Enums.Highlight[]
-    isPetsAllowed?: BoolFieldUpdateOperationsInput | boolean
+    amenities?: NullableStringFieldUpdateOperationsInput | string | null
+    highlights?: NullableStringFieldUpdateOperationsInput | string | null
     isParkingIncluded?: BoolFieldUpdateOperationsInput | boolean
     beds?: IntFieldUpdateOperationsInput | number
     baths?: FloatFieldUpdateOperationsInput | number
     squareFeet?: IntFieldUpdateOperationsInput | number
     propertyType?: EnumPropertyTypeFieldUpdateOperationsInput | $Enums.PropertyType
+    status?: EnumPropertyStatusFieldUpdateOperationsInput | $Enums.PropertyStatus
     postedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     averageRating?: NullableFloatFieldUpdateOperationsInput | number | null
     numberOfReviews?: NullableIntFieldUpdateOperationsInput | number | null
@@ -28480,6 +36943,7 @@ export namespace Prisma {
     leases?: LeaseUncheckedUpdateManyWithoutPropertyNestedInput
     applications?: ApplicationUncheckedUpdateManyWithoutPropertyNestedInput
     favoritedBy?: TenantUncheckedUpdateManyWithoutFavoritesNestedInput
+    inspections?: InspectionUncheckedUpdateManyWithoutPropertyNestedInput
   }
 
   export type PropertyUncheckedUpdateManyWithoutTenantsInput = {
@@ -28488,16 +36952,15 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     pricePerYear?: FloatFieldUpdateOperationsInput | number
     securityDeposit?: FloatFieldUpdateOperationsInput | number
-    applicationFee?: FloatFieldUpdateOperationsInput | number
     photoUrls?: PropertyUpdatephotoUrlsInput | string[]
-    amenities?: PropertyUpdateamenitiesInput | $Enums.Amenity[]
-    highlights?: PropertyUpdatehighlightsInput | $Enums.Highlight[]
-    isPetsAllowed?: BoolFieldUpdateOperationsInput | boolean
+    amenities?: NullableStringFieldUpdateOperationsInput | string | null
+    highlights?: NullableStringFieldUpdateOperationsInput | string | null
     isParkingIncluded?: BoolFieldUpdateOperationsInput | boolean
     beds?: IntFieldUpdateOperationsInput | number
     baths?: FloatFieldUpdateOperationsInput | number
     squareFeet?: IntFieldUpdateOperationsInput | number
     propertyType?: EnumPropertyTypeFieldUpdateOperationsInput | $Enums.PropertyType
+    status?: EnumPropertyStatusFieldUpdateOperationsInput | $Enums.PropertyStatus
     postedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     averageRating?: NullableFloatFieldUpdateOperationsInput | number | null
     numberOfReviews?: NullableIntFieldUpdateOperationsInput | number | null
@@ -28510,16 +36973,15 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     pricePerYear?: FloatFieldUpdateOperationsInput | number
     securityDeposit?: FloatFieldUpdateOperationsInput | number
-    applicationFee?: FloatFieldUpdateOperationsInput | number
     photoUrls?: PropertyUpdatephotoUrlsInput | string[]
-    amenities?: PropertyUpdateamenitiesInput | $Enums.Amenity[]
-    highlights?: PropertyUpdatehighlightsInput | $Enums.Highlight[]
-    isPetsAllowed?: BoolFieldUpdateOperationsInput | boolean
+    amenities?: NullableStringFieldUpdateOperationsInput | string | null
+    highlights?: NullableStringFieldUpdateOperationsInput | string | null
     isParkingIncluded?: BoolFieldUpdateOperationsInput | boolean
     beds?: IntFieldUpdateOperationsInput | number
     baths?: FloatFieldUpdateOperationsInput | number
     squareFeet?: IntFieldUpdateOperationsInput | number
     propertyType?: EnumPropertyTypeFieldUpdateOperationsInput | $Enums.PropertyType
+    status?: EnumPropertyStatusFieldUpdateOperationsInput | $Enums.PropertyStatus
     postedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     averageRating?: NullableFloatFieldUpdateOperationsInput | number | null
     numberOfReviews?: NullableIntFieldUpdateOperationsInput | number | null
@@ -28528,6 +36990,7 @@ export namespace Prisma {
     leases?: LeaseUpdateManyWithoutPropertyNestedInput
     applications?: ApplicationUpdateManyWithoutPropertyNestedInput
     tenants?: TenantUpdateManyWithoutPropertiesNestedInput
+    inspections?: InspectionUpdateManyWithoutPropertyNestedInput
   }
 
   export type PropertyUncheckedUpdateWithoutFavoritedByInput = {
@@ -28536,16 +36999,15 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     pricePerYear?: FloatFieldUpdateOperationsInput | number
     securityDeposit?: FloatFieldUpdateOperationsInput | number
-    applicationFee?: FloatFieldUpdateOperationsInput | number
     photoUrls?: PropertyUpdatephotoUrlsInput | string[]
-    amenities?: PropertyUpdateamenitiesInput | $Enums.Amenity[]
-    highlights?: PropertyUpdatehighlightsInput | $Enums.Highlight[]
-    isPetsAllowed?: BoolFieldUpdateOperationsInput | boolean
+    amenities?: NullableStringFieldUpdateOperationsInput | string | null
+    highlights?: NullableStringFieldUpdateOperationsInput | string | null
     isParkingIncluded?: BoolFieldUpdateOperationsInput | boolean
     beds?: IntFieldUpdateOperationsInput | number
     baths?: FloatFieldUpdateOperationsInput | number
     squareFeet?: IntFieldUpdateOperationsInput | number
     propertyType?: EnumPropertyTypeFieldUpdateOperationsInput | $Enums.PropertyType
+    status?: EnumPropertyStatusFieldUpdateOperationsInput | $Enums.PropertyStatus
     postedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     averageRating?: NullableFloatFieldUpdateOperationsInput | number | null
     numberOfReviews?: NullableIntFieldUpdateOperationsInput | number | null
@@ -28554,6 +37016,7 @@ export namespace Prisma {
     leases?: LeaseUncheckedUpdateManyWithoutPropertyNestedInput
     applications?: ApplicationUncheckedUpdateManyWithoutPropertyNestedInput
     tenants?: TenantUncheckedUpdateManyWithoutPropertiesNestedInput
+    inspections?: InspectionUncheckedUpdateManyWithoutPropertyNestedInput
   }
 
   export type PropertyUncheckedUpdateManyWithoutFavoritedByInput = {
@@ -28562,16 +37025,15 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     pricePerYear?: FloatFieldUpdateOperationsInput | number
     securityDeposit?: FloatFieldUpdateOperationsInput | number
-    applicationFee?: FloatFieldUpdateOperationsInput | number
     photoUrls?: PropertyUpdatephotoUrlsInput | string[]
-    amenities?: PropertyUpdateamenitiesInput | $Enums.Amenity[]
-    highlights?: PropertyUpdatehighlightsInput | $Enums.Highlight[]
-    isPetsAllowed?: BoolFieldUpdateOperationsInput | boolean
+    amenities?: NullableStringFieldUpdateOperationsInput | string | null
+    highlights?: NullableStringFieldUpdateOperationsInput | string | null
     isParkingIncluded?: BoolFieldUpdateOperationsInput | boolean
     beds?: IntFieldUpdateOperationsInput | number
     baths?: FloatFieldUpdateOperationsInput | number
     squareFeet?: IntFieldUpdateOperationsInput | number
     propertyType?: EnumPropertyTypeFieldUpdateOperationsInput | $Enums.PropertyType
+    status?: EnumPropertyStatusFieldUpdateOperationsInput | $Enums.PropertyStatus
     postedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     averageRating?: NullableFloatFieldUpdateOperationsInput | number | null
     numberOfReviews?: NullableIntFieldUpdateOperationsInput | number | null
@@ -28731,6 +37193,62 @@ export namespace Prisma {
     propertyId?: IntFieldUpdateOperationsInput | number
   }
 
+  export type InspectionUpdateWithoutTenantInput = {
+    scheduledDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumInspectionStatusFieldUpdateOperationsInput | $Enums.InspectionStatus
+    tenantName?: StringFieldUpdateOperationsInput | string
+    tenantEmail?: StringFieldUpdateOperationsInput | string
+    tenantPhone?: StringFieldUpdateOperationsInput | string
+    preferredTime?: StringFieldUpdateOperationsInput | string
+    message?: NullableStringFieldUpdateOperationsInput | string | null
+    adminNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    depositPaid?: BoolFieldUpdateOperationsInput | boolean
+    depositAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    paymentReference?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    property?: PropertyUpdateOneRequiredWithoutInspectionsNestedInput
+    agent?: AgentUpdateOneWithoutInspectionsNestedInput
+  }
+
+  export type InspectionUncheckedUpdateWithoutTenantInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    propertyId?: IntFieldUpdateOperationsInput | number
+    scheduledDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumInspectionStatusFieldUpdateOperationsInput | $Enums.InspectionStatus
+    tenantName?: StringFieldUpdateOperationsInput | string
+    tenantEmail?: StringFieldUpdateOperationsInput | string
+    tenantPhone?: StringFieldUpdateOperationsInput | string
+    preferredTime?: StringFieldUpdateOperationsInput | string
+    message?: NullableStringFieldUpdateOperationsInput | string | null
+    adminNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    agentId?: NullableIntFieldUpdateOperationsInput | number | null
+    depositPaid?: BoolFieldUpdateOperationsInput | boolean
+    depositAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    paymentReference?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type InspectionUncheckedUpdateManyWithoutTenantInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    propertyId?: IntFieldUpdateOperationsInput | number
+    scheduledDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumInspectionStatusFieldUpdateOperationsInput | $Enums.InspectionStatus
+    tenantName?: StringFieldUpdateOperationsInput | string
+    tenantEmail?: StringFieldUpdateOperationsInput | string
+    tenantPhone?: StringFieldUpdateOperationsInput | string
+    preferredTime?: StringFieldUpdateOperationsInput | string
+    message?: NullableStringFieldUpdateOperationsInput | string | null
+    adminNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    agentId?: NullableIntFieldUpdateOperationsInput | number | null
+    depositPaid?: BoolFieldUpdateOperationsInput | boolean
+    depositAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    paymentReference?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type TaskCreateManyAgentInput = {
     id?: number
     title: string
@@ -28741,6 +37259,25 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     assignedBy: string
+  }
+
+  export type InspectionCreateManyAgentInput = {
+    id?: number
+    propertyId: number
+    tenantCognitoId: string
+    scheduledDate: Date | string
+    status?: $Enums.InspectionStatus
+    tenantName: string
+    tenantEmail: string
+    tenantPhone: string
+    preferredTime: string
+    message?: string | null
+    adminNotes?: string | null
+    depositPaid?: boolean
+    depositAmount?: number | null
+    paymentReference?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type TaskUpdateWithoutAgentInput = {
@@ -28778,12 +37315,89 @@ export namespace Prisma {
     assignedBy?: StringFieldUpdateOperationsInput | string
   }
 
+  export type InspectionUpdateWithoutAgentInput = {
+    scheduledDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumInspectionStatusFieldUpdateOperationsInput | $Enums.InspectionStatus
+    tenantName?: StringFieldUpdateOperationsInput | string
+    tenantEmail?: StringFieldUpdateOperationsInput | string
+    tenantPhone?: StringFieldUpdateOperationsInput | string
+    preferredTime?: StringFieldUpdateOperationsInput | string
+    message?: NullableStringFieldUpdateOperationsInput | string | null
+    adminNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    depositPaid?: BoolFieldUpdateOperationsInput | boolean
+    depositAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    paymentReference?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    property?: PropertyUpdateOneRequiredWithoutInspectionsNestedInput
+    tenant?: TenantUpdateOneRequiredWithoutInspectionsNestedInput
+  }
+
+  export type InspectionUncheckedUpdateWithoutAgentInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    propertyId?: IntFieldUpdateOperationsInput | number
+    tenantCognitoId?: StringFieldUpdateOperationsInput | string
+    scheduledDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumInspectionStatusFieldUpdateOperationsInput | $Enums.InspectionStatus
+    tenantName?: StringFieldUpdateOperationsInput | string
+    tenantEmail?: StringFieldUpdateOperationsInput | string
+    tenantPhone?: StringFieldUpdateOperationsInput | string
+    preferredTime?: StringFieldUpdateOperationsInput | string
+    message?: NullableStringFieldUpdateOperationsInput | string | null
+    adminNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    depositPaid?: BoolFieldUpdateOperationsInput | boolean
+    depositAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    paymentReference?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type InspectionUncheckedUpdateManyWithoutAgentInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    propertyId?: IntFieldUpdateOperationsInput | number
+    tenantCognitoId?: StringFieldUpdateOperationsInput | string
+    scheduledDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumInspectionStatusFieldUpdateOperationsInput | $Enums.InspectionStatus
+    tenantName?: StringFieldUpdateOperationsInput | string
+    tenantEmail?: StringFieldUpdateOperationsInput | string
+    tenantPhone?: StringFieldUpdateOperationsInput | string
+    preferredTime?: StringFieldUpdateOperationsInput | string
+    message?: NullableStringFieldUpdateOperationsInput | string | null
+    adminNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    depositPaid?: BoolFieldUpdateOperationsInput | boolean
+    depositAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    paymentReference?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type LandlordCreateManyRegistrationCodeInput = {
     id?: number
     cognitoId: string
     name: string
     email: string
     phoneNumber: string
+    currentAddress?: string | null
+    city?: string | null
+    state?: string | null
+    country?: string | null
+    postalCode?: string | null
+    bankName?: string | null
+    accountNumber?: string | null
+    accountName?: string | null
+    bankCode?: string | null
+    businessName?: string | null
+    businessType?: string | null
+    taxId?: string | null
+    dateOfBirth?: Date | string | null
+    nationality?: string | null
+    occupation?: string | null
+    emergencyContactName?: string | null
+    emergencyContactPhone?: string | null
+    isOnboardingComplete?: boolean
+    onboardedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type LandlordUpdateWithoutRegistrationCodeInput = {
@@ -28791,7 +37405,29 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     phoneNumber?: StringFieldUpdateOperationsInput | string
+    currentAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    postalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    bankName?: NullableStringFieldUpdateOperationsInput | string | null
+    accountNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    accountName?: NullableStringFieldUpdateOperationsInput | string | null
+    bankCode?: NullableStringFieldUpdateOperationsInput | string | null
+    businessName?: NullableStringFieldUpdateOperationsInput | string | null
+    businessType?: NullableStringFieldUpdateOperationsInput | string | null
+    taxId?: NullableStringFieldUpdateOperationsInput | string | null
+    dateOfBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    nationality?: NullableStringFieldUpdateOperationsInput | string | null
+    occupation?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContactName?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContactPhone?: NullableStringFieldUpdateOperationsInput | string | null
+    isOnboardingComplete?: BoolFieldUpdateOperationsInput | boolean
+    onboardedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     managedProperties?: PropertyUpdateManyWithoutLandlordNestedInput
+    withdrawals?: WithdrawalUpdateManyWithoutLandlordNestedInput
   }
 
   export type LandlordUncheckedUpdateWithoutRegistrationCodeInput = {
@@ -28800,7 +37436,29 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     phoneNumber?: StringFieldUpdateOperationsInput | string
+    currentAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    postalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    bankName?: NullableStringFieldUpdateOperationsInput | string | null
+    accountNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    accountName?: NullableStringFieldUpdateOperationsInput | string | null
+    bankCode?: NullableStringFieldUpdateOperationsInput | string | null
+    businessName?: NullableStringFieldUpdateOperationsInput | string | null
+    businessType?: NullableStringFieldUpdateOperationsInput | string | null
+    taxId?: NullableStringFieldUpdateOperationsInput | string | null
+    dateOfBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    nationality?: NullableStringFieldUpdateOperationsInput | string | null
+    occupation?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContactName?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContactPhone?: NullableStringFieldUpdateOperationsInput | string | null
+    isOnboardingComplete?: BoolFieldUpdateOperationsInput | boolean
+    onboardedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     managedProperties?: PropertyUncheckedUpdateManyWithoutLandlordNestedInput
+    withdrawals?: WithdrawalUncheckedUpdateManyWithoutLandlordNestedInput
   }
 
   export type LandlordUncheckedUpdateManyWithoutRegistrationCodeInput = {
@@ -28809,6 +37467,27 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     phoneNumber?: StringFieldUpdateOperationsInput | string
+    currentAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    postalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    bankName?: NullableStringFieldUpdateOperationsInput | string | null
+    accountNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    accountName?: NullableStringFieldUpdateOperationsInput | string | null
+    bankCode?: NullableStringFieldUpdateOperationsInput | string | null
+    businessName?: NullableStringFieldUpdateOperationsInput | string | null
+    businessType?: NullableStringFieldUpdateOperationsInput | string | null
+    taxId?: NullableStringFieldUpdateOperationsInput | string | null
+    dateOfBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    nationality?: NullableStringFieldUpdateOperationsInput | string | null
+    occupation?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContactName?: NullableStringFieldUpdateOperationsInput | string | null
+    emergencyContactPhone?: NullableStringFieldUpdateOperationsInput | string | null
+    isOnboardingComplete?: BoolFieldUpdateOperationsInput | boolean
+    onboardedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type AgentCreateManyRegistrationCodeInput = {
@@ -28817,6 +37496,7 @@ export namespace Prisma {
     name: string
     email: string
     phoneNumber?: string | null
+    address?: string | null
   }
 
   export type AgentUpdateWithoutRegistrationCodeInput = {
@@ -28824,7 +37504,9 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
     assignedTasks?: TaskUpdateManyWithoutAgentNestedInput
+    inspections?: InspectionUpdateManyWithoutAgentNestedInput
   }
 
   export type AgentUncheckedUpdateWithoutRegistrationCodeInput = {
@@ -28833,7 +37515,9 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
     assignedTasks?: TaskUncheckedUpdateManyWithoutAgentNestedInput
+    inspections?: InspectionUncheckedUpdateManyWithoutAgentNestedInput
   }
 
   export type AgentUncheckedUpdateManyWithoutRegistrationCodeInput = {
@@ -28842,6 +37526,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type PropertyUpdateWithoutLocationInput = {
@@ -28849,16 +37534,15 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     pricePerYear?: FloatFieldUpdateOperationsInput | number
     securityDeposit?: FloatFieldUpdateOperationsInput | number
-    applicationFee?: FloatFieldUpdateOperationsInput | number
     photoUrls?: PropertyUpdatephotoUrlsInput | string[]
-    amenities?: PropertyUpdateamenitiesInput | $Enums.Amenity[]
-    highlights?: PropertyUpdatehighlightsInput | $Enums.Highlight[]
-    isPetsAllowed?: BoolFieldUpdateOperationsInput | boolean
+    amenities?: NullableStringFieldUpdateOperationsInput | string | null
+    highlights?: NullableStringFieldUpdateOperationsInput | string | null
     isParkingIncluded?: BoolFieldUpdateOperationsInput | boolean
     beds?: IntFieldUpdateOperationsInput | number
     baths?: FloatFieldUpdateOperationsInput | number
     squareFeet?: IntFieldUpdateOperationsInput | number
     propertyType?: EnumPropertyTypeFieldUpdateOperationsInput | $Enums.PropertyType
+    status?: EnumPropertyStatusFieldUpdateOperationsInput | $Enums.PropertyStatus
     postedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     averageRating?: NullableFloatFieldUpdateOperationsInput | number | null
     numberOfReviews?: NullableIntFieldUpdateOperationsInput | number | null
@@ -28867,6 +37551,7 @@ export namespace Prisma {
     applications?: ApplicationUpdateManyWithoutPropertyNestedInput
     favoritedBy?: TenantUpdateManyWithoutFavoritesNestedInput
     tenants?: TenantUpdateManyWithoutPropertiesNestedInput
+    inspections?: InspectionUpdateManyWithoutPropertyNestedInput
   }
 
   export type PropertyUncheckedUpdateWithoutLocationInput = {
@@ -28875,16 +37560,15 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     pricePerYear?: FloatFieldUpdateOperationsInput | number
     securityDeposit?: FloatFieldUpdateOperationsInput | number
-    applicationFee?: FloatFieldUpdateOperationsInput | number
     photoUrls?: PropertyUpdatephotoUrlsInput | string[]
-    amenities?: PropertyUpdateamenitiesInput | $Enums.Amenity[]
-    highlights?: PropertyUpdatehighlightsInput | $Enums.Highlight[]
-    isPetsAllowed?: BoolFieldUpdateOperationsInput | boolean
+    amenities?: NullableStringFieldUpdateOperationsInput | string | null
+    highlights?: NullableStringFieldUpdateOperationsInput | string | null
     isParkingIncluded?: BoolFieldUpdateOperationsInput | boolean
     beds?: IntFieldUpdateOperationsInput | number
     baths?: FloatFieldUpdateOperationsInput | number
     squareFeet?: IntFieldUpdateOperationsInput | number
     propertyType?: EnumPropertyTypeFieldUpdateOperationsInput | $Enums.PropertyType
+    status?: EnumPropertyStatusFieldUpdateOperationsInput | $Enums.PropertyStatus
     postedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     averageRating?: NullableFloatFieldUpdateOperationsInput | number | null
     numberOfReviews?: NullableIntFieldUpdateOperationsInput | number | null
@@ -28893,6 +37577,7 @@ export namespace Prisma {
     applications?: ApplicationUncheckedUpdateManyWithoutPropertyNestedInput
     favoritedBy?: TenantUncheckedUpdateManyWithoutFavoritesNestedInput
     tenants?: TenantUncheckedUpdateManyWithoutPropertiesNestedInput
+    inspections?: InspectionUncheckedUpdateManyWithoutPropertyNestedInput
   }
 
   export type PropertyCreateManyLocationInput = {
@@ -28901,16 +37586,15 @@ export namespace Prisma {
     description: string
     pricePerYear: number
     securityDeposit: number
-    applicationFee: number
     photoUrls?: PropertyCreatephotoUrlsInput | string[]
-    amenities?: PropertyCreateamenitiesInput | $Enums.Amenity[]
-    highlights?: PropertyCreatehighlightsInput | $Enums.Highlight[]
-    isPetsAllowed?: boolean
+    amenities?: string | null
+    highlights?: string | null
     isParkingIncluded?: boolean
     beds: number
     baths: number
     squareFeet: number
     propertyType: $Enums.PropertyType
+    status?: $Enums.PropertyStatus
     postedDate?: Date | string
     averageRating?: number | null
     numberOfReviews?: number | null
@@ -28923,16 +37607,15 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     pricePerYear?: FloatFieldUpdateOperationsInput | number
     securityDeposit?: FloatFieldUpdateOperationsInput | number
-    applicationFee?: FloatFieldUpdateOperationsInput | number
     photoUrls?: PropertyUpdatephotoUrlsInput | string[]
-    amenities?: PropertyUpdateamenitiesInput | $Enums.Amenity[]
-    highlights?: PropertyUpdatehighlightsInput | $Enums.Highlight[]
-    isPetsAllowed?: BoolFieldUpdateOperationsInput | boolean
+    amenities?: NullableStringFieldUpdateOperationsInput | string | null
+    highlights?: NullableStringFieldUpdateOperationsInput | string | null
     isParkingIncluded?: BoolFieldUpdateOperationsInput | boolean
     beds?: IntFieldUpdateOperationsInput | number
     baths?: FloatFieldUpdateOperationsInput | number
     squareFeet?: IntFieldUpdateOperationsInput | number
     propertyType?: EnumPropertyTypeFieldUpdateOperationsInput | $Enums.PropertyType
+    status?: EnumPropertyStatusFieldUpdateOperationsInput | $Enums.PropertyStatus
     postedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     averageRating?: NullableFloatFieldUpdateOperationsInput | number | null
     numberOfReviews?: NullableIntFieldUpdateOperationsInput | number | null
