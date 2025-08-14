@@ -37,7 +37,13 @@ app.use(body_parser_1.default.urlencoded({ extended: false }));
 // Update CORS configuration
 app.use((0, cors_1.default)({
     origin: process.env.NODE_ENV === "production"
-        ? [process.env.FRONTEND_URL || "https://homematch.ng"]
+        ? [
+            process.env.FRONTEND_URL || "https://homematch.ng",
+            "https://www.homematch.ng",
+            "https://homematch.ng",
+            /https:\/\/.*\.vercel\.app$/,
+            /https:\/\/.*\.netlify\.app$/
+        ]
         : true,
     credentials: true,
 }));

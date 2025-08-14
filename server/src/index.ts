@@ -38,8 +38,10 @@ app.use(
       process.env.NODE_ENV === "production"
         ? [
             process.env.FRONTEND_URL || "https://homematch.ng",
-            "https://*.vercel.app",
-            /https:\/\/.*\.vercel\.app$/
+            "https://www.homematch.ng",
+            "https://homematch.ng",
+            /https:\/\/.*\.vercel\.app$/,
+            /https:\/\/.*\.netlify\.app$/
           ]
         : true,
     credentials: true,
