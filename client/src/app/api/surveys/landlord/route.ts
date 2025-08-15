@@ -5,7 +5,7 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     
     // Forward the request to the backend server
-    const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:3002';
+    const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://127.0.0.1:3002';
     const response = await fetch(`${backendUrl}/surveys/landlord`, {
       method: 'POST',
       headers: {

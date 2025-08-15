@@ -27,6 +27,7 @@ exports.createProperty = exports.getProperty = exports.getProperties = void 0;
 const client_1 = require("@prisma/client");
 const wkt_1 = require("@terraformer/wkt");
 const client_s3_1 = require("@aws-sdk/client-s3");
+const lib_storage_1 = require("@aws-sdk/lib-storage");
 const axios_1 = __importDefault(require("axios"));
 const prisma = new client_1.PrismaClient();
 const s3Client = new client_s3_1.S3Client({
@@ -169,8 +170,20 @@ const createProperty = (req, res) => __awaiter(void 0, void 0, void 0, function*
         console.log('Files received:', req.files);
         const files = req.files;
         const _e = req.body, { address, city, state, country, postalCode, landlordCognitoId } = _e, propertyData = __rest(_e, ["address", "city", "state", "country", "postalCode", "landlordCognitoId"]);
-        let photoUrls = [];
         // Temporarily disable S3 uploads due to configuration issues
+        const photoUrls = yield Promise.all(files.map((file) => __awaiter(void 0, void 0, void 0, function* () {
+            const uploadParams = {
+                Bucket: process.env.S3_BUCKET_NAME,
+                Key: `properties/${Date.now()}-${file.originalname}`,
+                Body: file.buffer,
+                ContentType: file.mimetype,
+            };
+            const uploadResult = yield new lib_storage_1.Upload({
+                client: s3Client,
+                params: uploadParams,
+            }).done();
+            return uploadResult.Location;
+        })));
         // TODO: Fix S3 bucket permissions and configuration
         console.log('S3 uploads temporarily disabled - property will be created without photos');
         if (files && files.length > 0) {

@@ -1,0 +1,114 @@
+Subject: Request for Production Access: Amazon SES - Homematch Rental Platform
+
+To Whom It May Concern,
+
+This email is to request production access for my AWS SES account. I have reviewed the AWS SES service terms and acceptable use policy and agree to abide by them.
+
+My use case for Amazon SES is: Sending transactional emails for Homematch, a real estate platform that connects property seekers with landlords and agents. Our platform facilitates property listings, user registrations, property inquiries, and booking confirmations. We need to send transactional emails to users who have signed up for our service, including property inquiry notifications, booking confirmations, password reset emails, and account verification messages. We expect to send approximately 1,000-5,000 emails per month initially, scaling up as our user base grows.
+
+I plan to send the following types of emails:
+
+Transactional:
+- User account verification emails
+- Password reset and security notifications
+- Property inquiry confirmations and responses
+- Booking confirmations for property viewings
+- Agent/landlord notification emails for new inquiries
+- System notifications and account updates
+
+I am prepared to manage bounces and complaints effectively, and I will ensure all emails sent are compliant with industry best practices.
+
+Here's how I handle bounces and complaints:
+
+Bounces:
+We implement SNS notifications to automatically handle bounce notifications. When a bounce occurs, our system automatically removes the bounced email address from our active mailing list and logs the bounce for monitoring purposes. Hard bounces result in immediate removal, while soft bounces are retried with exponential backoff before eventual removal if they persist.
+
+Complaints:
+We use SNS notifications to handle complaint notifications immediately. When a complaint is received, the email address is automatically added to our suppression list and removed from all future mailings. We maintain a comprehensive suppression list and regularly audit our sending practices to minimize complaints.
+
+Our website (https://homematch.ng) includes clear unsubscribe options and privacy policy information. Users can manage their email preferences through their account settings dashboard, and all transactional emails include appropriate unsubscribe mechanisms where legally permissible. Our unsubscribe process is accessible at https://homematch.ng/unsubscribe.
+
+Sample Email Templates:
+
+Below are examples of the types of emails we will be sending:
+
+1. Account Verification Email:
+Subject: Verify Your Homematch Account
+Body:
+Hi [User Name],
+
+Welcome to Homematch! Please verify your email address by clicking the link below:
+[Verification Link]
+
+If you didn't create this account, please ignore this email.
+
+Best regards,
+The Homematch Team
+https://homematch.ng
+
+2. Property Inquiry Confirmation:
+Subject: Your Property Inquiry - [Property Address]
+Body:
+Hi [User Name],
+
+Thank you for your interest in the property at [Property Address]. Your inquiry has been sent to the agent/landlord, and they will contact you within 24 hours.
+
+Property Details:
+- Address: [Property Address]
+- Price: [Price]
+- Agent: [Agent Name]
+
+You can view this property and manage your inquiries in your account dashboard
+
+Best regards,
+The Homematch Team
+
+3. Password Reset Email:
+Subject: Reset Your Homematch Password
+Body:
+Hi [User Name],
+
+We received a request to reset your password. Click the link below to create a new password:
+[Reset Link]
+
+This link will expire in 1 hour. If you didn't request this reset, please ignore this email.
+
+Best regards,
+The Homematch Team
+https://homematch.ng
+
+4. Booking Confirmation:
+Subject: Property Viewing Confirmed - [Property Address]
+Body:
+Hi [User Name],
+
+Your property viewing has been confirmed!
+
+Details:
+- Property: [Property Address]
+- Date: [Date]
+- Time: [Time]
+- Agent: [Agent Name] - [Agent Phone]
+
+Please arrive on time. If you need to reschedule, contact the agent directly
+
+Best regards,
+The Homematch Team
+
+We are committed to maintaining a good sending reputation and will monitor our metrics closely through CloudWatch and SES console. We have implemented proper email authentication (SPF, DKIM, DMARC) and follow email deliverability best practices.
+
+Our platform serves the Nigerian real estate market, helping to digitize property transactions and improve transparency in the real estate sector. All emails are permission-based and directly related to user actions on our platform.
+
+Website: https://homematch.ng
+Unsubscribe Management: https://homematch.ng/unsubscribe
+Privacy Policy: https://homematch.ng/privacy
+
+Thank you for your time and consideration.
+
+Sincerely,
+
+Miracle Ezechukwu
+Founder, Homematch
+Email: [your-email@homematch.ng]
+Website: https://homematch.ng
+Phone: [your-phone-number]
