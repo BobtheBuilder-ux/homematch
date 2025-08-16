@@ -291,6 +291,7 @@ export const createProperty = async (
         photoUrls,
         locationId: location.id,
         landlordCognitoId,
+        status: 'PendingApproval', // New properties require admin approval
         amenities:
           typeof propertyData.amenities === "string"
             ? propertyData.amenities.split(",")

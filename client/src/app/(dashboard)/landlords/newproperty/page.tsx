@@ -46,10 +46,16 @@ const NewProperty = () => {
     const formData = new FormData();
     Object.entries(data).forEach(([key, value]) => {
       if (key === "photoUrls") {
-        const files = value as File[];
-        files.forEach((file: File) => {
-          formData.append("photos", file);
-        });
+        // Handle photoUrls as either array of files or single file
+        if (Array.isArray(value)) {
+          value.forEach((file: File) => {
+            formData.append("photos", file);
+          });
+        } else if (value && typeof value === 'object' && 'name' in value && 'size' in value) {
+          // Check if it's a File object
+          formData.append("photos", value as File);
+        }
+        // Skip if no files selected
       } else if (Array.isArray(value)) {
         formData.append(key, JSON.stringify(value));
       } else {
@@ -185,6 +191,7 @@ const NewProperty = () => {
                 label="Property Photos"
                 type="file"
                 accept="image/*"
+                multiple={true}
               />
             </div>
 

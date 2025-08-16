@@ -216,7 +216,7 @@ const createProperty = (req, res) => __awaiter(void 0, void 0, void 0, function*
     `;
         // create property
         const newProperty = yield prisma.property.create({
-            data: Object.assign(Object.assign({}, propertyData), { photoUrls, locationId: location.id, landlordCognitoId, amenities: typeof propertyData.amenities === "string"
+            data: Object.assign(Object.assign({}, propertyData), { photoUrls, locationId: location.id, landlordCognitoId, status: 'PendingApproval', amenities: typeof propertyData.amenities === "string"
                     ? propertyData.amenities.split(",")
                     : [], highlights: typeof propertyData.highlights === "string"
                     ? propertyData.highlights.split(",")

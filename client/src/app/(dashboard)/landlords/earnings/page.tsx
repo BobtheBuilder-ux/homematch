@@ -140,7 +140,7 @@ const EarningsPage = () => {
                   min="0"
                   step="0.01"
                 />
-                {earnings && (
+                {earnings && earnings.availableBalance !== undefined && (
                   <p className="text-sm text-muted-foreground mt-1">
                     Available balance: ₦{earnings.availableBalance.toLocaleString()}
                   </p>
@@ -183,7 +183,7 @@ const EarningsPage = () => {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
-              {earnings ? `₦${earnings.totalEarnings.toLocaleString()}` : "₦0.00"}
+              {earnings && earnings.totalEarnings !== undefined ? `₦${earnings.totalEarnings.toLocaleString()}` : "₦0.00"}
             </div>
             <p className="text-xs text-muted-foreground">All-time rental income</p>
           </CardContent>
@@ -196,7 +196,7 @@ const EarningsPage = () => {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
-              {earnings ? `₦${earnings.availableBalance.toLocaleString()}` : "₦0.00"}
+              {earnings && earnings.availableBalance !== undefined ? `₦${earnings.availableBalance.toLocaleString()}` : "₦0.00"}
             </div>
             <p className="text-xs text-muted-foreground">Ready for withdrawal</p>
           </CardContent>
@@ -222,7 +222,7 @@ const EarningsPage = () => {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
-              {earnings ? `₦${earnings.currentMonthEarnings.toLocaleString()}` : "₦0.00"}
+              {earnings && earnings.currentMonthEarnings !== undefined ? `₦${earnings.currentMonthEarnings.toLocaleString()}` : "₦0.00"}
             </div>
             <p className="text-xs text-muted-foreground">Current month income</p>
           </CardContent>
@@ -251,7 +251,7 @@ const EarningsPage = () => {
                   <div className="flex-1">
                     <div className="flex items-center gap-3">
                       <div>
-                        <p className="font-medium">₦{withdrawal.amount.toLocaleString()}</p>
+                        <p className="font-medium">₦{withdrawal.amount !== undefined ? withdrawal.amount.toLocaleString() : '0.00'}</p>
                         <p className="text-sm text-muted-foreground">
                           Requested on {new Date(withdrawal.requestDate).toLocaleDateString()}
                         </p>

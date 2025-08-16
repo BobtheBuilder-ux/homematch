@@ -133,6 +133,7 @@ export const CustomFormField: React.FC<FormFieldProps> = ({
         return (
           <FilePond
             className={`${inputClassName}`}
+            files={field.value || []}
             onupdatefiles={(fileItems) => {
               if (multiple) {
                 const files = fileItems.map((fileItem) => fileItem.file);
