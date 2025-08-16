@@ -65,7 +65,7 @@ const components = {
       const { validationErrors } = useAuthenticator();
       const [role, setRole] = useState("tenant");
       const [invitationCode, setInvitationCode] = useState("");
-      const [superadminCode, setSuperadminCode] = useState("");
+
 
       return (
         <>
@@ -95,17 +95,7 @@ const components = {
               hasError={!!validationErrors?.["custom:invitationCode"]}
             />
           )}
-          {role === "admin" && (
-            <TextField
-              placeholder="Enter the superadmin code"
-              label="Superadmin Code"
-              isRequired
-              value={superadminCode}
-              onChange={(e) => setSuperadminCode(e.target.value)}
-              errorMessage={validationErrors?.["custom:superadminCode"]}
-              hasError={!!validationErrors?.["custom:superadminCode"]}
-            />
-          )}
+
         </>
       );
     },
@@ -192,82 +182,8 @@ const Auth = ({ children }: { children: React.ReactNode }) => {
   }
 
   const handleSignUp = async (formData: any) => {
-    const { "custom:role": role, "custom:invitationCode": invitationCode, "custom:superadminCode": superadminCode, username, email, password, ...rest } = formData;
-    if (role === 'agent') {
-      try {
-        console.log('Creating agent with formData:', formData);
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/agent/agents`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ 
-            name: username, // Use username as name
-            email,
-            phoneNumber: '', // Provide a default empty string for phoneNumber
-            address: '', // Provide a default empty string for address
-            invitationCode 
-          }),
-        });
-        if (!response.ok) {
-          const error = await response.json();
-          throw new Error(error.message);
-        }
-        console.log('Agent created successfully');
-        // Return a properly typed response since the backend already created the user in Cognito
-        return {
-          isSignUpComplete: false,
-          nextStep: {
-            signUpStep: 'CONFIRM_SIGN_UP' as const,
-            codeDeliveryDetails: {
-              deliveryMedium: 'EMAIL' as const,
-              destination: email
-            }
-          }
-        } as SignUpOutput;
-      } catch (error) {
-        console.error('Failed to create agent:', error);
-        // Handle error display to the user
-        throw error;
-      }
-    } else if (role === 'admin') {
-      try {
-        console.log('Creating admin with formData:', formData);
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/admin/admins`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ 
-            name: username, // Use username as name
-            email,
-            phoneNumber: '', // Provide a default empty string for phoneNumber
-            superadminCode 
-          }),
-        });
-        if (!response.ok) {
-          const error = await response.json();
-          throw new Error(error.message);
-        }
-        console.log('Admin created successfully');
-        // Return a properly typed response since the backend already created the user in Cognito
-        return {
-          isSignUpComplete: false,
-          nextStep: {
-            signUpStep: 'CONFIRM_SIGN_UP' as const,
-            codeDeliveryDetails: {
-              deliveryMedium: 'EMAIL' as const,
-              destination: email
-            }
-          }
-        } as SignUpOutput;
-      } catch (error) {
-        console.error('Failed to create admin:', error);
-        // Handle error display to the user
-        throw error;
-      }
-    }
-    // For tenant and landlord roles, use the regular signUp flow
+    // For all roles (tenant, landlord, admin, agent), use the regular Cognito signUp flow
+    // Profile creation will be handled after successful authentication
     return signUp(formData);
   };
 

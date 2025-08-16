@@ -75,12 +75,10 @@ export const api = createApi({
 
           let userDetailsResponse = await fetchWithBQ(endpoint);
 
-          // if user doesn't exist, create new user (but skip for admin and agent roles)
+          // if user doesn't exist, create new user for all roles
           if (
             userDetailsResponse.error &&
-            userDetailsResponse.error.status === 404 &&
-            userRole?.toLowerCase() !== "admin" &&
-            userRole?.toLowerCase() !== "agent"
+            userDetailsResponse.error.status === 404
           ) {
             userDetailsResponse = await createNewUserInDatabase(
               user,

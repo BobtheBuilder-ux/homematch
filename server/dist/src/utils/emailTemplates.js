@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.propertyRentedNotificationTemplate = exports.applicationApprovedTemplate = exports.applicationSubmittedTemplate = exports.inspectionApprovedTemplate = exports.inspectionRequestTemplate = exports.tenantWelcomeTemplate = exports.jobApplicationHiredTemplate = exports.jobApplicationRejectedTemplate = exports.jobApplicationShortlistedTemplate = exports.jobApplicationSubmittedTemplate = exports.welcomeToEmailListTemplate = exports.surveyConfirmationTemplate = void 0;
+exports.adminWelcomeTemplate = exports.propertyRentedNotificationTemplate = exports.applicationApprovedTemplate = exports.applicationSubmittedTemplate = exports.inspectionApprovedTemplate = exports.inspectionRequestTemplate = exports.tenantWelcomeTemplate = exports.jobApplicationHiredTemplate = exports.jobApplicationRejectedTemplate = exports.jobApplicationShortlistedTemplate = exports.jobApplicationSubmittedTemplate = exports.welcomeToEmailListTemplate = exports.surveyConfirmationTemplate = void 0;
 exports.surveyConfirmationTemplate = {
     tenant: {
         subject: "Thank you for completing our Tenant Survey!",
@@ -752,6 +752,76 @@ exports.propertyRentedNotificationTemplate = {
       <div style="text-align: center; margin-top: 20px;">
         <p style="color: #9ca3af; font-size: 12px;">
           This is an automated notification for your rented property.
+        </p>
+      </div>
+    </div>
+  `
+};
+exports.adminWelcomeTemplate = {
+    subject: "Welcome to HomeMatch Admin Portal - Your Account is Ready! 🔐",
+    body: (adminName, email, temporaryPassword) => `
+    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f9f9f9;">
+      <div style="background-color: white; padding: 30px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+        <h2 style="color: #7c2d12; margin-bottom: 20px;">🎉 Welcome to HomeMatch Admin Portal!</h2>
+        
+        <p style="color: #374151; font-size: 16px; line-height: 1.6;">Dear ${adminName},</p>
+        
+        <p style="color: #374151; font-size: 16px; line-height: 1.6;">
+          Welcome to HomeMatch! Your admin account has been successfully created and you now have access to the administrative portal. You can manage the platform, oversee operations, and ensure everything runs smoothly.
+        </p>
+        
+        <div style="background-color: #fef2f2; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #dc2626;">
+          <h3 style="color: #991b1b; margin: 0 0 15px 0;">🔐 Your Login Credentials:</h3>
+          <ul style="color: #374151; margin: 0; padding-left: 20px; list-style: none;">
+            <li style="margin-bottom: 8px;"><strong>Email:</strong> ${email}</li>
+            <li style="margin-bottom: 8px;"><strong>Temporary Password:</strong> <code style="background-color: #f3f4f6; padding: 2px 6px; border-radius: 4px; font-family: monospace;">${temporaryPassword}</code></li>
+          </ul>
+          <p style="color: #991b1b; margin: 10px 0 0 0; font-size: 14px; font-weight: bold;">
+            ⚠️ Please change your password after your first login for security purposes.
+          </p>
+        </div>
+        
+        <div style="background-color: #fef3c7; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #f59e0b;">
+          <h3 style="color: #92400e; margin: 0 0 15px 0;">🚀 Admin Capabilities:</h3>
+          <ul style="color: #374151; margin: 0; padding-left: 20px;">
+            <li style="margin-bottom: 8px;">Manage user accounts and permissions</li>
+            <li style="margin-bottom: 8px;">Oversee property listings and approvals</li>
+            <li style="margin-bottom: 8px;">Monitor platform analytics and reports</li>
+            <li style="margin-bottom: 8px;">Handle support tickets and user inquiries</li>
+            <li style="margin-bottom: 8px;">Configure system settings and preferences</li>
+          </ul>
+        </div>
+        
+        <div style="text-align: center; margin: 20px 0;">
+          <a href="${process.env.CLIENT_URL}/auth/signin" style="background-color: #7c2d12; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold; display: inline-block;">Access Admin Portal</a>
+        </div>
+        
+        <div style="background-color: #eff6ff; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #3b82f6;">
+          <h3 style="color: #1e40af; margin: 0 0 15px 0;">💡 Getting Started:</h3>
+          <ul style="color: #374151; margin: 0; padding-left: 20px;">
+            <li style="margin-bottom: 8px;">Log in using your credentials above</li>
+            <li style="margin-bottom: 8px;">Change your temporary password immediately</li>
+            <li style="margin-bottom: 8px;">Familiarize yourself with the admin dashboard</li>
+            <li style="margin-bottom: 8px;">Review the admin documentation and guidelines</li>
+            <li style="margin-bottom: 8px;">Contact the development team if you need assistance</li>
+          </ul>
+        </div>
+        
+        <p style="color: #374151; font-size: 16px; line-height: 1.6;">
+          If you have any questions or need assistance getting started, please don't hesitate to reach out to our support team.
+        </p>
+        
+        <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #e5e7eb;">
+          <p style="color: #6b7280; font-size: 14px; margin: 0;">
+            Welcome to the team!<br>
+            <strong style="color: #7c2d12;">The HomeMatch Development Team</strong>
+          </p>
+        </div>
+      </div>
+      
+      <div style="text-align: center; margin-top: 20px;">
+        <p style="color: #9ca3af; font-size: 12px;">
+          This is an automated notification for your new admin account.
         </p>
       </div>
     </div>

@@ -32,12 +32,8 @@ const authMiddleware = (allowedRoles) => {
                 res.status(403).json({ message: "Access Denied" });
                 return;
             }
-            // Special handling for admin and agent roles
-            if (userRole.toLowerCase() === "admin" || userRole.toLowerCase() === "agent") {
-                // Allow access for admin and agent roles without creating tenant records
-                // Skip tenant record creation for these roles
-                req.user.skipTenantCreation = true;
-            }
+            // All roles now follow the same authentication flow
+            // Profile creation is handled by the frontend API after successful authentication
         }
         catch (err) {
             console.error("Failed to decode token:", err);

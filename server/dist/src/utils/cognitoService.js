@@ -33,19 +33,9 @@ const createUserInCognito = (email_1, temporaryPassword_1, ...args_1) => __await
                 Value: role,
             },
         ],
-        MessageAction: "SUPPRESS", // Suppress the default welcome email
     });
     try {
         const response = yield cognitoClient.send(createUserCommand);
-        if (response.User) {
-            const setPasswordCommand = new client_cognito_identity_provider_1.AdminSetUserPasswordCommand({
-                Password: temporaryPassword,
-                UserPoolId: process.env.COGNITO_USER_POOL_ID || '',
-                Username: email,
-                Permanent: true,
-            });
-            yield cognitoClient.send(setPasswordCommand);
-        }
         return response.User;
     }
     catch (error) {

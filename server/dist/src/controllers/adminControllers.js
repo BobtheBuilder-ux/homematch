@@ -69,10 +69,10 @@ const getAnalytics = (req, res) => __awaiter(void 0, void 0, void 0, function* (
             totalUsers,
             totalApplications,
             totalRevenue,
-            propertiesGrowth: 12, // Mock data - you can calculate actual growth
-            usersGrowth: 8,
-            applicationsGrowth: 15,
-            revenueGrowth: 22,
+            propertiesGrowth: '', // Mock data - you can calculate actual growth
+            usersGrowth: '',
+            applicationsGrowth: '',
+            revenueGrowth: '',
             monthlyRevenue,
             propertyTypes: propertyTypesData,
             applicationsByStatus: applicationsData,
@@ -264,18 +264,14 @@ const createAgent = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         // Generate a temporary cognitoId (will be replaced when Cognito is integrated)
         const temporaryCognitoId = `temp-${Date.now()}-${Math.random().toString(36).substring(2, 15)}`;
         console.log("Using temporary cognitoId:", temporaryCognitoId);
-        // Set skipTenantCreation flag for agent users
+        // Set user context for agent creation
         if (!req.user) {
             req.user = {
                 id: temporaryCognitoId,
-                role: 'agent',
-                skipTenantCreation: true
+                role: 'agent'
             };
         }
-        else {
-            req.user.skipTenantCreation = true;
-        }
-        console.log("User object with skipTenantCreation flag:", req.user);
+        console.log("User object for agent creation:", req.user);
         // Create agent in database only
         console.log("Creating agent in database with temporary cognitoId:", temporaryCognitoId);
         const agent = yield prisma.agent.create({
@@ -321,10 +317,10 @@ exports.createAgent = createAgent;
 const createAdmin = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         console.log("Creating admin with request body:", req.body);
-        const { name, email, phoneNumber, superadminCode } = req.body;
-        // Validate superadmin code
-        if (superadminCode !== process.env.SUPERADMIN_CODE) {
-            res.status(400).json({ message: "Invalid superadmin code" });
+        const { name, email, phoneNumber } = req.body;
+        // Validate email domain
+        if (!email.endsWith('@homematch.ng')) {
+            res.status(400).json({ message: "Admin registration is only allowed for emails ending with @homematch.ng" });
             return;
         }
         // Check if admin with this email already exists
@@ -354,14 +350,14 @@ const createAdmin = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
             },
         });
         console.log("Admin created in database:", admin);
-        // Add admin to email list
+        // Add admin to email list (Cognito will handle the OTP email)
         try {
             yield (0, emailSubscriptionService_1.addToEmailList)({
                 email: admin.email,
                 fullName: admin.name,
                 subscriptionType: 'newsletter'
             });
-            console.log(`Added admin ${admin.email} to email list`);
+            console.log(`Admin ${admin.email} added to email list`);
         }
         catch (emailError) {
             console.error('Error adding admin to email list:', emailError);

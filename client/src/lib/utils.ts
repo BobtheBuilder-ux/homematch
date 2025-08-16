@@ -62,6 +62,12 @@ export const createNewUserInDatabase = async (
   fetchWithBQ: any
 ) => {
   let createEndpoint: string;
+  let requestBody: any = {
+    cognitoId: user.userId,
+    name: user.username,
+    email: idToken?.payload?.email || "",
+    phoneNumber: "",
+  };
   
   switch (userRole?.toLowerCase()) {
     case "landlord":
@@ -69,9 +75,19 @@ export const createNewUserInDatabase = async (
       break;
     case "admin":
       createEndpoint = "/admin/admins";
+      // For admin, validate email domain
+      const adminEmail = idToken?.payload?.email || "";
+      if (!adminEmail.endsWith("@homematch.ng")) {
+        throw new Error("Admin registration requires an @homematch.ng email address");
+      }
       break;
     case "agent":
       createEndpoint = "/agent/agents";
+      // For agent, we need to add address field
+      requestBody = {
+        ...requestBody,
+        address: "",
+      };
       break;
     case "tenant":
     default:
@@ -82,12 +98,7 @@ export const createNewUserInDatabase = async (
   const createUserResponse = await fetchWithBQ({
     url: createEndpoint,
     method: "POST",
-    body: {
-      cognitoId: user.userId,
-      name: user.username,
-      email: idToken?.payload?.email || "",
-      phoneNumber: "",
-    },
+    body: requestBody,
   });
 
   if (createUserResponse.error) {

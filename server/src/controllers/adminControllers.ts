@@ -71,10 +71,10 @@ export const getAnalytics = async (
       totalUsers,
       totalApplications,
       totalRevenue,
-      propertiesGrowth: 12, // Mock data - you can calculate actual growth
-      usersGrowth: 8,
-      applicationsGrowth: 15,
-      revenueGrowth: 22,
+      propertiesGrowth: '', // Mock data - you can calculate actual growth
+      usersGrowth:'',
+      applicationsGrowth: '',
+      revenueGrowth: '',
       monthlyRevenue,
       propertyTypes: propertyTypesData,
       applicationsByStatus: applicationsData,
@@ -304,17 +304,14 @@ export const createAgent = async (
     const temporaryCognitoId = `temp-${Date.now()}-${Math.random().toString(36).substring(2, 15)}`;
     console.log("Using temporary cognitoId:", temporaryCognitoId);
 
-    // Set skipTenantCreation flag for agent users
+    // Set user context for agent creation
     if (!req.user) {
       req.user = {
         id: temporaryCognitoId,
-        role: 'agent',
-        skipTenantCreation: true
+        role: 'agent'
       };
-    } else {
-      req.user.skipTenantCreation = true;
     }
-    console.log("User object with skipTenantCreation flag:", req.user);
+    console.log("User object for agent creation:", req.user);
 
     // Create agent in database only
     console.log("Creating agent in database with temporary cognitoId:", temporaryCognitoId);
@@ -364,11 +361,11 @@ export const createAdmin = async (
 ): Promise<void> => {
   try {
     console.log("Creating admin with request body:", req.body);
-    const { name, email, phoneNumber, superadminCode } = req.body;
+    const { name, email, phoneNumber } = req.body;
 
-    // Validate superadmin code
-    if (superadminCode !== process.env.SUPERADMIN_CODE) {
-      res.status(400).json({ message: "Invalid superadmin code" });
+    // Validate email domain
+    if (!email.endsWith('@homematch.ng')) {
+      res.status(400).json({ message: "Admin registration is only allowed for emails ending with @homematch.ng" });
       return;
     }
 
@@ -404,14 +401,14 @@ export const createAdmin = async (
     });
     console.log("Admin created in database:", admin);
 
-    // Add admin to email list
+    // Add admin to email list (Cognito will handle the OTP email)
     try {
       await addToEmailList({
         email: admin.email,
         fullName: admin.name,
         subscriptionType: 'newsletter'
       });
-      console.log(`Added admin ${admin.email} to email list`);
+      console.log(`Admin ${admin.email} added to email list`);
     } catch (emailError) {
       console.error('Error adding admin to email list:', emailError);
       // Don't fail the admin creation if email subscription fails

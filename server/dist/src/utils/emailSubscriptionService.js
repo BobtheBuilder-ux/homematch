@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.sendTenantWelcomeEmail = exports.sendInspectionApprovedEmail = exports.sendInspectionRequestEmail = exports.getEmailSubscriptions = exports.unsubscribeFromEmailList = exports.sendWelcomeEmail = exports.sendSurveyConfirmationEmail = exports.addToEmailList = void 0;
+exports.sendAdminWelcomeEmail = exports.sendTenantWelcomeEmail = exports.sendInspectionApprovedEmail = exports.sendInspectionRequestEmail = exports.getEmailSubscriptions = exports.unsubscribeFromEmailList = exports.sendWelcomeEmail = exports.sendSurveyConfirmationEmail = exports.addToEmailList = void 0;
 const client_1 = require("@prisma/client");
 const emailService_1 = require("./emailService");
 const emailTemplates_1 = require("./emailTemplates");
@@ -159,7 +159,7 @@ const sendTenantWelcomeEmail = (tenantEmail, tenantName) => __awaiter(void 0, vo
             subject: emailTemplates_1.tenantWelcomeTemplate.subject,
             body: emailTemplates_1.tenantWelcomeTemplate.body(tenantName)
         });
-        console.log(`Welcome email sent to new tenant: ${tenantEmail}`);
+        console.log(`Tenant welcome email sent to: ${tenantEmail}`);
     }
     catch (error) {
         console.error('Error sending tenant welcome email:', error);
@@ -167,3 +167,18 @@ const sendTenantWelcomeEmail = (tenantEmail, tenantName) => __awaiter(void 0, vo
     }
 });
 exports.sendTenantWelcomeEmail = sendTenantWelcomeEmail;
+const sendAdminWelcomeEmail = (adminEmail, adminName, temporaryPassword) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        yield (0, emailService_1.sendEmail)({
+            to: adminEmail,
+            subject: emailTemplates_1.adminWelcomeTemplate.subject,
+            body: emailTemplates_1.adminWelcomeTemplate.body(adminName, adminEmail, temporaryPassword)
+        });
+        console.log(`Admin welcome email sent to: ${adminEmail}`);
+    }
+    catch (error) {
+        console.error('Error sending admin welcome email:', error);
+        throw error;
+    }
+});
+exports.sendAdminWelcomeEmail = sendAdminWelcomeEmail;
