@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.propertyRentedNotificationTemplate = exports.applicationApprovedTemplate = exports.applicationSubmittedTemplate = exports.inspectionApprovedTemplate = exports.inspectionRequestTemplate = exports.tenantWelcomeTemplate = exports.welcomeToEmailListTemplate = exports.surveyConfirmationTemplate = void 0;
+exports.propertyRentedNotificationTemplate = exports.applicationApprovedTemplate = exports.applicationSubmittedTemplate = exports.inspectionApprovedTemplate = exports.inspectionRequestTemplate = exports.tenantWelcomeTemplate = exports.jobApplicationHiredTemplate = exports.jobApplicationRejectedTemplate = exports.jobApplicationShortlistedTemplate = exports.jobApplicationSubmittedTemplate = exports.welcomeToEmailListTemplate = exports.surveyConfirmationTemplate = void 0;
 exports.surveyConfirmationTemplate = {
     tenant: {
         subject: "Thank you for completing our Tenant Survey!",
@@ -136,6 +136,258 @@ exports.welcomeToEmailListTemplate = {
       </div>
     </div>
   `
+};
+// Job Application Email Templates
+exports.jobApplicationSubmittedTemplate = {
+    subject: "Application Submitted - We've Received Your Application!",
+    body: (applicantName, jobTitle, companyName, applicationDate) => `
+    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f9f9f9;">
+      <div style="background-color: white; padding: 30px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+        <h2 style="color: #3b82f6; margin-bottom: 20px;">📋 Application Submitted Successfully!</h2>
+        
+        <p style="color: #374151; font-size: 16px; line-height: 1.6;">Dear ${applicantName},</p>
+        
+        <p style="color: #374151; font-size: 16px; line-height: 1.6;">
+          Thank you for submitting your application for the <strong>${jobTitle}</strong> position at ${companyName}. We have received your application and it is currently <strong>under review</strong>.
+        </p>
+        
+        <div style="background-color: #eff6ff; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #3b82f6;">
+          <h3 style="color: #1e40af; margin: 0 0 15px 0;">💼 Application Details:</h3>
+          <ul style="color: #374151; margin: 0; padding-left: 20px; list-style: none;">
+            <li style="margin-bottom: 8px;"><strong>Position:</strong> ${jobTitle}</li>
+            <li style="margin-bottom: 8px;"><strong>Company:</strong> ${companyName}</li>
+            <li style="margin-bottom: 8px;"><strong>Application Date:</strong> ${applicationDate}</li>
+            <li style="margin-bottom: 8px;"><strong>Status:</strong> <span style="color: #f59e0b; font-weight: bold;">Under Review</span></li>
+          </ul>
+        </div>
+        
+        <div style="background-color: #fef3c7; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #f59e0b;">
+          <h3 style="color: #92400e; margin: 0 0 10px 0;">⏰ What Happens Next?</h3>
+          <p style="color: #374151; margin: 0; font-size: 16px; line-height: 1.6;">
+            Our hiring team will carefully review your application and qualifications. You will receive an email notification with updates on your application status. This process typically takes <strong>5-7 business days</strong>.
+          </p>
+        </div>
+        
+        <p style="color: #374151; font-size: 16px; line-height: 1.6;">
+          We appreciate your interest in joining our team and your patience during the review process. If you have any questions, please don't hesitate to contact our HR team.
+        </p>
+        
+        <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #e5e7eb;">
+          <p style="color: #6b7280; font-size: 14px; margin: 0;">
+            Best regards,<br>
+            <strong style="color: #3b82f6;">The ${companyName} Hiring Team</strong>
+          </p>
+        </div>
+      </div>
+      
+      <div style="text-align: center; margin-top: 20px;">
+        <p style="color: #9ca3af; font-size: 12px;">
+          This is an automated notification for your job application submission.
+        </p>
+      </div>
+    </div>
+  `
+};
+exports.jobApplicationShortlistedTemplate = {
+    subject: "🎉 You've Been Shortlisted for an Interview!",
+    body: (applicantName, jobTitle, companyName, interviewDate, interviewTime, interviewLocation) => `
+    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f9f9f9;">
+      <div style="background-color: white; padding: 30px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+        <h2 style="color: #10b981; margin-bottom: 20px;">🎉 Congratulations! You've Been Shortlisted!</h2>
+        
+        <p style="color: #374151; font-size: 16px; line-height: 1.6;">Dear ${applicantName},</p>
+        
+        <p style="color: #374151; font-size: 16px; line-height: 1.6;">
+          Great news! After reviewing your application for the <strong>${jobTitle}</strong> position at ${companyName}, we're pleased to inform you that you've been <strong>shortlisted for an interview</strong>.
+        </p>
+        
+        <div style="background-color: #d1fae5; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #10b981;">
+          <h3 style="color: #047857; margin: 0 0 15px 0;">💼 Interview Details:</h3>
+          <ul style="color: #374151; margin: 0; padding-left: 20px; list-style: none;">
+            <li style="margin-bottom: 8px;"><strong>Position:</strong> ${jobTitle}</li>
+            <li style="margin-bottom: 8px;"><strong>Company:</strong> ${companyName}</li>
+            ${interviewDate ? `<li style="margin-bottom: 8px;"><strong>Interview Date:</strong> ${interviewDate}</li>` : ''}
+            ${interviewTime ? `<li style="margin-bottom: 8px;"><strong>Interview Time:</strong> ${interviewTime}</li>` : ''}
+            ${interviewLocation ? `<li style="margin-bottom: 8px;"><strong>Location:</strong> ${interviewLocation}</li>` : ''}
+            <li style="margin-bottom: 8px;"><strong>Status:</strong> <span style="color: #10b981; font-weight: bold;">Shortlisted</span></li>
+          </ul>
+        </div>
+        
+        <div style="background-color: #eff6ff; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #3b82f6;">
+          <h3 style="color: #1e40af; margin: 0 0 15px 0;">📝 Interview Preparation Tips:</h3>
+          <ul style="color: #374151; margin: 0; padding-left: 20px;">
+            <li style="margin-bottom: 8px;">Review the job description and company information</li>
+            <li style="margin-bottom: 8px;">Prepare examples of your relevant experience and achievements</li>
+            <li style="margin-bottom: 8px;">Research common interview questions for this role</li>
+            <li style="margin-bottom: 8px;">Prepare thoughtful questions about the role and company</li>
+            <li style="margin-bottom: 8px;">Arrive 10-15 minutes early and dress professionally</li>
+          </ul>
+        </div>
+        
+        <div style="background-color: #fef3c7; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #f59e0b;">
+          <h3 style="color: #92400e; margin: 0 0 10px 0;">📞 Next Steps:</h3>
+          <p style="color: #374151; margin: 0; font-size: 16px; line-height: 1.6;">
+            ${interviewDate ? 'Please confirm your attendance by replying to this email.' : 'Our HR team will contact you within 24-48 hours to schedule your interview.'} If you have any questions or need to reschedule, please contact us as soon as possible.
+          </p>
+        </div>
+        
+        <p style="color: #374151; font-size: 16px; line-height: 1.6;">
+          We're excited to meet you and learn more about your qualifications. Good luck with your interview preparation!
+        </p>
+        
+        <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #e5e7eb;">
+          <p style="color: #6b7280; font-size: 14px; margin: 0;">
+            Best of luck!<br>
+            <strong style="color: #10b981;">The ${companyName} Hiring Team</strong>
+          </p>
+        </div>
+      </div>
+      
+      <div style="text-align: center; margin-top: 20px;">
+        <p style="color: #9ca3af; font-size: 12px;">
+          This is an automated notification for your job application status update.
+        </p>
+      </div>
+    </div>
+  `
+};
+exports.jobApplicationRejectedTemplate = {
+    subject: "Update on Your Job Application",
+    body: (applicantName, jobTitle, companyName) => `
+    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f9f9f9;">
+      <div style="background-color: white; padding: 30px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+        <h2 style="color: #6b7280; margin-bottom: 20px;">Thank You for Your Interest</h2>
+        
+        <p style="color: #374151; font-size: 16px; line-height: 1.6;">Dear ${applicantName},</p>
+        
+        <p style="color: #374151; font-size: 16px; line-height: 1.6;">
+          Thank you for your interest in the <strong>${jobTitle}</strong> position at ${companyName} and for taking the time to submit your application.
+        </p>
+        
+        <p style="color: #374151; font-size: 16px; line-height: 1.6;">
+          After careful consideration of all applications, we have decided to move forward with other candidates whose qualifications more closely match our current requirements for this specific role.
+        </p>
+        
+        <div style="background-color: #f3f4f6; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #6b7280;">
+          <h3 style="color: #374151; margin: 0 0 15px 0;">💼 Application Details:</h3>
+          <ul style="color: #374151; margin: 0; padding-left: 20px; list-style: none;">
+            <li style="margin-bottom: 8px;"><strong>Position:</strong> ${jobTitle}</li>
+            <li style="margin-bottom: 8px;"><strong>Company:</strong> ${companyName}</li>
+            <li style="margin-bottom: 8px;"><strong>Status:</strong> <span style="color: #6b7280; font-weight: bold;">Not Selected</span></li>
+          </ul>
+        </div>
+        
+        <div style="background-color: #eff6ff; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #3b82f6;">
+          <h3 style="color: #1e40af; margin: 0 0 15px 0;">🚀 Moving Forward:</h3>
+          <ul style="color: #374151; margin: 0; padding-left: 20px;">
+            <li style="margin-bottom: 8px;">We encourage you to apply for future openings that match your skills</li>
+            <li style="margin-bottom: 8px;">Your resume will be kept on file for consideration for other opportunities</li>
+            <li style="margin-bottom: 8px;">Follow us on social media for updates on new job postings</li>
+            <li style="margin-bottom: 8px;">Consider connecting with our team on all social media</li>
+          </ul>
+        </div>
+        
+        <div style="background-color: #fef3c7; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #f59e0b;">
+          <h3 style="color: #92400e; margin: 0 0 10px 0;">💡 Professional Development:</h3>
+          <p style="color: #374151; margin: 0; font-size: 16px; line-height: 1.6;">
+            While this particular opportunity didn't work out, we were impressed by your background. Consider enhancing your skills in areas relevant to your target roles, and don't hesitate to apply for future positions that align with your experience.
+          </p>
+        </div>
+        
+        <p style="color: #374151; font-size: 16px; line-height: 1.6;">
+          We appreciate the time and effort you invested in your application and wish you the best of luck in your job search. Thank you again for considering ${companyName} as a potential employer.
+        </p>
+        
+        <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #e5e7eb;">
+          <p style="color: #6b7280; font-size: 14px; margin: 0;">
+            Best wishes for your career journey,<br>
+            <strong style="color: #6b7280;">The ${companyName} Hiring Team</strong>
+          </p>
+        </div>
+      </div>
+      
+      <div style="text-align: center; margin-top: 20px;">
+        <p style="color: #9ca3af; font-size: 12px;">
+          This is an automated notification regarding your job application status.
+        </p>
+      </div>
+    </div>
+  `
+};
+exports.jobApplicationHiredTemplate = {
+    subject: "🎉 Congratulations! You've Been Selected for the Position!",
+    body: (applicantName, jobTitle, companyName, startDate, salary, hrContactName, hrContactEmail) => `
+    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f9f9f9;">
+      <div style="background-color: white; padding: 30px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+        <h2 style="color: #059669; margin-bottom: 20px;">🎉 Congratulations! Welcome to the Team!</h2>
+        
+        <p style="color: #374151; font-size: 16px; line-height: 1.6;">Dear ${applicantName},</p>
+        
+        <p style="color: #374151; font-size: 16px; line-height: 1.6;">
+          We are thrilled to inform you that you have been <strong>selected</strong> for the <strong>${jobTitle}</strong> position at ${companyName}! After careful consideration of all candidates, we believe you are the perfect fit for our team.
+        </p>
+        
+        <div style="background-color: #ecfdf5; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #059669;">
+          <h3 style="color: #047857; margin: 0 0 15px 0;">💼 Position Details:</h3>
+          <ul style="color: #374151; margin: 0; padding-left: 20px; list-style: none;">
+            <li style="margin-bottom: 8px;"><strong>Position:</strong> ${jobTitle}</li>
+            <li style="margin-bottom: 8px;"><strong>Company:</strong> ${companyName}</li>
+            ${startDate ? `<li style="margin-bottom: 8px;"><strong>Start Date:</strong> ${startDate}</li>` : ''}
+            ${salary ? `<li style="margin-bottom: 8px;"><strong>Salary:</strong> ${salary}</li>` : ''}
+            <li style="margin-bottom: 8px;"><strong>Status:</strong> <span style="color: #059669; font-weight: bold;">Hired</span></li>
+          </ul>
+        </div>
+        
+        <div style="background-color: #eff6ff; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #3b82f6;">
+          <h3 style="color: #1e40af; margin: 0 0 15px 0;">📋 Next Steps:</h3>
+          <ul style="color: #374151; margin: 0; padding-left: 20px;">
+            <li style="margin-bottom: 8px;">You will receive a formal offer letter within 24-48 hours</li>
+            <li style="margin-bottom: 8px;">Complete any required background checks and documentation</li>
+            <li style="margin-bottom: 8px;">Attend the new employee orientation session</li>
+            <li style="margin-bottom: 8px;">Set up your workspace and IT accounts</li>
+            <li style="margin-bottom: 8px;">Meet your team and direct supervisor</li>
+          </ul>
+        </div>
+        
+        ${hrContactName && hrContactEmail ? `
+        <div style="background-color: #fef3c7; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #f59e0b;">
+          <h3 style="color: #92400e; margin: 0 0 15px 0;">👤 Your HR Contact:</h3>
+          <div style="background-color: white; padding: 15px; border-radius: 6px; border: 1px solid #e5e7eb;">
+            <p style="color: #374151; margin: 0 0 8px 0; font-size: 18px;"><strong>${hrContactName}</strong></p>
+            <p style="color: #6b7280; margin: 0; font-size: 16px;">📧 Email: <strong style="color: #3b82f6;">${hrContactEmail}</strong></p>
+          </div>
+          <p style="color: #374151; margin: 10px 0 0 0; font-size: 14px;">
+            Please reach out to ${hrContactName} if you have any questions about your onboarding process or need any clarification.
+          </p>
+        </div>
+        ` : ''}
+        
+        <div style="background-color: #f0f9ff; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #0ea5e9;">
+          <h3 style="color: #0c4a6e; margin: 0 0 10px 0;">🌟 Welcome Message:</h3>
+          <p style="color: #374151; margin: 0; font-size: 16px; line-height: 1.6;">
+            We're excited to have you join our team and contribute to our mission. Your skills and experience will be valuable additions to our organization, and we look forward to supporting your professional growth.
+          </p>
+        </div>
+        
+        <p style="color: #374151; font-size: 16px; line-height: 1.6;">
+          Once again, congratulations on your new role! We can't wait to see the great things you'll accomplish as part of the ${companyName} family.
+        </p>
+        
+        <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #e5e7eb;">
+          <p style="color: #6b7280; font-size: 14px; margin: 0;">
+            Welcome aboard!<br>
+            <strong style="color: #059669;">The ${companyName} Team</strong>
+          </p>
+        </div>
+      </div>
+      
+      <div style="text-align: center; margin-top: 20px;">
+        <p style="color: #9ca3af; font-size: 12px;">
+          This is an automated notification for your successful job application.
+        </p>
+      </div>
+    </div>
+   `
 };
 exports.tenantWelcomeTemplate = {
     subject: "Welcome to HomeMatch - Your Journey Starts Here! 🏠",
