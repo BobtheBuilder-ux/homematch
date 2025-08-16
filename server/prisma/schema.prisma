@@ -425,3 +425,94 @@ model Withdrawal {
 
   landlord Landlord @relation(fields: [landlordCognitoId], references: [cognitoId])
 }
+
+// Job Application System Models
+enum JobType {
+  FullTime
+  PartTime
+  Contract
+  Internship
+  Remote
+}
+
+enum JobApplicationStatus {
+  Submitted
+  UnderReview
+  Shortlisted
+  Interviewed
+  Rejected
+  Hired
+}
+
+enum ExperienceLevel {
+  Entry
+  Junior
+  Mid
+  Senior
+  Lead
+  Executive
+}
+
+model Job {
+  id              Int             @id @default(autoincrement())
+  title           String
+  description     String
+  requirements    String
+  responsibilities String
+  jobType         JobType
+  experienceLevel ExperienceLevel
+  salaryMin       Float?
+  salaryMax       Float?
+  location        String
+  department      String?
+  isActive        Boolean         @default(true)
+  postedDate      DateTime        @default(now())
+  closingDate     DateTime?
+  createdBy       String          // Admin cognitoId
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
+  applications JobApplication[]
+}
+
+model JobApplication {
+  id                Int                   @id @default(autoincrement())
+  jobId             Int
+  applicantName     String
+  applicantEmail    String
+  applicantPhone    String?
+  resumeUrl         String
+  coverLetter       String?
+  experience        String?
+  education         String?
+  skills            String?
+  portfolioUrl      String?
+  linkedinUrl       String?
+  status            JobApplicationStatus @default(Submitted)
+  submittedAt       DateTime             @default(now())
+  reviewedAt        DateTime?
+  reviewedBy        String?              // Admin cognitoId
+  notes             String?
+  createdAt         DateTime             @default(now())
+  updatedAt         DateTime             @updatedAt
+
+  job     Job                    @relation(fields: [jobId], references: [id])
+  ratings JobApplicationRating[]
+}
+
+model JobApplicationRating {
+  id                  Int    @id @default(autoincrement())
+  jobApplicationId    Int
+  criteriaName        String
+  score              Int    // 1-10 scale
+  maxScore           Int    @default(10)
+  weight             Float  @default(1.0)
+  comments           String?
+  ratedBy            String // Admin cognitoId
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  jobApplication JobApplication @relation(fields: [jobApplicationId], references: [id])
+
+  @@unique([jobApplicationId, criteriaName])
+}
