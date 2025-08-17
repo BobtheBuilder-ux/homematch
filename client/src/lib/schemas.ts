@@ -37,7 +37,7 @@ export const applicationSchema = z.object({
   nationality: z.string().optional(),
   maritalStatus: z.string().optional(),
   idType: z.string().optional(),
-  idDocumentUrl: z.instanceof(File).optional(),
+  idDocumentUrl: z.union([z.instanceof(File), z.undefined()]).optional(),
   durationAtCurrentAddress: z.string().optional(),
   
   // Employment Details
@@ -47,7 +47,7 @@ export const applicationSchema = z.object({
   workAddress: z.string().optional(),
   monthlyIncome: z.coerce.number().positive().optional(),
   durationAtCurrentJob: z.string().optional(),
-  incomeProofUrl: z.instanceof(File).optional(),
+  incomeProofUrl: z.union([z.instanceof(File), z.undefined()]).optional(),
   
   // Additional Information
   reasonForLeaving: z.string().optional(),

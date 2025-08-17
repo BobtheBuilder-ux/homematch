@@ -1,6 +1,5 @@
-import { SESClient, SendEmailCommand, SendRawEmailCommand } from "@aws-sdk/client-ses";
-
-const ses = new SESClient({ region: process.env.AWS_REGION });
+import nodemailer from 'nodemailer';
+import { Attachment } from 'nodemailer/lib/mailer';
 
 interface EmailAttachment {
   filename: string;
@@ -15,74 +14,53 @@ interface EmailParams {
   attachments?: EmailAttachment[];
 }
 
+// Create Gmail transporter
+const createTransporter = () => {
+  return nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASS, // This should be an App Password, not your regular Gmail password
+    },
+  });
+};
+
 export const sendEmail = async ({ to, subject, body, attachments }: EmailParams): Promise<void> => {
-  if (attachments && attachments.length > 0) {
-    // Use SendRawEmailCommand for emails with attachments
-    const boundary = `----=_Part_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+  try {
+    const transporter = createTransporter();
     
-    let rawMessage = `From: ${process.env.SES_FROM_EMAIL}\r\n`;
-    rawMessage += `To: ${to}\r\n`;
-    rawMessage += `Subject: ${subject}\r\n`;
-    rawMessage += `MIME-Version: 1.0\r\n`;
-    rawMessage += `Content-Type: multipart/mixed; boundary="${boundary}"\r\n\r\n`;
-    
-    // HTML body part
-    rawMessage += `--${boundary}\r\n`;
-    rawMessage += `Content-Type: text/html; charset=UTF-8\r\n`;
-    rawMessage += `Content-Transfer-Encoding: 7bit\r\n\r\n`;
-    rawMessage += `${body}\r\n\r\n`;
-    
-    // Attachment parts
-    for (const attachment of attachments) {
-      rawMessage += `--${boundary}\r\n`;
-      rawMessage += `Content-Type: ${attachment.contentType}\r\n`;
-      rawMessage += `Content-Transfer-Encoding: base64\r\n`;
-      rawMessage += `Content-Disposition: attachment; filename="${attachment.filename}"\r\n\r\n`;
-      rawMessage += `${attachment.content.toString('base64')}\r\n\r\n`;
-    }
-    
-    rawMessage += `--${boundary}--\r\n`;
-    
-    const rawParams = {
-      Source: process.env.SES_FROM_EMAIL,
-      Destinations: [to],
-      RawMessage: {
-        Data: Buffer.from(rawMessage)
-      }
-    };
-    
-    try {
-      await ses.send(new SendRawEmailCommand(rawParams));
-    } catch (error) {
-      console.error("Error sending email with attachments:", error);
-      throw error;
-    }
-  } else {
-    // Use regular SendEmailCommand for emails without attachments
-    const params = {
-      Source: process.env.SES_FROM_EMAIL,
-      Destination: {
-        ToAddresses: [to],
-      },
-      Message: {
-        Subject: {
-          Data: subject,
-          Charset: "UTF-8",
-        },
-        Body: {
-          Html: {
-            Data: body,
-            Charset: "UTF-8",
-          },
-        },
-      },
+    // Convert attachments to nodemailer format
+    const nodemailerAttachments: Attachment[] = attachments?.map(attachment => ({
+      filename: attachment.filename,
+      content: attachment.content,
+      contentType: attachment.contentType,
+    })) || [];
+
+    const mailOptions = {
+      from: process.env.EMAIL_USER,
+      to: to,
+      subject: subject,
+      html: body,
+      attachments: nodemailerAttachments,
     };
 
-    try {
-      await ses.send(new SendEmailCommand(params));
-    } catch (error) {
-      console.error("Error sending email:", error);
-      throw error;
-    }
+    const result = await transporter.sendMail(mailOptions);
+    console.log('Email sent successfully:', result.messageId);
+  } catch (error) {
+    console.error('Error sending email:', error);
+    throw error;
+  }
+};
+
+// Test email configuration
+export const testEmailConfiguration = async (): Promise<boolean> => {
+  try {
+    const transporter = createTransporter();
+    await transporter.verify();
+    console.log('Gmail SMTP configuration is valid');
+    return true;
+  } catch (error) {
+    console.error('Gmail SMTP configuration error:', error);
+    return false;
   }
 };

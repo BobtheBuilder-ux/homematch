@@ -29,9 +29,16 @@ import { FilePond } from "react-filepond";
 import "filepond/dist/filepond.min.css";
 import FilePondPluginImagePreview from "filepond-plugin-image-preview";
 import FilePondPluginImageExifOrientation from "filepond-plugin-image-exif-orientation";
+import FilePondPluginFileValidateType from "filepond-plugin-file-validate-type";
+import FilePondPluginFileValidateSize from "filepond-plugin-file-validate-size";
 import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
 
-registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
+registerPlugin(
+  FilePondPluginImageExifOrientation,
+  FilePondPluginImagePreview,
+  FilePondPluginFileValidateType,
+  FilePondPluginFileValidateSize
+);
 
 interface FormFieldProps {
   name: string;
@@ -135,12 +142,18 @@ export const CustomFormField: React.FC<FormFieldProps> = ({
             className={`${inputClassName}`}
             files={field.value || []}
             onupdatefiles={(fileItems) => {
+              console.log('FilePond onupdatefiles called:', fileItems);
               if (multiple) {
-                const files = fileItems.map((fileItem) => fileItem.file);
+                const files = fileItems.map((fileItem) => {
+                  console.log('FileItem:', fileItem, 'File:', fileItem.file);
+                  return fileItem.file;
+                });
+                console.log('Setting files:', files);
                 field.onChange(files);
               } else {
                 // For single file uploads, return the first file or null
                 const file = fileItems.length > 0 ? fileItems[0].file : null;
+                console.log('Setting single file:', file);
                 field.onChange(file);
               }
             }}
@@ -149,6 +162,20 @@ export const CustomFormField: React.FC<FormFieldProps> = ({
             labelIdle={`Drag & Drop your ${multiple ? 'files' : 'file'} or <span class="filepond--label-action">Browse</span>`}
             credits={false}
             acceptedFileTypes={accept ? accept.split(',') : undefined}
+            allowFileTypeValidation={true}
+            fileValidateTypeLabelExpectedTypes="Expects {allButLastType} or {lastType}"
+            allowFileSizeValidation={true}
+            maxFileSize="10MB"
+            fileValidateTypeLabelExpectedTypesMap={{
+              'image/jpeg': '.jpg',
+              'image/png': '.png',
+              'image/gif': '.gif',
+              'image/webp': '.webp',
+              'application/pdf': '.pdf'
+            }}
+            allowImagePreview={true}
+            allowImageExifOrientation={true}
+            imagePreviewHeight={170}
           />
         );
       case "number":

@@ -8,75 +8,58 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.sendEmail = void 0;
-const client_ses_1 = require("@aws-sdk/client-ses");
-const ses = new client_ses_1.SESClient({ region: process.env.AWS_REGION });
+exports.testEmailConfiguration = exports.sendEmail = void 0;
+const nodemailer_1 = __importDefault(require("nodemailer"));
+// Create Gmail transporter
+const createTransporter = () => {
+    return nodemailer_1.default.createTransport({
+        service: 'gmail',
+        auth: {
+            user: process.env.EMAIL_USER,
+            pass: process.env.EMAIL_PASS, // This should be an App Password, not your regular Gmail password
+        },
+    });
+};
 const sendEmail = (_a) => __awaiter(void 0, [_a], void 0, function* ({ to, subject, body, attachments }) {
-    if (attachments && attachments.length > 0) {
-        // Use SendRawEmailCommand for emails with attachments
-        const boundary = `----=_Part_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-        let rawMessage = `From: ${process.env.SES_FROM_EMAIL}\r\n`;
-        rawMessage += `To: ${to}\r\n`;
-        rawMessage += `Subject: ${subject}\r\n`;
-        rawMessage += `MIME-Version: 1.0\r\n`;
-        rawMessage += `Content-Type: multipart/mixed; boundary="${boundary}"\r\n\r\n`;
-        // HTML body part
-        rawMessage += `--${boundary}\r\n`;
-        rawMessage += `Content-Type: text/html; charset=UTF-8\r\n`;
-        rawMessage += `Content-Transfer-Encoding: 7bit\r\n\r\n`;
-        rawMessage += `${body}\r\n\r\n`;
-        // Attachment parts
-        for (const attachment of attachments) {
-            rawMessage += `--${boundary}\r\n`;
-            rawMessage += `Content-Type: ${attachment.contentType}\r\n`;
-            rawMessage += `Content-Transfer-Encoding: base64\r\n`;
-            rawMessage += `Content-Disposition: attachment; filename="${attachment.filename}"\r\n\r\n`;
-            rawMessage += `${attachment.content.toString('base64')}\r\n\r\n`;
-        }
-        rawMessage += `--${boundary}--\r\n`;
-        const rawParams = {
-            Source: process.env.SES_FROM_EMAIL,
-            Destinations: [to],
-            RawMessage: {
-                Data: Buffer.from(rawMessage)
-            }
+    try {
+        const transporter = createTransporter();
+        // Convert attachments to nodemailer format
+        const nodemailerAttachments = (attachments === null || attachments === void 0 ? void 0 : attachments.map(attachment => ({
+            filename: attachment.filename,
+            content: attachment.content,
+            contentType: attachment.contentType,
+        }))) || [];
+        const mailOptions = {
+            from: process.env.EMAIL_USER,
+            to: to,
+            subject: subject,
+            html: body,
+            attachments: nodemailerAttachments,
         };
-        try {
-            yield ses.send(new client_ses_1.SendRawEmailCommand(rawParams));
-        }
-        catch (error) {
-            console.error("Error sending email with attachments:", error);
-            throw error;
-        }
+        const result = yield transporter.sendMail(mailOptions);
+        console.log('Email sent successfully:', result.messageId);
     }
-    else {
-        // Use regular SendEmailCommand for emails without attachments
-        const params = {
-            Source: process.env.SES_FROM_EMAIL,
-            Destination: {
-                ToAddresses: [to],
-            },
-            Message: {
-                Subject: {
-                    Data: subject,
-                    Charset: "UTF-8",
-                },
-                Body: {
-                    Html: {
-                        Data: body,
-                        Charset: "UTF-8",
-                    },
-                },
-            },
-        };
-        try {
-            yield ses.send(new client_ses_1.SendEmailCommand(params));
-        }
-        catch (error) {
-            console.error("Error sending email:", error);
-            throw error;
-        }
+    catch (error) {
+        console.error('Error sending email:', error);
+        throw error;
     }
 });
 exports.sendEmail = sendEmail;
+// Test email configuration
+const testEmailConfiguration = () => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const transporter = createTransporter();
+        yield transporter.verify();
+        console.log('Gmail SMTP configuration is valid');
+        return true;
+    }
+    catch (error) {
+        console.error('Gmail SMTP configuration error:', error);
+        return false;
+    }
+});
+exports.testEmailConfiguration = testEmailConfiguration;

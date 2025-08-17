@@ -115,10 +115,15 @@ const ApplicationModal = ({
       formData.append('consentToPrivacyPolicy', data.consentToPrivacyPolicy.toString());
       
       // Add files if they exist
+      console.log('File validation - idDocumentUrl:', data.idDocumentUrl, 'Type:', typeof data.idDocumentUrl, 'instanceof File:', data.idDocumentUrl instanceof File);
+      console.log('File validation - incomeProofUrl:', data.incomeProofUrl, 'Type:', typeof data.incomeProofUrl, 'instanceof File:', data.incomeProofUrl instanceof File);
+      
       if (data.idDocumentUrl && data.idDocumentUrl instanceof File) {
+        console.log('Adding idDocument to FormData:', data.idDocumentUrl.name, data.idDocumentUrl.size, data.idDocumentUrl.type);
         formData.append('idDocument', data.idDocumentUrl);
       }
       if (data.incomeProofUrl && data.incomeProofUrl instanceof File) {
+        console.log('Adding incomeProof to FormData:', data.incomeProofUrl.name, data.incomeProofUrl.size, data.incomeProofUrl.type);
         formData.append('incomeProof', data.incomeProofUrl);
       }
 
@@ -240,7 +245,7 @@ const ApplicationModal = ({
                   name="idDocumentUrl"
                   label="Upload Valid ID"
                   type="file"
-                  accept="image/*"
+                  accept="image/jpeg,image/png,image/webp,application/pdf"
                 />
                 <CustomFormField
                   name="durationAtCurrentAddress"
@@ -314,7 +319,7 @@ const ApplicationModal = ({
                     name="incomeProofUrl"
                     label="Upload Proof of Income (payslip, bank statement)"
                     type="file"
-                    accept="application/pdf,image/*"
+                    accept="image/jpeg,image/png,image/webp,application/pdf"
                   />
                 </div>
               </div>

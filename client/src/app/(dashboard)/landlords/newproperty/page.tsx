@@ -43,17 +43,29 @@ const NewProperty = () => {
       throw new Error("No landlord ID found");
     }
 
+    // Debug: Log the form data to see what's being submitted
+    console.log('Form data being submitted:', data);
+    console.log('PhotoUrls field:', data.photoUrls);
+    console.log('PhotoUrls type:', typeof data.photoUrls);
+    console.log('PhotoUrls is array:', Array.isArray(data.photoUrls));
+    console.log('PhotoUrls length:', data.photoUrls?.length);
+
     const formData = new FormData();
     Object.entries(data).forEach(([key, value]) => {
       if (key === "photoUrls") {
         // Handle photoUrls as either array of files or single file
         if (Array.isArray(value)) {
-          value.forEach((file: File) => {
+          console.log('Processing array of files:', value.length);
+          value.forEach((file: File, index) => {
+            console.log(`File ${index}:`, file.name, file.size, file.type);
             formData.append("photos", file);
           });
         } else if (value && typeof value === 'object' && 'name' in value && 'size' in value) {
           // Check if it's a File object
+          console.log('Processing single file:', value);
           formData.append("photos", value as File);
+        } else {
+          console.log('No valid files found in photoUrls:', value);
         }
         // Skip if no files selected
       } else if (Array.isArray(value)) {
@@ -64,6 +76,12 @@ const NewProperty = () => {
     });
 
     formData.append("landlordCognitoId", authUser.cognitoInfo.userId);
+
+    // Debug: Log FormData contents
+    console.log('FormData entries:');
+    for (const [key, value] of formData.entries()) {
+      console.log(key, value);
+    }
 
     await createProperty(formData);
   };
