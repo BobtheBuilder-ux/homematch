@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getApplication = exports.updateApplicationStatus = exports.createApplication = exports.createApplicationWithFiles = exports.listApplications = void 0;
+exports.checkExistingApplication = exports.getApplication = exports.updateApplicationStatus = exports.createApplication = exports.createApplicationWithFiles = exports.listApplications = void 0;
 const client_1 = require("@prisma/client");
 const emailService_1 = require("../utils/emailService");
 const emailTemplates_1 = require("../utils/emailTemplates");
@@ -87,6 +87,22 @@ const createApplicationWithFiles = (req, res) => __awaiter(void 0, void 0, void 
         });
         if (!property) {
             res.status(404).json({ message: "Property not found" });
+            return;
+        }
+        // Check for existing active application from this tenant for this property
+        const existingApplication = yield prisma.application.findFirst({
+            where: {
+                propertyId: parseInt(propertyId),
+                tenantCognitoId: tenantCognitoId,
+                status: {
+                    in: ['Pending', 'Approved']
+                }
+            }
+        });
+        if (existingApplication) {
+            res.status(400).json({
+                message: "You already have an active application for this property. Please wait for the current application to be processed."
+            });
             return;
         }
         // Upload documents to S3 (outside transaction)
@@ -233,6 +249,22 @@ const createApplication = (req, res) => __awaiter(void 0, void 0, void 0, functi
         });
         if (!property) {
             res.status(404).json({ message: "Property not found" });
+            return;
+        }
+        // Check for existing active application from this tenant for this property
+        const existingApplication = yield prisma.application.findFirst({
+            where: {
+                propertyId: propertyId,
+                tenantCognitoId: tenantCognitoId,
+                status: {
+                    in: ['Pending', 'Approved']
+                }
+            }
+        });
+        if (existingApplication) {
+            res.status(400).json({
+                message: "You already have an active application for this property. Please wait for the current application to be processed."
+            });
             return;
         }
         const newApplication = yield prisma.$transaction((prisma) => __awaiter(void 0, void 0, void 0, function* () {
@@ -418,7 +450,7 @@ const getApplication = (req, res) => __awaiter(void 0, void 0, void 0, function*
     try {
         const { id } = req.params;
         const application = yield prisma.application.findUnique({
-            where: { id: Number(id) },
+            where: { id: parseInt(id) },
             include: {
                 property: {
                     include: {
@@ -427,7 +459,11 @@ const getApplication = (req, res) => __awaiter(void 0, void 0, void 0, function*
                     },
                 },
                 tenant: true,
-                lease: true,
+                lease: {
+                    include: {
+                        payments: true,
+                    },
+                },
             },
         });
         if (!application) {
@@ -437,7 +473,47 @@ const getApplication = (req, res) => __awaiter(void 0, void 0, void 0, function*
         res.json(application);
     }
     catch (error) {
-        res.status(500).json({ message: `Error retrieving application: ${error.message}` });
+        res.status(500).json({ message: `Error fetching application: ${error.message}` });
     }
 });
 exports.getApplication = getApplication;
+const checkExistingApplication = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { propertyId, tenantCognitoId } = req.query;
+        if (!propertyId || !tenantCognitoId) {
+            res.status(400).json({ message: "Property ID and tenant Cognito ID are required" });
+            return;
+        }
+        const existingApplication = yield prisma.application.findFirst({
+            where: {
+                propertyId: parseInt(propertyId),
+                tenantCognitoId: tenantCognitoId,
+                status: {
+                    in: ['Pending', 'Approved']
+                }
+            },
+            include: {
+                property: {
+                    include: {
+                        location: true,
+                        landlord: true,
+                    },
+                },
+                tenant: true,
+                lease: {
+                    include: {
+                        payments: true,
+                    },
+                },
+            },
+        });
+        res.json({
+            hasApplication: !!existingApplication,
+            application: existingApplication || undefined
+        });
+    }
+    catch (error) {
+        res.status(500).json({ message: `Error checking existing application: ${error.message}` });
+    }
+});
+exports.checkExistingApplication = checkExistingApplication;

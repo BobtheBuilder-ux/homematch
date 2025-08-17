@@ -40,6 +40,7 @@ router.post("/with-files", (0, authMiddleware_1.authMiddleware)(["tenant"]), upl
     { name: 'incomeProof', maxCount: 1 }
 ]), applicationControllers_1.createApplicationWithFiles);
 // Original route for applications without files
+router.get("/check", (0, authMiddleware_1.authMiddleware)(["tenant"]), applicationControllers_1.checkExistingApplication);
 router.post("/", (0, authMiddleware_1.authMiddleware)(["tenant"]), applicationControllers_1.createApplication);
 router.put("/:id/status", (0, authMiddleware_1.authMiddleware)(["landlord", "admin"]), applicationControllers_1.updateApplicationStatus);
 router.get("/", (0, authMiddleware_1.authMiddleware)(["landlord", "tenant", "admin"]), applicationControllers_1.listApplications);
