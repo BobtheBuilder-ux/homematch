@@ -35,45 +35,26 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 
-const PaymentMethod = () => {
+const PaymentMethod = ({ userEmail }: { userEmail?: string }) => {
   return (
     <div className="bg-white rounded-xl shadow-md overflow-hidden p-6 mt-10 md:mt-0 flex-1">
-      <h2 className="text-2xl font-bold mb-4">Payment method</h2>
-      <p className="mb-4">Change how you pay for your plan.</p>
+      <h2 className="text-2xl font-bold mb-4">Payment Information</h2>
+      <p className="mb-4">Manage your payment methods for rent payments.</p>
       <div className="border rounded-lg p-6">
-        <div>
-          {/* Card Info */}
-          <div className="flex gap-10">
-            <div className="w-36 h-20 bg-blue-600 flex items-center justify-center rounded-md">
-              <span className="text-white text-2xl font-bold">VISA</span>
-            </div>
-            <div className="flex flex-col justify-between">
-              <div>
-                <div className="flex items-start gap-5">
-                  <h3 className="text-lg font-semibold">Visa ending in 2024</h3>
-                  <span className="text-sm font-medium border border-primary-700 text-primary-700 px-3 py-1 rounded-full">
-                    Default
-                  </span>
-                </div>
-                <div className="text-sm text-gray-500 flex items-center">
-                  <CreditCard className="w-4 h-4 mr-1" />
-                  <span>Expiry • 26/06/2024</span>
-                </div>
-              </div>
-              <div className="text-sm text-gray-500 flex items-center">
-                <Mail className="w-4 h-4 mr-1" />
-                <span>billing@baseclub.com</span>
-              </div>
-            </div>
+        <div className="text-center py-8">
+          <CreditCard className="w-16 h-16 mx-auto text-gray-400 mb-4" />
+          <h3 className="text-lg font-semibold text-gray-700 mb-2">No Payment Method Added</h3>
+          <p className="text-gray-500 mb-4">
+            Add a payment method to make rent payments easier.
+          </p>
+          <div className="text-sm text-gray-500 flex items-center justify-center mb-4">
+            <Mail className="w-4 h-4 mr-1" />
+            <span>Billing email: {userEmail || 'Not available'}</span>
           </div>
-
-          <hr className="my-4" />
-          <div className="flex justify-end">
-            <button className="bg-white border border-gray-300 text-gray-700 py-2 px-4 rounded-md flex items-center justify-center hover:bg-primary-700 hover:text-primary-50">
-              <Edit className="w-5 h-5 mr-2" />
-              <span>Edit</span>
-            </button>
-          </div>
+          <button className="bg-primary-600 hover:bg-primary-700 text-white py-2 px-4 rounded-md flex items-center justify-center mx-auto">
+            <Plus className="w-5 h-5 mr-2" />
+            <span>Add Payment Method</span>
+          </button>
         </div>
       </div>
     </div>
@@ -83,10 +64,43 @@ const PaymentMethod = () => {
 const ResidenceCard = ({
   property,
   currentLease,
+  payments,
 }: {
   property: Property;
   currentLease: Lease;
+  payments?: Payment[];
 }) => {
+  // Calculate next payment date based on lease start date and current date
+  const calculateNextPaymentDate = () => {
+    const leaseStart = new Date(currentLease.startDate);
+    const currentDate = new Date();
+    const leaseEnd = new Date(currentLease.endDate);
+    
+    // If current date is before lease start, next payment is the start date
+    if (currentDate < leaseStart) {
+      return leaseStart;
+    }
+    
+    // If current date is after lease end, no next payment
+    if (currentDate > leaseEnd) {
+      return null;
+    }
+    
+    // For yearly leases, next payment is one year from start date
+    // If we're already past the start date, the next payment would be the end date
+    const nextPaymentDate = new Date(leaseStart);
+    nextPaymentDate.setFullYear(nextPaymentDate.getFullYear() + 1);
+    
+    // If next payment date is beyond lease end, return lease end date
+    if (nextPaymentDate > leaseEnd) {
+      return leaseEnd;
+    }
+    
+    return nextPaymentDate;
+  };
+
+  const nextPaymentDate = calculateNextPaymentDate();
+  
   return (
     <div className="bg-white rounded-xl shadow-md overflow-hidden p-6 flex-1 flex flex-col justify-between">
       {/* Header */}
@@ -96,7 +110,7 @@ const ResidenceCard = ({
         <div className="flex flex-col justify-between">
           <div>
             <div className="bg-green-500 w-fit text-white px-4 py-1 rounded-full text-sm font-semibold">
-              Active Leases
+              Active Lease
             </div>
 
             <h2 className="text-2xl font-bold my-2">{property.name}</h2>
@@ -108,8 +122,8 @@ const ResidenceCard = ({
             </div>
           </div>
           <div className="text-xl font-bold">
-            ₦{currentLease.rent}{" "}
-            <span className="text-gray-500 text-sm font-normal">/ night</span>
+            ₦{currentLease.rent.toLocaleString()}{" "}
+            <span className="text-gray-500 text-sm font-normal">/ year</span>
           </div>
         </div>
       </div>
@@ -134,7 +148,7 @@ const ResidenceCard = ({
           <div className="xl:flex">
             <div className="text-gray-500 mr-2">Next Payment: </div>
             <div className="font-semibold">
-              {new Date(currentLease.endDate).toLocaleDateString()}
+              {nextPaymentDate ? new Date(nextPaymentDate).toLocaleDateString() : 'N/A'}
             </div>
           </div>
         </div>
@@ -286,9 +300,13 @@ const Residence = () => {
       <div className="w-full mx-auto">
         <div className="md:flex gap-10">
           {currentLease && (
-            <ResidenceCard property={property} currentLease={currentLease} />
+            <ResidenceCard 
+              property={property} 
+              currentLease={currentLease} 
+              payments={payments}
+            />
           )}
-          <PaymentMethod />
+          <PaymentMethod userEmail={authUser?.userInfo?.email} />
         </div>
         <BillingHistory payments={payments || []} currentLease={currentLease} />
       </div>

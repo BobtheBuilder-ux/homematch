@@ -599,7 +599,7 @@ export const applicationSubmittedTemplate = {
             <li style="margin-bottom: 8px;"><strong>Property:</strong> ${propertyAddress}</li>
             <li style="margin-bottom: 8px;"><strong>Application Date:</strong> ${applicationDate}</li>
             <li style="margin-bottom: 8px;"><strong>Annual Rent:</strong> ₦${annualRent.toLocaleString()}</li>
-            <li style="margin-bottom: 8px;"><strong>Security Deposit:</strong> ₦${securityDeposit.toLocaleString()}</li>
+            <li style="margin-bottom: 8px;"><strong>Caution Fee:</strong> ₦${securityDeposit.toLocaleString()}</li>
             <li style="margin-bottom: 8px;"><strong>Application Fee:</strong> ₦${applicationFee.toLocaleString()}</li>
             <li style="margin-bottom: 8px;"><strong>Status:</strong> <span style="color: #f59e0b; font-weight: bold;">Under Review</span></li>
           </ul>
@@ -651,7 +651,7 @@ export const applicationApprovedTemplate = {
           <ul style="color: #374151; margin: 0; padding-left: 20px; list-style: none;">
             <li style="margin-bottom: 8px;"><strong>Property:</strong> ${propertyAddress}</li>
             <li style="margin-bottom: 8px;"><strong>Annual Rent:</strong> ₦${annualRent.toLocaleString()}</li>
-            <li style="margin-bottom: 8px;"><strong>Security Deposit:</strong> ₦${securityDeposit.toLocaleString()}</li>
+            <li style="margin-bottom: 8px;"><strong>Caution Fee:</strong> ₦${securityDeposit.toLocaleString()}</li>
             <li style="margin-bottom: 8px;"><strong>Application Fee:</strong> ₦${applicationFee.toLocaleString()}</li>
             <li style="margin-bottom: 8px;"><strong>Status:</strong> <span style="color: #10b981; font-weight: bold;">Approved</span></li>
           </ul>
@@ -671,7 +671,7 @@ export const applicationApprovedTemplate = {
         </div>
         
         <div style="text-align: center; margin: 20px 0;">
-          <a href="${process.env.CLIENT_URL}/tenants/properties/${propertyId}" style="background-color: #10b981; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold; display: inline-block;">View Property & Pay Now</a>
+          <a href="${process.env.CLIENT_URL}/tenants/residences/${propertyId}" style="background-color: #10b981; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold; display: inline-block;">View Property & Pay Now</a>
         </div>
         
         <div style="background-color: #fef3c7; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #f59e0b;">

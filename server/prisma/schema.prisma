@@ -52,6 +52,7 @@ model Property {
   pricePerYear     Float
   securityDeposit   Float
   photoUrls         String[]
+  videoUrl          String?
   amenities         String?
   highlights        String?
   isParkingIncluded Boolean      @default(false)

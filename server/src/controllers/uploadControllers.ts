@@ -165,6 +165,61 @@ export const uploadPropertyPhotos = async (req: Request, res: Response): Promise
 };
 
 /**
+ * Upload property video (optional)
+ */
+export const uploadPropertyVideo = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const file = req.file;
+
+    if (!file) {
+      res.status(400).json({ message: 'No video file provided' });
+      return;
+    }
+
+    // Validate file type (only videos)
+    const validVideoTypes = ['video/mp4', 'video/mpeg', 'video/quicktime', 'video/x-msvideo', 'video/webm'];
+    
+    if (!validVideoTypes.includes(file.mimetype)) {
+      res.status(400).json({ 
+        message: 'Invalid file type. Only MP4, MPEG, QuickTime, AVI, and WebM videos are allowed.',
+        receivedType: file.mimetype
+      });
+      return;
+    }
+
+    // Check file size (limit to 100MB for videos)
+    const maxVideoSize = 100 * 1024 * 1024; // 100MB
+    if (file.size > maxVideoSize) {
+      res.status(400).json({ 
+        message: 'Video file too large. Maximum size is 100MB.',
+        fileSize: file.size,
+        maxSize: maxVideoSize
+      });
+      return;
+    }
+
+    const result = await uploadFileToS3(
+      file.buffer,
+      file.originalname,
+      file.mimetype,
+      'properties/videos'
+    );
+
+    res.status(200).json({
+      message: 'Property video uploaded successfully',
+      videoUrl: result.url,
+      key: result.key,
+    });
+  } catch (error: any) {
+    console.error('Error uploading property video:', error);
+    res.status(500).json({ 
+      message: 'Failed to upload property video', 
+      error: error.message 
+    });
+  }
+};
+
+/**
  * Delete a file from S3
  */
 export const deleteFile = async (req: Request, res: Response): Promise<void> => {

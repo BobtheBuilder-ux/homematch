@@ -73,10 +73,23 @@ const listApplications = (req, res) => __awaiter(void 0, void 0, void 0, functio
 });
 exports.listApplications = listApplications;
 const createApplicationWithFiles = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a;
     try {
         const files = req.files;
         const { applicationDate, status, propertyId, tenantCognitoId, name, email, phoneNumber, preferredMoveInDate, desiredLeaseDuration, gender, dateOfBirth, nationality, maritalStatus, idType, durationAtCurrentAddress, employmentStatus, occupation, employerName, workAddress, monthlyIncome, durationAtCurrentJob, previousEmployerName, previousJobTitle, previousEmploymentDuration, reasonForLeavingPrevJob, numberOfOccupants, relationshipToOccupants, hasPets, isSmoker, accessibilityNeeds, reasonForLeaving, consentToInformation, consentToVerification, consentToTenancyTerms, consentToPrivacyPolicy, } = req.body;
-        // Upload documents to S3
+        // Get property details first
+        const property = yield prisma.property.findUnique({
+            where: { id: parseInt(propertyId) },
+            include: {
+                landlord: true,
+                location: true
+            }
+        });
+        if (!property) {
+            res.status(404).json({ message: "Property not found" });
+            return;
+        }
+        // Upload documents to S3 (outside transaction)
         let idDocumentUrl = '';
         let incomeProofUrl = '';
         if (files.idDocument && files.idDocument[0]) {
@@ -89,19 +102,8 @@ const createApplicationWithFiles = (req, res) => __awaiter(void 0, void 0, void 
             const incomeResult = yield (0, s3Service_1.uploadFileToS3)(incomeFile.buffer, incomeFile.originalname, incomeFile.mimetype, 'documents/income');
             incomeProofUrl = incomeResult.url;
         }
-        const property = yield prisma.property.findUnique({
-            where: { id: parseInt(propertyId) },
-            include: {
-                landlord: true,
-                location: true
-            }
-        });
-        if (!property) {
-            res.status(404).json({ message: "Property not found" });
-            return;
-        }
+        // Create application and lease in transaction (with increased timeout)
         const newApplication = yield prisma.$transaction((prisma) => __awaiter(void 0, void 0, void 0, function* () {
-            var _a;
             // Create lease first
             const lease = yield prisma.lease.create({
                 data: {
@@ -176,11 +178,17 @@ const createApplicationWithFiles = (req, res) => __awaiter(void 0, void 0, void 
                     lease: true,
                 },
             });
+            return application;
+        }), {
+            timeout: 10000 // Increase timeout to 10 seconds
+        });
+        // Send emails after transaction completes
+        try {
             // Send email to tenant using template
             yield (0, emailService_1.sendEmail)({
                 to: email,
                 subject: emailTemplates_1.applicationSubmittedTemplate.subject,
-                body: emailTemplates_1.applicationSubmittedTemplate.body(name, property.location.address, new Date(applicationDate).toLocaleDateString(), property.pricePerYear, property.securityDeposit || 0, property.pricePerYear * 0.1)
+                body: emailTemplates_1.applicationSubmittedTemplate.body(name, property.location.address, new Date(applicationDate).toLocaleDateString(), property.pricePerYear, property.pricePerYear * 0.15, property.pricePerYear * 0.1)
             });
             // Send email to landlord
             if ((_a = property.landlord) === null || _a === void 0 ? void 0 : _a.email) {
@@ -200,8 +208,11 @@ const createApplicationWithFiles = (req, res) => __awaiter(void 0, void 0, void 
           `
                 });
             }
-            return application;
-        }));
+        }
+        catch (emailError) {
+            console.error('Error sending emails:', emailError);
+            // Don't fail the entire request if email fails
+        }
         res.status(201).json(newApplication);
     }
     catch (error) {
@@ -304,7 +315,7 @@ const createApplication = (req, res) => __awaiter(void 0, void 0, void 0, functi
             yield (0, emailService_1.sendEmail)({
                 to: email,
                 subject: emailTemplates_1.applicationSubmittedTemplate.subject,
-                body: emailTemplates_1.applicationSubmittedTemplate.body(name, property.location.address, new Date(applicationDate).toLocaleDateString(), property.pricePerYear, property.securityDeposit || 0, property.pricePerYear * 0.1)
+                body: emailTemplates_1.applicationSubmittedTemplate.body(name, property.location.address, new Date(applicationDate).toLocaleDateString(), property.pricePerYear, property.pricePerYear * 0.15, property.pricePerYear * 0.1)
             });
             // Send email to landlord
             if ((_a = property.landlord) === null || _a === void 0 ? void 0 : _a.email) {
@@ -358,33 +369,16 @@ const updateApplicationStatus = (req, res) => __awaiter(void 0, void 0, void 0, 
             return;
         }
         if (status === "Approved") {
-            const newLease = yield prisma.lease.create({
-                data: {
-                    startDate: new Date(),
-                    endDate: new Date(new Date().setFullYear(new Date().getFullYear() + 1)),
-                    rent: application.property.pricePerYear,
-                    deposit: application.property.securityDeposit,
-                    propertyId: application.propertyId,
-                    tenantCognitoId: application.tenantCognitoId,
-                },
-            });
-            yield prisma.property.update({
-                where: { id: application.propertyId },
-                data: {
-                    tenants: {
-                        connect: { cognitoId: application.tenantCognitoId },
-                    },
-                },
-            });
+            // Update application status to approved (lease will be created after payment)
             yield prisma.application.update({
                 where: { id: Number(id) },
-                data: { status, leaseId: newLease.id },
+                data: { status },
             });
             // Send approval email to tenant using template
             yield (0, emailService_1.sendEmail)({
                 to: application.tenant.email,
                 subject: emailTemplates_1.applicationApprovedTemplate.subject,
-                body: emailTemplates_1.applicationApprovedTemplate.body(application.tenant.name, application.property.location.address, application.propertyId, application.property.pricePerYear, application.property.securityDeposit, application.property.pricePerYear * 0.1)
+                body: emailTemplates_1.applicationApprovedTemplate.body(application.tenant.name, application.property.location.address, application.propertyId, application.property.pricePerYear, application.property.pricePerYear * 0.15, application.property.pricePerYear * 0.1)
             });
         }
         else if (status === "Denied") {

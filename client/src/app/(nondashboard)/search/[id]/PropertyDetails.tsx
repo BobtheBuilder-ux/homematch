@@ -137,11 +137,6 @@ const PropertyDetails = ({ propertyId }: PropertyDetailsProps) => {
             </div>
             <hr />
           </TabsContent>
-          <TabsContent value="pets">
-            <p className="font-semibold mt-5 mb-2">
-              Pets are {property.isPetsAllowed ? "allowed" : "not allowed"}
-            </p>
-          </TabsContent>
           <TabsContent value="parking">
             <p className="font-semibold mt-5 mb-2">
               Parking is{" "}

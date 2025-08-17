@@ -109,6 +109,27 @@ export const uploadPropertyPhotos = async (photos: File[]): Promise<FileUploadRe
 };
 
 /**
+ * Upload property video to S3 (optional)
+ */
+export const uploadPropertyVideo = async (video: File): Promise<FileUploadResponse> => {
+  const formData = new FormData();
+  formData.append('video', video);
+
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/uploads/property-video`, {
+    method: 'POST',
+    body: formData,
+    credentials: 'include',
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({ message: 'Upload failed' }));
+    throw new Error(errorData.message || 'Failed to upload property video');
+  }
+
+  return response.json();
+};
+
+/**
  * Delete a file from S3
  */
 export const deleteFileFromS3 = async (fileUrl: string): Promise<void> => {

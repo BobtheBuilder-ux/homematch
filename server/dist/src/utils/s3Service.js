@@ -41,8 +41,6 @@ const uploadFileToS3 = (file_1, fileName_1, mimeType_1, ...args_1) => __awaiter(
             Key: key,
             Body: file,
             ContentType: mimeType,
-            // Make files publicly readable
-            ACL: 'public-read',
         };
         const upload = new lib_storage_1.Upload({
             client: s3Client,

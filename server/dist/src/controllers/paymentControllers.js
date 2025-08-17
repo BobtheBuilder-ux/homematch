@@ -209,6 +209,17 @@ const verifyPayment = (req, res) => __awaiter(void 0, void 0, void 0, function* 
                         }
                     }
                 });
+                // Update the approved application with the lease ID
+                yield prisma.application.updateMany({
+                    where: {
+                        propertyId: propertyId,
+                        tenantCognitoId: tenant.cognitoId,
+                        status: "Approved"
+                    },
+                    data: {
+                        leaseId: newLease.id
+                    }
+                });
                 // Send notification email to landlord
                 if ((_a = newLease.property.landlord) === null || _a === void 0 ? void 0 : _a.email) {
                     yield (0, emailService_1.sendEmail)({

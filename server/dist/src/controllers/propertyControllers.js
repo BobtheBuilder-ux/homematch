@@ -169,9 +169,9 @@ const createProperty = (req, res) => __awaiter(void 0, void 0, void 0, function*
         const _e = req.body, { address, city, state, country, postalCode, landlordCognitoId } = _e, propertyData = __rest(_e, ["address", "city", "state", "country", "postalCode", "landlordCognitoId"]);
         // Upload property photos to S3
         let photoUrls = [];
-        if (files && files.length > 0) {
+        if ((files === null || files === void 0 ? void 0 : files.photos) && files.photos.length > 0) {
             try {
-                const fileData = files.map(file => ({
+                const fileData = files.photos.map(file => ({
                     buffer: file.buffer,
                     filename: file.originalname,
                     mimetype: file.mimetype,
@@ -184,6 +184,21 @@ const createProperty = (req, res) => __awaiter(void 0, void 0, void 0, function*
                 console.error('Error uploading property photos:', uploadError);
                 // Continue with property creation even if photo upload fails
                 photoUrls = [];
+            }
+        }
+        // Upload property video to S3 (optional)
+        let videoUrl = null;
+        if ((files === null || files === void 0 ? void 0 : files.video) && files.video.length > 0) {
+            try {
+                const videoFile = files.video[0];
+                const uploadResult = yield (0, s3Service_1.uploadFileToS3)(videoFile.buffer, videoFile.originalname, videoFile.mimetype, 'properties/videos');
+                videoUrl = uploadResult.url;
+                console.log('Successfully uploaded property video');
+            }
+            catch (uploadError) {
+                console.error('Error uploading property video:', uploadError);
+                // Continue with property creation even if video upload fails
+                videoUrl = null;
             }
         }
         const geocodingUrl = `https://nominatim.openstreetmap.org/search?${new URLSearchParams({
@@ -213,11 +228,12 @@ const createProperty = (req, res) => __awaiter(void 0, void 0, void 0, function*
     `;
         // create property
         const newProperty = yield prisma.property.create({
-            data: Object.assign(Object.assign({}, propertyData), { photoUrls, locationId: location.id, landlordCognitoId, status: 'PendingApproval', amenities: typeof propertyData.amenities === "string"
+            data: Object.assign(Object.assign({}, propertyData), { photoUrls,
+                videoUrl, locationId: location.id, landlordCognitoId, status: 'PendingApproval', amenities: typeof propertyData.amenities === "string"
                     ? propertyData.amenities.split(",")
                     : [], highlights: typeof propertyData.highlights === "string"
                     ? propertyData.highlights.split(",")
-                    : [], isPetsAllowed: propertyData.isPetsAllowed === "true", isParkingIncluded: propertyData.isParkingIncluded === "true", pricePerYear: parseFloat(propertyData.pricePerYear), securityDeposit: parseFloat(propertyData.pricePerYear) * 0.15, applicationFee: parseFloat(propertyData.pricePerYear) * 0.10, beds: parseInt(propertyData.beds), baths: parseFloat(propertyData.baths), squareFeet: parseInt(propertyData.squareFeet) }),
+                    : [], isParkingIncluded: propertyData.isParkingIncluded === "true", pricePerYear: parseFloat(propertyData.pricePerYear), securityDeposit: parseFloat(propertyData.pricePerYear) * 0.15, applicationFee: parseFloat(propertyData.pricePerYear) * 0.10, beds: parseInt(propertyData.beds), baths: parseFloat(propertyData.baths), squareFeet: parseInt(propertyData.squareFeet) }),
             include: {
                 location: true,
                 landlord: true,

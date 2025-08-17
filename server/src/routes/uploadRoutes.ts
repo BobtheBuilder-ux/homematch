@@ -5,6 +5,7 @@ import {
   uploadMultipleFiles,
   uploadApplicationDocuments,
   uploadPropertyPhotos,
+  uploadPropertyVideo,
   deleteFile,
 } from '../controllers/uploadControllers';
 
@@ -18,7 +19,7 @@ const upload = multer({
     fileSize: 10 * 1024 * 1024, // 10MB limit per file
   },
   fileFilter: (req, file, cb) => {
-    // Allow common file types
+    // Allow common file types including videos
     const allowedTypes = [
       'image/jpeg',
       'image/jpg', 
@@ -27,13 +28,18 @@ const upload = multer({
       'application/pdf',
       'application/msword',
       'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-      'text/plain'
+      'text/plain',
+      'video/mp4',
+      'video/mpeg',
+      'video/quicktime',
+      'video/x-msvideo',
+      'video/webm'
     ];
     
     if (allowedTypes.includes(file.mimetype)) {
       cb(null, true);
     } else {
-      cb(new Error('Invalid file type. Only images, PDFs, and documents are allowed.'));
+      cb(new Error('Invalid file type. Only images, PDFs, documents, and videos are allowed.'));
     }
   }
 });
@@ -55,6 +61,9 @@ router.post('/application-documents',
 
 // Property photos upload
 router.post('/property-photos', upload.array('photos', 20), uploadPropertyPhotos);
+
+// Property video upload (optional)
+router.post('/property-video', upload.single('video'), uploadPropertyVideo);
 
 // Delete file
 router.delete('/delete', deleteFile);

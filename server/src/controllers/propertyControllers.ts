@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { PrismaClient, Prisma, Location } from "@prisma/client";
 import { wktToGeoJSON } from "@terraformer/wkt";
-import { uploadMultipleFilesToS3 } from "../utils/s3Service";
+import { uploadMultipleFilesToS3, uploadFileToS3 } from "../utils/s3Service";
 import axios from "axios";
 
 const prisma = new PrismaClient();
@@ -216,7 +216,7 @@ export const createProperty = async (
     console.log('Creating property with data:', req.body);
     console.log('Files received:', req.files);
     
-    const files = req.files as Express.Multer.File[];
+    const files = req.files as { [fieldname: string]: Express.Multer.File[] };
     const {
       address,
       city,
@@ -229,9 +229,9 @@ export const createProperty = async (
 
     // Upload property photos to S3
     let photoUrls: string[] = [];
-    if (files && files.length > 0) {
+    if (files?.photos && files.photos.length > 0) {
       try {
-        const fileData = files.map(file => ({
+        const fileData = files.photos.map(file => ({
           buffer: file.buffer,
           filename: file.originalname,
           mimetype: file.mimetype,
@@ -244,6 +244,26 @@ export const createProperty = async (
         console.error('Error uploading property photos:', uploadError);
         // Continue with property creation even if photo upload fails
         photoUrls = [];
+      }
+    }
+
+    // Upload property video to S3 (optional)
+    let videoUrl: string | null = null;
+    if (files?.video && files.video.length > 0) {
+      try {
+        const videoFile = files.video[0];
+        const uploadResult = await uploadFileToS3(
+          videoFile.buffer,
+          videoFile.originalname,
+          videoFile.mimetype,
+          'properties/videos'
+        );
+        videoUrl = uploadResult.url;
+        console.log('Successfully uploaded property video');
+      } catch (uploadError) {
+        console.error('Error uploading property video:', uploadError);
+        // Continue with property creation even if video upload fails
+        videoUrl = null;
       }
     }
 
@@ -282,6 +302,7 @@ export const createProperty = async (
       data: {
         ...propertyData,
         photoUrls,
+        videoUrl,
         locationId: location.id,
         landlordCognitoId,
         status: 'PendingApproval', // New properties require admin approval
@@ -293,7 +314,6 @@ export const createProperty = async (
           typeof propertyData.highlights === "string"
             ? propertyData.highlights.split(",")
             : [],
-        isPetsAllowed: propertyData.isPetsAllowed === "true",
         isParkingIncluded: propertyData.isParkingIncluded === "true",
         pricePerYear: parseFloat(propertyData.pricePerYear),
         securityDeposit: parseFloat(propertyData.pricePerYear) * 0.15, // 15% caution fee

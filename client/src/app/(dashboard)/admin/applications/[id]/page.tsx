@@ -75,8 +75,8 @@ const ApplicationDetail = () => {
               <p>₦{application.property.pricePerYear.toLocaleString()}</p>
             </div>
             <div>
-              <h3 className="font-medium">Security Deposit</h3>
-              <p>₦{application.property.securityDeposit.toLocaleString()}</p>
+              <h3 className="font-medium">Caution Fee</h3>
+              <p>₦{(application.property.pricePerYear * 0.15).toLocaleString()}</p>
             </div>
           </CardContent>
         </Card>
@@ -114,6 +114,10 @@ const ApplicationDetail = () => {
                 <h3 className="font-medium">Application Date</h3>
                 <p>{new Date(application.applicationDate).toLocaleDateString()}</p>
               </div>
+              <div>
+                <h3 className="font-medium">Application Fee</h3>
+                <p>₦{(application.property.pricePerYear * 0.1).toLocaleString()}</p>
+              </div>
               {application.lease && (
                 <>
                   <div>
@@ -148,6 +152,55 @@ const ApplicationDetail = () => {
                     <Download className="h-4 w-4" />
                     Download Lease Agreement
                   </Button>
+                )}
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="md:col-span-2">
+          <CardHeader>
+            <CardTitle>Uploaded Documents</CardTitle>
+            <CardDescription>
+              Documents submitted with the application
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <h3 className="font-medium mb-2">ID Document</h3>
+                {application.idDocumentUrl ? (
+                  <div className="flex items-center gap-2">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="flex items-center gap-2"
+                      onClick={() => window.open(application.idDocumentUrl, '_blank')}
+                    >
+                      <Download className="h-4 w-4" />
+                      View ID Document
+                    </Button>
+                  </div>
+                ) : (
+                  <p className="text-gray-500 text-sm">No ID document uploaded</p>
+                )}
+              </div>
+              <div>
+                <h3 className="font-medium mb-2">Income Proof</h3>
+                {application.incomeProofUrl ? (
+                  <div className="flex items-center gap-2">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="flex items-center gap-2"
+                      onClick={() => window.open(application.incomeProofUrl, '_blank')}
+                    >
+                      <Download className="h-4 w-4" />
+                      View Income Proof
+                    </Button>
+                  </div>
+                ) : (
+                  <p className="text-gray-500 text-sm">No income proof uploaded</p>
                 )}
               </div>
             </div>

@@ -21,9 +21,9 @@ const NewProperty = () => {
       name: "",
       description: "",
       pricePerYear: 1000,
-      isPetsAllowed: true,
       isParkingIncluded: true,
       photoUrls: [],
+      videoUrl: undefined,
       amenities: "",
       highlights: "",
       beds: 1,
@@ -146,11 +146,6 @@ const NewProperty = () => {
                 />
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-                <CustomFormField
-                  name="isPetsAllowed"
-                  label="Pets Allowed"
-                  type="switch"
-                />
                 <CustomFormField
                   name="isParkingIncluded"
                   label="Parking Included"

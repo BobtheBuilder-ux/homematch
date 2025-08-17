@@ -129,7 +129,21 @@ export const createApplicationWithFiles = async (
       consentToPrivacyPolicy,
     } = req.body;
 
-    // Upload documents to S3
+    // Get property details first
+    const property = await prisma.property.findUnique({
+      where: { id: parseInt(propertyId) },
+      include: {
+        landlord: true,
+        location: true
+      }
+    });
+
+    if (!property) {
+      res.status(404).json({ message: "Property not found" });
+      return;
+    }
+
+    // Upload documents to S3 (outside transaction)
     let idDocumentUrl = '';
     let incomeProofUrl = '';
 
@@ -155,19 +169,7 @@ export const createApplicationWithFiles = async (
       incomeProofUrl = incomeResult.url;
     }
 
-    const property = await prisma.property.findUnique({
-      where: { id: parseInt(propertyId) },
-      include: {
-        landlord: true,
-        location: true
-      }
-    });
-
-    if (!property) {
-      res.status(404).json({ message: "Property not found" });
-      return;
-    }
-
+    // Create application and lease in transaction (with increased timeout)
     const newApplication = await prisma.$transaction(async (prisma: Prisma.TransactionClient) => {
       // Create lease first
       const lease = await prisma.lease.create({
@@ -245,6 +247,13 @@ export const createApplicationWithFiles = async (
         },
       });
 
+      return application;
+    }, {
+      timeout: 10000 // Increase timeout to 10 seconds
+    });
+
+    // Send emails after transaction completes
+    try {
       // Send email to tenant using template
       await sendEmail({
         to: email,
@@ -254,7 +263,7 @@ export const createApplicationWithFiles = async (
           property.location.address,
           new Date(applicationDate).toLocaleDateString(),
           property.pricePerYear,
-          property.securityDeposit || 0,
+          property.pricePerYear * 0.15,
           property.pricePerYear * 0.1
         )
       });
@@ -277,9 +286,10 @@ export const createApplicationWithFiles = async (
           `
         });
       }
-
-      return application;
-    });
+    } catch (emailError) {
+      console.error('Error sending emails:', emailError);
+      // Don't fail the entire request if email fails
+    }
 
     res.status(201).json(newApplication);
   } catch (error: any) {
@@ -432,7 +442,7 @@ export const createApplication = async (
           property.location.address,
           new Date(applicationDate).toLocaleDateString(),
           property.pricePerYear,
-          property.securityDeposit || 0,
+          property.pricePerYear * 0.15,
           property.pricePerYear * 0.1
         )
       });
@@ -497,29 +507,10 @@ export const updateApplicationStatus = async (
     }
 
     if (status === "Approved") {
-      const newLease = await prisma.lease.create({
-        data: {
-          startDate: new Date(),
-          endDate: new Date(new Date().setFullYear(new Date().getFullYear() + 1)),
-          rent: application.property.pricePerYear,
-          deposit: application.property.securityDeposit,
-          propertyId: application.propertyId,
-          tenantCognitoId: application.tenantCognitoId,
-        },
-      });
-
-      await prisma.property.update({
-        where: { id: application.propertyId },
-        data: {
-          tenants: {
-            connect: { cognitoId: application.tenantCognitoId },
-          },
-        },
-      });
-
+      // Update application status to approved (lease will be created after payment)
       await prisma.application.update({
         where: { id: Number(id) },
-        data: { status, leaseId: newLease.id },
+        data: { status },
       });
 
       // Send approval email to tenant using template
@@ -531,7 +522,7 @@ export const updateApplicationStatus = async (
           application.property.location.address,
           application.propertyId,
           application.property.pricePerYear,
-          application.property.securityDeposit,
+          application.property.pricePerYear * 0.15,
           application.property.pricePerYear * 0.1
         )
       });

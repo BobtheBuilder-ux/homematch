@@ -23,22 +23,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
-import { Edit, X, Plus } from "lucide-react";
-import { registerPlugin } from "filepond";
-import { FilePond } from "react-filepond";
-import "filepond/dist/filepond.min.css";
-import FilePondPluginImagePreview from "filepond-plugin-image-preview";
-import FilePondPluginImageExifOrientation from "filepond-plugin-image-exif-orientation";
-import FilePondPluginFileValidateType from "filepond-plugin-file-validate-type";
-import FilePondPluginFileValidateSize from "filepond-plugin-file-validate-size";
-import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
-
-registerPlugin(
-  FilePondPluginImageExifOrientation,
-  FilePondPluginImagePreview,
-  FilePondPluginFileValidateType,
-  FilePondPluginFileValidateSize
-);
+import { Edit, X, Plus, Upload } from "lucide-react";
+import { useState, useRef } from "react";
 
 interface FormFieldProps {
   name: string;
@@ -137,67 +123,7 @@ export const CustomFormField: React.FC<FormFieldProps> = ({
           </div>
         );
       case "file":
-        return (
-          <FilePond
-            className={`${inputClassName}`}
-            files={field.value || []}
-            onupdatefiles={(fileItems) => {
-              console.log('FilePond onupdatefiles called:', fileItems);
-              if (multiple) {
-                const files = fileItems.map((fileItem) => {
-                  console.log('FileItem:', fileItem, 'File:', fileItem.file);
-                  return fileItem.file;
-                });
-                console.log('Setting files:', files);
-                field.onChange(files);
-              } else {
-                // For single file uploads, return the first file or null
-                const file = fileItems.length > 0 ? fileItems[0].file : null;
-                console.log('Setting single file:', file);
-                field.onChange(file);
-              }
-            }}
-            onaddfile={(error, fileItem) => {
-              if (error) {
-                console.error('FilePond add file error:', JSON.stringify(error));
-              } else {
-                console.log('FilePond file added successfully:', fileItem.file?.name, fileItem.file?.type);
-              }
-            }}
-            onprocessfile={(error, fileItem) => {
-              if (error) {
-                console.error('FilePond process file error:', error);
-              }
-            }}
-            allowMultiple={multiple}
-            maxFiles={multiple ? undefined : 1}
-            labelIdle={`Drag & Drop your ${multiple ? 'files' : 'file'} or <span class="filepond--label-action">Browse</span>`}
-            credits={false}
-            acceptedFileTypes={accept ? accept.split(',').map(type => {
-              const mimeToExt: Record<string, string> = {
-                'image/jpeg': '.jpg',
-                'image/png': '.png', 
-                'image/webp': '.webp',
-                'application/pdf': '.pdf'
-              };
-              return mimeToExt[type.trim()] || type.trim();
-            }) : ['.jpg', '.png', '.webp', '.pdf']}
-            allowFileTypeValidation={true}
-            fileValidateTypeLabelExpectedTypes="Expects {allButLastType} or {lastType}"
-            allowFileSizeValidation={true}
-            maxFileSize="10MB"
-            fileValidateTypeLabelExpectedTypesMap={{
-              'image/jpeg': '.jpg',
-              'image/png': '.png',
-              'image/gif': '.gif',
-              'image/webp': '.webp',
-              'application/pdf': '.pdf'
-            }}
-            allowImagePreview={true}
-            allowImageExifOrientation={true}
-            imagePreviewHeight={170}
-          />
-        );
+        return <CustomFileUpload field={field} accept={accept} multiple={multiple} inputClassName={inputClassName} />;
       case "number":
         return (
           <Input
@@ -282,6 +208,179 @@ export const CustomFormField: React.FC<FormFieldProps> = ({
     />
   );
 };
+interface CustomFileUploadProps {
+  field: ControllerRenderProps<FieldValues, string>;
+  accept?: string;
+  multiple?: boolean;
+  inputClassName?: string;
+}
+
+const CustomFileUpload: React.FC<CustomFileUploadProps> = ({ field, accept, multiple, inputClassName }) => {
+  const [isDragOver, setIsDragOver] = useState(false);
+  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const validateFile = (file: File): string | null => {
+    const maxSize = 10 * 1024 * 1024; // 10MB
+    if (file.size > maxSize) {
+      return 'File size must be less than 10MB';
+    }
+
+    if (accept) {
+      const acceptedTypes = accept.split(',').map(type => type.trim());
+      const isValidType = acceptedTypes.some(type => {
+        if (type.startsWith('.')) {
+          return file.name.toLowerCase().endsWith(type.toLowerCase());
+        }
+        // Handle MIME type patterns like "image/*", "video/*"
+        if (type.includes('*')) {
+          const baseType = type.split('/')[0];
+          return file.type.startsWith(baseType + '/');
+        }
+        return file.type === type;
+      });
+      
+      if (!isValidType) {
+        const extensions = acceptedTypes.filter(type => type.startsWith('.')).join(', ');
+        const mimeTypes = acceptedTypes.filter(type => !type.startsWith('.')).join(', ');
+        const expectedTypes = extensions || mimeTypes || '.jpg, .png, .webp, .pdf';
+        return `File type not supported. Expected: ${expectedTypes}`;
+      }
+    }
+    
+    return null;
+  };
+
+  const handleFiles = (files: FileList) => {
+    const fileArray = Array.from(files);
+    const validFiles: File[] = [];
+    const errors: string[] = [];
+
+    fileArray.forEach(file => {
+      const error = validateFile(file);
+      if (error) {
+        errors.push(`${file.name}: ${error}`);
+      } else {
+        validFiles.push(file);
+      }
+    });
+
+    if (errors.length > 0) {
+      console.error('File validation errors:', errors);
+      alert(errors.join('\n'));
+      return;
+    }
+
+    if (multiple) {
+      const newFiles = [...selectedFiles, ...validFiles];
+      setSelectedFiles(newFiles);
+      field.onChange(newFiles);
+    } else {
+      const file = validFiles[0] || null;
+      setSelectedFiles(file ? [file] : []);
+      field.onChange(file);
+    }
+  };
+
+  const removeFile = (index: number) => {
+    const newFiles = selectedFiles.filter((_, i) => i !== index);
+    setSelectedFiles(newFiles);
+    if (multiple) {
+      field.onChange(newFiles);
+    } else {
+      field.onChange(newFiles[0] || null);
+    }
+  };
+
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragOver(true);
+  };
+
+  const handleDragLeave = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragOver(false);
+  };
+
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragOver(false);
+    if (e.dataTransfer.files) {
+      handleFiles(e.dataTransfer.files);
+    }
+  };
+
+  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      handleFiles(e.target.files);
+    }
+  };
+
+  const openFileDialog = () => {
+    fileInputRef.current?.click();
+  };
+
+  return (
+    <div className={`w-full ${inputClassName}`}>
+      <div
+        className={`border-2 border-dashed rounded-lg p-6 text-center cursor-pointer transition-colors ${
+          isDragOver ? 'border-blue-500 bg-blue-50' : 'border-gray-300 hover:border-gray-400'
+        }`}
+        onDragOver={handleDragOver}
+        onDragLeave={handleDragLeave}
+        onDrop={handleDrop}
+        onClick={openFileDialog}
+      >
+        <Upload className="mx-auto h-12 w-12 text-gray-400 mb-4" />
+        <p className="text-sm text-gray-600 mb-2">
+          Drag & Drop your {multiple ? 'files' : 'file'} here or{' '}
+          <span className="text-blue-600 font-medium">browse</span>
+        </p>
+        <p className="text-xs text-gray-500">
+          Supports: {accept ? accept.split(',').map(type => type.trim()).join(', ') : '.jpg, .png, .webp, .pdf'} (Max 10MB)
+        </p>
+      </div>
+      
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept={accept}
+        multiple={multiple}
+        onChange={handleFileSelect}
+        className="hidden"
+      />
+      
+      {selectedFiles.length > 0 && (
+        <div className="mt-4 space-y-2">
+          {selectedFiles.map((file, index) => (
+            <div key={index} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+              <div className="flex items-center space-x-3">
+                <div className="w-8 h-8 bg-blue-100 rounded flex items-center justify-center">
+                  <Upload className="w-4 h-4 text-blue-600" />
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-gray-900">{file.name}</p>
+                  <p className="text-xs text-gray-500">{(file.size / 1024 / 1024).toFixed(2)} MB</p>
+                </div>
+              </div>
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  removeFile(index);
+                }}
+                className="text-red-500 hover:text-red-700"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
+
 interface MultiInputFieldProps {
   name: string;
   control: any;

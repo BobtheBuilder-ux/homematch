@@ -5,11 +5,11 @@ export const propertySchema = z.object({
   name: z.string().min(1, "Name is required"),
   description: z.string().min(1, "Description is required"),
   pricePerYear: z.coerce.number().positive().min(0).int(),
-  isPetsAllowed: z.boolean(),
   isParkingIncluded: z.boolean(),
   photoUrls: z
     .array(z.instanceof(File))
     .min(1, "At least one photo is required"),
+  videoUrl: z.union([z.instanceof(File), z.undefined()]).optional(),
   amenities: z.string().min(1, "Amenities are required"),
   highlights: z.string().min(1, "Highlights are required"),
   beds: z.coerce.number().positive().min(0).max(10).int(),

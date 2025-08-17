@@ -229,6 +229,18 @@ export const verifyPayment = async (
           }
         });
 
+        // Update the approved application with the lease ID
+        await prisma.application.updateMany({
+          where: {
+            propertyId: propertyId,
+            tenantCognitoId: tenant.cognitoId,
+            status: "Approved"
+          },
+          data: {
+            leaseId: newLease.id
+          }
+        });
+
         // Send notification email to landlord
         if (newLease.property.landlord?.email) {
           await sendEmail({
