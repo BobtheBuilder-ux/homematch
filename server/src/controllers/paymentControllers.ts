@@ -123,19 +123,19 @@ export const verifyPayment = async (
     if (data.status === "success") {
       const paymentId = parseInt(data.metadata.paymentId, 10);
       const leaseId = data.metadata.leaseId ? parseInt(data.metadata.leaseId, 10) : null;
-      const propertyId = parseInt(data.metadata.propertyId, 10);
+      const propertyId = data.metadata.propertyId ? parseInt(data.metadata.propertyId, 10) : null;
       const paymentType = data.metadata.paymentType;
       const tenantId = data.metadata.tenantId;
-
-      // Validate that propertyId is a valid number
-      if (isNaN(propertyId)) {
-        res.status(400).json({ success: false, message: "Invalid property ID" });
-        return;
-      }
 
       // Validate that paymentId is a valid number
       if (isNaN(paymentId)) {
         res.status(400).json({ success: false, message: "Invalid payment ID" });
+        return;
+      }
+
+      // Validate propertyId if it exists and is required for the payment type
+      if ((paymentType === "initial_payment" || paymentType === "deposit") && (!propertyId || isNaN(propertyId))) {
+        res.status(400).json({ success: false, message: "Invalid or missing property ID for this payment type" });
         return;
       }
 
@@ -150,7 +150,7 @@ export const verifyPayment = async (
       if (paymentType === "initial_payment") {
         // For initial payment, we need to create a lease first
         const property = await prisma.property.findUnique({
-          where: { id: propertyId },
+          where: { id: propertyId! },
           include: {
             location: true,
             landlord: true
@@ -220,7 +220,7 @@ export const verifyPayment = async (
 
         // Connect tenant to property and mark property as closed
         await prisma.property.update({
-          where: { id: propertyId },
+          where: { id: propertyId! },
           data: {
             status: "Closed",
             tenants: {
@@ -232,7 +232,7 @@ export const verifyPayment = async (
         // Update the approved application with the lease ID
         await prisma.application.updateMany({
           where: {
-            propertyId: propertyId,
+            propertyId: propertyId!,
             tenantCognitoId: tenant.cognitoId,
             status: "Approved"
           },
@@ -258,7 +258,7 @@ export const verifyPayment = async (
       } else if (paymentType === "deposit") {
         // For deposit payment, update tenant's inspection limit
         const property = await prisma.property.findUnique({
-          where: { id: propertyId },
+          where: { id: propertyId! },
           include: {
             location: true,
             landlord: true
@@ -352,7 +352,7 @@ export const verifyPayment = async (
           where: { cognitoId: tenantId }
         });
         const property = await prisma.property.findUnique({
-          where: { id: propertyId },
+          where: { id: propertyId! },
           include: { location: true }
         });
         

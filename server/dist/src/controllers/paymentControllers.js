@@ -115,17 +115,17 @@ const verifyPayment = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         if (data.status === "success") {
             const paymentId = parseInt(data.metadata.paymentId, 10);
             const leaseId = data.metadata.leaseId ? parseInt(data.metadata.leaseId, 10) : null;
-            const propertyId = parseInt(data.metadata.propertyId, 10);
+            const propertyId = data.metadata.propertyId ? parseInt(data.metadata.propertyId, 10) : null;
             const paymentType = data.metadata.paymentType;
             const tenantId = data.metadata.tenantId;
-            // Validate that propertyId is a valid number
-            if (isNaN(propertyId)) {
-                res.status(400).json({ success: false, message: "Invalid property ID" });
-                return;
-            }
             // Validate that paymentId is a valid number
             if (isNaN(paymentId)) {
                 res.status(400).json({ success: false, message: "Invalid payment ID" });
+                return;
+            }
+            // Validate propertyId if it exists and is required for the payment type
+            if ((paymentType === "initial_payment" || paymentType === "deposit") && (!propertyId || isNaN(propertyId))) {
+                res.status(400).json({ success: false, message: "Invalid or missing property ID for this payment type" });
                 return;
             }
             // Validate leaseId if it exists
