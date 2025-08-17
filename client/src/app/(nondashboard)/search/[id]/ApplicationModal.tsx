@@ -10,11 +10,13 @@ import {
 } from "@/components/ui/dialog";
 import { Form } from "@/components/ui/form";
 import { ApplicationFormData, applicationSchema } from "@/lib/schemas";
-import { useCreateApplicationMutation, useGetAuthUserQuery } from "@/state/api";
+import { useCreateApplicationWithFilesMutation, useGetAuthUserQuery } from "@/state/api";
 import { zodResolver } from "@hookform/resolvers/zod";
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Separator } from "@/components/ui/separator";
+import { toast } from "sonner";
+import { Loader2 } from "lucide-react";
 
 const ApplicationModal = ({
   isOpen,
@@ -22,8 +24,9 @@ const ApplicationModal = ({
   propertyId,
   onApplicationSubmitted,
 }: ApplicationModalProps) => {
-  const [createApplication] = useCreateApplicationMutation();
+  const [createApplicationWithFiles] = useCreateApplicationWithFilesMutation();
   const { data: authUser } = useGetAuthUserQuery();
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const form = useForm<ApplicationFormData>({
     resolver: zodResolver(applicationSchema),
@@ -62,33 +65,74 @@ const ApplicationModal = ({
 
   const onSubmit = async (data: ApplicationFormData) => {
     if (!authUser || authUser.userRole !== "tenant") {
-      console.error(
-        "You must be logged in as a tenant to submit an application"
-      );
+      toast.error("You must be logged in as a tenant to submit an application");
       return;
     }
     
-    // Convert date strings to Date objects for API
-    const formattedData = {
-      ...data,
-      preferredMoveInDate: data.preferredMoveInDate ? new Date(data.preferredMoveInDate).toISOString() : undefined,
-      dateOfBirth: data.dateOfBirth ? new Date(data.dateOfBirth).toISOString() : undefined,
-      // Handle file uploads - in a real implementation, these would be uploaded to a storage service
-      // and the URLs would be stored in the database
-      idDocumentUrl: data.idDocumentUrl ? "uploaded-id-document-url" : undefined,
-      incomeProofUrl: data.incomeProofUrl ? "uploaded-income-proof-url" : undefined,
-    };
+    setIsSubmitting(true);
+    
+    try {
+      // Create FormData for file upload
+      const formData = new FormData();
+      
+      // Add application data
+      formData.append('applicationDate', new Date().toISOString());
+      formData.append('status', 'Pending');
+      formData.append('propertyId', propertyId.toString());
+      formData.append('tenantCognitoId', authUser.cognitoInfo.userId);
+      formData.append('name', data.name);
+      formData.append('email', data.email);
+      formData.append('phoneNumber', data.phoneNumber);
+      
+      if (data.preferredMoveInDate) {
+        formData.append('preferredMoveInDate', new Date(data.preferredMoveInDate).toISOString());
+      }
+      if (data.desiredLeaseDuration) {
+        formData.append('desiredLeaseDuration', data.desiredLeaseDuration);
+      }
+      if (data.gender) formData.append('gender', data.gender);
+      if (data.dateOfBirth) {
+        formData.append('dateOfBirth', new Date(data.dateOfBirth).toISOString());
+      }
+      if (data.nationality) formData.append('nationality', data.nationality);
+      if (data.maritalStatus) formData.append('maritalStatus', data.maritalStatus);
+      if (data.idType) formData.append('idType', data.idType);
+      if (data.durationAtCurrentAddress) formData.append('durationAtCurrentAddress', data.durationAtCurrentAddress);
+      
+      // Employment details
+      if (data.employmentStatus) formData.append('employmentStatus', data.employmentStatus);
+      if (data.occupation) formData.append('occupation', data.occupation);
+      if (data.employerName) formData.append('employerName', data.employerName);
+      if (data.workAddress) formData.append('workAddress', data.workAddress);
+      if (data.monthlyIncome) formData.append('monthlyIncome', data.monthlyIncome.toString());
+      if (data.durationAtCurrentJob) formData.append('durationAtCurrentJob', data.durationAtCurrentJob);
+      if (data.reasonForLeaving) formData.append('reasonForLeaving', data.reasonForLeaving);
+      
+      // Consent fields
+      formData.append('consentToInformation', data.consentToInformation.toString());
+      formData.append('consentToVerification', data.consentToVerification.toString());
+      formData.append('consentToTenancyTerms', data.consentToTenancyTerms.toString());
+      formData.append('consentToPrivacyPolicy', data.consentToPrivacyPolicy.toString());
+      
+      // Add files if they exist
+      if (data.idDocumentUrl && data.idDocumentUrl instanceof File) {
+        formData.append('idDocument', data.idDocumentUrl);
+      }
+      if (data.incomeProofUrl && data.incomeProofUrl instanceof File) {
+        formData.append('incomeProof', data.incomeProofUrl);
+      }
 
-    await createApplication({
-      ...formattedData,
-      applicationDate: new Date().toISOString(),
-      status: "Pending",
-      propertyId: propertyId,
-      tenantCognitoId: authUser.cognitoInfo.userId,
-    });
-    onClose();
-    if (onApplicationSubmitted) {
-      onApplicationSubmitted();
+      await createApplicationWithFiles(formData).unwrap();
+      
+      onClose();
+      if (onApplicationSubmitted) {
+        onApplicationSubmitted();
+      }
+    } catch (error) {
+      console.error('Error submitting application:', error);
+      toast.error('Failed to submit application. Please try again.');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -319,8 +363,19 @@ const ApplicationModal = ({
               </div>
             </div>
             
-            <Button type="submit" className="bg-primary-700 text-white w-full">
-              Submit Application
+            <Button 
+              type="submit" 
+              className="bg-primary-700 text-white w-full" 
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Submitting Application...
+                </>
+              ) : (
+                "Submit Application"
+              )}
             </Button>
           </form>
         </Form>

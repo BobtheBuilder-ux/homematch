@@ -26,13 +26,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.createProperty = exports.getProperty = exports.getProperties = void 0;
 const client_1 = require("@prisma/client");
 const wkt_1 = require("@terraformer/wkt");
-const client_s3_1 = require("@aws-sdk/client-s3");
-const lib_storage_1 = require("@aws-sdk/lib-storage");
+const s3Service_1 = require("../utils/s3Service");
 const axios_1 = __importDefault(require("axios"));
 const prisma = new client_1.PrismaClient();
-const s3Client = new client_s3_1.S3Client({
-    region: process.env.AWS_REGION,
-});
+// S3 client moved to s3Service utility
 const getProperties = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { favoriteIds, priceMin, priceMax, beds, baths, propertyType, squareFeetMin, squareFeetMax, amenities, availableFrom, latitude, longitude, name, location, } = req.query;
@@ -170,24 +167,24 @@ const createProperty = (req, res) => __awaiter(void 0, void 0, void 0, function*
         console.log('Files received:', req.files);
         const files = req.files;
         const _e = req.body, { address, city, state, country, postalCode, landlordCognitoId } = _e, propertyData = __rest(_e, ["address", "city", "state", "country", "postalCode", "landlordCognitoId"]);
-        // Temporarily disable S3 uploads due to configuration issues
-        const photoUrls = yield Promise.all(files.map((file) => __awaiter(void 0, void 0, void 0, function* () {
-            const uploadParams = {
-                Bucket: process.env.S3_BUCKET_NAME,
-                Key: `properties/${Date.now()}-${file.originalname}`,
-                Body: file.buffer,
-                ContentType: file.mimetype,
-            };
-            const uploadResult = yield new lib_storage_1.Upload({
-                client: s3Client,
-                params: uploadParams,
-            }).done();
-            return uploadResult.Location;
-        })));
-        // TODO: Fix S3 bucket permissions and configuration
-        console.log('S3 uploads temporarily disabled - property will be created without photos');
+        // Upload property photos to S3
+        let photoUrls = [];
         if (files && files.length > 0) {
-            console.log(`Skipping upload of ${files.length} files due to S3 configuration issues`);
+            try {
+                const fileData = files.map(file => ({
+                    buffer: file.buffer,
+                    filename: file.originalname,
+                    mimetype: file.mimetype,
+                }));
+                const uploadResults = yield (0, s3Service_1.uploadMultipleFilesToS3)(fileData, 'properties/photos');
+                photoUrls = uploadResults.map(result => result.url);
+                console.log(`Successfully uploaded ${photoUrls.length} property photos`);
+            }
+            catch (uploadError) {
+                console.error('Error uploading property photos:', uploadError);
+                // Continue with property creation even if photo upload fails
+                photoUrls = [];
+            }
         }
         const geocodingUrl = `https://nominatim.openstreetmap.org/search?${new URLSearchParams({
             street: address,

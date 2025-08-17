@@ -9,10 +9,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getApplication = exports.updateApplicationStatus = exports.createApplication = exports.listApplications = void 0;
+exports.getApplication = exports.updateApplicationStatus = exports.createApplication = exports.createApplicationWithFiles = exports.listApplications = void 0;
 const client_1 = require("@prisma/client");
 const emailService_1 = require("../utils/emailService");
 const emailTemplates_1 = require("../utils/emailTemplates");
+const s3Service_1 = require("../utils/s3Service");
 const prisma = new client_1.PrismaClient();
 const listApplications = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -71,6 +72,144 @@ const listApplications = (req, res) => __awaiter(void 0, void 0, void 0, functio
     }
 });
 exports.listApplications = listApplications;
+const createApplicationWithFiles = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const files = req.files;
+        const { applicationDate, status, propertyId, tenantCognitoId, name, email, phoneNumber, preferredMoveInDate, desiredLeaseDuration, gender, dateOfBirth, nationality, maritalStatus, idType, durationAtCurrentAddress, employmentStatus, occupation, employerName, workAddress, monthlyIncome, durationAtCurrentJob, previousEmployerName, previousJobTitle, previousEmploymentDuration, reasonForLeavingPrevJob, numberOfOccupants, relationshipToOccupants, hasPets, isSmoker, accessibilityNeeds, reasonForLeaving, consentToInformation, consentToVerification, consentToTenancyTerms, consentToPrivacyPolicy, } = req.body;
+        // Upload documents to S3
+        let idDocumentUrl = '';
+        let incomeProofUrl = '';
+        if (files.idDocument && files.idDocument[0]) {
+            const idFile = files.idDocument[0];
+            const idResult = yield (0, s3Service_1.uploadFileToS3)(idFile.buffer, idFile.originalname, idFile.mimetype, 'documents/id');
+            idDocumentUrl = idResult.url;
+        }
+        if (files.incomeProof && files.incomeProof[0]) {
+            const incomeFile = files.incomeProof[0];
+            const incomeResult = yield (0, s3Service_1.uploadFileToS3)(incomeFile.buffer, incomeFile.originalname, incomeFile.mimetype, 'documents/income');
+            incomeProofUrl = incomeResult.url;
+        }
+        const property = yield prisma.property.findUnique({
+            where: { id: parseInt(propertyId) },
+            include: {
+                landlord: true,
+                location: true
+            }
+        });
+        if (!property) {
+            res.status(404).json({ message: "Property not found" });
+            return;
+        }
+        const newApplication = yield prisma.$transaction((prisma) => __awaiter(void 0, void 0, void 0, function* () {
+            var _a;
+            // Create lease first
+            const lease = yield prisma.lease.create({
+                data: {
+                    startDate: new Date(),
+                    endDate: new Date(new Date().setFullYear(new Date().getFullYear() + 1)),
+                    rent: property.pricePerYear,
+                    deposit: property.securityDeposit || 0,
+                    property: {
+                        connect: { id: parseInt(propertyId) },
+                    },
+                    tenant: {
+                        connect: { cognitoId: tenantCognitoId },
+                    },
+                },
+            });
+            // Create application
+            const application = yield prisma.application.create({
+                data: {
+                    applicationDate: new Date(applicationDate),
+                    status,
+                    name,
+                    email,
+                    phoneNumber,
+                    preferredMoveInDate: preferredMoveInDate ? new Date(preferredMoveInDate) : null,
+                    desiredLeaseDuration,
+                    gender,
+                    dateOfBirth: dateOfBirth ? new Date(dateOfBirth) : null,
+                    nationality,
+                    maritalStatus,
+                    idType,
+                    idDocumentUrl,
+                    durationAtCurrentAddress,
+                    employmentStatus,
+                    occupation,
+                    employerName,
+                    workAddress,
+                    monthlyIncome: monthlyIncome ? parseFloat(monthlyIncome) : null,
+                    durationAtCurrentJob,
+                    incomeProofUrl,
+                    previousEmployerName,
+                    previousJobTitle,
+                    previousEmploymentDuration,
+                    reasonForLeavingPrevJob,
+                    numberOfOccupants: numberOfOccupants ? parseInt(numberOfOccupants) : null,
+                    relationshipToOccupants,
+                    hasPets: hasPets === 'true',
+                    isSmoker: isSmoker === 'true',
+                    accessibilityNeeds,
+                    reasonForLeaving,
+                    consentToInformation: consentToInformation === 'true',
+                    consentToVerification: consentToVerification === 'true',
+                    consentToTenancyTerms: consentToTenancyTerms === 'true',
+                    consentToPrivacyPolicy: consentToPrivacyPolicy === 'true',
+                    property: {
+                        connect: { id: parseInt(propertyId) },
+                    },
+                    tenant: {
+                        connect: { cognitoId: tenantCognitoId },
+                    },
+                    lease: {
+                        connect: { id: lease.id },
+                    },
+                },
+                include: {
+                    property: {
+                        include: {
+                            location: true,
+                            landlord: true,
+                        },
+                    },
+                    tenant: true,
+                    lease: true,
+                },
+            });
+            // Send email to tenant using template
+            yield (0, emailService_1.sendEmail)({
+                to: email,
+                subject: emailTemplates_1.applicationSubmittedTemplate.subject,
+                body: emailTemplates_1.applicationSubmittedTemplate.body(name, property.location.address, new Date(applicationDate).toLocaleDateString(), property.pricePerYear, property.securityDeposit || 0, property.pricePerYear * 0.1)
+            });
+            // Send email to landlord
+            if ((_a = property.landlord) === null || _a === void 0 ? void 0 : _a.email) {
+                yield (0, emailService_1.sendEmail)({
+                    to: property.landlord.email,
+                    subject: "New Rental Application Received",
+                    body: `
+            <h2>New Application Received</h2>
+            <p>A new application has been submitted for your property at ${property.location.address}.</p>
+            <p>Applicant Details:</p>
+            <ul>
+              <li>Name: ${name}</li>
+              <li>Email: ${email}</li>
+              <li>Application Date: ${new Date(applicationDate).toLocaleDateString()}</li>
+            </ul>
+            <p>Please log in to your dashboard to review the application.</p>
+          `
+                });
+            }
+            return application;
+        }));
+        res.status(201).json(newApplication);
+    }
+    catch (error) {
+        console.error('Error creating application with files:', error);
+        res.status(500).json({ message: `Error creating application: ${error.message}` });
+    }
+});
+exports.createApplicationWithFiles = createApplicationWithFiles;
 const createApplication = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { applicationDate, status, propertyId, tenantCognitoId, name, email, phoneNumber, preferredMoveInDate, desiredLeaseDuration, gender, dateOfBirth, nationality, maritalStatus, idType, idDocumentUrl, durationAtCurrentAddress, employmentStatus, occupation, employerName, workAddress, monthlyIncome, durationAtCurrentJob, incomeProofUrl, previousEmployerName, previousJobTitle, previousEmploymentDuration, reasonForLeavingPrevJob, numberOfOccupants, relationshipToOccupants, hasPets, isSmoker, accessibilityNeeds, reasonForLeaving, consentToInformation, consentToVerification, consentToTenancyTerms, consentToPrivacyPolicy, } = req.body;

@@ -1,15 +1,12 @@
 import { Request, Response } from "express";
 import { PrismaClient, Prisma, Location } from "@prisma/client";
 import { wktToGeoJSON } from "@terraformer/wkt";
-import { S3Client } from "@aws-sdk/client-s3";
-import { Upload } from "@aws-sdk/lib-storage";
+import { uploadMultipleFilesToS3 } from "../utils/s3Service";
 import axios from "axios";
 
 const prisma = new PrismaClient();
 
-const s3Client = new S3Client({
-  region: process.env.AWS_REGION,
-});
+// S3 client moved to s3Service utility
 
 export const getProperties = async (
   req: Request,
@@ -230,28 +227,24 @@ export const createProperty = async (
       ...propertyData
     } = req.body;
 
-    // Temporarily disable S3 uploads due to configuration issues
-    const photoUrls = await Promise.all(
-      files.map(async (file) => {
-        const uploadParams = {
-          Bucket: process.env.S3_BUCKET_NAME!,
-          Key: `properties/${Date.now()}-${file.originalname}`,
-          Body: file.buffer,
-          ContentType: file.mimetype,
-        };
-
-        const uploadResult = await new Upload({
-          client: s3Client,
-          params: uploadParams,
-        }).done();
-
-        return uploadResult.Location;
-      })
-    );
-    // TODO: Fix S3 bucket permissions and configuration
-    console.log('S3 uploads temporarily disabled - property will be created without photos');
+    // Upload property photos to S3
+    let photoUrls: string[] = [];
     if (files && files.length > 0) {
-      console.log(`Skipping upload of ${files.length} files due to S3 configuration issues`);
+      try {
+        const fileData = files.map(file => ({
+          buffer: file.buffer,
+          filename: file.originalname,
+          mimetype: file.mimetype,
+        }));
+        
+        const uploadResults = await uploadMultipleFilesToS3(fileData, 'properties/photos');
+        photoUrls = uploadResults.map(result => result.url);
+        console.log(`Successfully uploaded ${photoUrls.length} property photos`);
+      } catch (uploadError) {
+        console.error('Error uploading property photos:', uploadError);
+        // Continue with property creation even if photo upload fails
+        photoUrls = [];
+      }
     }
 
     const geocodingUrl = `https://nominatim.openstreetmap.org/search?${new URLSearchParams(

@@ -430,6 +430,21 @@ export const api = createApi({
       },
     }),
 
+    createApplicationWithFiles: build.mutation<Application, FormData>({
+      query: (formData) => ({
+        url: `applications/with-files`,
+        method: "POST",
+        body: formData,
+      }),
+      invalidatesTags: ["Applications"],
+      async onQueryStarted(_, { queryFulfilled }) {
+        await withToast(queryFulfilled, {
+          success: "Application submitted successfully!",
+          error: "Failed to submit application.",
+        });
+      },
+    }),
+
     // Admin endpoints
     getAdminAnalytics: build.query<any, void>({
       query: () => "admin/analytics",
@@ -924,6 +939,7 @@ export const {
   useGetApplicationQuery,
   useUpdateApplicationStatusMutation,
   useCreateApplicationMutation,
+  useCreateApplicationWithFilesMutation,
   // Admin hooks
   useGetAdminAnalyticsQuery,
   useGetAllUsersQuery,

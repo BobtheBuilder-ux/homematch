@@ -5,6 +5,7 @@ import {
   applicationSubmittedTemplate, 
   applicationApprovedTemplate 
 } from "../utils/emailTemplates";
+import { uploadFileToS3 } from "../utils/s3Service";
 
 const prisma = new PrismaClient();
 
@@ -81,6 +82,209 @@ export const listApplications = async (
     res
       .status(500)
       .json({ message: `Error retrieving applications: ${error.message}` });
+  }
+};
+
+export const createApplicationWithFiles = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const files = req.files as { [fieldname: string]: Express.Multer.File[] };
+    const {
+      applicationDate,
+      status,
+      propertyId,
+      tenantCognitoId,
+      name,
+      email,
+      phoneNumber,
+      preferredMoveInDate,
+      desiredLeaseDuration,
+      gender,
+      dateOfBirth,
+      nationality,
+      maritalStatus,
+      idType,
+      durationAtCurrentAddress,
+      employmentStatus,
+      occupation,
+      employerName,
+      workAddress,
+      monthlyIncome,
+      durationAtCurrentJob,
+      previousEmployerName,
+      previousJobTitle,
+      previousEmploymentDuration,
+      reasonForLeavingPrevJob,
+      numberOfOccupants,
+      relationshipToOccupants,
+      hasPets,
+      isSmoker,
+      accessibilityNeeds,
+      reasonForLeaving,
+      consentToInformation,
+      consentToVerification,
+      consentToTenancyTerms,
+      consentToPrivacyPolicy,
+    } = req.body;
+
+    // Upload documents to S3
+    let idDocumentUrl = '';
+    let incomeProofUrl = '';
+
+    if (files.idDocument && files.idDocument[0]) {
+      const idFile = files.idDocument[0];
+      const idResult = await uploadFileToS3(
+        idFile.buffer,
+        idFile.originalname,
+        idFile.mimetype,
+        'documents/id'
+      );
+      idDocumentUrl = idResult.url;
+    }
+
+    if (files.incomeProof && files.incomeProof[0]) {
+      const incomeFile = files.incomeProof[0];
+      const incomeResult = await uploadFileToS3(
+        incomeFile.buffer,
+        incomeFile.originalname,
+        incomeFile.mimetype,
+        'documents/income'
+      );
+      incomeProofUrl = incomeResult.url;
+    }
+
+    const property = await prisma.property.findUnique({
+      where: { id: parseInt(propertyId) },
+      include: {
+        landlord: true,
+        location: true
+      }
+    });
+
+    if (!property) {
+      res.status(404).json({ message: "Property not found" });
+      return;
+    }
+
+    const newApplication = await prisma.$transaction(async (prisma: Prisma.TransactionClient) => {
+      // Create lease first
+      const lease = await prisma.lease.create({
+        data: {
+          startDate: new Date(),
+          endDate: new Date(new Date().setFullYear(new Date().getFullYear() + 1)),
+          rent: property.pricePerYear,
+          deposit: property.securityDeposit || 0,
+          property: {
+            connect: { id: parseInt(propertyId) },
+          },
+          tenant: {
+            connect: { cognitoId: tenantCognitoId },
+          },
+        },
+      });
+
+      // Create application
+      const application = await prisma.application.create({
+        data: {
+          applicationDate: new Date(applicationDate),
+          status,
+          name,
+          email,
+          phoneNumber,
+          preferredMoveInDate: preferredMoveInDate ? new Date(preferredMoveInDate) : null,
+          desiredLeaseDuration,
+          gender,
+          dateOfBirth: dateOfBirth ? new Date(dateOfBirth) : null,
+          nationality,
+          maritalStatus,
+          idType,
+          idDocumentUrl,
+          durationAtCurrentAddress,
+          employmentStatus,
+          occupation,
+          employerName,
+          workAddress,
+          monthlyIncome: monthlyIncome ? parseFloat(monthlyIncome) : null,
+          durationAtCurrentJob,
+          incomeProofUrl,
+          previousEmployerName,
+          previousJobTitle,
+          previousEmploymentDuration,
+          reasonForLeavingPrevJob,
+          numberOfOccupants: numberOfOccupants ? parseInt(numberOfOccupants) : null,
+          relationshipToOccupants,
+          hasPets: hasPets === 'true',
+          isSmoker: isSmoker === 'true',
+          accessibilityNeeds,
+          reasonForLeaving,
+          consentToInformation: consentToInformation === 'true',
+          consentToVerification: consentToVerification === 'true',
+          consentToTenancyTerms: consentToTenancyTerms === 'true',
+          consentToPrivacyPolicy: consentToPrivacyPolicy === 'true',
+          property: {
+            connect: { id: parseInt(propertyId) },
+          },
+          tenant: {
+            connect: { cognitoId: tenantCognitoId },
+          },
+          lease: {
+            connect: { id: lease.id },
+          },
+        },
+        include: {
+          property: {
+            include: {
+              location: true,
+              landlord: true,
+            },
+          },
+          tenant: true,
+          lease: true,
+        },
+      });
+
+      // Send email to tenant using template
+      await sendEmail({
+        to: email,
+        subject: applicationSubmittedTemplate.subject,
+        body: applicationSubmittedTemplate.body(
+          name,
+          property.location.address,
+          new Date(applicationDate).toLocaleDateString(),
+          property.pricePerYear,
+          property.securityDeposit || 0,
+          property.pricePerYear * 0.1
+        )
+      });
+
+      // Send email to landlord
+      if (property.landlord?.email) {
+        await sendEmail({
+          to: property.landlord.email,
+          subject: "New Rental Application Received",
+          body: `
+            <h2>New Application Received</h2>
+            <p>A new application has been submitted for your property at ${property.location.address}.</p>
+            <p>Applicant Details:</p>
+            <ul>
+              <li>Name: ${name}</li>
+              <li>Email: ${email}</li>
+              <li>Application Date: ${new Date(applicationDate).toLocaleDateString()}</li>
+            </ul>
+            <p>Please log in to your dashboard to review the application.</p>
+          `
+        });
+      }
+
+      return application;
+    });
+
+    res.status(201).json(newApplication);
+  } catch (error: any) {
+    console.error('Error creating application with files:', error);
+    res.status(500).json({ message: `Error creating application: ${error.message}` });
   }
 };
 
