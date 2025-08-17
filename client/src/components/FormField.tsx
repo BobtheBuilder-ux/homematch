@@ -157,11 +157,31 @@ export const CustomFormField: React.FC<FormFieldProps> = ({
                 field.onChange(file);
               }
             }}
+            onaddfile={(error, fileItem) => {
+              if (error) {
+                console.error('FilePond add file error:', JSON.stringify(error));
+              } else {
+                console.log('FilePond file added successfully:', fileItem.file?.name, fileItem.file?.type);
+              }
+            }}
+            onprocessfile={(error, fileItem) => {
+              if (error) {
+                console.error('FilePond process file error:', error);
+              }
+            }}
             allowMultiple={multiple}
             maxFiles={multiple ? undefined : 1}
             labelIdle={`Drag & Drop your ${multiple ? 'files' : 'file'} or <span class="filepond--label-action">Browse</span>`}
             credits={false}
-            acceptedFileTypes={accept ? accept.split(',') : undefined}
+            acceptedFileTypes={accept ? accept.split(',').map(type => {
+              const mimeToExt: Record<string, string> = {
+                'image/jpeg': '.jpg',
+                'image/png': '.png', 
+                'image/webp': '.webp',
+                'application/pdf': '.pdf'
+              };
+              return mimeToExt[type.trim()] || type.trim();
+            }) : ['.jpg', '.png', '.webp', '.pdf']}
             allowFileTypeValidation={true}
             fileValidateTypeLabelExpectedTypes="Expects {allButLastType} or {lastType}"
             allowFileSizeValidation={true}
