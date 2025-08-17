@@ -397,6 +397,15 @@ export const api = createApi({
       providesTags: (_, __, id) => [{ type: "Applications", id }],
     }),
 
+    checkExistingApplication: build.query<
+      { hasApplication: boolean; application?: Application },
+      { propertyId: number; tenantCognitoId: string }
+    >({
+      query: ({ propertyId, tenantCognitoId }) => 
+        `applications/check?propertyId=${propertyId}&tenantCognitoId=${tenantCognitoId}`,
+      providesTags: ["Applications"],
+    }),
+
     updateApplicationStatus: build.mutation<
       Application & { lease?: Lease },
       { id: number; status: string; userType: string }
@@ -937,6 +946,7 @@ export const {
   useCreatePaymentMutation,
   useGetApplicationsQuery,
   useGetApplicationQuery,
+  useCheckExistingApplicationQuery,
   useUpdateApplicationStatusMutation,
   useCreateApplicationMutation,
   useCreateApplicationWithFilesMutation,

@@ -113,6 +113,25 @@ export const PropertyTypeIcons: Record<PropertyTypeEnum, LucideIcon> = {
 // Add this constant at the end of the file
 export const NAVBAR_HEIGHT = 52; // in pixels
 
+// Tenant Preference Enums
+export enum MaritalPreferenceEnum {
+  Single = "Single",
+  Married = "Married",
+  Any = "Any",
+}
+
+export enum GenderPreferenceEnum {
+  Male = "Male",
+  Female = "Female",
+  Any = "Any",
+}
+
+export enum ChildrenPreferenceEnum {
+  Yes = "Yes",
+  No = "No",
+  Any = "Any",
+}
+
 // Test users for development
 export const testUsers = {
   tenant: {

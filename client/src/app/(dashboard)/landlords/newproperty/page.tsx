@@ -5,7 +5,7 @@ import Header from "@/components/Header";
 import { Form } from "@/components/ui/form";
 import { PropertyFormData, propertySchema } from "@/lib/schemas";
 import { useCreatePropertyMutation, useGetAuthUserQuery } from "@/state/api";
-import { AmenityEnum, HighlightEnum, PropertyTypeEnum } from "@/lib/constants";
+import { AmenityEnum, PropertyTypeEnum, MaritalPreferenceEnum, GenderPreferenceEnum, ChildrenPreferenceEnum } from "@/lib/constants";
 import { zodResolver } from "@hookform/resolvers/zod";
 import React from "react";
 import { useForm } from "react-hook-form";
@@ -25,7 +25,9 @@ const NewProperty = () => {
       photoUrls: [],
       videoUrl: undefined,
       amenities: "",
-      highlights: "",
+      maritalPreference: MaritalPreferenceEnum.Any,
+      genderPreference: GenderPreferenceEnum.Any,
+      childrenPreference: ChildrenPreferenceEnum.Any,
       beds: 1,
       baths: 1,
       squareFeet: 1000,
@@ -167,28 +169,50 @@ const NewProperty = () => {
 
             <hr className="my-6 border-gray-200" />
 
-            {/* Amenities and Highlights */}
+            {/* Amenities */}
             <div>
-              <h2 className="text-lg font-semibold mb-4">
-                Amenities and Highlights
-              </h2>
+              <h2 className="text-lg font-semibold mb-4">Amenities</h2>
               <div className="space-y-6">
                 <CustomFormField
                   name="amenities"
-                  label="Amenities"
+                  label="Amenities (comma-separated)"
+                  type="textarea"
+                  placeholder="e.g. Swimming Pool, Gym, Parking, Security, etc."
+                />
+              </div>
+            </div>
+
+            <hr className="my-6 border-gray-200" />
+
+            {/* Tenant Preferences */}
+            <div>
+              <h2 className="text-lg font-semibold mb-4">Tenant Preferences</h2>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <CustomFormField
+                  name="maritalPreference"
+                  label="Preferred Marital Status"
                   type="select"
-                  options={Object.keys(AmenityEnum).map((amenity) => ({
-                    value: amenity,
-                    label: amenity,
+                  options={Object.keys(MaritalPreferenceEnum).map((status) => ({
+                    value: status,
+                    label: status,
                   }))}
                 />
                 <CustomFormField
-                  name="highlights"
-                  label="Highlights"
+                  name="genderPreference"
+                  label="Preferred Gender"
                   type="select"
-                  options={Object.keys(HighlightEnum).map((highlight) => ({
-                    value: highlight,
-                    label: highlight,
+                  options={Object.keys(GenderPreferenceEnum).map((gender) => ({
+                    value: gender,
+                    label: gender,
+                  }))}
+                />
+                <CustomFormField
+                  name="childrenPreference"
+                  label="Children Allowed"
+                  type="select"
+                  options={Object.keys(ChildrenPreferenceEnum).map((option) => ({
+                    value: option,
+                    label: option,
                   }))}
                 />
               </div>

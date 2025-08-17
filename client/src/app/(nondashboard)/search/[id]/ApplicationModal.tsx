@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/dialog";
 import { Form } from "@/components/ui/form";
 import { ApplicationFormData, applicationSchema } from "@/lib/schemas";
-import { useCreateApplicationWithFilesMutation, useGetAuthUserQuery } from "@/state/api";
+import { useCreateApplicationWithFilesMutation, useGetAuthUserQuery, useCheckExistingApplicationQuery } from "@/state/api";
 import { zodResolver } from "@hookform/resolvers/zod";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -27,6 +27,17 @@ const ApplicationModal = ({
   const [createApplicationWithFiles] = useCreateApplicationWithFilesMutation();
   const { data: authUser } = useGetAuthUserQuery();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  
+  // Check for existing application
+  const { data: existingApplicationCheck, isLoading: isCheckingApplication } = useCheckExistingApplicationQuery(
+    {
+      propertyId,
+      tenantCognitoId: authUser?.cognitoInfo?.userId || ""
+    },
+    {
+      skip: !authUser?.cognitoInfo?.userId || !isOpen
+    }
+  );
 
   const form = useForm<ApplicationFormData>({
     resolver: zodResolver(applicationSchema),
@@ -140,6 +151,88 @@ const ApplicationModal = ({
       setIsSubmitting(false);
     }
   };
+
+  // Show loading state while checking for existing application
+  if (isCheckingApplication) {
+    return (
+      <Dialog open={isOpen} onOpenChange={onClose}>
+        <DialogContent className="bg-white max-w-md">
+          <div className="flex items-center justify-center p-8">
+            <Loader2 className="h-8 w-8 animate-spin" />
+            <span className="ml-2">Checking application status...</span>
+          </div>
+        </DialogContent>
+      </Dialog>
+    );
+  }
+
+  // Show existing application status if user already has an application
+  if (existingApplicationCheck?.hasApplication && existingApplicationCheck.application) {
+    const application = existingApplicationCheck.application;
+    const hasInitialPayment = application.lease?.payments?.some((payment: any) => 
+      payment.paymentStatus === "Paid" && payment.amountPaid > 0
+    );
+
+    return (
+      <Dialog open={isOpen} onOpenChange={onClose}>
+        <DialogContent className="bg-white max-w-2xl">
+          <DialogHeader className="mb-4">
+            <DialogTitle>Application Status</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4">
+            <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
+              <h3 className="font-semibold text-blue-900 mb-2">You already have an application for this property</h3>
+              <p className="text-blue-700 mb-3">
+                Application Status: <span className="font-semibold">{application.status}</span>
+              </p>
+              <p className="text-blue-700 mb-3">
+                Submitted on: {new Date(application.applicationDate).toLocaleDateString()}
+              </p>
+              
+              {application.status === "Approved" && !hasInitialPayment && (
+                <div className="mt-4 p-3 bg-green-50 border border-green-200 rounded">
+                  <p className="text-green-700 font-semibold mb-2">🎉 Your application has been approved!</p>
+                  <p className="text-green-600 text-sm mb-3">Complete your payment to secure the property.</p>
+                  <button
+                    onClick={() => {
+                      // Redirect to applications page where they can pay
+                      window.location.href = "/dashboard/tenants/applications";
+                    }}
+                    className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+                  >
+                    Go to Applications to Pay
+                  </button>
+                </div>
+              )}
+              
+              {application.status === "Approved" && hasInitialPayment && (
+                <div className="mt-4 p-3 bg-green-50 border border-green-200 rounded">
+                  <p className="text-green-700 font-semibold">✅ Property secured!</p>
+                  <p className="text-green-600 text-sm">
+                    You are renting this property until {application.lease?.endDate ? new Date(application.lease.endDate).toLocaleDateString() : 'N/A'}
+                  </p>
+                </div>
+              )}
+              
+              {application.status === "Pending" && (
+                <div className="mt-4 p-3 bg-yellow-50 border border-yellow-200 rounded">
+                  <p className="text-yellow-700 font-semibold">⏳ Application under review</p>
+                  <p className="text-yellow-600 text-sm">Please wait for the landlord or admin to review your application.</p>
+                </div>
+              )}
+              
+              {application.status === "Denied" && (
+                <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded">
+                  <p className="text-red-700 font-semibold">❌ Application denied</p>
+                  <p className="text-red-600 text-sm">Unfortunately, your application was not approved for this property.</p>
+                </div>
+              )}
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+    );
+  }
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>

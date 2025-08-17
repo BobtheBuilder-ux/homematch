@@ -1,6 +1,6 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Loading from "@/components/Loading";
-import { AmenityIcons, HighlightIcons } from "@/lib/constants";
+import { AmenityIcons } from "@/lib/constants";
 import { formatEnumString } from "@/lib/utils";
 import { useGetPropertyQuery } from "@/state/api";
 import { HelpCircle } from "lucide-react";
@@ -59,49 +59,42 @@ const PropertyDetails = ({ propertyId }: PropertyDetailsProps) => {
         </div>
       </div>
 
-      {/* Highlights */}
-      <div className="mt-12 mb-16">
-        <h3 className="text-xl font-semibold text-primary-800 dark:text-primary-100">
-          Highlights
-        </h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 mt-4 w-full">
-          {property.highlights && typeof property.highlights === 'string'
-            ? property.highlights.split(',').map((highlight: string) => {
-                const trimmedHighlight = highlight.trim();
-                const Icon = HighlightIcons[trimmedHighlight as HighlightEnum] || HelpCircle;
-                return (
-                  <div
-                    key={trimmedHighlight}
-                    className="flex flex-col items-center border rounded-xl py-8 px-4"
-                  >
-                    <Icon className="w-8 h-8 mb-2 text-primary-600 dark:text-primary-300" />
-                    <span className="text-sm text-center text-primary-600 dark:text-primary-300">
-                      {formatEnumString(trimmedHighlight)}
-                    </span>
-                  </div>
-                );
-              })
-            : Array.isArray(property.highlights)
-              ? property.highlights.map((highlight: HighlightEnum) => {
-                  const Icon = HighlightIcons[highlight as HighlightEnum] || HelpCircle;
-                  return (
-                    <div
-                      key={highlight}
-                      className="flex flex-col items-center border rounded-xl py-8 px-4"
-                    >
-                      <Icon className="w-8 h-8 mb-2 text-primary-600 dark:text-primary-300" />
-                      <span className="text-sm text-center text-primary-600 dark:text-primary-300">
-                        {formatEnumString(highlight)}
-                      </span>
-                    </div>
-                  );
-                })
-              : null}
+      {/* Tenant Preferences */}
+      <div className="mt-8">
+        <h2 className="text-xl font-semibold my-3">Tenant Preferences</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+          <div className="flex flex-col items-center border rounded-xl py-6 px-4">
+            <div className="w-8 h-8 mb-2 bg-primary-100 rounded-full flex items-center justify-center">
+              <span className="text-primary-600 font-semibold text-sm">M</span>
+            </div>
+            <span className="text-sm font-medium text-gray-700 mb-1">Marital Status</span>
+            <span className="text-sm text-center text-gray-600">
+              {property.maritalPreference || 'Any'}
+            </span>
+          </div>
+          <div className="flex flex-col items-center border rounded-xl py-6 px-4">
+            <div className="w-8 h-8 mb-2 bg-primary-100 rounded-full flex items-center justify-center">
+              <span className="text-primary-600 font-semibold text-sm">G</span>
+            </div>
+            <span className="text-sm font-medium text-gray-700 mb-1">Gender</span>
+            <span className="text-sm text-center text-gray-600">
+              {property.genderPreference || 'Any'}
+            </span>
+          </div>
+          <div className="flex flex-col items-center border rounded-xl py-6 px-4">
+            <div className="w-8 h-8 mb-2 bg-primary-100 rounded-full flex items-center justify-center">
+              <span className="text-primary-600 font-semibold text-sm">C</span>
+            </div>
+            <span className="text-sm font-medium text-gray-700 mb-1">Children</span>
+            <span className="text-sm text-center text-gray-600">
+              {property.childrenPreference === 'Yes' ? 'Allowed' : property.childrenPreference === 'No' ? 'Not Allowed' : 'Any'}
+            </span>
+          </div>
         </div>
       </div>
 
       {/* Tabs Section */}
-      <div>
+      <div className="mt-8">
         <h3 className="text-xl font-semibold text-primary-800 dark:text-primary-100 mb-5">
           Fees and Policies
         </h3>
