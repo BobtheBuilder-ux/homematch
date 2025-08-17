@@ -248,6 +248,7 @@ model Application {
   status                  ApplicationStatus
   propertyId              Int
   tenantCognitoId         String
+  paymentDeadline         DateTime?
   name                    String
   email                   String
   phoneNumber             String

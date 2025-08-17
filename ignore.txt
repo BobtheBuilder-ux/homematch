@@ -1,3 +1,1 @@
-1. Tenants are allowed one application at a time for any property
-2. A timer should be added for them to make a payment before it expires
-3. Remove the approve button from the landlord dashboard application section, only admin can approve
+1. Add reset password to the signin

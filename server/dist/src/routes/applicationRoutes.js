@@ -41,8 +41,9 @@ router.post("/with-files", (0, authMiddleware_1.authMiddleware)(["tenant"]), upl
 ]), applicationControllers_1.createApplicationWithFiles);
 // Original route for applications without files
 router.get("/check", (0, authMiddleware_1.authMiddleware)(["tenant"]), applicationControllers_1.checkExistingApplication);
+router.get("/check-deadlines", (0, authMiddleware_1.authMiddleware)(["admin"]), applicationControllers_1.checkPaymentDeadlines);
 router.post("/", (0, authMiddleware_1.authMiddleware)(["tenant"]), applicationControllers_1.createApplication);
-router.put("/:id/status", (0, authMiddleware_1.authMiddleware)(["landlord", "admin"]), applicationControllers_1.updateApplicationStatus);
+router.put("/:id/status", (0, authMiddleware_1.authMiddleware)(["admin"]), applicationControllers_1.updateApplicationStatus);
 router.get("/", (0, authMiddleware_1.authMiddleware)(["landlord", "tenant", "admin"]), applicationControllers_1.listApplications);
 router.get("/:id", (0, authMiddleware_1.authMiddleware)(["landlord", "tenant", "admin"]), applicationControllers_1.getApplication);
 exports.default = router;

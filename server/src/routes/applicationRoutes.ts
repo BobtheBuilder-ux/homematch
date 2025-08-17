@@ -8,6 +8,7 @@ import {
   updateApplicationStatus,
   getApplication,
   checkExistingApplication,
+  checkPaymentDeadlines,
 } from "../controllers/applicationControllers";
 
 const router = express.Router();
@@ -51,8 +52,9 @@ router.post("/with-files",
 
 // Original route for applications without files
 router.get("/check", authMiddleware(["tenant"]), checkExistingApplication);
+router.get("/check-deadlines", authMiddleware(["admin"]), checkPaymentDeadlines);
 router.post("/", authMiddleware(["tenant"]), createApplication);
-router.put("/:id/status", authMiddleware(["landlord", "admin"]), updateApplicationStatus);
+router.put("/:id/status", authMiddleware(["admin"]), updateApplicationStatus);
 router.get("/", authMiddleware(["landlord", "tenant", "admin"]), listApplications);
 router.get("/:id", authMiddleware(["landlord", "tenant", "admin"]), getApplication);
 

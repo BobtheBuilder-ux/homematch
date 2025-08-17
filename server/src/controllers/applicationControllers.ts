@@ -143,20 +143,32 @@ export const createApplicationWithFiles = async (
       return;
     }
 
-    // Check for existing active application from this tenant for this property
+    // Check for existing active application from this tenant for ANY property
     const existingApplication = await prisma.application.findFirst({
       where: {
-        propertyId: parseInt(propertyId),
         tenantCognitoId: tenantCognitoId,
         status: {
           in: ['Pending', 'Approved']
+        }
+      },
+      include: {
+        property: {
+          include: {
+            location: true
+          }
         }
       }
     });
 
     if (existingApplication) {
       res.status(400).json({ 
-        message: "You already have an active application for this property. Please wait for the current application to be processed." 
+        message: `You already have an active application for ${existingApplication.property.location.address}. Tenants are allowed only one application at a time. Please wait for your current application to be processed or contact support.`,
+        existingApplication: {
+          id: existingApplication.id,
+          propertyAddress: existingApplication.property.location.address,
+          status: existingApplication.status,
+          applicationDate: existingApplication.applicationDate
+        }
       });
       return;
     }
@@ -374,20 +386,32 @@ export const createApplication = async (
       return;
     }
 
-    // Check for existing active application from this tenant for this property
+    // Check for existing active application from this tenant for ANY property
     const existingApplication = await prisma.application.findFirst({
       where: {
-        propertyId: propertyId,
         tenantCognitoId: tenantCognitoId,
         status: {
           in: ['Pending', 'Approved']
+        }
+      },
+      include: {
+        property: {
+          include: {
+            location: true
+          }
         }
       }
     });
 
     if (existingApplication) {
       res.status(400).json({ 
-        message: "You already have an active application for this property. Please wait for the current application to be processed." 
+        message: `You already have an active application for ${existingApplication.property.location.address}. Tenants are allowed only one application at a time. Please wait for your current application to be processed or contact support.`,
+        existingApplication: {
+          id: existingApplication.id,
+          propertyAddress: existingApplication.property.location.address,
+          status: existingApplication.status,
+          applicationDate: existingApplication.applicationDate
+        }
       });
       return;
     }
@@ -543,10 +567,17 @@ export const updateApplicationStatus = async (
     }
 
     if (status === "Approved") {
-      // Update application status to approved (lease will be created after payment)
+      // Set payment deadline to 7 days from now
+      const paymentDeadline = new Date();
+      paymentDeadline.setDate(paymentDeadline.getDate() + 7);
+
+      // Update application status to approved with payment deadline
       await prisma.application.update({
         where: { id: Number(id) },
-        data: { status },
+        data: { 
+          status,
+          paymentDeadline 
+        },
       });
 
       // Send approval email to tenant using template
@@ -632,21 +663,79 @@ export const getApplication = async (
   }
 };
 
+export const checkPaymentDeadlines = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const now = new Date();
+    
+    // Find all approved applications with expired payment deadlines
+    const expiredApplications = await prisma.application.findMany({
+      where: {
+        status: 'Approved',
+        paymentDeadline: {
+          lt: now
+        }
+      },
+      include: {
+        property: {
+          include: {
+            location: true
+          }
+        },
+        tenant: true
+      }
+    });
+
+    // Update expired applications to 'Denied' status
+    for (const application of expiredApplications) {
+      await prisma.application.update({
+        where: { id: application.id },
+        data: { 
+          status: 'Denied',
+          paymentDeadline: null
+        }
+      });
+
+      // Send notification email to tenant
+      await sendEmail({
+        to: application.tenant.email,
+        subject: "Payment Deadline Expired - Application Denied",
+        body: `
+          <h2>Payment Deadline Expired</h2>
+          <p>Dear ${application.tenant.name},</p>
+          <p>Your payment deadline for the property at ${application.property.location.address} has expired.</p>
+          <p>Your application has been automatically denied due to non-payment within the required timeframe.</p>
+          <p>You can apply for other available properties on our platform.</p>
+          <p>Thank you for your interest.</p>
+        `
+      });
+    }
+
+    res.json({ 
+      message: `Processed ${expiredApplications.length} expired applications`,
+      expiredCount: expiredApplications.length
+    });
+  } catch (error: any) {
+    res.status(500).json({ message: `Error checking payment deadlines: ${error.message}` });
+  }
+};
+
 export const checkExistingApplication = async (
   req: Request,
   res: Response
 ): Promise<void> => {
   try {
-    const { propertyId, tenantCognitoId } = req.query;
+    const { tenantCognitoId } = req.query;
 
-    if (!propertyId || !tenantCognitoId) {
-      res.status(400).json({ message: "Property ID and tenant Cognito ID are required" });
+    if (!tenantCognitoId) {
+      res.status(400).json({ message: "Tenant Cognito ID is required" });
       return;
     }
 
     const existingApplication = await prisma.application.findFirst({
       where: {
-        propertyId: parseInt(propertyId as string),
         tenantCognitoId: tenantCognitoId as string,
         status: {
           in: ['Pending', 'Approved']

@@ -7,7 +7,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   useGetApplicationsQuery,
   useGetAuthUserQuery,
-  useUpdateApplicationStatusMutation,
 } from "@/state/api";
 import { CircleCheckBig, Download, File, Hospital } from "lucide-react";
 import Link from "next/link";
@@ -30,11 +29,7 @@ const Applications = () => {
       skip: !authUser?.cognitoInfo?.userId,
     }
   );
-  const [updateApplicationStatus] = useUpdateApplicationStatusMutation();
 
-  const handleStatusChange = async (id: number, status: string) => {
-    await updateApplicationStatus({ id, status, userType: "admin" });
-  };
 
   if (isLoading) return <Loading />;
   if (isError || !applications) return <div>Error fetching applications</div>;
@@ -135,24 +130,9 @@ const Applications = () => {
                         </button>
                       )}
                       {application.status === "Pending" && (
-                        <>
-                          <button
-                            className="px-4 py-2 text-sm text-white bg-green-600 rounded hover:bg-green-500"
-                            onClick={() =>
-                              handleStatusChange(application.id, "Approved")
-                            }
-                          >
-                            Approve
-                          </button>
-                          <button
-                            className="px-4 py-2 text-sm text-white bg-red-600 rounded hover:bg-red-500"
-                            onClick={() =>
-                              handleStatusChange(application.id, "Denied")
-                            }
-                          >
-                            Deny
-                          </button>
-                        </>
+                        <div className="px-4 py-2 text-sm text-gray-600 bg-yellow-100 rounded">
+                          Pending Admin Review
+                        </div>
                       )}
                       {application.status === "Denied" && (
                         <button
