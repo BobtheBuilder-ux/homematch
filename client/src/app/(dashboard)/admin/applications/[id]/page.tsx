@@ -71,7 +71,7 @@ const ApplicationDetail = () => {
               <p>{application.property.location.address}</p>
             </div>
             <div>
-              <h3 className="font-medium">Monthly Rent</h3>
+              <h3 className="font-medium">Yearly Rent</h3>
               <p>₦{application.property.pricePerYear.toLocaleString()}</p>
             </div>
             <div>
