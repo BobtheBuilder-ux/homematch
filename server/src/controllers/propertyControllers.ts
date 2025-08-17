@@ -98,7 +98,12 @@ export const getProperties = async (
 
     if (amenities && amenities !== "any") {
       const amenitiesArray = (amenities as string).split(",");
-      whereConditions.push(Prisma.sql`p.amenities @> ${amenitiesArray}`);
+      const amenityConditions = amenitiesArray.map(amenity => 
+        Prisma.sql`p.amenities ILIKE ${`%${amenity.trim()}%`}`
+      );
+      if (amenityConditions.length > 0) {
+        whereConditions.push(Prisma.sql`(${Prisma.join(amenityConditions, ' OR ')})`);
+      }
     }
 
     if (availableFrom && availableFrom !== "any") {
@@ -308,12 +313,11 @@ export const createProperty = async (
         status: 'PendingApproval', // New properties require admin approval
         amenities:
           typeof propertyData.amenities === "string"
-            ? propertyData.amenities.split(",")
-            : [],
-        highlights:
-          typeof propertyData.highlights === "string"
-            ? propertyData.highlights.split(",")
-            : [],
+            ? propertyData.amenities
+            : Array.isArray(propertyData.amenities)
+            ? propertyData.amenities.join(", ")
+            : null,
+
         isParkingIncluded: propertyData.isParkingIncluded === "true",
         pricePerYear: parseFloat(propertyData.pricePerYear),
         securityDeposit: parseFloat(propertyData.pricePerYear) * 0.15, // 15% caution fee

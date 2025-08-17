@@ -74,7 +74,10 @@ const getProperties = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         }
         if (amenities && amenities !== "any") {
             const amenitiesArray = amenities.split(",");
-            whereConditions.push(client_1.Prisma.sql `p.amenities @> ${amenitiesArray}`);
+            const amenityConditions = amenitiesArray.map(amenity => client_1.Prisma.sql `p.amenities ILIKE ${`%${amenity.trim()}%`}`);
+            if (amenityConditions.length > 0) {
+                whereConditions.push(client_1.Prisma.sql `(${client_1.Prisma.join(amenityConditions, ' OR ')})`);
+            }
         }
         if (availableFrom && availableFrom !== "any") {
             const availableFromDate = typeof availableFrom === "string" ? availableFrom : null;
@@ -230,10 +233,10 @@ const createProperty = (req, res) => __awaiter(void 0, void 0, void 0, function*
         const newProperty = yield prisma.property.create({
             data: Object.assign(Object.assign({}, propertyData), { photoUrls,
                 videoUrl, locationId: location.id, landlordCognitoId, status: 'PendingApproval', amenities: typeof propertyData.amenities === "string"
-                    ? propertyData.amenities.split(",")
-                    : [], highlights: typeof propertyData.highlights === "string"
-                    ? propertyData.highlights.split(",")
-                    : [], isParkingIncluded: propertyData.isParkingIncluded === "true", pricePerYear: parseFloat(propertyData.pricePerYear), securityDeposit: parseFloat(propertyData.pricePerYear) * 0.15, applicationFee: parseFloat(propertyData.pricePerYear) * 0.10, beds: parseInt(propertyData.beds), baths: parseFloat(propertyData.baths), squareFeet: parseInt(propertyData.squareFeet) }),
+                    ? propertyData.amenities
+                    : Array.isArray(propertyData.amenities)
+                        ? propertyData.amenities.join(", ")
+                        : null, isParkingIncluded: propertyData.isParkingIncluded === "true", pricePerYear: parseFloat(propertyData.pricePerYear), securityDeposit: parseFloat(propertyData.pricePerYear) * 0.15, applicationFee: parseFloat(propertyData.pricePerYear) * 0.10, beds: parseInt(propertyData.beds), baths: parseFloat(propertyData.baths), squareFeet: parseInt(propertyData.squareFeet) }),
             include: {
                 location: true,
                 landlord: true,
