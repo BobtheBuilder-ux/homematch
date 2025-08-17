@@ -69,6 +69,7 @@ model Property {
   description       String
   pricePerYear     Float
   securityDeposit   Float
+  applicationFee    Float
   photoUrls         String[]
   videoUrl          String?
   amenities         String?
