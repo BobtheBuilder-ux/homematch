@@ -3,7 +3,7 @@
 import Header from "@/components/Header";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Download, Users, Building, FileText, BarChart3 } from "lucide-react";
+import { Download, Users, Building, FileText, BarChart3, Briefcase, UserCheck } from "lucide-react";
 import { useState } from "react";
 import Link from "next/link";
 
@@ -104,6 +104,37 @@ const AdminDashboard = () => {
             <CardContent>
               <p className="text-xs text-muted-foreground">
                 View platform analytics
+              </p>
+            </CardContent>
+          </Card>
+        </Link>
+      </div>
+
+      {/* Job Management Section */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+        <Link href="/admin/jobs">
+          <Card className="cursor-pointer hover:shadow-lg transition-shadow">
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">Job Management</CardTitle>
+              <Briefcase className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              <p className="text-xs text-muted-foreground">
+                Create and manage job postings
+              </p>
+            </CardContent>
+          </Card>
+        </Link>
+
+        <Link href="/admin/job-applications">
+          <Card className="cursor-pointer hover:shadow-lg transition-shadow">
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">Job Applications</CardTitle>
+              <UserCheck className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              <p className="text-xs text-muted-foreground">
+                Review and manage job applications
               </p>
             </CardContent>
           </Card>

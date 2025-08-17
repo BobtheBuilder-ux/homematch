@@ -23,6 +23,7 @@ import {
   ClipboardList,
   File,
   Banknote,
+  Briefcase,
 } from "lucide-react";
 import { NAVBAR_HEIGHT } from "@/lib/constants";
 import { cn } from "@/lib/utils";
@@ -58,6 +59,8 @@ const AppSidebar = ({ userType }: AppSidebarProps) => {
           { icon: Users, label: "Users", href: "/admin/users" },
           { icon: Building, label: "Properties", href: "/admin/properties" },
           { icon: File, label: "Applications", href: "/admin/applications" },
+          { icon: Briefcase, label: "Jobs", href: "/admin/jobs" },
+          { icon: UserCheck, label: "Job Applications", href: "/admin/job-applications" },
           { icon: UserCheck, label: "Landlord Registrations", href: "/admin/landlord-registrations" },
           { icon: ClipboardList, label: "Tasks", href: "/admin/tasks" },
           { icon: Settings, label: "Settings", href: "/admin/settings" },

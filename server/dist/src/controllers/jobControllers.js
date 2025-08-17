@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.exportJobApplications = exports.getApplicationStats = exports.getJobStats = exports.getJobApplicationRatings = exports.rateJobApplication = exports.getJobApplicationsByStatus = exports.searchJobApplications = exports.updateJobApplicationStatus = exports.getJobApplicationById = exports.getJobApplications = exports.submitJobApplication = exports.deleteJob = exports.updateJob = exports.getJobById = exports.getActiveJobs = exports.getAllJobs = exports.createJob = void 0;
+exports.getGeneralJobStats = exports.exportJobApplications = exports.getApplicationStats = exports.getJobStats = exports.getJobApplicationRatings = exports.rateJobApplication = exports.getJobApplicationsByStatus = exports.searchJobApplications = exports.updateJobApplicationStatus = exports.getJobApplicationById = exports.getJobApplications = exports.submitJobApplication = exports.deleteJob = exports.updateJob = exports.getJobById = exports.getActiveJobs = exports.getAllJobs = exports.createJob = void 0;
 const client_1 = require("@prisma/client");
 const json2csv_1 = require("json2csv");
 const prisma = new client_1.PrismaClient();
@@ -607,3 +607,37 @@ const exportJobApplications = (req, res) => __awaiter(void 0, void 0, void 0, fu
     }
 });
 exports.exportJobApplications = exportJobApplications;
+const getGeneralJobStats = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const totalJobs = yield prisma.job.count();
+        const activeJobs = yield prisma.job.count({
+            where: { isActive: true },
+        });
+        const totalApplications = yield prisma.jobApplication.count();
+        const pendingApplications = yield prisma.jobApplication.count({
+            where: { status: 'Submitted' },
+        });
+        const shortlistedApplications = yield prisma.jobApplication.count({
+            where: { status: 'Shortlisted' },
+        });
+        const hiredApplications = yield prisma.jobApplication.count({
+            where: { status: 'Hired' },
+        });
+        res.json({
+            success: true,
+            data: {
+                totalJobs,
+                activeJobs,
+                totalApplications,
+                pendingApplications,
+                shortlistedApplications,
+                hiredApplications,
+            }
+        });
+    }
+    catch (error) {
+        console.error("Error fetching general job stats:", error);
+        res.status(500).json({ success: false, message: "Failed to fetch general job statistics" });
+    }
+});
+exports.getGeneralJobStats = getGeneralJobStats;

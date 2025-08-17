@@ -11,7 +11,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getTaskStats = exports.deleteTask = exports.updateTask = exports.getTasks = exports.createTask = exports.assignCodeToAgent = exports.getAgentRegistrationStats = exports.getAgentRegistrations = exports.getLandlordRegistrationStats = exports.getLandlordRegistrations = exports.getAllAgents = exports.getAgent = exports.getAdmin = exports.createAdmin = exports.createAgent = exports.updateAdminSettings = exports.getAdminSettings = exports.deleteProperty = exports.updatePropertyStatus = exports.deleteUser = exports.updateUserStatus = exports.getAllProperties = exports.getAllUsers = exports.getAnalytics = void 0;
 const client_1 = require("@prisma/client");
-const cognitoService_1 = require("../utils/cognitoService");
 const emailSubscriptionService_1 = require("../utils/emailSubscriptionService");
 const prisma = new client_1.PrismaClient();
 const getAnalytics = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -317,39 +316,62 @@ exports.createAgent = createAgent;
 const createAdmin = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         console.log("Creating admin with request body:", req.body);
-        const { name, email, phoneNumber } = req.body;
+        const { cognitoId, name, email, phoneNumber } = req.body;
+        // Validate required fields
+        if (!name || !email) {
+            console.log("Missing required fields - name:", name, "email:", email);
+            res.status(400).json({ message: "Name and email are required" });
+            return;
+        }
         // Validate email domain
         if (!email.endsWith('@homematch.ng')) {
+            console.log("Invalid email domain:", email);
             res.status(400).json({ message: "Admin registration is only allowed for emails ending with @homematch.ng" });
             return;
         }
         // Check if admin with this email already exists
+        console.log("Checking for existing admin with email:", email);
         const existingAdmin = yield prisma.admin.findFirst({
             where: { email }
         });
+        let admin;
         if (existingAdmin) {
-            res.status(400).json({ message: "Admin with this email already exists" });
-            return;
+            console.log("Admin already exists:", existingAdmin);
+            // Update existing admin with the real cognitoId from Cognito authentication
+            if (cognitoId && existingAdmin.cognitoId !== cognitoId) {
+                console.log("Updating existing admin's cognitoId from", existingAdmin.cognitoId, "to", cognitoId);
+                admin = yield prisma.admin.update({
+                    where: { id: existingAdmin.id },
+                    data: {
+                        cognitoId: cognitoId,
+                        name,
+                        phoneNumber: phoneNumber || existingAdmin.phoneNumber,
+                    },
+                });
+                console.log("Admin updated in database:", admin);
+            }
+            else {
+                console.log("Admin already exists with same cognitoId, returning existing admin");
+                admin = existingAdmin;
+            }
         }
-        // Create user in Cognito
-        const temporaryPassword = Math.random().toString(36).slice(-8) + "Aa1!";
-        console.log("Creating admin in Cognito with email:", email);
-        const cognitoUser = yield (0, cognitoService_1.createUserInCognito)(email, temporaryPassword, 'admin');
-        console.log("Cognito user created:", cognitoUser);
-        if (!cognitoUser || !cognitoUser.Username) {
-            throw new Error("Failed to create user in Cognito");
+        else {
+            console.log("No existing admin found, proceeding with creation");
+            // Use provided cognitoId or generate a temporary one
+            const finalCognitoId = cognitoId || `temp-admin-${Date.now()}-${Math.random().toString(36).substring(2, 15)}`;
+            console.log("Using cognitoId for admin:", finalCognitoId);
+            // Create admin in database
+            console.log("Creating admin in database with cognitoId:", finalCognitoId);
+            admin = yield prisma.admin.create({
+                data: {
+                    cognitoId: finalCognitoId,
+                    name,
+                    email,
+                    phoneNumber: phoneNumber || '',
+                },
+            });
+            console.log("Admin created in database:", admin);
         }
-        // Create admin in database
-        console.log("Creating admin in database with cognitoId:", cognitoUser.Username);
-        const admin = yield prisma.admin.create({
-            data: {
-                cognitoId: cognitoUser.Username,
-                name,
-                email,
-                phoneNumber: phoneNumber || '',
-            },
-        });
-        console.log("Admin created in database:", admin);
         // Add admin to email list (Cognito will handle the OTP email)
         try {
             yield (0, emailSubscriptionService_1.addToEmailList)({
@@ -367,6 +389,7 @@ const createAdmin = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
             message: "Admin created successfully",
             admin: {
                 id: admin.id,
+                cognitoId: admin.cognitoId,
                 name: admin.name,
                 email: admin.email,
                 phoneNumber: admin.phoneNumber,
@@ -382,6 +405,7 @@ exports.createAdmin = createAdmin;
 const getAdmin = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { cognitoId } = req.params;
+        console.log("Getting admin with cognitoId:", cognitoId);
         const admin = yield prisma.admin.findUnique({
             where: { cognitoId },
             select: {
@@ -391,13 +415,16 @@ const getAdmin = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                 phoneNumber: true,
             },
         });
+        console.log("Admin found:", admin);
         if (!admin) {
+            console.log("Admin not found for cognitoId:", cognitoId);
             res.status(404).json({ message: "Admin not found" });
             return;
         }
         res.json(admin);
     }
     catch (error) {
+        console.error("Error retrieving admin:", error);
         res.status(500).json({ message: `Error retrieving admin: ${error.message}` });
     }
 });

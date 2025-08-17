@@ -361,45 +361,66 @@ export const createAdmin = async (
 ): Promise<void> => {
   try {
     console.log("Creating admin with request body:", req.body);
-    const { name, email, phoneNumber } = req.body;
+    const { cognitoId, name, email, phoneNumber } = req.body;
+
+    // Validate required fields
+    if (!name || !email) {
+      console.log("Missing required fields - name:", name, "email:", email);
+      res.status(400).json({ message: "Name and email are required" });
+      return;
+    }
 
     // Validate email domain
     if (!email.endsWith('@homematch.ng')) {
+      console.log("Invalid email domain:", email);
       res.status(400).json({ message: "Admin registration is only allowed for emails ending with @homematch.ng" });
       return;
     }
 
     // Check if admin with this email already exists
+    console.log("Checking for existing admin with email:", email);
     const existingAdmin = await prisma.admin.findFirst({
       where: { email }
     });
 
+    let admin;
     if (existingAdmin) {
-      res.status(400).json({ message: "Admin with this email already exists" });
-      return;
+      console.log("Admin already exists:", existingAdmin);
+      // Update existing admin with the real cognitoId from Cognito authentication
+      if (cognitoId && existingAdmin.cognitoId !== cognitoId) {
+        console.log("Updating existing admin's cognitoId from", existingAdmin.cognitoId, "to", cognitoId);
+        admin = await prisma.admin.update({
+          where: { id: existingAdmin.id },
+          data: {
+            cognitoId: cognitoId,
+            name,
+            phoneNumber: phoneNumber || existingAdmin.phoneNumber,
+          },
+        });
+        console.log("Admin updated in database:", admin);
+      } else {
+        console.log("Admin already exists with same cognitoId, returning existing admin");
+        admin = existingAdmin;
+      }
+    } else {
+      console.log("No existing admin found, proceeding with creation");
+      
+      // Use provided cognitoId or generate a temporary one
+      const finalCognitoId = cognitoId || `temp-admin-${Date.now()}-${Math.random().toString(36).substring(2, 15)}`;
+      console.log("Using cognitoId for admin:", finalCognitoId);
+      
+      // Create admin in database
+      console.log("Creating admin in database with cognitoId:", finalCognitoId);
+      admin = await prisma.admin.create({
+        data: {
+          cognitoId: finalCognitoId,
+          name,
+          email,
+          phoneNumber: phoneNumber || '',
+        },
+      });
+      console.log("Admin created in database:", admin);
     }
-
-    // Create user in Cognito
-    const temporaryPassword = Math.random().toString(36).slice(-8) + "Aa1!";
-    console.log("Creating admin in Cognito with email:", email);
-    const cognitoUser = await createUserInCognito(email, temporaryPassword, 'admin');
-    console.log("Cognito user created:", cognitoUser);
-
-    if (!cognitoUser || !cognitoUser.Username) {
-      throw new Error("Failed to create user in Cognito");
-    }
-    
-    // Create admin in database
-    console.log("Creating admin in database with cognitoId:", cognitoUser.Username);
-    const admin = await prisma.admin.create({
-      data: {
-        cognitoId: cognitoUser.Username,
-        name,
-        email,
-        phoneNumber: phoneNumber || '',
-      },
-    });
-    console.log("Admin created in database:", admin);
 
     // Add admin to email list (Cognito will handle the OTP email)
     try {
@@ -418,6 +439,7 @@ export const createAdmin = async (
       message: "Admin created successfully",
       admin: {
         id: admin.id,
+        cognitoId: admin.cognitoId,
         name: admin.name,
         email: admin.email,
         phoneNumber: admin.phoneNumber,
@@ -435,6 +457,8 @@ export const getAdmin = async (
 ): Promise<void> => {
   try {
     const { cognitoId } = req.params;
+    console.log("Getting admin with cognitoId:", cognitoId);
+    
     const admin = await prisma.admin.findUnique({
       where: { cognitoId },
       select: {
@@ -444,14 +468,17 @@ export const getAdmin = async (
         phoneNumber: true,
       },
     });
+    console.log("Admin found:", admin);
 
     if (!admin) {
+      console.log("Admin not found for cognitoId:", cognitoId);
       res.status(404).json({ message: "Admin not found" });
       return;
     }
 
     res.json(admin);
   } catch (error: any) {
+    console.error("Error retrieving admin:", error);
     res.status(500).json({ message: `Error retrieving admin: ${error.message}` });
   }
 };

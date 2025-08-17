@@ -17,28 +17,32 @@ import {
   getJobStats,
   getApplicationStats,
   exportJobApplications,
+  getGeneralJobStats,
 } from "../controllers/jobControllers";
 
 const router = express.Router();
 
 // Job Management Routes (Admin)
-router.post("/jobs", createJob);
-router.get("/jobs", getAllJobs);
-router.get("/jobs/active", getActiveJobs);
-router.get("/jobs/:id", getJobById);
-router.put("/jobs/:id", updateJob);
-router.delete("/jobs/:id", deleteJob);
-router.get("/jobs/:id/stats", getJobStats);
+router.post("/", createJob);
+router.get("/", getAllJobs);
+router.get("/active", getActiveJobs);
+router.get("/general-stats", getGeneralJobStats);
 
-// Job Application Routes
-router.post("/jobs/:id/apply", submitJobApplication);
-router.get("/jobs/:id/applications", getJobApplications);
+// Job Application Routes (must come before parameterized job routes)
 router.get("/applications", searchJobApplications);
 router.get("/applications/stats", getApplicationStats);
 router.get("/applications/status/:status", getJobApplicationsByStatus);
+router.get("/applications/export", exportJobApplications);
 router.get("/applications/:id", getJobApplicationById);
 router.put("/applications/:id/status", updateJobApplicationStatus);
-router.get("/applications/export", exportJobApplications);
+
+// Parameterized Job Routes (must come after specific routes)
+router.get("/:id", getJobById);
+router.put("/:id", updateJob);
+router.delete("/:id", deleteJob);
+router.get("/:id/stats", getJobStats);
+router.post("/:id/apply", submitJobApplication);
+router.get("/:id/applications", getJobApplications);
 
 // Rating System Routes
 router.post("/applications/:id/rate", rateJobApplication);

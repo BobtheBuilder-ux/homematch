@@ -86,6 +86,10 @@ export const api = createApi({
               userRole,
               fetchWithBQ
             );
+            // Update the user object with the cognitoId from the server response
+            if (userDetailsResponse.data && (userDetailsResponse.data as any).cognitoId) {
+              user.userId = (userDetailsResponse.data as any).cognitoId;
+            }
           }
 
           return {

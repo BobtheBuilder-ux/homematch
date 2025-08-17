@@ -675,3 +675,38 @@ export const exportJobApplications = async (req: Request, res: Response) => {
     res.status(500).json({ success: false, message: "Failed to export applications" });
   }
 };
+
+export const getGeneralJobStats = async (req: Request, res: Response) => {
+  try {
+    const totalJobs = await prisma.job.count();
+    const activeJobs = await prisma.job.count({
+      where: { isActive: true },
+    });
+    
+    const totalApplications = await prisma.jobApplication.count();
+    const pendingApplications = await prisma.jobApplication.count({
+      where: { status: 'Submitted' },
+    });
+    const shortlistedApplications = await prisma.jobApplication.count({
+      where: { status: 'Shortlisted' },
+    });
+    const hiredApplications = await prisma.jobApplication.count({
+      where: { status: 'Hired' },
+    });
+
+    res.json({ 
+      success: true, 
+      data: {
+        totalJobs,
+        activeJobs,
+        totalApplications,
+        pendingApplications,
+        shortlistedApplications,
+        hiredApplications,
+      }
+    });
+  } catch (error) {
+    console.error("Error fetching general job stats:", error);
+    res.status(500).json({ success: false, message: "Failed to fetch general job statistics" });
+  }
+};
