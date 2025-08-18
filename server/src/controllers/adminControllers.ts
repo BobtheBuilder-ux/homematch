@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { PrismaClient } from "@prisma/client";
 import { createUserInCognito } from "../utils/cognitoService";
 import { addToEmailList } from "../utils/emailSubscriptionService";
+import { assignPropertyToAgent } from "./agentPropertyMatchingController";
 
 const prisma = new PrismaClient();
 
@@ -201,11 +202,44 @@ export const updatePropertyStatus = async (
     const { propertyId } = req.params;
     const { status } = req.body;
 
-    // Note: You might need to add a status field to your Property model
-    // For now, we'll just return success
-    res.json({ message: "Property status updated successfully", propertyId, status });
+    // Validate status values
+    const validStatuses = ['PendingApproval', 'Available', 'Closed', 'Rejected'];
+    if (!validStatuses.includes(status)) {
+      res.status(400).json({ message: "Invalid status. Must be one of: PendingApproval, Available, Closed, Rejected" });
+      return;
+    }
+
+    // Update property status in database
+    const updatedProperty = await prisma.property.update({
+      where: { id: Number(propertyId) },
+      data: { status },
+      include: {
+        location: true,
+        landlord: true
+      }
+    });
+
+    // If property is approved (Available), automatically assign to an agent
+    if (status === 'Available') {
+      try {
+        await assignPropertyToAgent(Number(propertyId));
+        console.log(`Property ${propertyId} successfully assigned to an agent`);
+      } catch (assignmentError: any) {
+        console.error(`Failed to assign property ${propertyId} to agent:`, assignmentError.message);
+        // Don't fail the status update if agent assignment fails
+      }
+    }
+
+    res.json({ 
+      message: "Property status updated successfully", 
+      property: updatedProperty 
+    });
   } catch (error: any) {
-    res.status(500).json({ message: `Error updating property status: ${error.message}` });
+    if (error.code === 'P2025') {
+      res.status(404).json({ message: "Property not found" });
+    } else {
+      res.status(500).json({ message: `Error updating property status: ${error.message}` });
+    }
   }
 };
 

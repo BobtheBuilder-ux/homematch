@@ -1,4 +1,4 @@
-import { Bath, Bed, Heart, House, Star } from "lucide-react";
+import { Bath, Bed, Heart, House } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
@@ -70,15 +70,7 @@ const CardCompact = ({
           <p className="text-gray-600 mb-1 text-sm">
             {property?.location?.address}, {property?.location?.city}
           </p>
-          <div className="flex text-sm items-center">
-            <Star className="w-3 h-3 text-yellow-400 mr-1" />
-            <span className="font-semibold">
-              {property.averageRating.toFixed(1)}
-            </span>
-            <span className="text-gray-600 ml-1">
-              ({property.numberOfReviews})
-            </span>
-          </div>
+
         </div>
         <div className="flex justify-between items-center text-sm">
           <div className="flex gap-2 text-gray-600">

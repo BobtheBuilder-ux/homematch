@@ -1,6 +1,6 @@
 import Loading from "@/components/Loading";
 import { useGetPropertyQuery } from "@/state/api";
-import { MapPin, Star } from "lucide-react";
+import { MapPin } from "lucide-react";
 import React from "react";
 import { useIsMobile } from "@/hooks/use-mobile";
 
@@ -35,11 +35,6 @@ const PropertyOverview = ({ propertyId }: PropertyOverviewProps) => {
             {property.location?.country}
           </span>
           <div className="flex justify-between items-center gap-3">
-            <span className="flex items-center text-yellow-500">
-              <Star className="w-4 h-4 mr-1 fill-current" />
-              {property.averageRating.toFixed(1)} ({property.numberOfReviews}{" "}
-              Reviews)
-            </span>
             <span className="text-green-600">Verified Listing</span>
           </div>
         </div>

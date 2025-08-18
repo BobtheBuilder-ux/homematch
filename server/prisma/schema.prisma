@@ -83,8 +83,6 @@ model Property {
   propertyType      PropertyType
   status            PropertyStatus @default(Available)
   postedDate        DateTime     @default(now())
-  averageRating     Float?       @default(0)
-  numberOfReviews   Int?         @default(0)
   locationId        Int
   landlordCognitoId  String
 
@@ -95,6 +93,7 @@ model Property {
   favoritedBy  Tenant[]      @relation("TenantFavorites")
   tenants      Tenant[]      @relation("TenantProperties")
   inspections  Inspection[]
+  agentAssignments AgentProperty[]
 }
 
 model Landlord {
@@ -170,6 +169,7 @@ model Agent {
   registrationCode  AgentRegistrationCode? @relation(fields: [registrationCodeId], references: [id])
   assignedTasks     Task[] @relation("AgentTasks")
   inspections       Inspection[]
+  assignedProperties AgentProperty[]
 }
 
 model Admin {
@@ -228,6 +228,20 @@ model Task {
   agentId     Int
   
   agent Agent @relation("AgentTasks", fields: [agentId], references: [id])
+}
+
+model AgentProperty {
+  id          Int      @id @default(autoincrement())
+  agentId     Int
+  propertyId  Int
+  assignedAt  DateTime @default(now())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  agent    Agent    @relation(fields: [agentId], references: [id])
+  property Property @relation(fields: [propertyId], references: [id])
+
+  @@unique([agentId, propertyId])
 }
 
 model Location {

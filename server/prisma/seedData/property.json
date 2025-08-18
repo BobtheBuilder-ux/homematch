@@ -17,8 +17,6 @@
     "squareFeet": 800,
     "propertyType": "Apartment",
     "postedDate": "2023-05-15T00:00:00Z",
-    "averageRating": 4.5,
-    "numberOfReviews": 10,
     "locationId": 1,
     "managerCognitoId": "010be580-60a1-70ae-780e-18a6fd94ad32"
   },
@@ -40,8 +38,6 @@
     "squareFeet": 1200,
     "propertyType": "Duplex",
     "postedDate": "2023-06-01T00:00:00Z",
-    "averageRating": 4.8,
-    "numberOfReviews": 5,
     "locationId": 2,
     "managerCognitoId": "us-east-2:23456789-90ab-cdef-1234-567890abcdef"
   },
@@ -63,8 +59,6 @@
     "squareFeet": 900,
     "propertyType": "Apartment",
     "postedDate": "2023-07-01T00:00:00Z",
-    "averageRating": 4.7,
-    "numberOfReviews": 8,
     "locationId": 3,
     "managerCognitoId": "us-east-2:34567890-90ab-cdef-1234-567890abcdef"
   },
@@ -86,8 +80,6 @@
     "squareFeet": 2000,
     "propertyType": "Bungalow",
     "postedDate": "2023-06-15T00:00:00Z",
-    "averageRating": 4.9,
-    "numberOfReviews": 12,
     "locationId": 4,
     "managerCognitoId": "us-east-2:45678901-90ab-cdef-1234-567890abcdef"
   },
@@ -109,8 +101,6 @@
     "squareFeet": 2500,
     "propertyType": "Apartment",
     "postedDate": "2023-07-01T00:00:00Z",
-    "averageRating": 5.0,
-    "numberOfReviews": 15,
     "locationId": 5,
     "managerCognitoId": "us-east-2:56789012-90ab-cdef-1234-567890abcdef"
   },
@@ -132,8 +122,6 @@
     "squareFeet": 400,
     "propertyType": "Apartment",
     "postedDate": "2023-08-01T00:00:00Z",
-    "averageRating": 4.2,
-    "numberOfReviews": 6,
     "locationId": 6,
     "managerCognitoId": "us-east-2:67890123-90ab-cdef-1234-567890abcdef"
   },
@@ -155,8 +143,6 @@
     "squareFeet": 1800,
     "propertyType": "Bungalow",
     "postedDate": "2023-09-01T00:00:00Z",
-    "averageRating": 4.6,
-    "numberOfReviews": 9,
     "locationId": 7,
     "managerCognitoId": "us-east-2:78901234-90ab-cdef-1234-567890abcdef"
   },
@@ -178,8 +164,6 @@
     "squareFeet": 300,
     "propertyType": "Apartment",
     "postedDate": "2023-08-01T00:00:00Z",
-    "averageRating": 4.3,
-    "numberOfReviews": 7,
     "locationId": 8,
     "managerCognitoId": "us-east-2:89012345-90ab-cdef-1234-567890abcdef"
   },
@@ -201,8 +185,6 @@
     "squareFeet": 1000,
     "propertyType": "SelfContain",
     "postedDate": "2023-08-15T00:00:00Z",
-    "averageRating": 4.9,
-    "numberOfReviews": 11,
     "locationId": 9,
     "managerCognitoId": "us-east-2:90123456-90ab-cdef-1234-567890abcdef"
   },
@@ -224,8 +206,6 @@
     "squareFeet": 250,
     "propertyType": "SelfContain",
     "postedDate": "2023-08-10T00:00:00Z",
-    "averageRating": 4.7,
-    "numberOfReviews": 8,
     "locationId": 10,
     "managerCognitoId": "us-east-2:01234567-90ab-cdef-1234-567890abcdef"
   }
