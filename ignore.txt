@@ -1,1 +1,1 @@
-1. Add reset password to the signin
+Do same configuration for agent 

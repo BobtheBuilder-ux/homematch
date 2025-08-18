@@ -282,49 +282,70 @@ export const createAgent = async (
 ): Promise<void> => {
   try {
     console.log("Creating agent with request body:", req.body);
-    const { name, email, phoneNumber, address, invitationCode } = req.body;
+    const { cognitoId, name, email, phoneNumber, address } = req.body;
 
-    // Validate invitation code
-    if (invitationCode !== process.env.AGENT_INVITATION_CODE) {
-      res.status(400).json({ message: "Invalid invitation code" });
+    // Validate required fields
+    if (!name || !email) {
+      console.log("Missing required fields - name:", name, "email:", email);
+      res.status(400).json({ message: "Name and email are required" });
       return;
     }
 
     // Check if agent with this email already exists
+    console.log("Checking for existing agent with email:", email);
     const existingAgent = await prisma.agent.findFirst({
       where: { email },
     });
 
+    let agent;
     if (existingAgent) {
-      res.status(400).json({ message: "Agent with this email already exists" });
-      return;
+      console.log("Agent already exists:", existingAgent);
+      // Update existing agent with the real cognitoId from Cognito authentication
+      if (cognitoId && existingAgent.cognitoId !== cognitoId) {
+        console.log("Updating existing agent's cognitoId from", existingAgent.cognitoId, "to", cognitoId);
+        agent = await prisma.agent.update({
+          where: { id: existingAgent.id },
+          data: {
+            cognitoId: cognitoId,
+            name,
+            phoneNumber: phoneNumber || existingAgent.phoneNumber,
+            address: address || existingAgent.address,
+          },
+        });
+        console.log("Agent updated in database:", agent);
+      } else {
+        console.log("Agent already exists with same cognitoId, returning existing agent");
+        agent = existingAgent;
+      }
+    } else {
+      console.log("No existing agent found, proceeding with creation");
+      
+      // Use provided cognitoId or generate a temporary one
+      const finalCognitoId = cognitoId || `temp-agent-${Date.now()}-${Math.random().toString(36).substring(2, 15)}`;
+      console.log("Using cognitoId for agent:", finalCognitoId);
+
+      // Set user context for agent creation
+      if (!req.user) {
+        req.user = {
+          id: finalCognitoId,
+          role: 'agent'
+        };
+      }
+      console.log("User object for agent creation:", req.user);
+
+      // Create agent in database
+      console.log("Creating agent in database with cognitoId:", finalCognitoId);
+      agent = await prisma.agent.create({
+        data: {
+          cognitoId: finalCognitoId,
+          name,
+          email,
+          phoneNumber: phoneNumber || '',
+          address: address || '',
+        },
+      });
+      console.log("Agent created in database:", agent);
     }
-
-    // Generate a temporary cognitoId (will be replaced when Cognito is integrated)
-    const temporaryCognitoId = `temp-${Date.now()}-${Math.random().toString(36).substring(2, 15)}`;
-    console.log("Using temporary cognitoId:", temporaryCognitoId);
-
-    // Set user context for agent creation
-    if (!req.user) {
-      req.user = {
-        id: temporaryCognitoId,
-        role: 'agent'
-      };
-    }
-    console.log("User object for agent creation:", req.user);
-
-    // Create agent in database only
-    console.log("Creating agent in database with temporary cognitoId:", temporaryCognitoId);
-    const agent = await prisma.agent.create({
-      data: {
-        cognitoId: temporaryCognitoId,
-        name,
-        email,
-        phoneNumber: phoneNumber || '',
-        address: address || '',
-      },
-    });
-    console.log("Agent created in database:", agent);
 
     // Add agent to email list
     try {
@@ -489,6 +510,8 @@ export const getAgent = async (
 ): Promise<void> => {
   try {
     const { cognitoId } = req.params;
+    console.log("Getting agent with cognitoId:", cognitoId);
+    
     const agent = await prisma.agent.findUnique({
       where: { cognitoId },
       select: {
@@ -500,14 +523,17 @@ export const getAgent = async (
         address: true,
       },
     });
+    console.log("Agent found:", agent);
 
     if (!agent) {
+      console.log("Agent not found for cognitoId:", cognitoId);
       res.status(404).json({ message: "Agent not found" });
       return;
     }
 
     res.json(agent);
   } catch (error: any) {
+    console.error("Error retrieving agent:", error);
     res.status(500).json({ message: `Error retrieving agent: ${error.message}` });
   }
 };

@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { Amplify } from "aws-amplify";
-import { signUp, type SignUpOutput } from "aws-amplify/auth";
+import { signUp, resetPassword, type SignUpOutput } from "aws-amplify/auth";
 import {
   Authenticator,
   Heading,
@@ -14,6 +14,7 @@ import {
 } from "@aws-amplify/ui-react";
 import "@aws-amplify/ui-react/styles.css";
 import { useRouter, usePathname } from "next/navigation";
+import { toast } from "sonner";
 
 // https://docs.amplify.aws/gen1/javascript/tools/libraries/configure-categories/
 Amplify.configure({
@@ -45,6 +46,53 @@ const components = {
   SignIn: {
     Footer() {
       const { toSignUp } = useAuthenticator();
+      const [email, setEmail] = useState("");
+      const [showResetForm, setShowResetForm] = useState(false);
+      
+      const handleResetPassword = async () => {
+        if (!email) {
+          toast.error("Please enter your email address first");
+          return;
+        }
+        
+        try {
+          await resetPassword({ username: email });
+          toast.success("Password reset instructions sent to your email");
+          setShowResetForm(false);
+        } catch (error: any) {
+          toast.error(error.message || "Failed to send reset instructions");
+        }
+      };
+      
+      if (showResetForm) {
+        return (
+          <View className="text-center mt-4">
+            <p className="text-muted-foreground mb-2">Enter your email to reset password:</p>
+            <input
+              type="email"
+              placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full p-2 border rounded mb-2"
+            />
+            <div className="flex gap-2 justify-center">
+              <button
+                onClick={handleResetPassword}
+                className="bg-primary text-white px-4 py-2 rounded hover:bg-primary/90"
+              >
+                Send Reset Link
+              </button>
+              <button
+                onClick={() => setShowResetForm(false)}
+                className="text-muted-foreground hover:underline bg-transparent border-none p-2"
+              >
+                Cancel
+              </button>
+            </div>
+          </View>
+        );
+      }
+      
       return (
         <View className="text-center mt-4">
           <p className="text-muted-foreground">
@@ -54,6 +102,14 @@ const components = {
               className="text-primary hover:underline bg-transparent border-none p-0"
             >
               Sign up here
+            </button>
+          </p>
+          <p className="text-muted-foreground mt-2">
+            <button
+              onClick={() => setShowResetForm(true)}
+              className="text-primary hover:underline bg-transparent border-none p-0"
+            >
+              Forgot your password?
             </button>
           </p>
         </View>
