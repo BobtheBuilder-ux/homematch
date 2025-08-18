@@ -103,8 +103,8 @@ const getProperties = (req, res) => __awaiter(void 0, void 0, void 0, function* 
           ${degrees}
         )`);
         }
-        // Always exclude closed properties from search results
-        whereConditions.push(client_1.Prisma.sql `p.status != 'Closed'`);
+        // Only show properties with 'Available' status (admin approved)
+        whereConditions.push(client_1.Prisma.sql `p.status = 'Available'`);
         const completeQuery = client_1.Prisma.sql `
       SELECT 
         p.*,

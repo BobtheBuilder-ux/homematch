@@ -138,9 +138,9 @@ export const getProperties = async (
       );
     }
 
-    // Always exclude closed properties from search results
+    // Only show properties with 'Available' status (admin approved)
     whereConditions.push(
-      Prisma.sql`p.status != 'Closed'`
+      Prisma.sql`p.status = 'Available'`
     );
 
     const completeQuery = Prisma.sql`

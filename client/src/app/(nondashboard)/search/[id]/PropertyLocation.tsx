@@ -54,14 +54,18 @@ const PropertyLocation = ({ propertyId }: PropertyDetailsProps) => {
       <div className="flex justify-between items-center text-sm text-primary-500 mt-2">
         <div className="flex items-center text-gray-500">
           <MapPin className="w-4 h-4 mr-1 text-gray-700" />
-          Property Address:
+          Property Location:
           <span className="ml-2 font-semibold text-gray-700">
-            {property.location?.address || "Address not available"}
+            {property.location?.city && property.location?.state 
+              ? `${property.location.city}, ${property.location.state}`
+              : "Location not available"}
           </span>
         </div>
         <a
           href={`https://maps.google.com/?q=${encodeURIComponent(
-            property.location?.address || ""
+            property.location?.city && property.location?.state
+              ? `${property.location.city}, ${property.location.state}`
+              : ""
           )}`}
           target="_blank"
           rel="noopener noreferrer"

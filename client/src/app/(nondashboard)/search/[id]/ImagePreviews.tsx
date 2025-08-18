@@ -3,9 +3,40 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
 import React, { useState } from "react";
+import { generateOptimizedImageUrl } from "@/services/cloudinaryService";
 
 const ImagePreviews = ({ images }: ImagePreviewsProps) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  // If no images are provided, show a placeholder
+  if (!images || images.length === 0) {
+    return (
+      <div className="relative h-[450px] w-full bg-gray-200 flex items-center justify-center">
+        <div className="text-gray-500 text-lg">No images available</div>
+      </div>
+    );
+  }
+
+  // Helper function to get watermarked image URL
+  const getWatermarkedImageUrl = (imageUrl: string) => {
+    // Extract public ID from Cloudinary URL or use the URL as is for S3
+    if (imageUrl.includes('cloudinary.com')) {
+      const publicIdMatch = imageUrl.match(/\/v\d+\/(.+)\.(jpg|jpeg|png|webp)$/i);
+      if (publicIdMatch) {
+        const publicId = publicIdMatch[1];
+        return generateOptimizedImageUrl(publicId, {
+          width: 1200,
+          height: 800,
+          crop: 'fill',
+          quality: 'auto',
+          format: 'auto',
+          watermark: true
+        });
+      }
+    }
+    // For S3 URLs or other formats, return as is (watermark should be applied during upload)
+    return imageUrl;
+  };
 
   const handlePrev = () => {
     setCurrentImageIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
@@ -25,7 +56,7 @@ const ImagePreviews = ({ images }: ImagePreviewsProps) => {
           }`}
         >
           <Image
-            src={image}
+            src={getWatermarkedImageUrl(image)}
             alt={`Property Image ${index + 1}`}
             fill
             priority={index == 0}
@@ -33,20 +64,26 @@ const ImagePreviews = ({ images }: ImagePreviewsProps) => {
           />
         </div>
       ))}
-      <button
-        onClick={handlePrev}
-        className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-primary-700 bg-opacity-50 p-2 rounded-full focus:outline-none focus:ring focus:ring-secondary-300"
-        aria-label="Previous image"
-      >
-        <ChevronLeft className="text-white" />
-      </button>
-      <button
-        onClick={handleNext}
-        className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-primary-700 bg-opacity-50 p-2 rounded-full focus:outline-none focus:ring focus:ring-secondary-300"
-        aria-label="Previous image"
-      >
-        <ChevronRight className="text-white" />
-      </button>
+      
+      {/* Only show navigation buttons if there are multiple images */}
+      {images.length > 1 && (
+        <>
+          <button
+            onClick={handlePrev}
+            className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-primary-700 bg-opacity-50 p-2 rounded-full focus:outline-none focus:ring focus:ring-secondary-300"
+            aria-label="Previous image"
+          >
+            <ChevronLeft className="text-white" />
+          </button>
+          <button
+            onClick={handleNext}
+            className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-primary-700 bg-opacity-50 p-2 rounded-full focus:outline-none focus:ring focus:ring-secondary-300"
+            aria-label="Next image"
+          >
+            <ChevronRight className="text-white" />
+          </button>
+        </>
+      )}
     </div>
   );
 };
