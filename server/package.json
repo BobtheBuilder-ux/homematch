@@ -22,7 +22,6 @@
     "@terraformer/wkt": "^2.2.1",
     "@types/json2csv": "^5.0.7",
     "@types/node-fetch": "^2.6.11",
-    "@types/nodemailer": "^6.4.17",
     "@types/pdfkit": "^0.17.2",
     "axios": "^1.7.9",
     "body-parser": "^1.20.3",
@@ -36,11 +35,11 @@
     "morgan": "^1.10.0",
     "multer": "^1.4.5-lts.1",
     "node-fetch": "^2.7.0",
-    "nodemailer": "^7.0.5",
     "paystack": "^2.0.1",
     "pdfkit": "^0.17.1",
     "prisma": "^6.3.0",
     "puppeteer": "^24.16.0",
+    "resend": "^6.0.1",
     "uuid": "^11.0.5"
   },
   "devDependencies": {

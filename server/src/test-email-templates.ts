@@ -13,30 +13,28 @@ import {
   adminWelcomeTemplate
 } from './utils/emailTemplates';
 
-const TEST_EMAIL = process.env.EMAIL_USER || 'test@example.com';
+const TEST_EMAIL = 'berrybobbiechuks@gmail.com';
 
 async function testEmailTemplates() {
-  console.log('🧪 Testing Gmail SMTP email templates...');
+  console.log('🧪 Testing Resend email templates...');
   console.log('Configuration:');
-  console.log(`- Email Host: ${process.env.EMAIL_HOST}`);
-  console.log(`- Email Port: ${process.env.EMAIL_PORT}`);
-  console.log(`- Email User: ${process.env.EMAIL_USER}`);
-  console.log(`- Has Email Password: ${!!process.env.EMAIL_PASS}`);
+  console.log(`- Resend API Key: ${process.env.RESEND_API_KEY ? 'Set' : 'Not set'}`);
+  console.log(`- From Email: ${process.env.RESEND_FROM_EMAIL}`);
   console.log('');
 
-  // Test Gmail configuration first
-  console.log('🔧 Testing Gmail SMTP configuration...');
+  // Test Resend configuration first
+  console.log('🔧 Testing Resend configuration...');
   const configTest = await testEmailConfiguration();
   if (!configTest) {
-    console.log('❌ Gmail SMTP configuration failed. Please check your credentials.');
+    console.log('❌ Resend configuration failed. Please check your API key.');
     console.log('\n📋 Troubleshooting Tips:');
-    console.log('1. Ensure 2-Factor Authentication is enabled on your Gmail account');
-    console.log('2. Generate an App Password for this application');
-    console.log('3. Use the App Password (not your regular Gmail password) in EMAIL_PASS');
-    console.log('4. Check that EMAIL_HOST=smtp.gmail.com and EMAIL_PORT=587');
+    console.log('1. Verify your Resend API key is correct');
+    console.log('2. Check that your domain is verified in Resend dashboard');
+    console.log('3. Ensure RESEND_FROM_EMAIL is set to a verified sender');
+    console.log('4. Verify your Resend account is active and not suspended');
     return;
   }
-  console.log('✅ Gmail SMTP configuration is valid!');
+  console.log('✅ Resend configuration is valid!');
   console.log('');
 
   const testTemplates = [
@@ -130,12 +128,11 @@ async function testEmailTemplates() {
         console.log(`   ⚠️  Found unreplaced variables: ${unreplacedVars.join(', ')}`);
       }
       
-      // Send test email (commented out to avoid spam during testing)
-      // await sendEmail({
-      //   to: TEST_EMAIL,
-      //   subject: `[TEST] ${subject}`,
-      //   body: body
-      // });
+      await sendEmail({
+        to: TEST_EMAIL,
+        subject: `[TEST] ${subject}`,
+        body: body
+      });
       
       console.log(`   ✅ Template generated successfully`);
       console.log(`   📝 Subject: ${subject}`);
@@ -152,7 +149,7 @@ async function testEmailTemplates() {
   console.log(`- Total templates tested: ${testTemplates.length}`);
   console.log('- All templates use responsive HTML design');
   console.log('- Templates include proper styling and branding');
-  console.log('- Ready for production use with Gmail SMTP');
+  console.log('- Ready for production use with Resend');
   console.log('');
   
   console.log('💡 To send actual test emails, uncomment the sendEmail() calls in the code.');

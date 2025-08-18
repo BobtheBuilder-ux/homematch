@@ -1,1 +1,4 @@
-Do same configuration for agent 
+Do this
+1. Remove property ratings, if comment exist, remove it
+2. Admin must approve new property added by landlord
+3. Create a function where agents location and property location can link, and when a new property is added and approved, it is linked to the agent that their location match example If the agent location has wuse in it, and the new property has wuse in it, they link and that agent becomes the agent for their area and if there are multipy agents in that location, the properties are divided equally to each for them to oversee

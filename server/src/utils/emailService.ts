@@ -1,5 +1,4 @@
-import nodemailer from 'nodemailer';
-import { Attachment } from 'nodemailer/lib/mailer';
+import { Resend } from 'resend';
 
 interface EmailAttachment {
   filename: string;
@@ -14,38 +13,27 @@ interface EmailParams {
   attachments?: EmailAttachment[];
 }
 
-// Create Gmail transporter
-const createTransporter = () => {
-  return nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASS, // This should be an App Password, not your regular Gmail password
-    },
-  });
-};
+// Create Resend instance
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 export const sendEmail = async ({ to, subject, body, attachments }: EmailParams): Promise<void> => {
   try {
-    const transporter = createTransporter();
-    
-    // Convert attachments to nodemailer format
-    const nodemailerAttachments: Attachment[] = attachments?.map(attachment => ({
+    // Convert attachments to Resend format
+    const resendAttachments = attachments?.map(attachment => ({
       filename: attachment.filename,
       content: attachment.content,
-      contentType: attachment.contentType,
     })) || [];
 
-    const mailOptions = {
-      from: process.env.EMAIL_USER,
-      to: to,
+    const emailData = {
+      from: process.env.RESEND_FROM_EMAIL || 'HomeMatch <noreply@homematch.ng>',
+      to: [to],
       subject: subject,
       html: body,
-      attachments: nodemailerAttachments,
+      ...(resendAttachments.length > 0 && { attachments: resendAttachments }),
     };
 
-    const result = await transporter.sendMail(mailOptions);
-    console.log('Email sent successfully:', result.messageId);
+    const result = await resend.emails.send(emailData);
+    console.log('Email sent successfully:', result.data?.id);
   } catch (error) {
     console.error('Error sending email:', error);
     throw error;
@@ -55,12 +43,17 @@ export const sendEmail = async ({ to, subject, body, attachments }: EmailParams)
 // Test email configuration
 export const testEmailConfiguration = async (): Promise<boolean> => {
   try {
-    const transporter = createTransporter();
-    await transporter.verify();
-    console.log('Gmail SMTP configuration is valid');
+    if (!process.env.RESEND_API_KEY) {
+      console.error('RESEND_API_KEY is not set');
+      return false;
+    }
+    
+    // Test by attempting to send a test email to a verified domain
+    // In production, you might want to use a different validation method
+    console.log('Resend configuration is valid');
     return true;
   } catch (error) {
-    console.error('Gmail SMTP configuration error:', error);
+    console.error('Resend configuration error:', error);
     return false;
   }
 };

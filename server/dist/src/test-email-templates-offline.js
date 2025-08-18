@@ -143,10 +143,10 @@ function testEmailTemplatesOffline() {
         console.log('- All templates use responsive HTML design');
         console.log('- Templates include proper styling and branding');
         console.log('- Currency properly set to Naira (₦) for rental platform');
-        console.log('- Ready for production use with Gmail SMTP');
+        console.log('- Ready for production use with Resend');
         console.log('');
         console.log('💡 To test actual email sending:');
-        console.log('1. Configure Gmail SMTP credentials in .env file');
+        console.log('1. Configure Resend API key in .env file');
         console.log('2. Run: npm run build && node dist/src/test-email.js');
         console.log('\n✨ Email template validation completed!');
         if (errorCount === 0) {

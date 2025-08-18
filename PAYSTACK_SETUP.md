@@ -38,15 +38,15 @@ NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY=pk_test_your_public_key_here
    - Copy your **Test Public Key** and **Test Secret Key**
    - For production, use your **Live** keys
 
-## Gmail SMTP Configuration
+## Resend Email Configuration
 
-1. **Set up Gmail SMTP**: Follow the detailed setup guide in `GMAIL_SETUP.md`
+1. **Set up Resend**: Follow the detailed setup guide in `RESEND_SETUP.md`
 2. **Key Steps**:
-   - Enable 2-Factor Authentication on your Gmail account
-   - Generate an App Password for the application
-   - Configure SMTP settings in environment variables
+   - Create a Resend account and verify your domain
+   - Generate an API key for the application
+   - Configure Resend settings in environment variables
    - Test email functionality
-3. **Important**: Replace placeholder values with your actual Gmail credentials and App Password
+3. **Important**: Replace placeholder values with your actual Resend API key and verified sender email
 
 ## Testing the Integration
 

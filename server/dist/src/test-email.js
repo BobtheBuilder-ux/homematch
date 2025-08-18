@@ -18,42 +18,40 @@ const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
 function testEmail() {
     return __awaiter(this, void 0, void 0, function* () {
-        console.log('Testing Gmail SMTP email configuration...');
+        console.log('Testing Resend email configuration...');
         console.log('Configuration:');
-        console.log('- Email Host:', process.env.EMAIL_HOST);
-        console.log('- Email Port:', process.env.EMAIL_PORT);
-        console.log('- Email User:', process.env.EMAIL_USER);
-        console.log('- Has Email Password:', !!process.env.EMAIL_PASS);
+        console.log('- Resend API Key:', process.env.RESEND_API_KEY ? 'Set' : 'Not set');
+        console.log('- From Email:', process.env.RESEND_FROM_EMAIL);
         console.log('');
         try {
             // First test the configuration
-            console.log('🔧 Testing Gmail SMTP configuration...');
+            console.log('🔧 Testing Resend configuration...');
             const isConfigValid = yield (0, emailService_1.testEmailConfiguration)();
             if (!isConfigValid) {
-                console.log('❌ Gmail SMTP configuration is invalid. Please check your credentials.');
+                console.log('❌ Resend configuration is invalid. Please check your API key.');
                 return;
             }
-            console.log('✅ Gmail SMTP configuration is valid!');
+            console.log('✅ Resend configuration is valid!');
             console.log('');
             // Test email - replace with your email address
-            const testEmailAddress = process.env.EMAIL_USER || 'berrybobbiechuks@gmail.com';
+            const testEmailAddress = 'berrybobbiechuks@gmail.com';
             console.log(`📧 Sending test email to: ${testEmailAddress}`);
             yield (0, emailService_1.sendEmail)({
                 to: testEmailAddress,
-                subject: 'Gmail SMTP Test Email - HomeMatch Application',
+                subject: 'Resend Integration Test - HomeMatch Application',
                 body: `
         <html>
           <body>
-            <h2>🎉 Gmail SMTP Integration Successful!</h2>
+            <h2>🎉 Resend Integration Successful!</h2>
             <p>This is a test email from your HomeMatch rental application.</p>
             <p><strong>Configuration Details:</strong></p>
             <ul>
-              <li>Email Host: ${process.env.EMAIL_HOST}</li>
-              <li>Email Port: ${process.env.EMAIL_PORT}</li>
-              <li>Email User: ${process.env.EMAIL_USER}</li>
+              <li>Email Service: Resend</li>
+              <li>From Email: ${process.env.RESEND_FROM_EMAIL}</li>
+              <li>API Key: ${process.env.RESEND_API_KEY ? 'Configured' : 'Not configured'}</li>
               <li>Timestamp: ${new Date().toISOString()}</li>
             </ul>
-            <p>Your Gmail SMTP integration is working correctly!</p>
+            <p>Your Resend integration is working correctly!</p>
             <hr>
             <p><small>This email was sent from the HomeMatch application test script.</small></p>
           </body>
@@ -63,17 +61,17 @@ function testEmail() {
             console.log('✅ Test email sent successfully!');
             console.log(`📧 Email sent to: ${testEmailAddress}`);
             console.log('\n🔍 Check your email inbox to confirm delivery.');
-            console.log('\n📝 Note: Make sure you have enabled "Less secure app access" or use an App Password for Gmail.');
+            console.log('\n📝 Note: Make sure you have set your RESEND_API_KEY in the environment variables.');
         }
         catch (error) {
             console.error('❌ Failed to send test email:');
             console.error(error);
             console.log('\n🔧 Troubleshooting tips:');
-            console.log('1. Verify your Gmail credentials are correct');
-            console.log('2. Enable 2-Factor Authentication and use an App Password');
-            console.log('3. Check if "Less secure app access" is enabled (not recommended)');
-            console.log('4. Verify your Gmail account allows SMTP access');
-            console.log('5. Check your internet connection and firewall settings');
+            console.log('1. Verify your Resend API key is correct');
+            console.log('2. Check that your domain is verified in Resend dashboard');
+            console.log('3. Ensure RESEND_FROM_EMAIL is set to a verified sender');
+            console.log('4. Check your internet connection');
+            console.log('5. Verify your Resend account is active and not suspended');
         }
     });
 }
