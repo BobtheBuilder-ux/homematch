@@ -40,7 +40,7 @@ export interface ProcessedFileResult {
 export const uploadLogoForWatermark = async (logoPath: string): Promise<string> => {
   try {
     const result = await cloudinary.uploader.upload(logoPath, {
-      public_id: 'logo_watermark',
+      public_id: 'watermark/logo',
       folder: 'watermarks',
       resource_type: 'image',
       overwrite: true,
@@ -320,7 +320,7 @@ export const generateOptimizedUrl = (
   }
 
   if (options.watermark) {
-    transformations.overlay = 'watermarks:logo_watermark';
+    transformations.overlay = 'watermarks:watermark:logo';
     transformations.gravity = 'south_east';
     transformations.x = 20;
     transformations.y = 20;

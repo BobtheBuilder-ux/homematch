@@ -1,5 +1,17 @@
+import dotenv from 'dotenv';
 import path from 'path';
-import { uploadLogoForWatermark } from '../utils/cloudinaryService';
+import { v2 as cloudinary } from 'cloudinary';
+import fs from 'fs';
+
+// Load environment variables
+dotenv.config();
+
+// Configure Cloudinary directly in the script
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 /**
  * Script to upload the logo.svg file to Cloudinary for watermarking
@@ -12,11 +24,25 @@ async function uploadLogo() {
     console.log('Uploading logo for watermarking...');
     console.log('Logo path:', logoPath);
     
-    const publicId = await uploadLogoForWatermark(logoPath);
+    // Check if logo file exists
+    if (!fs.existsSync(logoPath)) {
+      throw new Error(`Logo file not found at: ${logoPath}`);
+    }
+    
+    // Upload logo to Cloudinary
+    const result = await cloudinary.uploader.upload(logoPath, {
+      public_id: 'watermark/logo',
+      resource_type: 'image',
+      overwrite: true,
+      folder: 'watermarks'
+    });
     
     console.log('✅ Logo uploaded successfully!');
-    console.log('Public ID:', publicId);
+    console.log('Public ID:', result.public_id);
+    console.log('Secure URL:', result.secure_url);
     console.log('You can now use this logo for watermarking images and videos.');
+    
+    return result.public_id;
     
   } catch (error) {
     console.error('❌ Error uploading logo:', error);

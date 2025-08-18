@@ -39,7 +39,7 @@ const BUCKET_NAME = process.env.S3_BUCKET_NAME;
 const uploadLogoForWatermark = (logoPath) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const result = yield cloudinary_1.v2.uploader.upload(logoPath, {
-            public_id: 'logo_watermark',
+            public_id: 'watermark/logo',
             folder: 'watermarks',
             resource_type: 'image',
             overwrite: true,
@@ -275,7 +275,7 @@ const generateOptimizedUrl = (publicId, options = {}) => {
         transformations.crop = options.crop || 'limit';
     }
     if (options.watermark) {
-        transformations.overlay = 'watermarks:logo_watermark';
+        transformations.overlay = 'watermarks:watermark:logo';
         transformations.gravity = 'south_east';
         transformations.x = 20;
         transformations.y = 20;
