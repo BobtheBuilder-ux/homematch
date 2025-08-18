@@ -22,7 +22,8 @@ import { useParams } from "next/navigation";
 import React from "react";
 
 const PropertyTenants = () => {
-  const { id } = useParams();
+  const params = useParams();
+  const id = params?.id as string;
   const propertyId = Number(id);
 
   const { data: property, isLoading: propertyLoading } =

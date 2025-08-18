@@ -18,7 +18,7 @@ export default function UnsubscribePage() {
 
   useEffect(() => {
     // Pre-fill email if provided in URL params
-    const emailParam = searchParams.get('email');
+    const emailParam = searchParams?.get('email');
     if (emailParam) {
       setEmail(decodeURIComponent(emailParam));
     }

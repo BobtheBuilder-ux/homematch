@@ -21,6 +21,8 @@ const SearchPage = () => {
   );
 
   useEffect(() => {
+    if (!searchParams) return;
+    
     const initialFilters = Array.from(searchParams.entries()).reduce(
       (acc: any, [key, value]) => {
         if (key === "priceRange" || key === "squareFeet") {

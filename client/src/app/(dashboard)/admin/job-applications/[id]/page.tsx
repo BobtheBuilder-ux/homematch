@@ -83,7 +83,7 @@ interface RatingCriteria {
 const ApplicationDetailPage = () => {
   const router = useRouter();
   const params = useParams();
-  const applicationId = params.id as string;
+  const applicationId = params?.id as string;
   
   const [application, setApplication] = useState<JobApplication | null>(null);
   const [loading, setLoading] = useState(true);

@@ -11,7 +11,7 @@ import { toast } from "sonner";
 const PaymentSuccess = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
-  const reference = searchParams.get("reference");
+  const reference = searchParams?.get("reference");
   const [verificationStatus, setVerificationStatus] = useState<"loading" | "success" | "failed">("loading");
 
   const {

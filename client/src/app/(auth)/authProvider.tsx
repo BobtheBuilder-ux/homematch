@@ -221,9 +221,9 @@ const Auth = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
   const pathname = usePathname();
 
-  const isAuthPage = pathname.match(/^\/(signin|signup)$/);
+  const isAuthPage = pathname?.match(/^\/(signin|signup)$/);
   const isDashboardPage =
-    pathname.startsWith("/landlord") || pathname.startsWith("/tenants");
+    pathname?.startsWith("/landlord") || pathname?.startsWith("/tenants");
 
   // Redirect authenticated users away from auth pages
   useEffect(() => {
@@ -246,7 +246,7 @@ const Auth = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="h-full">
       <Authenticator
-        initialState={pathname.includes("signup") ? "signUp" : "signIn"}
+        initialState={pathname?.includes("signup") ? "signUp" : "signIn"}
         components={components}
         formFields={formFields}
         services={{

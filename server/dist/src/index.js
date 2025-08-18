@@ -27,6 +27,7 @@ const emailRoutes_1 = __importDefault(require("./routes/emailRoutes"));
 const earningsRoutes_1 = __importDefault(require("./routes/earningsRoutes"));
 const jobRoutes_1 = __importDefault(require("./routes/jobRoutes"));
 const uploadRoutes_1 = __importDefault(require("./routes/uploadRoutes"));
+const cloudinaryUploadRoutes_1 = __importDefault(require("./routes/cloudinaryUploadRoutes"));
 /* CONFIGURATIONS */
 dotenv_1.default.config();
 const app = (0, express_1.default)();
@@ -72,6 +73,7 @@ app.use("/emails", emailRoutes_1.default);
 app.use("/earnings", (0, authMiddleware_1.authMiddleware)(["landlord", "admin"]), earningsRoutes_1.default);
 app.use("/jobs", jobRoutes_1.default);
 app.use("/uploads", uploadRoutes_1.default);
+app.use("/cloudinary", cloudinaryUploadRoutes_1.default);
 /* SERVER */
 const port = Number(process.env.PORT) || 3002;
 app.listen(port, "0.0.0.0", () => {

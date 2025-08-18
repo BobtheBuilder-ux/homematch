@@ -1,4 +1,4 @@
-// Utility functions for handling file uploads to S3
+// Utility functions for handling file uploads via Cloudinary-S3 hybrid service
 
 export interface FileUploadResponse {
   url: string;
@@ -6,9 +6,9 @@ export interface FileUploadResponse {
 }
 
 /**
- * Upload a single file to S3
+ * Upload a single file via Cloudinary-S3 hybrid service
  */
-export const uploadFileToS3 = async (file: File, endpoint: string = '/uploads/single'): Promise<FileUploadResponse> => {
+export const uploadFileToS3 = async (file: File, endpoint: string = '/cloudinary/upload/single'): Promise<FileUploadResponse> => {
   const formData = new FormData();
   formData.append('file', file);
 
@@ -27,9 +27,9 @@ export const uploadFileToS3 = async (file: File, endpoint: string = '/uploads/si
 };
 
 /**
- * Upload multiple files to S3
+ * Upload multiple files via Cloudinary-S3 hybrid service
  */
-export const uploadMultipleFilesToS3 = async (files: File[], endpoint: string = '/uploads/multiple'): Promise<FileUploadResponse[]> => {
+export const uploadMultipleFilesToS3 = async (files: File[], endpoint: string = '/cloudinary/upload/multiple'): Promise<FileUploadResponse[]> => {
   const formData = new FormData();
   files.forEach(file => {
     formData.append('files', file);
@@ -67,7 +67,7 @@ export const uploadApplicationDocuments = async (idDocument?: File, incomeProof?
     return {};
   }
 
-  const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/uploads/application-documents`, {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/cloudinary/upload/application-documents`, {
     method: 'POST',
     body: formData,
     credentials: 'include',
@@ -94,7 +94,7 @@ export const uploadPropertyPhotos = async (photos: File[]): Promise<FileUploadRe
     formData.append('photos', photo);
   });
 
-  const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/uploads/property-photos`, {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/cloudinary/upload/property-photos`, {
     method: 'POST',
     body: formData,
     credentials: 'include',
@@ -109,13 +109,13 @@ export const uploadPropertyPhotos = async (photos: File[]): Promise<FileUploadRe
 };
 
 /**
- * Upload property video to S3 (optional)
+ * Upload property video via Cloudinary-S3 hybrid service (with watermarking)
  */
 export const uploadPropertyVideo = async (video: File): Promise<FileUploadResponse> => {
   const formData = new FormData();
   formData.append('video', video);
 
-  const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/uploads/property-video`, {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/cloudinary/upload/property-video`, {
     method: 'POST',
     body: formData,
     credentials: 'include',
@@ -133,7 +133,7 @@ export const uploadPropertyVideo = async (video: File): Promise<FileUploadRespon
  * Delete a file from S3
  */
 export const deleteFileFromS3 = async (fileUrl: string): Promise<void> => {
-  const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/uploads/delete`, {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/cloudinary/delete`, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',

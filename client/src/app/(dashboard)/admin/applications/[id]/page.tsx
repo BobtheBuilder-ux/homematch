@@ -17,7 +17,8 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 
 const ApplicationDetail = () => {
-  const { id } = useParams();
+  const params = useParams();
+  const id = params?.id as string;
   const applicationId = Number(id);
   
   const { data: application, isLoading, isError } = useGetApplicationQuery(applicationId);

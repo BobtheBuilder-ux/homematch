@@ -11,7 +11,8 @@ import ContactWidget from "./ContactWidget";
 import ApplicationModal from "./ApplicationModal";
 
 const SingleListing = () => {
-  const { id } = useParams();
+  const params = useParams();
+  const id = params?.id as string;
   const propertyId = Number(id);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { data: authUser } = useGetAuthUserQuery();

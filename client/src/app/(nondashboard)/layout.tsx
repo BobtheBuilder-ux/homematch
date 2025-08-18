@@ -15,12 +15,12 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     // Skip auth checks for coming-soon pages
-    if (pathname.startsWith("/coming-soon")) {
+    if (pathname?.startsWith("/coming-soon")) {
       setIsLoading(false);
       return;
     }
 
-    if (authUser) {
+    if (authUser && pathname) {
       const userRole = authUser.userRole?.toLowerCase();
       if (
         (userRole === "landlord" && (pathname.startsWith("/search") || pathname === "/")) ||

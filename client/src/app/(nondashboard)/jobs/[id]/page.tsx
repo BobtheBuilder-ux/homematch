@@ -49,7 +49,7 @@ interface ApplicationFormData {
 const JobDetailPage = () => {
   const params = useParams();
   const router = useRouter();
-  const jobId = params.id as string;
+  const jobId = params?.id as string;
 
   const [job, setJob] = useState<Job | null>(null);
   const [loading, setLoading] = useState(true);

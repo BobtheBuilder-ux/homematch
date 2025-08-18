@@ -70,6 +70,13 @@ const NewProperty = () => {
           console.log('No valid files found in photoUrls:', value);
         }
         // Skip if no files selected
+      } else if (key === "videoUrl") {
+        // Handle video file upload
+        if (value && typeof value === 'object' && 'name' in value && 'size' in value) {
+          console.log('Processing video file:', value);
+          formData.append("video", value as File);
+        }
+        // Skip if no video file selected
       } else if (Array.isArray(value)) {
         formData.append(key, JSON.stringify(value));
       } else {
@@ -229,6 +236,20 @@ const NewProperty = () => {
                 type="file"
                 accept="image/*"
                 multiple={true}
+              />
+            </div>
+
+            <hr className="my-6 border-gray-200" />
+
+            {/* Video */}
+            <div>
+              <h2 className="text-lg font-semibold mb-4">Video (Optional)</h2>
+              <CustomFormField
+                name="videoUrl"
+                label="Property Video"
+                type="file"
+                accept="video/*"
+                multiple={false}
               />
             </div>
 

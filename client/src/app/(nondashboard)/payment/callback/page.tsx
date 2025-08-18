@@ -14,8 +14,8 @@ const PaymentCallback = () => {
   const searchParams = useSearchParams();
   const [verificationStatus, setVerificationStatus] = useState<VerificationStatus>("loading");
   
-  const reference = searchParams.get("reference");
-  const trxref = searchParams.get("trxref");
+  const reference = searchParams?.get("reference");
+  const trxref = searchParams?.get("trxref");
   
   // Use the reference from URL params
   const paymentReference = reference || trxref;

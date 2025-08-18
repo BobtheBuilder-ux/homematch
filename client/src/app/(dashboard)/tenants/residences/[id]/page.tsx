@@ -271,7 +271,8 @@ const BillingHistory = ({ payments, currentLease }: { payments: Payment[]; curre
 };
 
 const Residence = () => {
-  const { id } = useParams();
+  const params = useParams();
+  const id = params?.id as string;
   const { data: authUser } = useGetAuthUserQuery();
   const {
     data: property,

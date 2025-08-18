@@ -25,8 +25,8 @@ const Navbar = () => {
   const pathname = usePathname();
 
   const isDashboardPage =
-    pathname.includes("/landlords") || pathname.includes("/tenants") ||
-    pathname.includes("/admin") || pathname.includes("/agent");
+    pathname?.includes("/landlords") || pathname?.includes("/tenants") ||
+    pathname?.includes("/admin") || pathname?.includes("/agent");
 
   type UserRole = "landlord" | "tenant" | "admin" | "agent";
   

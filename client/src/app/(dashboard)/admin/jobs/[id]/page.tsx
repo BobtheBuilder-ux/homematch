@@ -74,7 +74,7 @@ const JobDetailPage = () => {
   const params = useParams();
   const router = useRouter();
   // Using toast from sonner
-  const jobId = params.id as string;
+  const jobId = params?.id as string;
 
   const [job, setJob] = useState<Job | null>(null);
   const [applications, setApplications] = useState<JobApplication[]>([]);
