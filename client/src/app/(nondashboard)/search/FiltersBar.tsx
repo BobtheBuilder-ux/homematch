@@ -21,16 +21,18 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { PropertyTypeIcons } from "@/lib/constants";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const FiltersBar = () => {
   const dispatch = useDispatch();
   const router = useRouter();
   const pathname = usePathname();
+  const isMobile = useIsMobile();
   const filters = useAppSelector((state) => state.global.filters);
+  const viewMode = useAppSelector((state) => state.global.viewMode);
   const isFiltersFullOpen = useAppSelector(
     (state) => state.global.isFiltersFullOpen
   );
-  const viewMode = useAppSelector((state) => state.global.viewMode);
   const [searchInput, setSearchInput] = useState(filters.location);
   const [nameSearchInput, setNameSearchInput] = useState("");
 
@@ -101,9 +103,9 @@ const FiltersBar = () => {
   };
 
   return (
-    <div className="flex justify-between items-center w-full py-5">
+    <div className={`w-full py-5 ${isMobile ? 'space-y-4' : 'flex justify-between items-center'}`}>
       {/* Filters */}
-      <div className="flex justify-between items-center gap-4 p-2">
+      <div className={`${isMobile ? 'flex flex-wrap gap-2 p-2' : 'flex justify-between items-center gap-4 p-2'}`}>
         {/* All Filters */}
         <Button
           variant="outline"
@@ -123,7 +125,7 @@ const FiltersBar = () => {
             placeholder="Search location"
             value={searchInput}
             onChange={(e) => setSearchInput(e.target.value)}
-            className="w-40 rounded-l-xl rounded-r-none border-primary-400 border-r-0"
+            className={`${isMobile ? 'w-32' : 'w-40'} rounded-l-xl rounded-r-none border-primary-400 border-r-0`}
           />
           <Button
             onClick={handleLocationSearch}
@@ -144,7 +146,7 @@ const FiltersBar = () => {
               const newValue = e.target.value.trim() ? e.target.value : undefined;
               dispatch(setFilters({ name: newValue }));
             }}
-            className="w-48 rounded-xl border-primary-400"
+            className={`${isMobile ? 'w-36' : 'w-48'} rounded-xl border-primary-400`}
           />
         </div>
 
@@ -157,7 +159,7 @@ const FiltersBar = () => {
               handleFilterChange("priceRange", value, true)
             }
           >
-            <SelectTrigger className="w-22 rounded-xl border-primary-400">
+            <SelectTrigger className={`${isMobile ? 'w-20' : 'w-22'} rounded-xl border-primary-400`}>
               <SelectValue>
                 {formatPriceValue(filters.priceRange[0], true)}
               </SelectValue>
@@ -179,7 +181,7 @@ const FiltersBar = () => {
               handleFilterChange("priceRange", value, false)
             }
           >
-            <SelectTrigger className="w-22 rounded-xl border-primary-400">
+            <SelectTrigger className={`${isMobile ? 'w-20' : 'w-22'} rounded-xl border-primary-400`}>
               <SelectValue>
                 {formatPriceValue(filters.priceRange[1], false)}
               </SelectValue>
@@ -202,7 +204,7 @@ const FiltersBar = () => {
             value={filters.beds}
             onValueChange={(value) => handleFilterChange("beds", value, null)}
           >
-            <SelectTrigger className="w-26 rounded-xl border-primary-400">
+            <SelectTrigger className={`${isMobile ? 'w-20' : 'w-26'} rounded-xl border-primary-400`}>
               <SelectValue placeholder="Beds" />
             </SelectTrigger>
             <SelectContent className="bg-white">
@@ -219,7 +221,7 @@ const FiltersBar = () => {
             value={filters.baths}
             onValueChange={(value) => handleFilterChange("baths", value, null)}
           >
-            <SelectTrigger className="w-26 rounded-xl border-primary-400">
+            <SelectTrigger className={`${isMobile ? 'w-20' : 'w-26'} rounded-xl border-primary-400`}>
               <SelectValue placeholder="Baths" />
             </SelectTrigger>
             <SelectContent className="bg-white">
@@ -238,7 +240,7 @@ const FiltersBar = () => {
             handleFilterChange("propertyType", value, null)
           }
         >
-          <SelectTrigger className="w-32 rounded-xl border-primary-400">
+          <SelectTrigger className={`${isMobile ? 'w-28' : 'w-32'} rounded-xl border-primary-400`}>
             <SelectValue placeholder="Home Type" />
           </SelectTrigger>
           <SelectContent className="bg-white">
@@ -256,7 +258,7 @@ const FiltersBar = () => {
       </div>
 
       {/* View Mode */}
-      <div className="flex justify-between items-center gap-4 p-2">
+      <div className={`${isMobile ? 'flex items-center gap-4 p-2' : 'flex justify-between items-center gap-4 p-2'}`}>
         <div className="flex border rounded-xl">
           <Button
             variant="ghost"
