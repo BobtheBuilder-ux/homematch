@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { PrismaClient, Prisma } from "@prisma/client"; // Added Prisma import
 import { wktToGeoJSON } from "@terraformer/wkt";
-import { addToEmailList } from "../utils/emailSubscriptionService";
+import { addToEmailList, sendLandlordWelcomeEmail } from "../utils/emailSubscriptionService";
 
 const prisma = new PrismaClient();
 
@@ -48,7 +48,15 @@ export const createLandlord = async (
       },
     });
 
-    // Add landlord to email list
+    // Send welcome email and add landlord to email list
+    try {
+      await sendLandlordWelcomeEmail(landlord.email, landlord.name);
+      console.log(`Welcome email sent to landlord: ${landlord.email}`);
+    } catch (emailError) {
+      console.error('Error sending landlord welcome email:', emailError);
+      // Don't fail the landlord creation if email fails
+    }
+
     try {
       await addToEmailList({
         email: landlord.email,
@@ -111,7 +119,15 @@ export const registerLandlordWithCode = async (
       },
     });
 
-    // Add landlord to email list
+    // Send welcome email and add landlord to email list
+    try {
+      await sendLandlordWelcomeEmail(landlord.email, landlord.name);
+      console.log(`Welcome email sent to landlord: ${landlord.email}`);
+    } catch (emailError) {
+      console.error('Error sending landlord welcome email:', emailError);
+      // Don't fail the landlord creation if email fails
+    }
+
     try {
       await addToEmailList({
         email: landlord.email,

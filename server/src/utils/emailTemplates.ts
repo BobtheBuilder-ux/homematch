@@ -767,6 +767,85 @@ export const propertyRentedNotificationTemplate = {
   `
 };
 
+export const landlordWelcomeTemplate = {
+  subject: "Welcome to HomeMatch - Start Earning from Your Properties! 🏠",
+  body: (landlordName: string) => `
+    <div class="email-container" style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f9f9f9;">
+      <style>
+        @media only screen and (max-width: 600px) {
+          .email-container { padding: 10px !important; }
+          .email-content { padding: 20px !important; }
+          .email-button { padding: 10px 20px !important; font-size: 14px !important; }
+          .email-text { font-size: 14px !important; }
+          .email-heading { font-size: 20px !important; }
+          .email-section { padding: 15px !important; margin: 15px 0 !important; }
+          .email-list { padding-left: 15px !important; }
+        }
+      </style>
+      <div class="email-content" style="background-color: white; padding: 30px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+        <h2 class="email-heading" style="color: #059669; margin-bottom: 20px;">🎉 Welcome to HomeMatch!</h2>
+        
+        <p class="email-text" style="color: #374151; font-size: 16px; line-height: 1.6;">Dear ${landlordName},</p>
+        
+        <p class="email-text" style="color: #374151; font-size: 16px; line-height: 1.6;">
+          Welcome to HomeMatch! We're excited to have you join our community of landlords who are maximizing their rental income through our platform. Your account has been successfully created and you're now ready to start listing your properties and connecting with quality tenants.
+        </p>
+        
+        <div class="email-section" style="background-color: #ecfdf5; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #059669;">
+          <h3 style="color: #047857; margin: 0 0 15px 0;">🚀 What You Can Do Now:</h3>
+          <ul class="email-list" style="color: #374151; margin: 0; padding-left: 20px;">
+            <li style="margin-bottom: 8px;">List your properties with detailed descriptions and photos</li>
+            <li style="margin-bottom: 8px;">Set competitive rental prices with our market insights</li>
+            <li style="margin-bottom: 8px;">Screen and connect with verified tenants</li>
+            <li style="margin-bottom: 8px;">Manage rental applications and lease agreements</li>
+            <li style="margin-bottom: 8px;">Track rental income and property performance</li>
+          </ul>
+        </div>
+        
+        <div class="email-section" style="background-color: #eff6ff; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #3b82f6;">
+          <h3 style="color: #1e40af; margin: 0 0 15px 0;">💡 Getting Started Tips:</h3>
+          <ul class="email-list" style="color: #374151; margin: 0; padding-left: 20px;">
+            <li style="margin-bottom: 8px;">Complete your landlord profile to build trust with tenants</li>
+            <li style="margin-bottom: 8px;">Upload high-quality photos of your properties</li>
+            <li style="margin-bottom: 8px;">Set up your banking details for seamless rent collection</li>
+            <li style="margin-bottom: 8px;">Review our landlord guide for best practices</li>
+          </ul>
+        </div>
+        
+        <div class="email-section" style="background-color: #fef3c7; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #f59e0b;">
+          <h3 style="color: #92400e; margin: 0 0 10px 0;">💰 Maximize Your Earnings:</h3>
+          <p class="email-text" style="color: #374151; margin: 0; font-size: 16px; line-height: 1.6;">
+            Our platform helps you find quality tenants quickly, reduce vacancy periods, and ensure consistent rental income. All tenants are verified and payments are processed securely.
+          </p>
+        </div>
+        
+        <p class="email-text" style="color: #374151; font-size: 16px; line-height: 1.6;">
+          Ready to start earning from your properties? Complete your onboarding process and list your first property today!
+        </p>
+        
+        <div style="text-align: center; margin: 20px 0;">
+          <a href="#" class="email-button" style="background-color: #059669; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold; display: inline-block;">Complete Onboarding</a>
+        </div>
+        
+        <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #e5e7eb;">
+          <p style="color: #6b7280; font-size: 14px; margin: 0;">
+            Welcome to the HomeMatch family!<br>
+            <strong style="color: #059669;">The HomeMatch Team</strong>
+          </p>
+        </div>
+      </div>
+      
+      <div style="text-align: center; margin-top: 20px;">
+        <p style="color: #9ca3af; font-size: 12px;">
+          You're receiving this email because you just created a landlord account with HomeMatch.
+          <br>
+          If you have any questions, feel free to contact our support team.
+        </p>
+      </div>
+    </div>
+  `
+};
+
 export const adminWelcomeTemplate = {
   subject: "Welcome to HomeMatch Admin Portal - Your Account is Ready! 🔐",
   body: (adminName: string, email: string, temporaryPassword: string) => `

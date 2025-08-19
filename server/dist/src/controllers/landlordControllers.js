@@ -45,7 +45,15 @@ const createLandlord = (req, res) => __awaiter(void 0, void 0, void 0, function*
                 phoneNumber,
             },
         });
-        // Add landlord to email list
+        // Send welcome email and add landlord to email list
+        try {
+            yield (0, emailSubscriptionService_1.sendLandlordWelcomeEmail)(landlord.email, landlord.name);
+            console.log(`Welcome email sent to landlord: ${landlord.email}`);
+        }
+        catch (emailError) {
+            console.error('Error sending landlord welcome email:', emailError);
+            // Don't fail the landlord creation if email fails
+        }
         try {
             yield (0, emailSubscriptionService_1.addToEmailList)({
                 email: landlord.email,
@@ -100,7 +108,15 @@ const registerLandlordWithCode = (req, res) => __awaiter(void 0, void 0, void 0,
                 usedAt: new Date(),
             },
         });
-        // Add landlord to email list
+        // Send welcome email and add landlord to email list
+        try {
+            yield (0, emailSubscriptionService_1.sendLandlordWelcomeEmail)(landlord.email, landlord.name);
+            console.log(`Welcome email sent to landlord: ${landlord.email}`);
+        }
+        catch (emailError) {
+            console.error('Error sending landlord welcome email:', emailError);
+            // Don't fail the landlord creation if email fails
+        }
         try {
             yield (0, emailSubscriptionService_1.addToEmailList)({
                 email: landlord.email,

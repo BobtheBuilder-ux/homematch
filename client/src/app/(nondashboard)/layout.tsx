@@ -22,13 +22,30 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
 
     if (authUser && pathname) {
       const userRole = authUser.userRole?.toLowerCase();
+      
+      // Special handling for landlords - check onboarding status
+      if (userRole === "landlord") {
+        const isOnboardingComplete = authUser.userInfo?.isOnboardingComplete;
+        
+        // If landlord hasn't completed onboarding and is not already on onboarding page
+        if (!isOnboardingComplete && !pathname.startsWith("/landlords/onboarding")) {
+          router.push("/landlords/onboarding", { scroll: false });
+          return;
+        }
+        
+        // If landlord has completed onboarding and is on general pages, redirect to dashboard
+        if (isOnboardingComplete && (pathname.startsWith("/search") || pathname === "/")) {
+          router.push("/landlords/properties", { scroll: false });
+          return;
+        }
+      }
+      
+      // Handle other roles
       if (
-        (userRole === "landlord" && (pathname.startsWith("/search") || pathname === "/")) ||
         (userRole === "admin" && pathname === "/") ||
         (userRole === "agent" && pathname === "/")
       ) {
         const redirectPath = ({
-          landlord: "/landlords/properties",
           admin: "/admin/analytics",
           agent: "/agent/leads"
         } as Record<string, string>)[userRole] || "/";

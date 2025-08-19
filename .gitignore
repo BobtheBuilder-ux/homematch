@@ -37,3 +37,4 @@ yarn-error.log*
 
 # IDEs
 .vscode/
+.env.sentry-build-plugin

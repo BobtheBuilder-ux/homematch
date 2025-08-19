@@ -32,6 +32,7 @@
     "@radix-ui/react-tabs": "^1.1.2",
     "@radix-ui/react-tooltip": "^1.1.7",
     "@reduxjs/toolkit": "^2.5.1",
+    "@sentry/nextjs": "^10.5.0",
     "@types/formidable": "^3.4.5",
     "@types/node-fetch": "^2.6.13",
     "aws-amplify": "^6.12.2",

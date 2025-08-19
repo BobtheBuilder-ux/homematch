@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.sendAdminWelcomeEmail = exports.sendTenantWelcomeEmail = exports.sendInspectionApprovedEmail = exports.sendInspectionRequestEmail = exports.getEmailSubscriptions = exports.unsubscribeFromEmailList = exports.sendWelcomeEmail = exports.sendSurveyConfirmationEmail = exports.addToEmailList = void 0;
+exports.sendAdminWelcomeEmail = exports.sendLandlordWelcomeEmail = exports.sendTenantWelcomeEmail = exports.sendInspectionApprovedEmail = exports.sendInspectionRequestEmail = exports.getEmailSubscriptions = exports.unsubscribeFromEmailList = exports.sendWelcomeEmail = exports.sendSurveyConfirmationEmail = exports.addToEmailList = void 0;
 const client_1 = require("@prisma/client");
 const emailService_1 = require("./emailService");
 const emailTemplates_1 = require("./emailTemplates");
@@ -167,6 +167,21 @@ const sendTenantWelcomeEmail = (tenantEmail, tenantName) => __awaiter(void 0, vo
     }
 });
 exports.sendTenantWelcomeEmail = sendTenantWelcomeEmail;
+const sendLandlordWelcomeEmail = (landlordEmail, landlordName) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        yield (0, emailService_1.sendEmail)({
+            to: landlordEmail,
+            subject: emailTemplates_1.landlordWelcomeTemplate.subject,
+            body: emailTemplates_1.landlordWelcomeTemplate.body(landlordName)
+        });
+        console.log(`Landlord welcome email sent to: ${landlordEmail}`);
+    }
+    catch (error) {
+        console.error('Error sending landlord welcome email:', error);
+        throw error;
+    }
+});
+exports.sendLandlordWelcomeEmail = sendLandlordWelcomeEmail;
 const sendAdminWelcomeEmail = (adminEmail, adminName, temporaryPassword) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         yield (0, emailService_1.sendEmail)({

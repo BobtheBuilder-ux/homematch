@@ -1,6 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 import { sendEmail } from './emailService';
-import { surveyConfirmationTemplate, welcomeToEmailListTemplate, inspectionRequestTemplate, inspectionApprovedTemplate, tenantWelcomeTemplate, adminWelcomeTemplate } from './emailTemplates';
+import { surveyConfirmationTemplate, welcomeToEmailListTemplate, inspectionRequestTemplate, inspectionApprovedTemplate, tenantWelcomeTemplate, landlordWelcomeTemplate, adminWelcomeTemplate } from './emailTemplates';
 
 const prisma = new PrismaClient();
 
@@ -183,6 +183,24 @@ export const sendTenantWelcomeEmail = async (
     console.log(`Tenant welcome email sent to: ${tenantEmail}`);
   } catch (error) {
     console.error('Error sending tenant welcome email:', error);
+    throw error;
+  }
+};
+
+export const sendLandlordWelcomeEmail = async (
+  landlordEmail: string,
+  landlordName: string
+): Promise<void> => {
+  try {
+    await sendEmail({
+      to: landlordEmail,
+      subject: landlordWelcomeTemplate.subject,
+      body: landlordWelcomeTemplate.body(landlordName)
+    });
+    
+    console.log(`Landlord welcome email sent to: ${landlordEmail}`);
+  } catch (error) {
+    console.error('Error sending landlord welcome email:', error);
     throw error;
   }
 };
