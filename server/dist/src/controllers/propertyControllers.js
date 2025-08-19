@@ -25,107 +25,37 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.createProperty = exports.getProperty = exports.getProperties = void 0;
 const client_1 = require("@prisma/client");
-const wkt_1 = require("@terraformer/wkt");
 const s3Service_1 = require("../utils/s3Service");
+const queryOptimizationService_1 = require("../services/queryOptimizationService");
 const axios_1 = __importDefault(require("axios"));
 const prisma = new client_1.PrismaClient();
 // S3 client moved to s3Service utility
 const getProperties = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { favoriteIds, priceMin, priceMax, beds, baths, propertyType, squareFeetMin, squareFeetMax, amenities, availableFrom, latitude, longitude, name, location, } = req.query;
-        let whereConditions = [];
-        if (favoriteIds) {
-            const favoriteIdsArray = favoriteIds.split(",").map(Number);
-            whereConditions.push(client_1.Prisma.sql `p.id IN (${client_1.Prisma.join(favoriteIdsArray)})`);
-        }
-        if (priceMin) {
-            whereConditions.push(client_1.Prisma.sql `p."pricePerYear" >= ${Number(priceMin)}`);
-        }
-        if (priceMax) {
-            whereConditions.push(client_1.Prisma.sql `p."pricePerYear" <= ${Number(priceMax)}`);
-        }
-        if (beds && beds !== "any") {
-            whereConditions.push(client_1.Prisma.sql `p.beds >= ${Number(beds)}`);
-        }
-        if (baths && baths !== "any") {
-            whereConditions.push(client_1.Prisma.sql `p.baths >= ${Number(baths)}`);
-        }
-        if (squareFeetMin) {
-            whereConditions.push(client_1.Prisma.sql `p."squareFeet" >= ${Number(squareFeetMin)}`);
-        }
-        if (squareFeetMax) {
-            whereConditions.push(client_1.Prisma.sql `p."squareFeet" <= ${Number(squareFeetMax)}`);
-        }
-        if (propertyType && propertyType !== "any") {
-            whereConditions.push(client_1.Prisma.sql `p."propertyType" = ${propertyType}::"PropertyType"`);
-        }
-        // Search by property name (only if no location coordinates are provided)
-        if (name && !latitude && !longitude) {
-            whereConditions.push(client_1.Prisma.sql `p.name ILIKE ${`%${name}%`}`);
-        }
-        // Search by location text (only if no coordinates are provided)
-        if (location && !latitude && !longitude) {
-            whereConditions.push(client_1.Prisma.sql `(
-          l.city ILIKE ${`%${location}%`} OR
-          l.state ILIKE ${`%${location}%`} OR
-          l.country ILIKE ${`%${location}%`} OR
-          l.address ILIKE ${`%${location}%`}
-        )`);
-        }
-        if (amenities && amenities !== "any") {
-            const amenitiesArray = amenities.split(",");
-            const amenityConditions = amenitiesArray.map(amenity => client_1.Prisma.sql `p.amenities ILIKE ${`%${amenity.trim()}%`}`);
-            if (amenityConditions.length > 0) {
-                whereConditions.push(client_1.Prisma.sql `(${client_1.Prisma.join(amenityConditions, ' OR ')})`);
-            }
-        }
-        if (availableFrom && availableFrom !== "any") {
-            const availableFromDate = typeof availableFrom === "string" ? availableFrom : null;
-            if (availableFromDate) {
-                const date = new Date(availableFromDate);
-                if (!isNaN(date.getTime())) {
-                    whereConditions.push(client_1.Prisma.sql `EXISTS (
-              SELECT 1 FROM "Lease" l 
-              WHERE l."propertyId" = p.id 
-              AND l."startDate" <= ${date.toISOString()}
-            )`);
-                }
-            }
-        }
-        if (latitude && longitude) {
-            const lat = parseFloat(latitude);
-            const lng = parseFloat(longitude);
-            const radiusInKilometers = 1000;
-            const degrees = radiusInKilometers / 111; // Converts kilometers to degrees
-            whereConditions.push(client_1.Prisma.sql `ST_DWithin(
-          l.coordinates::geometry,
-          ST_SetSRID(ST_MakePoint(${lng}, ${lat}), 4326),
-          ${degrees}
-        )`);
-        }
-        // Only show properties with 'Available' status (admin approved)
-        whereConditions.push(client_1.Prisma.sql `p.status = 'Available'`);
-        const completeQuery = client_1.Prisma.sql `
-      SELECT 
-        p.*,
-        json_build_object(
-          'id', l.id,
-          'address', l.address,
-          'city', l.city,
-          'state', l.state,
-          'country', l.country,
-          'postalCode', l."postalCode",
-          'coordinates', json_build_object(
-            'longitude', ST_X(l."coordinates"::geometry),
-            'latitude', ST_Y(l."coordinates"::geometry)
-          )
-        ) as location
-      FROM "Property" p
-      JOIN "Location" l ON p."locationId" = l.id
-      WHERE ${client_1.Prisma.join(whereConditions, " AND ")}
-    `;
-        const properties = yield prisma.$queryRaw(completeQuery);
-        res.json(properties);
+        const queryOptimizer = new queryOptimizationService_1.QueryOptimizationService(prisma);
+        const filters = {
+            favoriteIds: req.query.favoriteIds,
+            priceMin: req.query.priceMin,
+            priceMax: req.query.priceMax,
+            beds: req.query.beds,
+            baths: req.query.baths,
+            propertyType: req.query.propertyType,
+            squareFeetMin: req.query.squareFeetMin,
+            squareFeetMax: req.query.squareFeetMax,
+            amenities: req.query.amenities,
+            availableFrom: req.query.availableFrom,
+            latitude: req.query.latitude,
+            longitude: req.query.longitude,
+            name: req.query.name,
+            location: req.query.location,
+            page: req.query.page,
+            limit: req.query.limit,
+            sortBy: req.query.sortBy,
+            sortOrder: req.query.sortOrder
+        };
+        // Use the optimized query service
+        const result = yield queryOptimizer.getOptimizedProperties(filters);
+        res.json(result);
     }
     catch (error) {
         res
@@ -135,26 +65,15 @@ const getProperties = (req, res) => __awaiter(void 0, void 0, void 0, function* 
 });
 exports.getProperties = getProperties;
 const getProperty = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a;
     try {
         const { id } = req.params;
-        const property = yield prisma.property.findUnique({
-            where: { id: Number(id) },
-            include: {
-                location: true,
-            },
-        });
-        if (property) {
-            const coordinates = yield prisma.$queryRaw `SELECT ST_asText(coordinates) as coordinates from "Location" where id = ${property.location.id}`;
-            const geoJSON = (0, wkt_1.wktToGeoJSON)(((_a = coordinates[0]) === null || _a === void 0 ? void 0 : _a.coordinates) || "");
-            const longitude = geoJSON.coordinates[0];
-            const latitude = geoJSON.coordinates[1];
-            const propertyWithCoordinates = Object.assign(Object.assign({}, property), { location: Object.assign(Object.assign({}, property.location), { coordinates: {
-                        longitude,
-                        latitude,
-                    } }) });
-            res.json(propertyWithCoordinates);
+        const queryOptimizer = new queryOptimizationService_1.QueryOptimizationService(prisma);
+        const property = yield queryOptimizer.getOptimizedProperty(Number(id));
+        if (!property) {
+            res.status(404).json({ error: 'Property not found' });
+            return;
         }
+        res.json(property);
     }
     catch (err) {
         res

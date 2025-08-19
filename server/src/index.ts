@@ -5,6 +5,11 @@ import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
 import { authMiddleware } from "./middleware/authMiddleware";
+import redisService from "./utils/redisService";
+import { generalRateLimit, authRateLimit, uploadRateLimit, paymentRateLimit, searchRateLimit, adminRateLimit } from "./middleware/rateLimitMiddleware";
+import { performanceMiddleware, healthCheckMiddleware, metricsEndpoint } from "./middleware/performanceMiddleware";
+import { databaseService } from "./utils/database";
+import { cdnHeadersMiddleware, imageOptimizationMiddleware } from "./middleware/cdnMiddleware";
 /* ROUTE IMPORT */
 import tenantRoutes from "./routes/tenantRoutes";
 import landlordRoutes from "./routes/landlordRoutes";
@@ -28,6 +33,27 @@ import agentPropertyRoutes from "./routes/agentPropertyRoutes";
 /* CONFIGURATIONS */
 dotenv.config();
 const app = express();
+
+// Initialize Redis connection
+redisService.connect().catch(console.error);
+
+// Initialize database connection
+databaseService.connect().catch(console.error);
+
+// Health check and metrics endpoints (before rate limiting)
+app.use(healthCheckMiddleware);
+app.use(metricsEndpoint);
+
+// CDN headers and image optimization
+app.use(cdnHeadersMiddleware);
+app.use(imageOptimizationMiddleware);
+
+// Performance monitoring
+app.use(performanceMiddleware);
+
+// Apply general rate limiting to all requests
+app.use(generalRateLimit);
+
 app.use(express.json());
 app.use(helmet());
 app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
@@ -58,9 +84,9 @@ app.get("/", (req, res) => {
 });
 
 app.use("/applications", applicationRoutes);
-app.use("/properties", propertyRoutes);
+app.use("/properties", searchRateLimit, propertyRoutes);
 app.use("/leases", leaseRoutes);
-app.use("/payments", paymentRoutes);
+app.use("/payments", paymentRateLimit, paymentRoutes);
 app.use(
   "/inspections",
   authMiddleware(["tenant", "landlord", "agent", "admin"]),
@@ -74,21 +100,51 @@ app.use(
 app.use("/landlords", authMiddleware(["landlord", "admin"]), landlordRoutes);
 // Admin routes with exception for admin creation
 // Public admin routes (no authentication required)
-app.use("/admin", publicAdminRoutes);
-app.use("/agent", publicAgentRoutes);
+app.use("/admin", authRateLimit, publicAdminRoutes);
+app.use("/agent", authRateLimit, publicAgentRoutes);
 app.use("/surveys", surveyRoutes);
 // Protected admin routes (authentication required)
-app.use("/admin", authMiddleware(["admin"]), adminRoutes);
+app.use("/admin", authMiddleware(["admin"]), adminRateLimit, adminRoutes);
 app.use("/agent", authMiddleware(["agent"]), agentRoutes);
 app.use("/emails", emailRoutes);
 app.use("/earnings", authMiddleware(["landlord", "admin"]), earningsRoutes);
 app.use("/jobs", jobRoutes);
-app.use("/uploads", uploadRoutes);
-app.use("/cloudinary", cloudinaryUploadRoutes);
+app.use("/uploads", uploadRateLimit, uploadRoutes);
+app.use("/cloudinary", uploadRateLimit, cloudinaryUploadRoutes);
 app.use("/agent-properties", authMiddleware(["admin", "agent"]), agentPropertyRoutes);
 
 /* SERVER */
 const port = Number(process.env.PORT) || 3002;
 app.listen(port, "0.0.0.0", () => {
   console.log(`Server running on port ${port}`);
+});
+
+// Graceful shutdown
+process.on('SIGTERM', async () => {
+  console.log('SIGTERM received, shutting down gracefully');
+  await Promise.all([
+    redisService.disconnect(),
+    databaseService.disconnect()
+  ]);
+  process.exit(0);
+});
+
+process.on('SIGINT', async () => {
+  console.log('SIGINT received, shutting down gracefully');
+  await Promise.all([
+    redisService.disconnect(),
+    databaseService.disconnect()
+  ]);
+  process.exit(0);
+});
+
+// Handle uncaught exceptions
+process.on('uncaughtException', (error) => {
+  console.error('Uncaught Exception:', error);
+  process.exit(1);
+});
+
+process.on('unhandledRejection', (reason, promise) => {
+  console.error('Unhandled Rejection at:', promise, 'reason:', reason);
+  process.exit(1);
 });

@@ -8,6 +8,8 @@ const propertyControllers_1 = require("../controllers/propertyControllers");
 const leaseControllers_1 = require("../controllers/leaseControllers");
 const multer_1 = __importDefault(require("multer"));
 const authMiddleware_1 = require("../middleware/authMiddleware");
+const cacheMiddleware_1 = require("../middleware/cacheMiddleware");
+const cdnMiddleware_1 = require("../middleware/cdnMiddleware");
 const storage = multer_1.default.memoryStorage();
 const upload = (0, multer_1.default)({
     storage: storage,
@@ -36,8 +38,8 @@ const upload = (0, multer_1.default)({
     }
 });
 const router = express_1.default.Router();
-router.get("/", propertyControllers_1.getProperties);
-router.get("/:id", propertyControllers_1.getProperty);
+router.get("/", cacheMiddleware_1.propertyListingsCache, cdnMiddleware_1.propertyImageOptimizationMiddleware, propertyControllers_1.getProperties);
+router.get("/:id", cacheMiddleware_1.singlePropertyCache, cdnMiddleware_1.responsiveImageMiddleware, propertyControllers_1.getProperty);
 router.get("/:propertyId/leases", (0, authMiddleware_1.authMiddleware)(["landlord", "tenant", "admin"]), leaseControllers_1.getPropertyLeases);
 router.post("/", (0, authMiddleware_1.authMiddleware)(["landlord"]), upload.fields([
     { name: 'photos', maxCount: 20 },
