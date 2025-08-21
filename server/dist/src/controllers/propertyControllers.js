@@ -26,36 +26,70 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.createProperty = exports.getProperty = exports.getProperties = void 0;
 const client_1 = require("@prisma/client");
 const s3Service_1 = require("../utils/s3Service");
-const queryOptimizationService_1 = require("../services/queryOptimizationService");
 const axios_1 = __importDefault(require("axios"));
 const prisma = new client_1.PrismaClient();
 // S3 client moved to s3Service utility
 const getProperties = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const queryOptimizer = new queryOptimizationService_1.QueryOptimizationService(prisma);
-        const filters = {
-            favoriteIds: req.query.favoriteIds,
-            priceMin: req.query.priceMin,
-            priceMax: req.query.priceMax,
-            beds: req.query.beds,
-            baths: req.query.baths,
-            propertyType: req.query.propertyType,
-            squareFeetMin: req.query.squareFeetMin,
-            squareFeetMax: req.query.squareFeetMax,
-            amenities: req.query.amenities,
-            availableFrom: req.query.availableFrom,
-            latitude: req.query.latitude,
-            longitude: req.query.longitude,
-            name: req.query.name,
-            location: req.query.location,
-            page: req.query.page,
-            limit: req.query.limit,
-            sortBy: req.query.sortBy,
-            sortOrder: req.query.sortOrder
-        };
-        // Use the optimized query service
-        const result = yield queryOptimizer.getOptimizedProperties(filters);
-        res.json(result);
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 10;
+        const skip = (page - 1) * limit;
+        // Build where clause based on filters
+        const where = {};
+        if (req.query.priceMin) {
+            where.price = Object.assign(Object.assign({}, where.price), { gte: parseFloat(req.query.priceMin) });
+        }
+        if (req.query.priceMax) {
+            where.price = Object.assign(Object.assign({}, where.price), { lte: parseFloat(req.query.priceMax) });
+        }
+        if (req.query.beds) {
+            where.beds = parseInt(req.query.beds);
+        }
+        if (req.query.baths) {
+            where.baths = parseInt(req.query.baths);
+        }
+        if (req.query.propertyType) {
+            where.propertyType = req.query.propertyType;
+        }
+        if (req.query.name) {
+            where.name = { contains: req.query.name, mode: 'insensitive' };
+        }
+        if (req.query.location) {
+            where.location = { contains: req.query.location, mode: 'insensitive' };
+        }
+        // Build orderBy clause
+        const orderBy = {};
+        const sortBy = req.query.sortBy || 'createdAt';
+        const sortOrder = req.query.sortOrder || 'desc';
+        orderBy[sortBy] = sortOrder;
+        const [properties, total] = yield Promise.all([
+            prisma.property.findMany({
+                where,
+                skip,
+                take: limit,
+                orderBy,
+                include: {
+                    landlord: {
+                        select: {
+                            id: true,
+                            name: true,
+                            email: true,
+                            phoneNumber: true
+                        }
+                    }
+                }
+            }),
+            prisma.property.count({ where })
+        ]);
+        res.json({
+            properties,
+            pagination: {
+                page,
+                limit,
+                total,
+                pages: Math.ceil(total / limit)
+            }
+        });
     }
     catch (error) {
         res
@@ -67,8 +101,20 @@ exports.getProperties = getProperties;
 const getProperty = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { id } = req.params;
-        const queryOptimizer = new queryOptimizationService_1.QueryOptimizationService(prisma);
-        const property = yield queryOptimizer.getOptimizedProperty(Number(id));
+        const property = yield prisma.property.findUnique({
+            where: { id: Number(id) },
+            include: {
+                landlord: {
+                    select: {
+                        id: true,
+                        name: true,
+                        email: true,
+                        phoneNumber: true
+                    }
+                },
+                location: true
+            }
+        });
         if (!property) {
             res.status(404).json({ error: 'Property not found' });
             return;

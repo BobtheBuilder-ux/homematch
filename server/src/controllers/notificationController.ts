@@ -9,10 +9,14 @@ const prisma = databaseService.getClient();
 let notificationService: NotificationService | null = null;
 
 function getNotificationService(): NotificationService {
-  if (!notificationService && socketService.getIO()) {
-    notificationService = new NotificationService(socketService.getIO()!);
+  if (!notificationService) {
+    const io = socketService.getIO();
+    if (!io) {
+      throw new Error('Socket.IO server not initialized. Please ensure socketService.initialize() is called before using notifications.');
+    }
+    notificationService = new NotificationService(io);
   }
-  return notificationService!;
+  return notificationService;
 }
 
 export const notificationController = {

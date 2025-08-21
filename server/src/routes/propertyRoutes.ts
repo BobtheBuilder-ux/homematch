@@ -7,8 +7,7 @@ import {
 import { getPropertyLeases } from "../controllers/leaseControllers";
 import multer from "multer";
 import { authMiddleware } from "../middleware/authMiddleware";
-import { propertyListingsCache, singlePropertyCache } from "../middleware/cacheMiddleware";
-import { propertyImageOptimizationMiddleware, responsiveImageMiddleware } from "../middleware/cdnMiddleware";
+
 
 const storage = multer.memoryStorage();
 const upload = multer({ 
@@ -40,8 +39,8 @@ const upload = multer({
 
 const router = express.Router();
 
-router.get("/", propertyListingsCache, propertyImageOptimizationMiddleware, getProperties);
-router.get("/:id", singlePropertyCache, responsiveImageMiddleware, getProperty);
+router.get("/", getProperties);
+router.get("/:id", getProperty);
 router.get(
   "/:propertyId/leases",
   authMiddleware(["landlord", "tenant", "admin"]),

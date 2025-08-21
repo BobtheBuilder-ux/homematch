@@ -6,11 +6,7 @@ import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
 import { authMiddleware } from "./middleware/authMiddleware";
-import redisService from "./utils/redisService";
-import { generalRateLimit, authRateLimit, uploadRateLimit, paymentRateLimit, searchRateLimit, adminRateLimit } from "./middleware/rateLimitMiddleware";
-import { performanceMiddleware, healthCheckMiddleware, metricsEndpoint } from "./middleware/performanceMiddleware";
 import { databaseService } from "./utils/database";
-import { cdnHeadersMiddleware, imageOptimizationMiddleware } from "./middleware/cdnMiddleware";
 import { socketService } from "./services/socketService";
 /* ROUTE IMPORT */
 import tenantRoutes from "./routes/tenantRoutes";
@@ -38,25 +34,8 @@ dotenv.config();
 const app = express();
 const server = createServer(app);
 
-// Initialize Redis connection
-redisService.connect().catch(console.error);
-
 // Initialize database connection
 databaseService.connect().catch(console.error);
-
-// Health check and metrics endpoints (before rate limiting)
-app.use(healthCheckMiddleware);
-app.use(metricsEndpoint);
-
-// CDN headers and image optimization
-app.use(cdnHeadersMiddleware);
-app.use(imageOptimizationMiddleware);
-
-// Performance monitoring
-app.use(performanceMiddleware);
-
-// Apply general rate limiting to all requests
-app.use(generalRateLimit);
 
 app.use(express.json());
 app.use(helmet());
@@ -88,9 +67,9 @@ app.get("/", (req, res) => {
 });
 
 app.use("/applications", applicationRoutes);
-app.use("/properties", searchRateLimit, propertyRoutes);
+app.use("/properties", propertyRoutes);
 app.use("/leases", leaseRoutes);
-app.use("/payments", paymentRateLimit, paymentRoutes);
+app.use("/payments", paymentRoutes);
 app.use(
   "/inspections",
   authMiddleware(["tenant", "landlord", "agent", "admin"]),
@@ -104,17 +83,17 @@ app.use(
 app.use("/landlords", authMiddleware(["landlord", "admin"]), landlordRoutes);
 // Admin routes with exception for admin creation
 // Public admin routes (no authentication required)
-app.use("/admin", authRateLimit, publicAdminRoutes);
-app.use("/agent", authRateLimit, publicAgentRoutes);
+app.use("/admin", publicAdminRoutes);
+app.use("/agent", publicAgentRoutes);
 app.use("/surveys", surveyRoutes);
 // Protected admin routes (authentication required)
-app.use("/admin", authMiddleware(["admin"]), adminRateLimit, adminRoutes);
+app.use("/admin", authMiddleware(["admin"]), adminRoutes);
 app.use("/agent", authMiddleware(["agent"]), agentRoutes);
 app.use("/emails", emailRoutes);
 app.use("/earnings", authMiddleware(["landlord", "admin"]), earningsRoutes);
 app.use("/jobs", jobRoutes);
-app.use("/uploads", uploadRateLimit, uploadRoutes);
-app.use("/cloudinary", uploadRateLimit, cloudinaryUploadRoutes);
+app.use("/uploads", uploadRoutes);
+app.use("/cloudinary", cloudinaryUploadRoutes);
 app.use("/agent-properties", authMiddleware(["admin", "agent"]), agentPropertyRoutes);
 app.use("/notifications", notificationRoutes);
 
@@ -132,29 +111,32 @@ server.listen(port, "0.0.0.0", () => {
 // Graceful shutdown
 process.on('SIGTERM', async () => {
   console.log('SIGTERM received, shutting down gracefully');
-  await Promise.all([
-    redisService.disconnect(),
-    databaseService.disconnect()
-  ]);
+  await databaseService.disconnect();
   process.exit(0);
 });
 
 process.on('SIGINT', async () => {
   console.log('SIGINT received, shutting down gracefully');
-  await Promise.all([
-    redisService.disconnect(),
-    databaseService.disconnect()
-  ]);
+  await databaseService.disconnect();
   process.exit(0);
 });
 
-// Handle uncaught exceptions
+// Handle uncaught exceptions (temporarily disabled to prevent crashes)
+// process.on('uncaughtException', (error) => {
+//   console.error('Uncaught Exception:', error);
+//   process.exit(1);
+// });
+
+// process.on('unhandledRejection', (reason, promise) => {
+//   console.error('Unhandled Rejection at:', promise, 'reason:', reason);
+//   process.exit(1);
+// });
+
+// Log errors without crashing
 process.on('uncaughtException', (error) => {
-  console.error('Uncaught Exception:', error);
-  process.exit(1);
+  console.error('Uncaught Exception (non-fatal):', error);
 });
 
 process.on('unhandledRejection', (reason, promise) => {
-  console.error('Unhandled Rejection at:', promise, 'reason:', reason);
-  process.exit(1);
+  console.error('Unhandled Rejection (non-fatal) at:', promise, 'reason:', reason);
 });

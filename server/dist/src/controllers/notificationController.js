@@ -20,8 +20,12 @@ const prisma = database_1.databaseService.getClient();
 // Initialize notification service with socket.io (lazy initialization)
 let notificationService = null;
 function getNotificationService() {
-    if (!notificationService && socketService_1.socketService.getIO()) {
-        notificationService = new notificationService_1.default(socketService_1.socketService.getIO());
+    if (!notificationService) {
+        const io = socketService_1.socketService.getIO();
+        if (!io) {
+            throw new Error('Socket.IO server not initialized. Please ensure socketService.initialize() is called before using notifications.');
+        }
+        notificationService = new notificationService_1.default(io);
     }
     return notificationService;
 }

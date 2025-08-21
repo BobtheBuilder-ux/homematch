@@ -1,8 +1,7 @@
 import { Request, Response } from "express";
 import { PrismaClient, Prisma, Location } from "@prisma/client";
-import { wktToGeoJSON } from "@terraformer/wkt";
 import { uploadMultipleFilesToS3, uploadFileToS3 } from "../utils/s3Service";
-import { QueryOptimizationService, PropertyFilters } from '../services/queryOptimizationService';
+
 import axios from "axios";
 
 const prisma = new PrismaClient();
@@ -14,32 +13,70 @@ export const getProperties = async (
   res: Response
 ): Promise<void> => {
   try {
-    const queryOptimizer = new QueryOptimizationService(prisma);
-    const filters: PropertyFilters = {
-      favoriteIds: req.query.favoriteIds as string,
-      priceMin: req.query.priceMin as string,
-      priceMax: req.query.priceMax as string,
-      beds: req.query.beds as string,
-      baths: req.query.baths as string,
-      propertyType: req.query.propertyType as string,
-      squareFeetMin: req.query.squareFeetMin as string,
-      squareFeetMax: req.query.squareFeetMax as string,
-      amenities: req.query.amenities as string,
-      availableFrom: req.query.availableFrom as string,
-      latitude: req.query.latitude as string,
-      longitude: req.query.longitude as string,
-      name: req.query.name as string,
-      location: req.query.location as string,
-      page: req.query.page as string,
-      limit: req.query.limit as string,
-      sortBy: req.query.sortBy as 'price' | 'date' | 'beds' | 'baths' | 'squareFeet',
-      sortOrder: req.query.sortOrder as 'asc' | 'desc'
-    };
+    const page = parseInt(req.query.page as string) || 1;
+    const limit = parseInt(req.query.limit as string) || 10;
+    const skip = (page - 1) * limit;
 
-    // Use the optimized query service
-    const result = await queryOptimizer.getOptimizedProperties(filters);
-     
-    res.json(result);
+    // Build where clause based on filters
+    const where: any = {};
+    
+    if (req.query.priceMin) {
+      where.price = { ...where.price, gte: parseFloat(req.query.priceMin as string) };
+    }
+    if (req.query.priceMax) {
+      where.price = { ...where.price, lte: parseFloat(req.query.priceMax as string) };
+    }
+    if (req.query.beds) {
+      where.beds = parseInt(req.query.beds as string);
+    }
+    if (req.query.baths) {
+      where.baths = parseInt(req.query.baths as string);
+    }
+    if (req.query.propertyType) {
+      where.propertyType = req.query.propertyType as string;
+    }
+    if (req.query.name) {
+      where.name = { contains: req.query.name as string, mode: 'insensitive' };
+    }
+    if (req.query.location) {
+      where.location = { contains: req.query.location as string, mode: 'insensitive' };
+    }
+
+    // Build orderBy clause
+    const orderBy: any = {};
+    const sortBy = req.query.sortBy as string || 'createdAt';
+    const sortOrder = req.query.sortOrder as string || 'desc';
+    orderBy[sortBy] = sortOrder;
+
+    const [properties, total] = await Promise.all([
+      prisma.property.findMany({
+        where,
+        skip,
+        take: limit,
+        orderBy,
+        include: {
+          landlord: {
+            select: {
+              id: true,
+              name: true,
+              email: true,
+              phoneNumber: true
+            }
+          }
+        }
+      }),
+      prisma.property.count({ where })
+    ]);
+
+    res.json({
+      properties,
+      pagination: {
+        page,
+        limit,
+        total,
+        pages: Math.ceil(total / limit)
+      }
+    });
   } catch (error: any) {
     res
       .status(500)
@@ -53,8 +90,20 @@ export const getProperty = async (
 ): Promise<void> => {
   try {
     const { id } = req.params;
-    const queryOptimizer = new QueryOptimizationService(prisma);
-    const property = await queryOptimizer.getOptimizedProperty(Number(id));
+    const property = await prisma.property.findUnique({
+      where: { id: Number(id) },
+      include: {
+         landlord: {
+           select: {
+             id: true,
+             name: true,
+             email: true,
+             phoneNumber: true
+           }
+         },
+         location: true
+       }
+    });
 
     if (!property) {
       res.status(404).json({ error: 'Property not found' });

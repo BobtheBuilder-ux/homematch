@@ -20,11 +20,7 @@ const cors_1 = __importDefault(require("cors"));
 const helmet_1 = __importDefault(require("helmet"));
 const morgan_1 = __importDefault(require("morgan"));
 const authMiddleware_1 = require("./middleware/authMiddleware");
-const redisService_1 = __importDefault(require("./utils/redisService"));
-const rateLimitMiddleware_1 = require("./middleware/rateLimitMiddleware");
-const performanceMiddleware_1 = require("./middleware/performanceMiddleware");
 const database_1 = require("./utils/database");
-const cdnMiddleware_1 = require("./middleware/cdnMiddleware");
 const socketService_1 = require("./services/socketService");
 /* ROUTE IMPORT */
 const tenantRoutes_1 = __importDefault(require("./routes/tenantRoutes"));
@@ -50,20 +46,8 @@ const notifications_1 = __importDefault(require("./routes/notifications"));
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 const server = (0, http_1.createServer)(app);
-// Initialize Redis connection
-redisService_1.default.connect().catch(console.error);
 // Initialize database connection
 database_1.databaseService.connect().catch(console.error);
-// Health check and metrics endpoints (before rate limiting)
-app.use(performanceMiddleware_1.healthCheckMiddleware);
-app.use(performanceMiddleware_1.metricsEndpoint);
-// CDN headers and image optimization
-app.use(cdnMiddleware_1.cdnHeadersMiddleware);
-app.use(cdnMiddleware_1.imageOptimizationMiddleware);
-// Performance monitoring
-app.use(performanceMiddleware_1.performanceMiddleware);
-// Apply general rate limiting to all requests
-app.use(rateLimitMiddleware_1.generalRateLimit);
 app.use(express_1.default.json());
 app.use((0, helmet_1.default)());
 app.use(helmet_1.default.crossOriginResourcePolicy({ policy: "cross-origin" }));
@@ -88,25 +72,25 @@ app.get("/", (req, res) => {
     res.send("This is home route");
 });
 app.use("/applications", applicationRoutes_1.default);
-app.use("/properties", rateLimitMiddleware_1.searchRateLimit, propertyRoutes_1.default);
+app.use("/properties", propertyRoutes_1.default);
 app.use("/leases", leaseRoutes_1.default);
-app.use("/payments", rateLimitMiddleware_1.paymentRateLimit, paymentRoutes_1.default);
+app.use("/payments", paymentRoutes_1.default);
 app.use("/inspections", (0, authMiddleware_1.authMiddleware)(["tenant", "landlord", "agent", "admin"]), inspectionRoutes_1.default);
 app.use("/tenants", (0, authMiddleware_1.authMiddleware)(["tenant", "landlord", "agent", "admin"]), tenantRoutes_1.default);
 app.use("/landlords", (0, authMiddleware_1.authMiddleware)(["landlord", "admin"]), landlordRoutes_1.default);
 // Admin routes with exception for admin creation
 // Public admin routes (no authentication required)
-app.use("/admin", rateLimitMiddleware_1.authRateLimit, publicAdminRoutes_1.default);
-app.use("/agent", rateLimitMiddleware_1.authRateLimit, publicAgentRoutes_1.default);
+app.use("/admin", publicAdminRoutes_1.default);
+app.use("/agent", publicAgentRoutes_1.default);
 app.use("/surveys", surveyRoutes_1.default);
 // Protected admin routes (authentication required)
-app.use("/admin", (0, authMiddleware_1.authMiddleware)(["admin"]), rateLimitMiddleware_1.adminRateLimit, adminRoutes_1.default);
+app.use("/admin", (0, authMiddleware_1.authMiddleware)(["admin"]), adminRoutes_1.default);
 app.use("/agent", (0, authMiddleware_1.authMiddleware)(["agent"]), agentRoutes_1.default);
 app.use("/emails", emailRoutes_1.default);
 app.use("/earnings", (0, authMiddleware_1.authMiddleware)(["landlord", "admin"]), earningsRoutes_1.default);
 app.use("/jobs", jobRoutes_1.default);
-app.use("/uploads", rateLimitMiddleware_1.uploadRateLimit, uploadRoutes_1.default);
-app.use("/cloudinary", rateLimitMiddleware_1.uploadRateLimit, cloudinaryUploadRoutes_1.default);
+app.use("/uploads", uploadRoutes_1.default);
+app.use("/cloudinary", cloudinaryUploadRoutes_1.default);
 app.use("/agent-properties", (0, authMiddleware_1.authMiddleware)(["admin", "agent"]), agentPropertyRoutes_1.default);
 app.use("/notifications", notifications_1.default);
 /* SERVER */
@@ -120,26 +104,27 @@ server.listen(port, "0.0.0.0", () => {
 // Graceful shutdown
 process.on('SIGTERM', () => __awaiter(void 0, void 0, void 0, function* () {
     console.log('SIGTERM received, shutting down gracefully');
-    yield Promise.all([
-        redisService_1.default.disconnect(),
-        database_1.databaseService.disconnect()
-    ]);
+    yield database_1.databaseService.disconnect();
     process.exit(0);
 }));
 process.on('SIGINT', () => __awaiter(void 0, void 0, void 0, function* () {
     console.log('SIGINT received, shutting down gracefully');
-    yield Promise.all([
-        redisService_1.default.disconnect(),
-        database_1.databaseService.disconnect()
-    ]);
+    yield database_1.databaseService.disconnect();
     process.exit(0);
 }));
-// Handle uncaught exceptions
+// Handle uncaught exceptions (temporarily disabled to prevent crashes)
+// process.on('uncaughtException', (error) => {
+//   console.error('Uncaught Exception:', error);
+//   process.exit(1);
+// });
+// process.on('unhandledRejection', (reason, promise) => {
+//   console.error('Unhandled Rejection at:', promise, 'reason:', reason);
+//   process.exit(1);
+// });
+// Log errors without crashing
 process.on('uncaughtException', (error) => {
-    console.error('Uncaught Exception:', error);
-    process.exit(1);
+    console.error('Uncaught Exception (non-fatal):', error);
 });
 process.on('unhandledRejection', (reason, promise) => {
-    console.error('Unhandled Rejection at:', promise, 'reason:', reason);
-    process.exit(1);
+    console.error('Unhandled Rejection (non-fatal) at:', promise, 'reason:', reason);
 });
