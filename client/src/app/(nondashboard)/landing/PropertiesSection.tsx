@@ -12,10 +12,10 @@ const PropertiesSection = () => {
   const { data: properties, isLoading, isError } = useGetPropertiesQuery({});
 
   if (isLoading) return <div className="text-center py-10"><Loading /></div>;
-  if (isError || !properties) return null;
+  if (isError || !properties?.properties) return null;
 
   // Display only the first 3 properties
-  const featuredProperties = properties.slice(0, 3);
+  const featuredProperties = properties.properties.slice(0, 3);
 
   return (
     <section className="py-16 bg-gray-50">

@@ -106,7 +106,7 @@ export const api = createApi({
     }),
 
     // property related endpoints
-    getProperties: build.query<Property[], Partial<FiltersState & { name?: string }>>({      
+    getProperties: build.query<{properties: Property[], pagination: any}, Partial<FiltersState & { name?: string }>>({      
       query: (filters) => {
         const params = cleanParams({
           location: filters.location,
@@ -128,9 +128,9 @@ export const api = createApi({
         return { url: "properties", params };
       },
       providesTags: (result) =>
-        result
+        result?.properties
           ? [
-              ...result.map(({ id }) => ({ type: "Properties" as const, id })),
+              ...result.properties.map(({ id }) => ({ type: "Properties" as const, id })),
               { type: "Properties", id: "LIST" },
             ]
           : [{ type: "Properties", id: "LIST" }],

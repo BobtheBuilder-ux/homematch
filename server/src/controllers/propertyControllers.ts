@@ -44,7 +44,7 @@ export const getProperties = async (
 
     // Build orderBy clause
     const orderBy: any = {};
-    const sortBy = req.query.sortBy as string || 'createdAt';
+    const sortBy = req.query.sortBy as string || 'postedDate';
     const sortOrder = req.query.sortOrder as string || 'desc';
     orderBy[sortBy] = sortOrder;
 

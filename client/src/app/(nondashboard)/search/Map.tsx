@@ -19,7 +19,7 @@ const Map = () => {
   } = useGetPropertiesQuery(filters);
 
   useEffect(() => {
-    if (isLoading || isError || !properties) return;
+    if (isLoading || isError || !properties?.properties) return;
 
     const map = new mapboxgl.Map({
       container: mapContainerRef.current!,
@@ -28,7 +28,7 @@ const Map = () => {
       zoom: 9,
     });
 
-    properties.forEach((property) => {
+    properties.properties.forEach((property) => {
       const marker = createPropertyMarker(property, map);
       const markerElement = marker.getElement();
       const path = markerElement.querySelector("path[fill='#3FB1CE']");
@@ -41,10 +41,10 @@ const Map = () => {
     resizeMap();
 
     return () => map.remove();
-  }, [isLoading, isError, properties, filters.coordinates]);
+  }, [isLoading, isError, properties?.properties, filters.coordinates]);
 
   if (isLoading) return <Loading />;
-  if (isError || !properties) return <div>Failed to fetch properties</div>;
+  if (isError || !properties?.properties) return <div>Failed to fetch properties</div>;
 
   return (
     <div className="basis-5/12 grow relative rounded-xl">

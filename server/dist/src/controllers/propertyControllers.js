@@ -59,7 +59,7 @@ const getProperties = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         }
         // Build orderBy clause
         const orderBy = {};
-        const sortBy = req.query.sortBy || 'createdAt';
+        const sortBy = req.query.sortBy || 'postedDate';
         const sortOrder = req.query.sortOrder || 'desc';
         orderBy[sortBy] = sortOrder;
         const [properties, total] = yield Promise.all([
