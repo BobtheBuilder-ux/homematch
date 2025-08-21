@@ -3,6 +3,7 @@
 import Header from "@/components/Header";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import ActivityFeed from "@/components/ActivityFeed";
 import { Download, Users, Building, FileText, BarChart3, Briefcase, UserCheck } from "lucide-react";
 import { useState } from "react";
 import Link from "next/link";
@@ -211,6 +212,11 @@ const AdminDashboard = () => {
             </CardContent>
           </Card>
         </Link>
+      </div>
+
+      {/* Activity Feed Section */}
+      <div className="mt-8">
+        <ActivityFeed maxItems={15} className="w-full" />
       </div>
     </div>
   );

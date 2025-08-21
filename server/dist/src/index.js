@@ -13,6 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
+const http_1 = require("http");
 const dotenv_1 = __importDefault(require("dotenv"));
 const body_parser_1 = __importDefault(require("body-parser"));
 const cors_1 = __importDefault(require("cors"));
@@ -24,6 +25,7 @@ const rateLimitMiddleware_1 = require("./middleware/rateLimitMiddleware");
 const performanceMiddleware_1 = require("./middleware/performanceMiddleware");
 const database_1 = require("./utils/database");
 const cdnMiddleware_1 = require("./middleware/cdnMiddleware");
+const socketService_1 = require("./services/socketService");
 /* ROUTE IMPORT */
 const tenantRoutes_1 = __importDefault(require("./routes/tenantRoutes"));
 const landlordRoutes_1 = __importDefault(require("./routes/landlordRoutes"));
@@ -43,9 +45,11 @@ const jobRoutes_1 = __importDefault(require("./routes/jobRoutes"));
 const uploadRoutes_1 = __importDefault(require("./routes/uploadRoutes"));
 const cloudinaryUploadRoutes_1 = __importDefault(require("./routes/cloudinaryUploadRoutes"));
 const agentPropertyRoutes_1 = __importDefault(require("./routes/agentPropertyRoutes"));
+const notifications_1 = __importDefault(require("./routes/notifications"));
 /* CONFIGURATIONS */
 dotenv_1.default.config();
 const app = (0, express_1.default)();
+const server = (0, http_1.createServer)(app);
 // Initialize Redis connection
 redisService_1.default.connect().catch(console.error);
 // Initialize database connection
@@ -104,10 +108,14 @@ app.use("/jobs", jobRoutes_1.default);
 app.use("/uploads", rateLimitMiddleware_1.uploadRateLimit, uploadRoutes_1.default);
 app.use("/cloudinary", rateLimitMiddleware_1.uploadRateLimit, cloudinaryUploadRoutes_1.default);
 app.use("/agent-properties", (0, authMiddleware_1.authMiddleware)(["admin", "agent"]), agentPropertyRoutes_1.default);
+app.use("/notifications", notifications_1.default);
 /* SERVER */
 const port = Number(process.env.PORT) || 3002;
-app.listen(port, "0.0.0.0", () => {
+// Initialize Socket.io
+socketService_1.socketService.initialize(server);
+server.listen(port, "0.0.0.0", () => {
     console.log(`Server running on port ${port}`);
+    console.log(`Socket.io server initialized`);
 });
 // Graceful shutdown
 process.on('SIGTERM', () => __awaiter(void 0, void 0, void 0, function* () {

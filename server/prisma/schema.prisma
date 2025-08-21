@@ -553,3 +553,80 @@ model JobApplicationRating {
 
   @@unique([jobApplicationId, criteriaName])
 }
+
+// Notification System Models
+enum NotificationType {
+  PropertyUpdate
+  ApplicationStatus
+  PaymentReminder
+  InspectionScheduled
+  LeaseExpiring
+  MaintenanceRequest
+  SystemAlert
+  Welcome
+  General
+}
+
+enum NotificationPriority {
+  Low
+  Medium
+  High
+  Urgent
+}
+
+model Notification {
+  id          Int                  @id @default(autoincrement())
+  title       String
+  message     String
+  type        NotificationType
+  priority    NotificationPriority @default(Medium)
+  isRead      Boolean              @default(false)
+  recipientId String               // Cognito ID
+  recipientType String             // "landlord", "tenant", "agent", "admin"
+  relatedId   Int?                 // ID of related entity (property, application, etc.)
+  relatedType String?              // Type of related entity
+  actionUrl   String?              // URL for action button
+  actionText  String?              // Text for action button
+  metadata    Json?                // Additional data
+  expiresAt   DateTime?
+  createdAt   DateTime             @default(now())
+  updatedAt   DateTime             @updatedAt
+}
+
+// Activity Feed Models
+enum ActivityType {
+  PropertyCreated
+  PropertyUpdated
+  PropertyDeleted
+  ApplicationSubmitted
+  ApplicationApproved
+  ApplicationDenied
+  LeaseCreated
+  LeaseExpired
+  PaymentMade
+  PaymentOverdue
+  InspectionScheduled
+  InspectionCompleted
+  TenantRegistered
+  LandlordRegistered
+  AgentAssigned
+  MaintenanceRequested
+  MaintenanceCompleted
+  WithdrawalRequested
+  WithdrawalProcessed
+}
+
+model ActivityFeed {
+  id          Int          @id @default(autoincrement())
+  type        ActivityType
+  title       String
+  description String
+  actorId     String       // Cognito ID of who performed the action
+  actorType   String       // "landlord", "tenant", "agent", "admin"
+  actorName   String       // Name of the actor
+  targetId    Int?         // ID of the target entity
+  targetType  String?      // Type of target entity
+  metadata    Json?        // Additional context data
+  isPublic    Boolean      @default(false) // Whether visible to other users
+  createdAt   DateTime     @default(now())
+}

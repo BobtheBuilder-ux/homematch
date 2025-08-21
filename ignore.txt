@@ -1,0 +1,13 @@
+Messaging System
+
+1. One-on-one real-time chat between tenants and agents
+
+2. Message read receipts
+
+3. Chat history and search
+
+4. Typing indicators
+
+5. Message reactions/emojis
+
+6. Add a feature to the admin to monitor each conversation

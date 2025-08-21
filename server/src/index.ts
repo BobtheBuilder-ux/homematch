@@ -1,4 +1,5 @@
 import express from "express";
+import { createServer } from "http";
 import dotenv from "dotenv";
 import bodyParser from "body-parser";
 import cors from "cors";
@@ -10,6 +11,7 @@ import { generalRateLimit, authRateLimit, uploadRateLimit, paymentRateLimit, sea
 import { performanceMiddleware, healthCheckMiddleware, metricsEndpoint } from "./middleware/performanceMiddleware";
 import { databaseService } from "./utils/database";
 import { cdnHeadersMiddleware, imageOptimizationMiddleware } from "./middleware/cdnMiddleware";
+import { socketService } from "./services/socketService";
 /* ROUTE IMPORT */
 import tenantRoutes from "./routes/tenantRoutes";
 import landlordRoutes from "./routes/landlordRoutes";
@@ -29,10 +31,12 @@ import jobRoutes from "./routes/jobRoutes";
 import uploadRoutes from "./routes/uploadRoutes";
 import cloudinaryUploadRoutes from "./routes/cloudinaryUploadRoutes";
 import agentPropertyRoutes from "./routes/agentPropertyRoutes";
+import notificationRoutes from "./routes/notifications";
 
 /* CONFIGURATIONS */
 dotenv.config();
 const app = express();
+const server = createServer(app);
 
 // Initialize Redis connection
 redisService.connect().catch(console.error);
@@ -112,11 +116,17 @@ app.use("/jobs", jobRoutes);
 app.use("/uploads", uploadRateLimit, uploadRoutes);
 app.use("/cloudinary", uploadRateLimit, cloudinaryUploadRoutes);
 app.use("/agent-properties", authMiddleware(["admin", "agent"]), agentPropertyRoutes);
+app.use("/notifications", notificationRoutes);
 
 /* SERVER */
 const port = Number(process.env.PORT) || 3002;
-app.listen(port, "0.0.0.0", () => {
+
+// Initialize Socket.io
+socketService.initialize(server);
+
+server.listen(port, "0.0.0.0", () => {
   console.log(`Server running on port ${port}`);
+  console.log(`Socket.io server initialized`);
 });
 
 // Graceful shutdown
