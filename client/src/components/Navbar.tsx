@@ -143,7 +143,7 @@ const Navbar = () => {
                 <MessageCircle className="w-6 h-6 cursor-pointer text-primary-200 hover:text-primary-400" />
                 <span className="absolute top-0 right-0 w-2 h-2 bg-secondary-700 rounded-full"></span>
               </div>
-              <div className="hidden md:block">
+              <div className="relativemd:block">
                 <NotificationBell />
               </div>
 

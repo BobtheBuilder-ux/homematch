@@ -43,7 +43,7 @@ class SocketService {
 
     const serverUrl = process.env.NODE_ENV === 'production'
       ? process.env.NEXT_PUBLIC_API_BASE_URL || 'https://api.homematch.ng'
-      : 'http://localhost:3002';
+      : 'http://localhost:3001';
 
     this.socket = io(serverUrl, {
       auth: {
