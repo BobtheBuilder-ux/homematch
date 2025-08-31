@@ -1,3 +1,4 @@
+
 generator client {
   provider        = "prisma-client-js"
   output          = "../node_modules/.prisma/client"
@@ -64,78 +65,72 @@ enum ChildrenPreference {
 }
 
 model Property {
-  id                Int          @id @default(autoincrement())
-  name              String
-  description       String
-  pricePerYear     Float
-  securityDeposit   Float
-  applicationFee    Float
-  photoUrls         String[]
-  videoUrl          String?
-  amenities         String?
-  isParkingIncluded Boolean      @default(false)
-  maritalPreference MaritalPreference @default(Any)
-  genderPreference  GenderPreference  @default(Any)
+  id                 Int                @id @default(autoincrement())
+  name               String
+  description        String
+  pricePerYear       Float
+  securityDeposit    Float
+  applicationFee     Float
+  photoUrls          String[]
+  videoUrl           String?
+  amenities          String?
+  isParkingIncluded  Boolean            @default(false)
+  maritalPreference  MaritalPreference  @default(Any)
+  genderPreference   GenderPreference   @default(Any)
   childrenPreference ChildrenPreference @default(Any)
-  beds              Int
-  baths             Float
-  squareFeet        Int
-  propertyType      PropertyType
-  status            PropertyStatus @default(Available)
-  postedDate        DateTime     @default(now())
-  locationId        Int
+  beds               Int
+  baths              Float
+  squareFeet         Int
+  propertyType       PropertyType
+  status             PropertyStatus     @default(Available)
+  postedDate         DateTime           @default(now())
+  locationId         Int
   landlordCognitoId  String
 
-  location     Location      @relation(fields: [locationId], references: [id])
-  landlord     Landlord      @relation(fields: [landlordCognitoId], references: [cognitoId])
-  leases       Lease[]
-  applications Application[]
-  favoritedBy  Tenant[]      @relation("TenantFavorites")
-  tenants      Tenant[]      @relation("TenantProperties")
-  inspections  Inspection[]
+  location         Location        @relation(fields: [locationId], references: [id])
+  landlord         Landlord        @relation(fields: [landlordCognitoId], references: [cognitoId])
+  leases           Lease[]
+  applications     Application[]
+  favoritedBy      Tenant[]        @relation("TenantFavorites")
+  tenants          Tenant[]        @relation("TenantProperties")
+  inspections      Inspection[]
   agentAssignments AgentProperty[]
 }
 
 model Landlord {
-  id          Int    @id @default(autoincrement())
-  cognitoId   String @unique
-  name        String
-  email       String
-  phoneNumber String
-  registrationCodeId Int?
-  
+  id                    Int       @id @default(autoincrement())
+  cognitoId             String    @unique
+  name                  String
+  email                 String
+  phoneNumber           String
+  registrationCodeId    Int?
   // Address Information
-  currentAddress    String?
-  city             String?
-  state            String?
-  country          String?
-  postalCode       String?
-  
+  currentAddress        String?
+  city                  String?
+  state                 String?
+  country               String?
+  postalCode            String?
   // Bank Details
-  bankName         String?
-  accountNumber    String?
-  accountName      String?
-  bankCode         String?
-  
+  bankName              String?
+  accountNumber         String?
+  accountName           String?
+  bankCode              String?
   // Business Information
-  businessName     String?
-  businessType     String?
-  taxId            String?
-  
+  businessName          String?
+  businessType          String?
+  taxId                 String?
   // Additional Information
-  dateOfBirth      DateTime?
-  nationality      String?
-  occupation       String?
-  emergencyContactName   String?
-  emergencyContactPhone  String?
-  
+  dateOfBirth           DateTime?
+  nationality           String?
+  occupation            String?
+  emergencyContactName  String?
+  emergencyContactPhone String?
   // Onboarding Status
-  isOnboardingComplete Boolean @default(false)
-  onboardedAt          DateTime?
-  
+  isOnboardingComplete  Boolean   @default(false)
+  onboardedAt           DateTime?
   // Timestamps
-  createdAt            DateTime  @default(now())
-  updatedAt            DateTime  @default(now()) @updatedAt
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @default(now()) @updatedAt
 
   managedProperties Property[]
   registrationCode  LandlordRegistrationCode? @relation(fields: [registrationCodeId], references: [id])
@@ -158,47 +153,45 @@ model Tenant {
 }
 
 model Agent {
-  id          Int    @id @default(autoincrement())
-  cognitoId   String @unique
-  name        String
-  email       String
-  phoneNumber String?
-  address     String?
+  id                 Int     @id @default(autoincrement())
+  cognitoId          String  @unique
+  name               String
+  email              String
+  phoneNumber        String?
+  address            String?
   registrationCodeId Int?
 
-  registrationCode  AgentRegistrationCode? @relation(fields: [registrationCodeId], references: [id])
-  assignedTasks     Task[] @relation("AgentTasks")
-  inspections       Inspection[]
+  registrationCode   AgentRegistrationCode? @relation(fields: [registrationCodeId], references: [id])
+  assignedTasks      Task[]                 @relation("AgentTasks")
+  inspections        Inspection[]
   assignedProperties AgentProperty[]
 }
 
 model Admin {
-  id          Int    @id @default(autoincrement())
-  cognitoId   String @unique
+  id          Int     @id @default(autoincrement())
+  cognitoId   String  @unique
   name        String
   email       String
   phoneNumber String?
 }
 
 model LandlordRegistrationCode {
-  id        Int      @id @default(autoincrement())
-  code      String   @unique
-  isUsed    Boolean  @default(false)
-  createdAt DateTime @default(now())
+  id        Int        @id @default(autoincrement())
+  code      String     @unique
+  isUsed    Boolean    @default(false)
+  createdAt DateTime   @default(now())
   usedAt    DateTime?
-  
   landlords Landlord[]
 }
 
 model AgentRegistrationCode {
-  id        Int      @id @default(autoincrement())
-  code      String   @unique
-  isUsed    Boolean  @default(false)
-  createdAt DateTime @default(now())
-  usedAt    DateTime?
+  id         Int       @id @default(autoincrement())
+  code       String    @unique
+  isUsed     Boolean   @default(false)
+  createdAt  DateTime  @default(now())
+  usedAt     DateTime?
   assignedBy String? // Admin who assigned this code
-  
-  agents Agent[]
+  agents     Agent[]
 }
 
 enum TaskStatus {
@@ -224,19 +217,18 @@ model Task {
   dueDate     DateTime?
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @updatedAt
-  assignedBy  String       // Admin who assigned the task
+  assignedBy  String // Admin who assigned the task
   agentId     Int
-  
-  agent Agent @relation("AgentTasks", fields: [agentId], references: [id])
+  agent       Agent        @relation("AgentTasks", fields: [agentId], references: [id])
 }
 
 model AgentProperty {
-  id          Int      @id @default(autoincrement())
-  agentId     Int
-  propertyId  Int
-  assignedAt  DateTime @default(now())
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id         Int      @id @default(autoincrement())
+  agentId    Int
+  propertyId Int
+  assignedAt DateTime @default(now())
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 
   agent    Agent    @relation(fields: [agentId], references: [id])
   property Property @relation(fields: [propertyId], references: [id])
@@ -257,46 +249,46 @@ model Location {
 }
 
 model Application {
-  id                      Int               @id @default(autoincrement())
-  applicationDate         DateTime
-  status                  ApplicationStatus
-  propertyId              Int
-  tenantCognitoId         String
-  paymentDeadline         DateTime?
-  name                    String
-  email                   String
-  phoneNumber             String
-  preferredMoveInDate     DateTime?
-  desiredLeaseDuration    String?
-  gender                  String?
-  dateOfBirth             DateTime?
-  nationality             String?
-  maritalStatus           String?
-  idType                  String?
-  idDocumentUrl          String?
-  durationAtCurrentAddress String?
-  employmentStatus        String?
-  occupation              String?
-  employerName            String?
-  workAddress             String?
-  monthlyIncome           Float?
-  durationAtCurrentJob    String?
-  incomeProofUrl          String?
-  previousEmployerName    String?
-  previousJobTitle        String?
+  id                         Int               @id @default(autoincrement())
+  applicationDate            DateTime
+  status                     ApplicationStatus
+  propertyId                 Int
+  tenantCognitoId            String
+  paymentDeadline            DateTime?
+  name                       String
+  email                      String
+  phoneNumber                String
+  preferredMoveInDate        DateTime?
+  desiredLeaseDuration       String?
+  gender                     String?
+  dateOfBirth                DateTime?
+  nationality                String?
+  maritalStatus              String?
+  idType                     String?
+  idDocumentUrl              String?
+  durationAtCurrentAddress   String?
+  employmentStatus           String?
+  occupation                 String?
+  employerName               String?
+  workAddress                String?
+  monthlyIncome              Float?
+  durationAtCurrentJob       String?
+  incomeProofUrl             String?
+  previousEmployerName       String?
+  previousJobTitle           String?
   previousEmploymentDuration String?
-  reasonForLeavingPrevJob String?
-  numberOfOccupants       Int?
-  relationshipToOccupants String?
-  hasPets                 Boolean?
-  isSmoker                Boolean?
-  accessibilityNeeds      String?
-  reasonForLeaving        String?
-  consentToInformation    Boolean?
-  consentToVerification   Boolean?
-  consentToTenancyTerms   Boolean?
-  consentToPrivacyPolicy  Boolean?
-  leaseId                 Int?              @unique
+  reasonForLeavingPrevJob    String?
+  numberOfOccupants          Int?
+  relationshipToOccupants    String?
+  hasPets                    Boolean?
+  isSmoker                   Boolean?
+  accessibilityNeeds         String?
+  reasonForLeaving           String?
+  consentToInformation       Boolean?
+  consentToVerification      Boolean?
+  consentToTenancyTerms      Boolean?
+  consentToPrivacyPolicy     Boolean?
+  leaseId                    Int?              @unique
 
   property Property @relation(fields: [propertyId], references: [id])
   tenant   Tenant   @relation(fields: [tenantCognitoId], references: [cognitoId])
@@ -331,73 +323,73 @@ model Payment {
 }
 
 model AdminSettings {
-  id                        Int     @id @default(autoincrement())
-  siteName                  String  @default("HomeMatch")
-  siteDescription           String  @default("Find your perfect rental property")
-  allowRegistration         Boolean @default(true)
-  maxPropertiesPerLandlord  Int     @default(50)
-  commissionRate            Float   @default(5.0)
-  emailNotifications        Boolean @default(true)
-  smsNotifications          Boolean @default(false)
-  createdAt                 DateTime @default(now())
-  updatedAt                 DateTime @updatedAt
+  id                       Int      @id @default(autoincrement())
+  siteName                 String   @default("HomeMatch")
+  siteDescription          String   @default("Find your perfect rental property")
+  allowRegistration        Boolean  @default(true)
+  maxPropertiesPerLandlord Int      @default(50)
+  commissionRate           Float    @default(5.0)
+  emailNotifications       Boolean  @default(true)
+  smsNotifications         Boolean  @default(false)
+  createdAt                DateTime @default(now())
+  updatedAt                DateTime @updatedAt
 }
 
 model TenantSurvey {
-  id                        Int      @id @default(autoincrement())
-  fullName                  String
-  email                     String
-  currentLocation           String
-  rentingStatus             String
-  housingType               String[]
-  frustrations              String[]
-  scamExperience            String
-  scamDetails               String?
-  propertyListingRating     String
-  dashboardRating           String
-  maintenanceRating         String
-  rentCollectionRating      String
-  customerSupportRating     String
-  monthlyReportRating       String
-  wishEasier                String
-  launchNotification        String
-  createdAt                 DateTime @default(now())
-  updatedAt                 DateTime @updatedAt
+  id                    Int      @id @default(autoincrement())
+  fullName              String
+  email                 String
+  currentLocation       String
+  rentingStatus         String
+  housingType           String[]
+  frustrations          String[]
+  scamExperience        String
+  scamDetails           String?
+  propertyListingRating String
+  dashboardRating       String
+  maintenanceRating     String
+  rentCollectionRating  String
+  customerSupportRating String
+  monthlyReportRating   String
+  wishEasier            String
+  launchNotification    String
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
 }
 
 model LandlordSurvey {
-  id                        Int      @id @default(autoincrement())
-  fullName                  String
-  email                     String
-  propertyLocation          String
-  numberOfProperties        String
-  propertyTypes             String[]
-  tenantManagement          String[]
-  biggestChallenges         String[]
-  agentIssues               String
-  platformInterest          String
-  propertyListingRating     String
-  dashboardRating           String
-  maintenanceRating         String
-  rentCollectionRating      String
-  customerSupportRating     String
-  monthlyReportRating       String
-  wishEasier                String
-  launchNotification        String
-  createdAt                 DateTime @default(now())
-  updatedAt                 DateTime @updatedAt
+  id                    Int      @id @default(autoincrement())
+  fullName              String
+  email                 String
+  propertyLocation      String
+  numberOfProperties    String
+  propertyTypes         String[]
+  tenantManagement      String[]
+  biggestChallenges     String[]
+  agentIssues           String
+  platformInterest      String
+  propertyListingRating String
+  dashboardRating       String
+  maintenanceRating     String
+  rentCollectionRating  String
+  customerSupportRating String
+  monthlyReportRating   String
+  wishEasier            String
+  launchNotification    String
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
 }
 
 model EmailSubscription {
-  id            Int      @id @default(autoincrement())
-  email         String   @unique
-  fullName      String
+  id               Int       @id @default(autoincrement())
+  email            String    @unique
+  fullName         String
   subscriptionType String // "tenant_survey", "landlord_survey", "newsletter", etc.
-  isActive      Boolean  @default(true)
-  subscribedAt  DateTime @default(now())
-  unsubscribedAt DateTime?
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  isActive         Boolean   @default(true)
+  subscribedAt     DateTime  @default(now())
+  unsubscribedAt   DateTime?
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
 }
 
 enum InspectionStatus {
@@ -409,23 +401,23 @@ enum InspectionStatus {
 }
 
 model Inspection {
-  id                Int              @id @default(autoincrement())
-  propertyId        Int
-  tenantCognitoId   String
-  scheduledDate     DateTime
-  status            InspectionStatus @default(Pending)
-  tenantName        String
-  tenantEmail       String
-  tenantPhone       String
-  preferredTime     String
-  message           String?
-  adminNotes        String?
-  agentId           Int?
-  depositPaid       Boolean          @default(false)
-  depositAmount     Float?
-  paymentReference  String?
-  createdAt         DateTime         @default(now())
-  updatedAt         DateTime         @updatedAt
+  id               Int              @id @default(autoincrement())
+  propertyId       Int
+  tenantCognitoId  String
+  scheduledDate    DateTime
+  status           InspectionStatus @default(Pending)
+  tenantName       String
+  tenantEmail      String
+  tenantPhone      String
+  preferredTime    String
+  message          String?
+  adminNotes       String?
+  agentId          Int?
+  depositPaid      Boolean          @default(false)
+  depositAmount    Float?
+  paymentReference String?
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
 
   property Property @relation(fields: [propertyId], references: [id])
   tenant   Tenant   @relation(fields: [tenantCognitoId], references: [cognitoId])
@@ -433,14 +425,14 @@ model Inspection {
 }
 
 model InspectionLimit {
-  id              Int      @id @default(autoincrement())
-  tenantCognitoId String   @unique
-  freeInspections Int      @default(2)
-  usedInspections Int      @default(0)
-  hasUnlimited    Boolean  @default(false)
+  id              Int       @id @default(autoincrement())
+  tenantCognitoId String    @unique
+  freeInspections Int       @default(2)
+  usedInspections Int       @default(0)
+  hasUnlimited    Boolean   @default(false)
   unlimitedUntil  DateTime?
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
 
   tenant Tenant @relation(fields: [tenantCognitoId], references: [cognitoId])
 }
@@ -464,6 +456,7 @@ model Withdrawal {
 }
 
 // Job Application System Models
+
 enum JobType {
   FullTime
   PartTime
@@ -491,63 +484,63 @@ enum ExperienceLevel {
 }
 
 model Job {
-  id              Int             @id @default(autoincrement())
-  title           String
-  description     String
-  requirements    String
+  id               Int             @id @default(autoincrement())
+  title            String
+  description      String
+  requirements     String
   responsibilities String
-  jobType         JobType
-  experienceLevel ExperienceLevel
-  salaryMin       Float?
-  salaryMax       Float?
-  location        String
-  department      String?
-  isActive        Boolean         @default(true)
-  postedDate      DateTime        @default(now())
-  closingDate     DateTime?
-  createdBy       String          // Admin cognitoId
-  createdAt       DateTime        @default(now())
-  updatedAt       DateTime        @updatedAt
+  jobType          JobType
+  experienceLevel  ExperienceLevel
+  salaryMin        Float?
+  salaryMax        Float?
+  location         String
+  department       String?
+  isActive         Boolean         @default(true)
+  postedDate       DateTime        @default(now())
+  closingDate      DateTime?
+  createdBy        String // Admin cognitoId
+  createdAt        DateTime        @default(now())
+  updatedAt        DateTime        @updatedAt
 
   applications JobApplication[]
 }
 
 model JobApplication {
-  id                Int                   @id @default(autoincrement())
-  jobId             Int
-  applicantName     String
-  applicantEmail    String
-  applicantPhone    String?
-  resumeUrl         String
-  coverLetter       String?
-  experience        String?
-  education         String?
-  skills            String?
-  portfolioUrl      String?
-  linkedinUrl       String?
-  status            JobApplicationStatus @default(Submitted)
-  submittedAt       DateTime             @default(now())
-  reviewedAt        DateTime?
-  reviewedBy        String?              // Admin cognitoId
-  notes             String?
-  createdAt         DateTime             @default(now())
-  updatedAt         DateTime             @updatedAt
+  id             Int                  @id @default(autoincrement())
+  jobId          Int
+  applicantName  String
+  applicantEmail String
+  applicantPhone String?
+  resumeUrl      String
+  coverLetter    String?
+  experience     String?
+  education      String?
+  skills         String?
+  portfolioUrl   String?
+  linkedinUrl    String?
+  status         JobApplicationStatus @default(Submitted)
+  submittedAt    DateTime             @default(now())
+  reviewedAt     DateTime?
+  reviewedBy     String? // Admin cognitoId
+  notes          String?
+  createdAt      DateTime             @default(now())
+  updatedAt      DateTime             @updatedAt
 
   job     Job                    @relation(fields: [jobId], references: [id])
   ratings JobApplicationRating[]
 }
 
 model JobApplicationRating {
-  id                  Int    @id @default(autoincrement())
-  jobApplicationId    Int
-  criteriaName        String
-  score              Int    // 1-10 scale
-  maxScore           Int    @default(10)
-  weight             Float  @default(1.0)
-  comments           String?
-  ratedBy            String // Admin cognitoId
-  createdAt          DateTime @default(now())
-  updatedAt          DateTime @updatedAt
+  id               Int      @id @default(autoincrement())
+  jobApplicationId Int
+  criteriaName     String
+  score            Int // 1-10 scale
+  maxScore         Int      @default(10)
+  weight           Float    @default(1.0)
+  comments         String?
+  ratedBy          String // Admin cognitoId
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
 
   jobApplication JobApplication @relation(fields: [jobApplicationId], references: [id])
 
@@ -555,6 +548,7 @@ model JobApplicationRating {
 }
 
 // Notification System Models
+
 enum NotificationType {
   PropertyUpdate
   ApplicationStatus
@@ -575,25 +569,26 @@ enum NotificationPriority {
 }
 
 model Notification {
-  id          Int                  @id @default(autoincrement())
-  title       String
-  message     String
-  type        NotificationType
-  priority    NotificationPriority @default(Medium)
-  isRead      Boolean              @default(false)
-  recipientId String               // Cognito ID
-  recipientType String             // "landlord", "tenant", "agent", "admin"
-  relatedId   Int?                 // ID of related entity (property, application, etc.)
-  relatedType String?              // Type of related entity
-  actionUrl   String?              // URL for action button
-  actionText  String?              // Text for action button
-  metadata    Json?                // Additional data
-  expiresAt   DateTime?
-  createdAt   DateTime             @default(now())
-  updatedAt   DateTime             @updatedAt
+  id            Int                  @id @default(autoincrement())
+  title         String
+  message       String
+  type          NotificationType
+  priority      NotificationPriority @default(Medium)
+  isRead        Boolean              @default(false)
+  recipientId   String // Cognito ID
+  recipientType String // "landlord", "tenant", "agent", "admin"
+  relatedId     Int? // ID of related entity (property, application, etc.)
+  relatedType   String? // Type of related entity
+  actionUrl     String? // URL for action button
+  actionText    String? // Text for action button
+  metadata      Json? // Additional data
+  expiresAt     DateTime?
+  createdAt     DateTime             @default(now())
+  updatedAt     DateTime             @updatedAt
 }
 
 // Activity Feed Models
+
 enum ActivityType {
   PropertyCreated
   PropertyUpdated
@@ -621,12 +616,74 @@ model ActivityFeed {
   type        ActivityType
   title       String
   description String
-  actorId     String       // Cognito ID of who performed the action
-  actorType   String       // "landlord", "tenant", "agent", "admin"
-  actorName   String       // Name of the actor
-  targetId    Int?         // ID of the target entity
-  targetType  String?      // Type of target entity
-  metadata    Json?        // Additional context data
+  actorId     String // Cognito ID of who performed the action
+  actorType   String // "landlord", "tenant", "agent", "admin"
+  actorName   String // Name of the actor
+  targetId    Int? // ID of the target entity
+  targetType  String? // Type of target entity
+  metadata    Json? // Additional context data
   isPublic    Boolean      @default(false) // Whether visible to other users
   createdAt   DateTime     @default(now())
+}
+
+model User {
+  id             String    @id
+  name           String
+  email          String
+  emailVerified  Boolean
+  image          String?
+  createdAt      DateTime
+  updatedAt      DateTime
+  role           String
+  invitationCode String?
+  sessions       Session[]
+  accounts       Account[]
+
+  @@unique([email])
+  @@map("user")
+}
+
+model Session {
+  id        String   @id
+  expiresAt DateTime
+  token     String
+  createdAt DateTime
+  updatedAt DateTime
+  ipAddress String?
+  userAgent String?
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([token])
+  @@map("session")
+}
+
+model Account {
+  id                    String    @id
+  accountId             String
+  providerId            String
+  userId                String
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+  createdAt             DateTime
+  updatedAt             DateTime
+
+  @@map("account")
+}
+
+model Verification {
+  id         String    @id
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime?
+  updatedAt  DateTime?
+
+  @@map("verification")
 }

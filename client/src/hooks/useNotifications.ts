@@ -23,7 +23,7 @@ export const useNotifications = (): UseNotificationsReturn => {
 
   // Subscribe to notification service updates
   useEffect(() => {
-    if (!authUser?.cognitoInfo?.userId) return;
+    if (!authUser?.cognitoInfo?.id) return;
 
     const unsubscribeNotifications = notificationService.onNotificationsChange((newNotifications) => {
       setNotifications(newNotifications);
@@ -41,11 +41,11 @@ export const useNotifications = (): UseNotificationsReturn => {
       unsubscribeNotifications();
       unsubscribeUnreadCount();
     };
-  }, [authUser?.cognitoInfo?.userId]);
+  }, [authUser?.cognitoInfo?.id]);
 
   // Fetch notifications from API
   const fetchNotifications = useCallback(async (page: number = 1, limit: number = 20) => {
-    if (!authUser?.cognitoInfo?.userId) {
+    if (!authUser?.cognitoInfo?.id) {
       setError('User not authenticated');
       return;
     }
@@ -62,11 +62,11 @@ export const useNotifications = (): UseNotificationsReturn => {
     } finally {
       setIsLoading(false);
     }
-  }, [authUser?.cognitoInfo?.userId]);
+  }, [authUser?.cognitoInfo?.id]);
 
   // Mark notification as read
   const markAsRead = useCallback(async (notificationId: number) => {
-    if (!authUser?.cognitoInfo?.userId) {
+    if (!authUser?.cognitoInfo?.id) {
       setError('User not authenticated');
       return;
     }
@@ -79,11 +79,11 @@ export const useNotifications = (): UseNotificationsReturn => {
       setError(errorMessage);
       console.error('Error marking notification as read:', err);
     }
-  }, [authUser?.cognitoInfo?.userId]);
+  }, [authUser?.cognitoInfo?.id]);
 
   // Mark all notifications as read
   const markAllAsRead = useCallback(async () => {
-    if (!authUser?.cognitoInfo?.userId) {
+    if (!authUser?.cognitoInfo?.id) {
       setError('User not authenticated');
       return;
     }
@@ -96,11 +96,11 @@ export const useNotifications = (): UseNotificationsReturn => {
       setError(errorMessage);
       console.error('Error marking all notifications as read:', err);
     }
-  }, [authUser?.cognitoInfo?.userId]);
+  }, [authUser?.cognitoInfo?.id]);
 
   // Delete notification
   const deleteNotification = useCallback(async (notificationId: number) => {
-    if (!authUser?.cognitoInfo?.userId) {
+    if (!authUser?.cognitoInfo?.id) {
       setError('User not authenticated');
       return;
     }
@@ -113,11 +113,11 @@ export const useNotifications = (): UseNotificationsReturn => {
       setError(errorMessage);
       console.error('Error deleting notification:', err);
     }
-  }, [authUser?.cognitoInfo?.userId]);
+  }, [authUser?.cognitoInfo?.id]);
 
   // Refresh unread count
   const refreshUnreadCount = useCallback(async () => {
-    if (!authUser?.cognitoInfo?.userId) {
+    if (!authUser?.cognitoInfo?.id) {
       setError('User not authenticated');
       return;
     }
@@ -130,7 +130,7 @@ export const useNotifications = (): UseNotificationsReturn => {
       setError(errorMessage);
       console.error('Error refreshing unread count:', err);
     }
-  }, [authUser?.cognitoInfo?.userId]);
+  }, [authUser?.cognitoInfo?.id]);
 
   // Initial fetch when user is authenticated
   useEffect(() => {

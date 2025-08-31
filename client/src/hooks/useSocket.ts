@@ -1,7 +1,7 @@
 import { useEffect, useState, useCallback } from 'react';
 import { useGetAuthUserQuery } from '@/state/api';
 import { socketService } from '@/services/socketService';
-import { fetchAuthSession } from 'aws-amplify/auth';
+import { getSession } from '@/lib/auth-client';
 
 interface NotificationData {
   id: number;
@@ -34,15 +34,14 @@ export const useSocket = () => {
   // Initialize socket connection
   useEffect(() => {
     const initializeSocket = async () => {
-      if (authUser?.cognitoInfo?.userId) {
+      if (authUser?.cognitoInfo?.id) {
         try {
-          // Get the authentication token from AWS Amplify
-          const session = await fetchAuthSession();
-          const { idToken } = session.tokens ?? {};
+          // Get the authentication token from BetterAuth
+          const session = await getSession();
           
-          if (idToken) {
+          if (session?.data?.session?.token) {
             // Initialize socket connection with auth token
-            socketService.connect(idToken.toString());
+            socketService.connect(session.data.session.token);
 
             // Set up connection listener
             const unsubscribeConnection = socketService.onConnection((connected) => {
@@ -75,9 +74,9 @@ export const useSocket = () => {
         }
       }
     };
-    
+
     initializeSocket();
-  }, [authUser?.cognitoInfo?.userId]);
+  }, [authUser?.cognitoInfo?.id]);
 
   // Cleanup on unmount
   useEffect(() => {

@@ -1,6 +1,6 @@
 import { Server as SocketIOServer, Socket } from 'socket.io';
 import { Server as HTTPServer } from 'http';
-import jwt from 'jsonwebtoken';
+import { auth } from '../auth';
 import { databaseService } from '../utils/database';
 
 interface AuthenticatedSocket extends Socket {
@@ -39,69 +39,63 @@ class SocketService {
           return next(new Error('Authentication token required'));
         }
 
-        const decoded = jwt.verify(token, process.env.JWT_SECRET!) as any;
+        // Validate session using BetterAuth
+        const headers = new Headers();
+        headers.set('authorization', `Bearer ${token}`);
+        if (socket.handshake.headers.cookie) {
+          headers.set('cookie', socket.handshake.headers.cookie as string);
+        }
         
-        // Fetch user details from database - check all user types
-        const cognitoId = decoded.sub;
-        let user: any = null;
-        let userType = '';
-
-        // Check Tenant
-        const tenant = await databaseService.getClient().tenant.findUnique({
-          where: { cognitoId },
-          select: { cognitoId: true, email: true, name: true },
+        const session = await auth.api.getSession({
+          headers
         });
-        if (tenant) {
-          user = tenant;
-          userType = 'tenant';
+
+        if (!session || !session.user) {
+          return next(new Error('Invalid or expired session'));
         }
 
-        // Check Landlord
-        if (!user) {
-          const landlord = await databaseService.getClient().landlord.findUnique({
-            where: { cognitoId },
-            select: { cognitoId: true, email: true, name: true },
+        const userId = session.user.id;
+        const userRole = session.user.role || 'tenant';
+        const userEmail = session.user.email;
+        
+        // Fetch additional user details from database based on role
+        let user: any = null;
+        let userType = userRole;
+
+        // Check based on role from BetterAuth
+        if (userRole === 'tenant') {
+          user = await databaseService.getClient().tenant.findFirst({
+            where: { email: userEmail },
+            select: { id: true, email: true, name: true },
           });
-          if (landlord) {
-            user = landlord;
-            userType = 'landlord';
-          }
-        }
-
-        // Check Agent
-        if (!user) {
-          const agent = await databaseService.getClient().agent.findUnique({
-            where: { cognitoId },
-            select: { cognitoId: true, email: true, name: true },
+        } else if (userRole === 'landlord') {
+          user = await databaseService.getClient().landlord.findFirst({
+            where: { email: userEmail },
+            select: { id: true, email: true, name: true },
           });
-          if (agent) {
-            user = agent;
-            userType = 'agent';
-          }
-        }
-
-        // Check Admin
-        if (!user) {
-          const admin = await databaseService.getClient().admin.findUnique({
-            where: { cognitoId },
-            select: { cognitoId: true, email: true, name: true },
+        } else if (userRole === 'agent') {
+          user = await databaseService.getClient().agent.findFirst({
+            where: { email: userEmail },
+            select: { id: true, email: true, name: true },
           });
-          if (admin) {
-            user = admin;
-            userType = 'admin';
-          }
+        } else if (userRole === 'admin') {
+          user = await databaseService.getClient().admin.findFirst({
+            where: { email: userEmail },
+            select: { id: true, email: true, name: true },
+          });
         }
 
         if (!user) {
-          return next(new Error('User not found'));
+          return next(new Error('User profile not found'));
         }
 
-        socket.userId = user.cognitoId;
+        socket.userId = userId;
         socket.userType = userType;
-        socket.email = user.email;
+        socket.email = userEmail;
         
         next();
       } catch (error) {
+        console.error('Socket authentication error:', error);
         next(new Error('Invalid authentication token'));
       }
     });

@@ -1,5 +1,5 @@
 import { LucideIcon } from "lucide-react";
-import { AuthUser } from "aws-amplify/auth";
+// BetterAuth user type will be inferred from session
 import { Landlord, Tenant, Property, Application } from "./prismaTypes";
 import { MotionProps as OriginalMotionProps } from "framer-motion";
 
@@ -133,7 +133,7 @@ declare global {
   }
 
   interface User {
-    cognitoInfo: AuthUser;
+    cognitoInfo: any; // BetterAuth user object
     userInfo: Tenant | Landlord;
     userRole: JsonObject | JsonPrimitive | JsonArray;
   }

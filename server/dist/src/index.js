@@ -22,6 +22,7 @@ const morgan_1 = __importDefault(require("morgan"));
 const authMiddleware_1 = require("./middleware/authMiddleware");
 const database_1 = require("./utils/database");
 const socketService_1 = require("./services/socketService");
+const auth_1 = require("./auth");
 /* ROUTE IMPORT */
 const tenantRoutes_1 = __importDefault(require("./routes/tenantRoutes"));
 const landlordRoutes_1 = __importDefault(require("./routes/landlordRoutes"));
@@ -55,30 +56,20 @@ app.use((0, morgan_1.default)("common"));
 app.use(body_parser_1.default.json());
 app.use(body_parser_1.default.urlencoded({ extended: false }));
 // Update CORS configuration
-const allowedOrigins = [
-    "http://localhost:3000",
-    "http://127.0.0.1:3000",
-    "https://homematch.ng",
-    "https://www.homematch.ng",
-    process.env.FRONTEND_URL || ""
-];
 app.use((0, cors_1.default)({
-    origin: (origin, callback) => {
-        if (!origin)
-            return callback(null, true); // allow Postman / curl
-        if (/https:\/\/.*\.vercel\.app$/.test(origin))
-            return callback(null, true);
-        if (/https:\/\/.*\.netlify\.app$/.test(origin))
-            return callback(null, true);
-        if (allowedOrigins.includes(origin))
-            return callback(null, true);
-        return callback(new Error("CORS not allowed for " + origin));
-    },
+    origin: process.env.NODE_ENV === "production"
+        ? [
+            process.env.FRONTEND_URL || "https://homematch.ng",
+            "https://www.homematch.ng",
+            "https://homematch.ng",
+            "http://localhost:3000",
+            "http://127.0.0.1:3000",
+            /https:\/\/.*\.vercel\.app$/,
+            /https:\/\/.*\.netlify\.app$/
+        ]
+        : true,
     credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Origin", "X-Requested-With", "Content-Type", "Accept", "Authorization"],
 }));
-app.options("*", (0, cors_1.default)());
 /* ROUTES */
 app.get("/", (req, res) => {
     res.send("This is home route");
@@ -92,12 +83,11 @@ app.use("/tenants", (0, authMiddleware_1.authMiddleware)(["tenant", "landlord", 
 app.use("/landlords", (0, authMiddleware_1.authMiddleware)(["landlord", "admin"]), landlordRoutes_1.default);
 // Admin routes with exception for admin creation
 // Public admin routes (no authentication required)
+app.use("/admin", (0, authMiddleware_1.authMiddleware)(["admin"]), adminRoutes_1.default);
+app.use("/agent", (0, authMiddleware_1.authMiddleware)(["agent"]), agentRoutes_1.default);
 app.use("/admin", publicAdminRoutes_1.default);
 app.use("/agent", publicAgentRoutes_1.default);
 app.use("/surveys", surveyRoutes_1.default);
-// Protected admin routes (authentication required)
-app.use("/admin", (0, authMiddleware_1.authMiddleware)(["admin"]), adminRoutes_1.default);
-app.use("/agent", (0, authMiddleware_1.authMiddleware)(["agent"]), agentRoutes_1.default);
 app.use("/emails", emailRoutes_1.default);
 app.use("/earnings", (0, authMiddleware_1.authMiddleware)(["landlord", "admin"]), earningsRoutes_1.default);
 app.use("/jobs", jobRoutes_1.default);
@@ -105,6 +95,8 @@ app.use("/uploads", uploadRoutes_1.default);
 app.use("/cloudinary", cloudinaryUploadRoutes_1.default);
 app.use("/agent-properties", (0, authMiddleware_1.authMiddleware)(["admin", "agent"]), agentPropertyRoutes_1.default);
 app.use("/notifications", notifications_1.default);
+// BetterAuth routes
+app.use("/api/auth", auth_1.auth.handler);
 /* SERVER */
 const port = Number(process.env.PORT) || 3002;
 // Initialize Socket.io

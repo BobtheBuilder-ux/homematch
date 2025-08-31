@@ -8,17 +8,16 @@ import {
   Tenant,
 } from "@/types/prismaTypes";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { fetchAuthSession, getCurrentUser } from "aws-amplify/auth";
+import { getSession } from "@/lib/auth-client";
 import { FiltersState } from ".";
 
 export const api = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: process.env.NEXT_PUBLIC_API_BASE_URL,
     prepareHeaders: async (headers) => {
-      const session = await fetchAuthSession();
-      const { idToken } = session.tokens ?? {};
-      if (idToken) {
-        headers.set("Authorization", `Bearer ${idToken}`);
+      const session = await getSession();
+      if (session?.data?.session?.token) {
+        headers.set("Authorization", `Bearer ${session.data.session.token}`);
       }
       return headers;
     },
@@ -51,25 +50,29 @@ export const api = createApi({
     getAuthUser: build.query<User, void>({
       queryFn: async (_, _queryApi, _extraoptions, fetchWithBQ) => {
         try {
-          const session = await fetchAuthSession();
-          const { idToken } = session.tokens ?? {};
-          const user = await getCurrentUser();
-          const userRole = idToken?.payload["custom:role"] as string;
+          const session = await getSession();
+          if (!session?.data?.user) {
+            return { error: "No authenticated user found" };
+          }
+
+          const user = session.data.user;
+          // Note: Role will be determined from the database user record
+          const userRole = 'tenant'; // Default role, will be updated from database
 
           let endpoint: string;
           switch (userRole?.toLowerCase()) {
             case "landlord":
-              endpoint = `/landlords/${user.userId}`;
+              endpoint = `/landlords/${user.id}`;
               break;
             case "admin":
-              endpoint = `/admin/admins/${user.userId}`;
+              endpoint = `/admin/admins/${user.id}`;
               break;
             case "agent":
-              endpoint = `/admin/agents/${user.userId}`;
+              endpoint = `/admin/agents/${user.id}`;
               break;
             case "tenant":
             default:
-              endpoint = `/tenants/${user.userId}`;
+              endpoint = `/tenants/${user.id}`;
               break;
           }
 
@@ -82,13 +85,13 @@ export const api = createApi({
           ) {
             userDetailsResponse = await createNewUserInDatabase(
               user,
-              idToken,
+              session,
               userRole,
               fetchWithBQ
             );
-            // Update the user object with the cognitoId from the server response
-            if (userDetailsResponse.data && (userDetailsResponse.data as any).cognitoId) {
-              user.userId = (userDetailsResponse.data as any).cognitoId;
+            // Update the user object with the authId from the server response
+            if (userDetailsResponse.data && (userDetailsResponse.data as any).authId) {
+              user.id = (userDetailsResponse.data as any).authId;
             }
           }
 

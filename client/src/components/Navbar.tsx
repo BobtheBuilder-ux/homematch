@@ -7,7 +7,7 @@ import React from "react";
 import { Button } from "./ui/button";
 import { useGetAuthUserQuery } from "@/state/api";
 import { usePathname, useRouter } from "next/navigation";
-import { signOut } from "aws-amplify/auth";
+import { signOut } from "@/lib/auth-client";
 import { Bell, MessageCircle, Plus, Search } from "lucide-react";
 import {
   DropdownMenu,
@@ -33,7 +33,7 @@ const Navbar = () => {
   
   const handleSignOut = async () => {
     await signOut();
-    window.location.href = "/";
+    router.push("/signin");
   };
 
   const getActionPath = (role: string | undefined): string => {

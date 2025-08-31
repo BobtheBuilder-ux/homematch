@@ -284,15 +284,14 @@ class NotificationService {
 
   private async getAuthToken(): Promise<string> {
     try {
-      const { fetchAuthSession } = await import('aws-amplify/auth');
-      const session = await fetchAuthSession();
-      const { idToken } = session.tokens ?? {};
+      const { getSession } = await import('@/lib/auth-client');
+      const session = await getSession();
       
-      if (!idToken) {
+      if (!session?.data?.session?.token) {
         throw new Error('No authentication token available');
       }
       
-      return idToken.toString();
+      return session.data.session.token;
     } catch (error) {
       console.error('Error getting auth token:', error);
       throw new Error('Authentication required');

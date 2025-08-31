@@ -8,13 +8,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.socketService = void 0;
 const socket_io_1 = require("socket.io");
-const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+const auth_1 = require("../auth");
 const database_1 = require("../utils/database");
 class SocketService {
     constructor() {
@@ -45,62 +42,59 @@ class SocketService {
                 if (!token) {
                     return next(new Error('Authentication token required'));
                 }
-                const decoded = jsonwebtoken_1.default.verify(token, process.env.JWT_SECRET);
-                // Fetch user details from database - check all user types
-                const cognitoId = decoded.sub;
-                let user = null;
-                let userType = '';
-                // Check Tenant
-                const tenant = yield database_1.databaseService.getClient().tenant.findUnique({
-                    where: { cognitoId },
-                    select: { cognitoId: true, email: true, name: true },
+                // Validate session using BetterAuth
+                const headers = new Headers();
+                headers.set('authorization', `Bearer ${token}`);
+                if (socket.handshake.headers.cookie) {
+                    headers.set('cookie', socket.handshake.headers.cookie);
+                }
+                const session = yield auth_1.auth.api.getSession({
+                    headers
                 });
-                if (tenant) {
-                    user = tenant;
-                    userType = 'tenant';
+                if (!session || !session.user) {
+                    return next(new Error('Invalid or expired session'));
                 }
-                // Check Landlord
-                if (!user) {
-                    const landlord = yield database_1.databaseService.getClient().landlord.findUnique({
-                        where: { cognitoId },
-                        select: { cognitoId: true, email: true, name: true },
+                const userId = session.user.id;
+                const userRole = session.user.role || 'tenant';
+                const userEmail = session.user.email;
+                // Fetch additional user details from database based on role
+                let user = null;
+                let userType = userRole;
+                // Check based on role from BetterAuth
+                if (userRole === 'tenant') {
+                    user = yield database_1.databaseService.getClient().tenant.findFirst({
+                        where: { email: userEmail },
+                        select: { id: true, email: true, name: true },
                     });
-                    if (landlord) {
-                        user = landlord;
-                        userType = 'landlord';
-                    }
                 }
-                // Check Agent
-                if (!user) {
-                    const agent = yield database_1.databaseService.getClient().agent.findUnique({
-                        where: { cognitoId },
-                        select: { cognitoId: true, email: true, name: true },
+                else if (userRole === 'landlord') {
+                    user = yield database_1.databaseService.getClient().landlord.findFirst({
+                        where: { email: userEmail },
+                        select: { id: true, email: true, name: true },
                     });
-                    if (agent) {
-                        user = agent;
-                        userType = 'agent';
-                    }
                 }
-                // Check Admin
-                if (!user) {
-                    const admin = yield database_1.databaseService.getClient().admin.findUnique({
-                        where: { cognitoId },
-                        select: { cognitoId: true, email: true, name: true },
+                else if (userRole === 'agent') {
+                    user = yield database_1.databaseService.getClient().agent.findFirst({
+                        where: { email: userEmail },
+                        select: { id: true, email: true, name: true },
                     });
-                    if (admin) {
-                        user = admin;
-                        userType = 'admin';
-                    }
+                }
+                else if (userRole === 'admin') {
+                    user = yield database_1.databaseService.getClient().admin.findFirst({
+                        where: { email: userEmail },
+                        select: { id: true, email: true, name: true },
+                    });
                 }
                 if (!user) {
-                    return next(new Error('User not found'));
+                    return next(new Error('User profile not found'));
                 }
-                socket.userId = user.cognitoId;
+                socket.userId = userId;
                 socket.userType = userType;
-                socket.email = user.email;
+                socket.email = userEmail;
                 next();
             }
             catch (error) {
+                console.error('Socket authentication error:', error);
                 next(new Error('Invalid authentication token'));
             }
         }));
