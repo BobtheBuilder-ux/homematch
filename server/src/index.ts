@@ -56,26 +56,22 @@ const allowedOrigins = [
 app.use(
   cors({
     origin: (origin, callback) => {
-      // allow requests with no origin (like curl/postman)
-      if (!origin) return callback(null, true);
+      if (!origin) return callback(null, true); // allow Postman / curl
 
-      // allow Vercel / Netlify dynamic URLs
       if (/https:\/\/.*\.vercel\.app$/.test(origin)) return callback(null, true);
       if (/https:\/\/.*\.netlify\.app$/.test(origin)) return callback(null, true);
 
-      if (allowedOrigins.includes(origin)) {
-        return callback(null, true);
-      }
-      return callback(new Error("CORS not allowed for this origin: " + origin));
+      if (allowedOrigins.includes(origin)) return callback(null, true);
+
+      return callback(new Error("CORS not allowed for " + origin));
     },
     credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Origin", "X-Requested-With", "Content-Type", "Accept", "Authorization"],
   })
 );
 
-app.use((req, res, next) => {
-  console.log("Incoming request from:", req.headers.origin);
-  next();
-});
+app.options("*", cors()); 
 
 
 /* ROUTES */
