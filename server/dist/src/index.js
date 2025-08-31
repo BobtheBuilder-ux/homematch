@@ -55,20 +55,34 @@ app.use((0, morgan_1.default)("common"));
 app.use(body_parser_1.default.json());
 app.use(body_parser_1.default.urlencoded({ extended: false }));
 // Update CORS configuration
+const allowedOrigins = [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+    "https://homematch.ng",
+    "https://www.homematch.ng",
+    process.env.FRONTEND_URL || ""
+];
 app.use((0, cors_1.default)({
-    origin: process.env.NODE_ENV === "production"
-        ? [
-            process.env.FRONTEND_URL || "https://homematch.ng",
-            "https://www.homematch.ng",
-            "https://homematch.ng",
-            "http://localhost:3000",
-            "http://127.0.0.1:3000",
-            /https:\/\/.*\.vercel\.app$/,
-            /https:\/\/.*\.netlify\.app$/
-        ]
-        : true,
+    origin: (origin, callback) => {
+        // allow requests with no origin (like curl/postman)
+        if (!origin)
+            return callback(null, true);
+        // allow Vercel / Netlify dynamic URLs
+        if (/https:\/\/.*\.vercel\.app$/.test(origin))
+            return callback(null, true);
+        if (/https:\/\/.*\.netlify\.app$/.test(origin))
+            return callback(null, true);
+        if (allowedOrigins.includes(origin)) {
+            return callback(null, true);
+        }
+        return callback(new Error("CORS not allowed for this origin: " + origin));
+    },
     credentials: true,
 }));
+app.use((req, res, next) => {
+    console.log("Incoming request from:", req.headers.origin);
+    next();
+});
 /* ROUTES */
 app.get("/", (req, res) => {
     res.send("This is home route");
