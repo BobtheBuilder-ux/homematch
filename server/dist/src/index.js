@@ -61,6 +61,8 @@ app.use((0, cors_1.default)({
             process.env.FRONTEND_URL || "https://homematch.ng",
             "https://www.homematch.ng",
             "https://homematch.ng",
+            "http://localhost:3000",
+            "http://127.0.0.1:3000",
             /https:\/\/.*\.vercel\.app$/,
             /https:\/\/.*\.netlify\.app$/
         ]
